@@ -22,7 +22,8 @@
       "@containers/*": ["containers/*"],
       "@pages/*": ["pages/*"],
       "@utils/*": ["utils/*"],
-      "@redux/*": ["redux/*"]
+      "@redux/*": ["redux/*"],
+      "@layout/": ["layout/"]
     }
   },
   "include": ["src"]

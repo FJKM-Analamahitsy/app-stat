@@ -1,11 +1,8 @@
+import Layout from "layout";
 import { FC } from "react";
 
 const Home: FC = () => {
-  return (
-    <div className="w-screen h-screen m-auto flex flex-col justify-center">
-      home
-    </div>
-  );
+  return <Layout>home</Layout>;
 };
 
 export default Home;
