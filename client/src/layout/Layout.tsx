@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FC, ReactNode } from "react";
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
+import Avatar from "@components/Avatar";
 
 interface LayoutProps {
   children: ReactNode;
@@ -23,7 +24,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
         </Sidebar>
       </div>
       <div className="w-full">
-        <div className="w-full h-[70px] border-b flex items-center p-5">
+        <div className="w-full h-[70px] border-b flex items-center p-5 justify-between">
           <Input
             leftIcon={
               <FontAwesomeIcon
@@ -34,6 +35,9 @@ const Layout: FC<LayoutProps> = ({ children }) => {
             }
             placeholder="search"
           />
+          <div>
+            <Avatar label="Andrianarijaona Tojonirina" reversed />
+          </div>
         </div>
         <div>body</div>
       </div>
