@@ -32,7 +32,7 @@ const Avatar: FC<AvatarProps> = ({
         )}
       </div>
       {name && (
-        <div className="">
+        <div className="hidden sm:block">
           <p className={`leading-[1.1] ${reversed && "text-right"}`}>
             <span className="font-semibold">{name[0]}</span>
             <br />

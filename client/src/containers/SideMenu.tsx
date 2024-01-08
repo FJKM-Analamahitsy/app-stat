@@ -1,6 +1,7 @@
 import Logo from "@components/Logo";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAppSelector } from "@redux/hooks";
 import { FC } from "react";
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
@@ -24,8 +25,13 @@ const SideMenu: FC = () => {
     },
   ];
   const { pathname } = window.location;
+  const collapse = useAppSelector((state) => state.collapse);
   return (
-    <Sidebar className="h-full !border-0">
+    <Sidebar
+      className="h-full !border-0"
+      collapsed={collapse}
+      collapsedWidth="0"
+    >
       <div className="p-2 h-[70px]">
         <Logo />
       </div>
