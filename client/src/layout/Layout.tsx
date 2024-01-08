@@ -1,7 +1,7 @@
 import Input from "@components/Input";
 import Logo from "@components/Logo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { regular, solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FC, ReactNode } from "react";
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import Avatar from "@components/Avatar";
@@ -35,7 +35,17 @@ const Layout: FC<LayoutProps> = ({ children }) => {
             }
             placeholder="search"
           />
-          <div>
+          <div className="flex items-center gap-8">
+            <div className="relative">
+              <FontAwesomeIcon
+                icon={regular("bell")}
+                color="#A4B4BD"
+                size="lg"
+              />
+              <div className="w-[12px] h-[12px] rounded-full bg-red-500 text-white text-[10px] flex justify-center items-center p-1 absolute top-0 left-[9px]">
+                2
+              </div>
+            </div>
             <Avatar label="Andrianarijaona Tojonirina" reversed />
           </div>
         </div>
