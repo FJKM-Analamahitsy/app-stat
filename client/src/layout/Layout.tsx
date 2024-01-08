@@ -1,5 +1,7 @@
 import Input from "@components/Input";
 import Logo from "@components/Logo";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FC, ReactNode } from "react";
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 
@@ -22,7 +24,16 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       </div>
       <div className="w-full">
         <div className="w-full h-[70px] border-b flex items-center p-5">
-          <Input />
+          <Input
+            leftIcon={
+              <FontAwesomeIcon
+                icon={solid("magnifying-glass")}
+                color="#909090"
+                size="sm"
+              />
+            }
+            placeholder="search"
+          />
         </div>
         <div>body</div>
       </div>
