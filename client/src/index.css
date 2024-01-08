@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input {
+  outline: none;
+}
+
+.ps-menu-button {
+  padding: 0 !important;
+  height: 40px !important;
+  margin: 1rem 0px;
+}
+
+.ps-menu-button > span {
+  display: block;
+  height: 100%;
+}

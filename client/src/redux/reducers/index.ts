@@ -12,3 +12,14 @@ export const appReducer = (
       return state;
   }
 };
+
+export const collapseReducer = (state: boolean = false, action: AnyAction) => {
+  switch (action.show) {
+    case true:
+      return true;
+    case false:
+      return false;
+    default:
+      return state;
+  }
+};
