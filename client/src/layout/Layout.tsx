@@ -9,9 +9,7 @@ interface LayoutProps {
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <div className="w-screen h-screen flex">
-      <div>
-        <SideMenu />
-      </div>
+      <SideMenu />
       <div className="w-full">
         <Header />
         <div className="w-full h-[calc(100vh-70px)]">{children}</div>
