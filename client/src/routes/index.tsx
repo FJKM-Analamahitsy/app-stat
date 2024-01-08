@@ -1,3 +1,4 @@
+import Dashboard from "@pages/Dashboard";
 import Home from "@pages/Home";
 import Login from "@pages/Login";
 import { FC } from "react";
@@ -8,6 +9,7 @@ const Routes: FC = () => {
     <Router>
       <Route path="/" element={<Login />} />
       <Route path="/home" element={<Home />} />
+      <Route path="/dash" element={<Dashboard />} />
     </Router>
   );
 };
