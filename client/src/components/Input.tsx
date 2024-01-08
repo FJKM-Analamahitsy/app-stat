@@ -11,7 +11,7 @@ interface InputProps
 
 const Input: FC<InputProps> = ({ leftIcon, rightIcon, ...props }) => {
   return (
-    <div className="h-[40px] bg-bg rounded-[5px] flex items-center gap-[10px] px-[10px]">
+    <div className="h-[40px] w-full min-w-[200px] bg-bg rounded-[5px] flex items-center gap-[10px] px-[10px]">
       {leftIcon}
       <input
         type="text"
