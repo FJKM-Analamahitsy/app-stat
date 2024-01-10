@@ -21,7 +21,7 @@ const Avatar: FC<AvatarProps> = ({
       }`}
     >
       <div
-        className="rounded-full bg-bg flex justify-center items-center cursor-pointer"
+        className="rounded-full bg-bg flex justify-center items-center cursor-pointer overflow-hidden"
         style={{ width: size, height: size }}
       >
         {img && <img src={img} alt="" className="w-full h-full" />}

@@ -24,13 +24,13 @@ const SideMenu: FC = () => {
     },
   ];
   const { pathname } = window.location;
-  const [collapse, setCollapse] = useState(window.innerWidth < 640);
+  const [collapse, setCollapse] = useState(window.innerWidth < 769);
   window.addEventListener("resize", () => {
-    setCollapse(window.innerWidth < 640);
+    setCollapse(window.innerWidth < 769);
   });
   return (
-    <div className="fixed top-0 left-0 sm:relative h-screen bg-bg z-10">
-      <div className="h-[68px] bg-white absolute left-full flex justify-center items-center px-4 sm:hidden">
+    <div className="fixed top-0 left-0 lg:relative h-screen bg-bg z-10">
+      <div className="h-[68px] bg-white absolute left-full flex justify-center items-center px-4 lg:hidden">
         <FontAwesomeIcon
           icon={solid("bars")}
           className="text-grey"
@@ -58,12 +58,12 @@ const SideMenu: FC = () => {
                   <div className="flex gap-3 h-full">
                     <div
                       className={`h-full w-[15px] rounded-r-lg ${
-                        pathname === mn.path && "bg-primary"
+                        pathname.includes(mn.path) && "bg-primary"
                       }`}
                     />
                     <div
                       className={`${
-                        pathname === mn.path
+                        pathname.includes(mn.path)
                           ? "bg-primary text-white"
                           : "text-grey"
                       } h-full w-full flex items-center rounded-[5px] px-4 gap-2`}
