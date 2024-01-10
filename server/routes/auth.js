@@ -11,8 +11,8 @@ const route = express.Router();
 
 route.post("/", login);
 route.post("/new", createUser);
-route.post("/delete", deleteUser);
-route.post("/update", updateUser);
-route.post("/list", listUser);
+route.delete("/", deleteUser);
+route.put("/", updateUser);
+route.get("/", listUser);
 
 module.exports.auth = route;

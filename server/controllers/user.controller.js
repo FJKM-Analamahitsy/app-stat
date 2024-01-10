@@ -1,6 +1,7 @@
 const { User } = require("../models/user.model");
 const { compare, hashPassword } = require("../utils/bcrypt");
 const { object, string } = require("yup");
+const jwt = require("jsonwebtoken");
 
 const idSchema = object({
   id: string().required(),
@@ -65,7 +66,13 @@ const login = async (req, res) => {
     const user = await User.findOne({ username });
     if (user) {
       const check = await compare(password, user.password);
-      if (check) return res.send("auth");
+      if (check)
+        return res.send({
+          token: jwt.sign(
+            { username: user.username, role: user.role },
+            process.env.PRIVATE_KEY
+          ),
+        });
     }
     return res.send("Auth error");
   } catch (error) {
