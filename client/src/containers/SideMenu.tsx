@@ -58,12 +58,12 @@ const SideMenu: FC = () => {
                   <div className="flex gap-3 h-full">
                     <div
                       className={`h-full w-[15px] rounded-r-lg ${
-                        pathname === mn.path && "bg-primary"
+                        pathname.includes(mn.path) && "bg-primary"
                       }`}
                     />
                     <div
                       className={`${
-                        pathname === mn.path
+                        pathname.includes(mn.path)
                           ? "bg-primary text-white"
                           : "text-grey"
                       } h-full w-full flex items-center rounded-[5px] px-4 gap-2`}
