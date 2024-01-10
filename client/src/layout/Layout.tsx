@@ -12,7 +12,9 @@ const Layout: FC<LayoutProps> = ({ children }) => {
       <SideMenu />
       <div className="w-full">
         <Header />
-        <div className="w-full h-[calc(100vh-70px)]">{children}</div>
+        <div className="w-full h-[calc(100vh-70px)] overflow-y-auto">
+          {children}
+        </div>
       </div>
     </div>
   );
