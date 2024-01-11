@@ -8,6 +8,15 @@ module.exports = {
         bg: "#F4F7F8",
         grey: "#6A6A6A",
       },
+      keyframes: {
+        scale_down: {
+          "0%": { transform: "scale(1)" },
+          "100%": { transform: "scale(0.5)" },
+        },
+      },
+      animation: {
+        scale_down: "scale_down 1s ease-in 1",
+      },
     },
   },
   plugins: [],
