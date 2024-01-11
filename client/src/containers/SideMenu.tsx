@@ -19,7 +19,7 @@ const SideMenu: FC = () => {
     },
     {
       label: "New User",
-      path: "/user",
+      path: "/new",
       icon: <FontAwesomeIcon icon={solid("user-plus")} />,
     },
   ];
