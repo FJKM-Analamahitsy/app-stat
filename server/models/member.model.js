@@ -15,15 +15,11 @@ const Member = mongoose.model("Member", {
   mail: String,
   fb: String,
   hobby: String,
-  batisa: {
-    status: Boolean,
-    year: Number,
-  },
-  mpandray: {
-    status: Boolean,
-    andiany: String,
-    karatra: Number,
-  },
+  baptism: Boolean,
+  baptismYear: String,
+  mpandray: Boolean,
+  mpandrayAndiany: String,
+  mpandrayN: String,
   family: {
     id: String,
     place: String,
