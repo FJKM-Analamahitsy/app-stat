@@ -1,6 +1,5 @@
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { MemberShema } from "@utils/schema";
 import { FC } from "react";
 
 interface MemberDetailsProps {
