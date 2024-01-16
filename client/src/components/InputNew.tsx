@@ -1,23 +1,27 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 
-interface InputNewProps {
+interface InputNewProps
+  extends React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   label?: string;
 }
 
-const InputNew: FC<InputNewProps> = ({ label }) => {
-  const [focus, setFocus] = useState<boolean>(false);
+const InputNew: FC<InputNewProps> = ({ label, ...props }) => {
   return (
-    <div className="w-full h-[40px] rounded-[5px] border border-bg relative">
+    <div className="relative bg-inherit bg-white ">
       <input
         type="text"
-        className="bg-transparent w-full h-full p-2 relative z-10"
-        onFocus={() => setFocus(true)}
-        onBlur={() => setFocus(false)}
+        id="username"
+        name="username"
+        className="peer bg-transparent h-10 w-full rounded-[5px] text-gray-200 placeholder-transparent ring-[2px] px-2 ring-gray-200 focus:ring-sky-200 focus:outline-none focus:border-rose-600"
+        placeholder="Type inside me"
+        {...props}
       />
       <label
-        className={`absolute top-[6px] ${
-          focus ? "--translate-2" : "5px"
-        } left-2`}
+        htmlFor="username"
+        className="absolute cursor-text left-0 -top-3 text-sm text-gray-500 bg-inherit mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-sky-600 peer-focus:text-sm transition-all"
       >
         {label}
       </label>
