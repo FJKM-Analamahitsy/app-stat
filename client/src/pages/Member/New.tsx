@@ -47,7 +47,7 @@ const NewMember: FC = () => {
               type="date"
               name=""
               id=""
-              className="border px-2 rounded-[5px] text-grey"
+              className="border px-2 rounded-[5px] h-[40px] text-grey"
             />
           </div>
           <InputNew label="Toerana nahaterahana" />
