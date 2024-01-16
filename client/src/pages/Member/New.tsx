@@ -1,5 +1,6 @@
 import Button from "@components/Button";
 import InputNew from "@components/InputNew";
+import api from "@utils/api";
 import Layout from "layout";
 import { FC, ReactNode, useState } from "react";
 
@@ -32,9 +33,12 @@ const NewMember: FC = () => {
           const name = e.target.name;
           setData({ ...data, [name]: value });
         }}
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          console.log(data);
+          await api
+            .post("/member", data)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
         }}
       >
         <div className="px-[2rem] py-[3rem] flex flex-col gap-4">
