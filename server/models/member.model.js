@@ -6,7 +6,7 @@ const Member = mongoose.model("Member", {
   birthday: Date,
   birthplace: String,
   gender: String,
-  adress: String,
+  home: String,
   city: String,
   place: String,
   job: String,

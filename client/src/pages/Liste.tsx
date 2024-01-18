@@ -3,18 +3,9 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import Layout from "layout";
-import {
-  FC,
-  ReactElement,
-  ReactNode,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import DataTable, {
-  TableColumn,
-  TableStyles,
-} from "react-data-table-component";
+import { FC, useEffect, useMemo, useState } from "react";
+import DataTable, { TableColumn } from "react-data-table-component";
+import { useNavigate } from "react-router-dom";
 
 interface DataRow {
   [key: string]: string;
@@ -22,20 +13,14 @@ interface DataRow {
 
 const Liste: FC = () => {
   const [data, setData] = useState<DataRow[]>([]);
-  const customStyle: TableStyles = {
-    cells: {
-      style: {
-        border: "0px",
-      },
-    },
-  };
+  const navigate = useNavigate();
   const columns: TableColumn<DataRow>[] = useMemo(
     () => [
       {
         name: "Anarana",
         cell: (row) => {
           return (
-            <div>
+            <div onClick={() => navigate("/member/" + row._id)}>
               <Avatar label={`${row.name} ${row.forname ? row.forname : ""}`} />
             </div>
           );
@@ -72,6 +57,7 @@ const Liste: FC = () => {
               <FontAwesomeIcon
                 icon={solid("user-pen")}
                 className="cursor-pointer hover:text-slate-500"
+                onClick={() => navigate("/edit/" + row._id)}
               />
               <FontAwesomeIcon
                 icon={solid("trash")}
@@ -95,9 +81,8 @@ const Liste: FC = () => {
         <DataTable
           columns={columns}
           data={data}
-          customStyles={customStyle}
           pagination
-          onRowClicked={(row) => console.log(row)}
+          onRowClicked={(row) => navigate("/member/" + row._id)}
         />
       </div>
     </Layout>

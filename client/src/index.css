@@ -41,6 +41,7 @@ input {
 
 .rdt_TableRow:hover {
   background-color: #fbfbfb;
+  cursor: pointer;
 }
 
 .rdt_TableRow:nth-child(even) {
