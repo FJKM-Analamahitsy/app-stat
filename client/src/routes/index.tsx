@@ -1,4 +1,4 @@
-import Dashboard from "@pages/Dashboard";
+import Liste from "@pages/Liste";
 import Home from "@pages/Home";
 import Login from "@pages/Login";
 import NewMember from "@pages/Member/New";
@@ -12,7 +12,7 @@ const Routes: FC = () => {
       <Route path="/" element={<Login />} />
       <Route path="/home" element={<Home />} />
       <Route path="/home/:id" element={<Page />} />
-      <Route path="/dash" element={<Dashboard />} />
+      <Route path="/list" element={<Liste />} />
       <Route path="/new" element={<NewMember />} />
     </Router>
   );

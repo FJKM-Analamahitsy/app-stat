@@ -3,6 +3,7 @@ import InputNew from "@components/InputNew";
 import api from "@utils/api";
 import Layout from "layout";
 import { FC, ReactNode, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface ContainerProps {
   title: string;
@@ -25,6 +26,7 @@ const Container: FC<ContainerProps> = ({ title, children, childClass }) => {
 
 const NewMember: FC = () => {
   const [data, setData] = useState<any>({});
+  const navigate = useNavigate();
   return (
     <Layout>
       <form
@@ -37,7 +39,7 @@ const NewMember: FC = () => {
           e.preventDefault();
           await api
             .post("/member", data)
-            .then((res) => console.log(res))
+            .then(() => navigate("/list"))
             .catch((err) => console.log(err));
         }}
       >

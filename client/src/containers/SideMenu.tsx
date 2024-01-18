@@ -13,9 +13,9 @@ const SideMenu: FC = () => {
       icon: <FontAwesomeIcon icon={solid("home")} />,
     },
     {
-      label: "Dashboard",
-      path: "/dash",
-      icon: <FontAwesomeIcon icon={solid("chart-line")} />,
+      label: "Liste",
+      path: "/list",
+      icon: <FontAwesomeIcon icon={solid("users")} />,
     },
     {
       label: "New",

@@ -1,8 +1,8 @@
 import Layout from "layout";
 import { FC } from "react";
 
-const Dashboard: FC = () => {
+const Liste: FC = () => {
   return <Layout>dash</Layout>;
 };
 
-export default Dashboard;
+export default Liste;
