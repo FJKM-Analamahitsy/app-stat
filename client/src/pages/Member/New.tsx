@@ -49,13 +49,13 @@ const NewMember: FC = () => {
             <InputNew label="Fanampiny" name="forname" />
             <div className="grid grid-cols-3">
               <div className="flex items-center gap-2 ">
-                <input type="radio" name="gender" value={1} />
+                <input type="radio" name="gender" value="lehilahy" />
                 <label htmlFor="" className="text-[15px] text-grey">
                   Lehilahy
                 </label>
               </div>
               <div className="flex items-center gap-2 ">
-                <input type="radio" name="gender" value={0} />
+                <input type="radio" name="gender" value="vehivavy" />
                 <label htmlFor="" className="text-[15px] text-grey">
                   Vehivavy
                 </label>
@@ -135,19 +135,19 @@ const NewMember: FC = () => {
           <Container title="Asa">
             <div className="grid grid-cols-3">
               <div className="flex items-center gap-2 ">
-                <input type="radio" name="job" value={0} />
+                <input type="radio" name="job" value="tena" />
                 <label htmlFor="" className="text-[15px] text-grey">
                   Tena
                 </label>
               </div>
               <div className="flex items-center gap-2 ">
-                <input type="radio" name="job" value={1} />
+                <input type="radio" name="job" value="tsy miankina" />
                 <label htmlFor="" className="text-[15px] text-grey">
                   Tsy miankina
                 </label>
               </div>
               <div className="flex items-center gap-2 ">
-                <input type="radio" name="job" value={2} />
+                <input type="radio" name="job" value="fanjakana" />
                 <label htmlFor="" className="text-[15px] text-grey">
                   Fanjakana
                 </label>
