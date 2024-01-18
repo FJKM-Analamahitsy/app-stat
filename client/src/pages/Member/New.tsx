@@ -1,9 +1,10 @@
 import Button from "@components/Button";
 import InputNew from "@components/InputNew";
+import RadioButton from "@components/RadioButton";
 import api from "@utils/api";
 import Layout from "layout";
 import { FC, ReactNode, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface ContainerProps {
   title: string;
@@ -32,13 +33,13 @@ const NewMember: FC = () => {
   useEffect(() => {
     if (id) {
       api.get("/member/" + id).then((res) => setData(res.data));
-      console.log(data);
     }
   }, [id]);
 
   const onChangeHandler = (e: any) => {
-    const value = e.target.value;
-    const name = e.target.name;
+    setDataHandler(e.target.name, e.target.value);
+  };
+  const setDataHandler = (name: string, value: string) => {
     setData({ ...data, [name]: value });
   };
   return (
@@ -76,34 +77,27 @@ const NewMember: FC = () => {
               onChange={onChangeHandler}
             />
             <div className="grid grid-cols-3">
-              <div className="flex items-center gap-2 ">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="lehilahy"
-                  checked={data.gender === "lehilahy"}
-                />
-                <label htmlFor="" className="text-[15px] text-grey">
-                  Lehilahy
-                </label>
-              </div>
-              <div className="flex items-center gap-2 ">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="vehivavy"
-                  checked={data.gender === "vehivavy"}
-                />
-                <label htmlFor="" className="text-[15px] text-grey">
-                  Vehivavy
-                </label>
-              </div>
+              <RadioButton
+                name="gender"
+                value="lehilahy"
+                onChange={onChangeHandler}
+                checked={data.gender === "lehilahy"}
+                onClick={() => setDataHandler("gender", "lehilahy")}
+              />
+
+              <RadioButton
+                name="gender"
+                value="vehivavy"
+                onChange={onChangeHandler}
+                checked={data.gender === "vehivavy"}
+                onClick={() => setDataHandler("gender", "vehivavy")}
+              />
 
               <input
                 type="date"
                 name="brithdate"
                 id=""
-                className="border px-2 rounded-[5px] h-[40px] text-grey"
+                className="border px-2 rounded-[5px] h-[40px] text-grey uppercase"
               />
             </div>
             <InputNew
@@ -116,18 +110,20 @@ const NewMember: FC = () => {
 
           <Container title="Batisa">
             <div className="grid grid-cols-3">
-              <div className="flex items-center gap-2 ">
-                <input type="radio" name="baptism" value="true" />
-                <label htmlFor="" className="text-[15px] text-grey">
-                  Eny
-                </label>
-              </div>
-              <div className="flex items-center gap-2 ">
-                <input type="radio" name="baptism" value="false" />
-                <label htmlFor="" className="text-[15px] text-grey">
-                  Tsy
-                </label>
-              </div>
+              <RadioButton
+                name="baptism"
+                value="eny"
+                onChange={onChangeHandler}
+                checked={data.baptism === "eny"}
+                onClick={() => setDataHandler("baptism", "eny")}
+              />
+              <RadioButton
+                name="baptism"
+                value="tsia"
+                onChange={onChangeHandler}
+                checked={data.baptism === "tsia"}
+                onClick={() => setDataHandler("baptism", "tsia")}
+              />
             </div>
             <InputNew
               label="Taona"
@@ -142,30 +138,21 @@ const NewMember: FC = () => {
 
           <Container title="Mpandray">
             <div className="grid grid-cols-3">
-              <div className="flex items-center gap-2 ">
-                <input
-                  type="radio"
-                  name="mpandray"
-                  value="true"
-                  checked={data.mpandray}
-                  onChange={onChangeHandler}
-                />
-                <label htmlFor="" className="text-[15px] text-grey">
-                  Eny
-                </label>
-              </div>
-              <div className="flex items-center gap-2 ">
-                <input
-                  type="radio"
-                  name="mpandray"
-                  value="false"
-                  checked={!data.mpandray}
-                  onChange={onChangeHandler}
-                />
-                <label htmlFor="" className="text-[15px] text-grey">
-                  Tsy
-                </label>
-              </div>
+              <RadioButton
+                name="mpandray"
+                value="eny"
+                onChange={onChangeHandler}
+                checked={data.mpandray === "eny"}
+                onClick={() => setDataHandler("mpandray", "eny")}
+              />
+              <RadioButton
+                name="mpandray"
+                value="tsia"
+                onChange={onChangeHandler}
+                checked={data.mpandray === "tsia"}
+                onClick={() => setDataHandler("mpandray", "tsia")}
+              />
+
               <InputNew
                 label="Andiany"
                 name="mpandrayAndiany"
@@ -213,39 +200,27 @@ const NewMember: FC = () => {
 
           <Container title="Asa">
             <div className="grid grid-cols-3">
-              <div className="flex items-center gap-2 ">
-                <input
-                  type="radio"
-                  name="job"
-                  value="tena"
-                  checked={data.job === "tena"}
-                />
-                <label htmlFor="" className="text-[15px] text-grey">
-                  Tena
-                </label>
-              </div>
-              <div className="flex items-center gap-2 ">
-                <input
-                  type="radio"
-                  name="job"
-                  value="tsy miankina"
-                  checked={data.job === "tsy miankina"}
-                />
-                <label htmlFor="" className="text-[15px] text-grey">
-                  Tsy miankina
-                </label>
-              </div>
-              <div className="flex items-center gap-2 ">
-                <input
-                  type="radio"
-                  name="job"
-                  value="fanjakana"
-                  checked={data.job === "fanjakana"}
-                />
-                <label htmlFor="" className="text-[15px] text-grey">
-                  Fanjakana
-                </label>
-              </div>
+              <RadioButton
+                name="job"
+                value="tena"
+                onChange={onChangeHandler}
+                checked={data.job === "tena"}
+                onClick={() => setDataHandler("job", "tena")}
+              />
+              <RadioButton
+                name="job"
+                value="tsy miankina"
+                onChange={onChangeHandler}
+                checked={data.job === "tsy miankina"}
+                onClick={() => setDataHandler("job", "tsy miankina")}
+              />
+              <RadioButton
+                name="job"
+                value="fanjakana"
+                onChange={onChangeHandler}
+                checked={data.job === "fanjakana"}
+                onClick={() => setDataHandler("job", "fanjakana")}
+              />
             </div>
             <InputNew
               label="Talenta"

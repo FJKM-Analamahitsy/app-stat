@@ -15,9 +15,9 @@ const Member = mongoose.model("Member", {
   mail: String,
   fb: String,
   hobby: String,
-  baptism: Boolean,
+  baptism: String,
   baptismYear: String,
-  mpandray: Boolean,
+  mpandray: String,
   mpandrayAndiany: String,
   mpandrayN: String,
   family: {

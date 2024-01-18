@@ -68,7 +68,7 @@ const Liste: FC = () => {
         },
       },
     ],
-    []
+    [navigate]
   );
   useEffect(() => {
     api.get("/member").then((res) => {
