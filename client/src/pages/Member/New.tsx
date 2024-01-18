@@ -33,6 +33,8 @@ const NewMember: FC = () => {
   useEffect(() => {
     if (id) {
       api.get("/member/" + id).then((res) => setData(res.data));
+    } else {
+      setData({});
     }
   }, [id]);
 
