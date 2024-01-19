@@ -1,7 +1,8 @@
-import Dashboard from "@pages/Dashboard";
+import Liste from "@pages/Liste";
 import Home from "@pages/Home";
 import Login from "@pages/Login";
-import Page from "@pages/Member/page";
+import NewMember from "@pages/Member/New";
+import Page from "@pages/Member/Page";
 import { FC } from "react";
 import { Routes as Router, Route } from "react-router-dom";
 
@@ -10,8 +11,10 @@ const Routes: FC = () => {
     <Router>
       <Route path="/" element={<Login />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/home/:id" element={<Page />} />
-      <Route path="/dash" element={<Dashboard />} />
+      <Route path="/member/:id" element={<Page />} />
+      <Route path="/list" element={<Liste />} />
+      <Route path="/new" element={<NewMember />} />
+      <Route path="/edit/:id" element={<NewMember />} />
     </Router>
   );
 };

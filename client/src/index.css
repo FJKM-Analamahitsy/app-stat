@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  outline: none !important;
+}
+
 input {
   outline: none;
 }
@@ -15,4 +19,36 @@ input {
 .ps-menu-button > span {
   display: block;
   height: 100%;
+}
+
+.rdt_Table {
+  height: calc(100vh - 160px) !important;
+}
+
+.rdt_TableHead {
+  font-weight: 700 !important;
+  font-size: 16px !important;
+}
+
+.rdt_TableHeadRow {
+  border-color: #eceff3 !important;
+}
+
+.rdt_TableRow {
+  border: 0px !important;
+  font-size: 15px !important;
+}
+
+.rdt_TableRow:hover {
+  background-color: #fbfbfb;
+  cursor: pointer;
+}
+
+.rdt_TableRow:nth-child(even) {
+  background-color: #fbfbfb;
+}
+
+.rdt_TableCell,
+.rdt_TableCol {
+  padding: 0.8rem 5px !important;
 }

@@ -5,7 +5,7 @@ const {
   updateMember,
   listMember,
   getMember,
-} = require("../controllers/member.model");
+} = require("../controllers/member.controller");
 
 const route = express.Router();
 

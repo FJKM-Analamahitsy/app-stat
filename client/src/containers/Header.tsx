@@ -28,7 +28,7 @@ const Header: FC = () => {
             2
           </div>
         </div>
-        <Avatar label="Andrianarijaona Tojonirina" reversed />
+        <Avatar label="Andrianarijaona Tojonirina" reversed hideLabSm />
       </div>
     </div>
   );
