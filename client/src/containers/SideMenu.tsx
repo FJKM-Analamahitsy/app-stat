@@ -3,7 +3,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC, useState } from "react";
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SideMenu: FC = () => {
   const menu = [
@@ -28,6 +28,12 @@ const SideMenu: FC = () => {
   window.addEventListener("resize", () => {
     setCollapse(window.innerWidth < 769);
   });
+  const navigate = useNavigate();
+
+  const logout = () => {
+    sessionStorage.removeItem("token");
+    navigate("/");
+  };
   return (
     <div className="fixed top-0 left-0 lg:relative h-screen bg-bg z-50">
       <div className="h-[68px] bg-white absolute left-full flex justify-center items-center px-4 lg:hidden">
@@ -78,10 +84,7 @@ const SideMenu: FC = () => {
           </Menu>
 
           <Menu>
-            <MenuItem
-              component={<Link to="/login" />}
-              rootStyles={{ padding: "0" }}
-            >
+            <MenuItem rootStyles={{ padding: "0" }} onClick={logout}>
               <div className="flex gap-3 h-full">
                 <div className={`h-full w-[15px] rounded-r-lg`} />
                 <div
