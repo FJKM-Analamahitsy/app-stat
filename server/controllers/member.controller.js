@@ -84,7 +84,6 @@ const exportMembersToCsv = async (req, res) => {
   });
   const prep = new parser();
   const csv = prep.parse(raw);
-  console.log(csv);
   res.header("Content-Type", "text/csv");
   res.attachment("liste.csv");
   return res.send(csv);
