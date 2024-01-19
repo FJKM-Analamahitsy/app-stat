@@ -1,11 +1,12 @@
 import { AnyAction } from "@reduxjs/toolkit";
+import { setUser, unSetUser } from "@utils/constant";
 
-export const tokenReducer = (state: string = "", action: AnyAction) => {
-  switch (action.set) {
-    case true:
-      return action.token;
-    case false:
-      return "";
+export const userReducer = (state: any = {}, action: AnyAction) => {
+  switch (action.type) {
+    case setUser:
+      return action.data;
+    case unSetUser:
+      return {};
     default:
       return state;
   }

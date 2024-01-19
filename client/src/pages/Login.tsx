@@ -3,6 +3,8 @@ import Input from "@components/Input";
 import Logo from "@components/Logo";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { userSetAction } from "@redux/actions";
+import { useAppDispatch } from "@redux/hooks";
 import api from "@utils/api";
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +13,7 @@ const Login: FC = () => {
   const [showPass, setShowPass] = useState<boolean>(false);
   const [data, setData] = useState<any>({});
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const onChangeHandler = (e: any) => {
     const name = e.target.name;
@@ -22,6 +25,7 @@ const Login: FC = () => {
     e.preventDefault();
     await api.post("/auth", data).then((res) => {
       sessionStorage.setItem("token", res.data.token);
+      dispatch(userSetAction({ username: data.username }));
       navigate("/home");
     });
   };

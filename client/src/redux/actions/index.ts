@@ -1,7 +1,10 @@
-import { setToken } from "@utils/constant";
+import { setUser, unSetUser } from "@utils/constant";
 
-export const tokenAction = (set: boolean, token: string = "") => ({
-  type: setToken,
-  set,
-  token,
+export const userSetAction = (data: any = {}) => ({
+  type: setUser,
+  data,
+});
+
+export const userUnSetAction = () => ({
+  type: unSetUser,
 });
