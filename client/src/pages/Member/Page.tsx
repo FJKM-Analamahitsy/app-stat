@@ -31,7 +31,7 @@ const Page: FC = () => {
             </Link>
           </div>
         </div>
-        <div className="w-full h-[25vh] bg-gray-300"></div>
+        <div className="w-full h-[25vh] bg-gray-300 overflow-hidden"></div>
         <div className="w-full flex flex-col md:flex-row  items-center md:items-end -translate-y-14 px-[2rem]">
           <Avatar img={avatar} size={200} />
           <div className="flex justify-between px-[2rem] grow ">
