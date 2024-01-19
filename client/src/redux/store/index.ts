@@ -1,10 +1,9 @@
-import { appReducer, collapseReducer } from "@redux/reducers";
+import { tokenReducer } from "@redux/reducers";
 import { configureStore } from "@reduxjs/toolkit";
 
 const store = configureStore({
   reducer: {
-    app: appReducer,
-    collapse: collapseReducer,
+    token: tokenReducer,
   },
 });
 

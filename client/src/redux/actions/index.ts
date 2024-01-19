@@ -1,6 +1,7 @@
-import { setCollapse } from "@utils/constant";
+import { setToken } from "@utils/constant";
 
-export const collapseAction = (show: boolean) => ({
-  type: setCollapse,
-  show,
+export const tokenAction = (set: boolean, token: string = "") => ({
+  type: setToken,
+  set,
+  token,
 });

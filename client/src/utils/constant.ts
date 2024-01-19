@@ -1,1 +1,1 @@
-export const setCollapse = "SET_COLLAPSE";
+export const setToken = "SET_TOKEN";
