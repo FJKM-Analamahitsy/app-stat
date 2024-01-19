@@ -22,7 +22,7 @@ input {
 }
 
 .rdt_Table {
-  height: calc(100vh - 160px) !important;
+  height: calc(100vh - 200px) !important;
 }
 
 .rdt_TableHead {

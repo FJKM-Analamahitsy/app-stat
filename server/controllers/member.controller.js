@@ -1,5 +1,6 @@
 const { object, string } = require("yup");
 const { Member } = require("../models/member.model");
+const parser = require("json2csv").Parser;
 
 const memberInput = object({
   name: string().required(),
@@ -55,10 +56,45 @@ const listMember = async (req, res) => {
   return res.send(member);
 };
 
+const exportMembersToCsv = async (req, res) => {
+  const data = await Member.find().select("-_id");
+  const raw = [];
+  data.map((el) => {
+    raw.push({
+      Anarana: el.name,
+      Fanampiny: el.forname,
+      "L/V": el.gender,
+      Karatra: el.mpandrayN,
+      "taona nahaterahana": el.birthday,
+      "toerana nahaterahana": el.birthplace,
+      adiresy: el.home,
+      tanana: el.city,
+      faritra: el.place,
+      asa: el.job,
+      talenta: el.talent,
+      telephone: el.phone,
+      email: el.mail,
+      fb: el.fb,
+      fialamboly: el.hobby,
+      batisa: el.baptism,
+      "taona batisa": el.baptismYear,
+      mpandray: el.mpandray,
+      "mpandray andiany": el.mpandrayAndiany,
+    });
+  });
+  const prep = new parser();
+  const csv = prep.parse(raw);
+  console.log(csv);
+  res.header("Content-Type", "text/csv");
+  res.attachment("liste.csv");
+  return res.send(csv);
+};
+
 module.exports = {
   createMember,
   deleteMember,
   updateMember,
   getMember,
   listMember,
+  exportMembersToCsv,
 };

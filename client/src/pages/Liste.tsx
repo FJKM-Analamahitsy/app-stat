@@ -78,6 +78,13 @@ const Liste: FC = () => {
   return (
     <Layout>
       <div className="p-4">
+        <a href={api.defaults.baseURL + "/member/export"} download>
+          <div className="bg-primary text-white p-1 px-8 rounded-[5px] w-fit float-right cursor-pointer">
+            <FontAwesomeIcon icon={solid("file-arrow-down")} />
+            <span className="ml-2">Export</span>
+          </div>
+        </a>
+
         <DataTable
           columns={columns}
           data={data}
