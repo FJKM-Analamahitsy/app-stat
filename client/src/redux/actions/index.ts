@@ -1,6 +1,10 @@
-import { setCollapse } from "@utils/constant";
+import { setUser, unSetUser } from "@utils/constant";
 
-export const collapseAction = (show: boolean) => ({
-  type: setCollapse,
-  show,
+export const userSetAction = (data: any = {}) => ({
+  type: setUser,
+  data,
+});
+
+export const userUnSetAction = () => ({
+  type: unSetUser,
 });

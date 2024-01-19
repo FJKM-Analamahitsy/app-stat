@@ -1,24 +1,12 @@
 import { AnyAction } from "@reduxjs/toolkit";
+import { setUser, unSetUser } from "@utils/constant";
 
-export const appReducer = (
-  state: string = "Welcome to react starter by tojonirina",
-  action: AnyAction
-) => {
+export const userReducer = (state: any = {}, action: AnyAction) => {
   switch (action.type) {
-    case "app":
-      return "welcome";
-
-    default:
-      return state;
-  }
-};
-
-export const collapseReducer = (state: boolean = false, action: AnyAction) => {
-  switch (action.show) {
-    case true:
-      return true;
-    case false:
-      return false;
+    case setUser:
+      return action.data;
+    case unSetUser:
+      return {};
     default:
       return state;
   }

@@ -1,10 +1,9 @@
-import { appReducer, collapseReducer } from "@redux/reducers";
+import { userReducer } from "@redux/reducers";
 import { configureStore } from "@reduxjs/toolkit";
 
 const store = configureStore({
   reducer: {
-    app: appReducer,
-    collapse: collapseReducer,
+    user: userReducer,
   },
 });
 
