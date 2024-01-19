@@ -32,7 +32,7 @@ const NewMember: FC = () => {
 
   useEffect(() => {
     if (id) {
-      api.get("/member/" + id).then((res) => setData(res.data));
+      api.get("/member/get/" + id).then((res) => setData(res.data));
     } else {
       setData({});
     }
@@ -97,9 +97,11 @@ const NewMember: FC = () => {
 
               <input
                 type="date"
-                name="brithdate"
+                name="birthday"
                 id=""
                 className="border px-2 rounded-[5px] h-[40px] text-grey uppercase"
+                value={data.birthday ? data.birthday : ""}
+                onChange={onChangeHandler}
               />
             </div>
             <InputNew
