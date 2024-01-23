@@ -52,8 +52,12 @@ const getMember = async (req, res) => {
 };
 
 const listMember = async (req, res) => {
-  const member = await Member.find();
-  return res.send(member);
+  const { page = 1, limit = 10 } = req.query;
+  const member = await Member.find()
+    .limit(limit * 1)
+    .skip((page - 1) * limit);
+  const totalRow = await Member.countDocuments();
+  return res.send({ member, totalRow });
 };
 
 const exportMembersToCsv = async (req, res) => {
