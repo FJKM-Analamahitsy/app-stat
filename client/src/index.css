@@ -37,6 +37,7 @@ input {
 .rdt_TableRow {
   border: 0px !important;
   font-size: 15px !important;
+  min-height: 80px !important;
 }
 
 .rdt_TableRow:hover {
@@ -51,4 +52,13 @@ input {
 .rdt_TableCell,
 .rdt_TableCol {
   padding: 0.8rem 5px !important;
+}
+
+.rdt_TableBody {
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.rdt_TableBody::-webkit-scrollbar {
+  display: none !important;
 }

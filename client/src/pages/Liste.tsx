@@ -25,6 +25,7 @@ const Liste: FC = () => {
             </div>
           );
         },
+        grow: 2,
       },
       {
         name: "L/V",
