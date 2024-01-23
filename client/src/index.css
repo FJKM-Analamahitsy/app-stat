@@ -55,10 +55,14 @@ input {
 }
 
 .rdt_TableBody {
-  overflow-y: auto;
+  overflow-y: scroll;
   scrollbar-width: none;
 }
 
 .rdt_TableBody::-webkit-scrollbar {
-  display: none !important;
+  width: 3px;
+}
+.rdt_TableBody::-webkit-scrollbar-thumb {
+  background-color: rgb(231, 229, 229);
+  border-radius: 5px;
 }
