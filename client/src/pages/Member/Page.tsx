@@ -15,7 +15,7 @@ const Page: FC = () => {
 
   useEffect(() => {
     if (id) {
-      api.get("/member/" + id).then((res) => setData(res.data));
+      api.get("/member/get/" + id).then((res) => setData(res.data));
     } else {
       setData({});
     }
@@ -31,11 +31,11 @@ const Page: FC = () => {
             </Link>
           </div>
         </div>
-        <div className="w-full h-[25vh] bg-gray-300"></div>
+        <div className="w-full h-[25vh] bg-gray-300 overflow-hidden"></div>
         <div className="w-full flex flex-col md:flex-row  items-center md:items-end -translate-y-14 px-[2rem]">
           <Avatar img={avatar} size={200} />
           <div className="flex justify-between px-[2rem] grow ">
-            <div className="text-center">
+            <div className="text-center sm:text-left">
               <Link
                 to={`/edit/${id}`}
                 className="text-primary cursor-pointer text-center md:text-left"
@@ -78,7 +78,7 @@ const Page: FC = () => {
         </div>
       </div>
       <div className="flex flex-col sm:flex-row p-4 gap-4">
-        <div>
+        <div className="w-full sm:w-1/4 min-w-[250px]">
           <MemberDetails data={data} />
         </div>
         <div className="grow p-2">
