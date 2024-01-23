@@ -81,6 +81,9 @@ const Liste: FC = () => {
   };
 
   const onChangeHandler = (page: number) => {
+    document
+      .querySelector(".rdt_TableBody")
+      ?.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     fetch(page);
   };
 
