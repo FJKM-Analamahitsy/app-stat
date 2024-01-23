@@ -13,6 +13,8 @@ interface DataRow {
 
 const Liste: FC = () => {
   const [data, setData] = useState<DataRow[]>([]);
+  const [rows, setRows] = useState<number>(0);
+  const [limit, setLimit] = useState<number>(10);
   const navigate = useNavigate();
   const columns: TableColumn<DataRow>[] = useMemo(
     () => [
@@ -25,6 +27,7 @@ const Liste: FC = () => {
             </div>
           );
         },
+        grow: 2,
       },
       {
         name: "L/V",
@@ -70,10 +73,28 @@ const Liste: FC = () => {
     ],
     [navigate]
   );
-  useEffect(() => {
-    api.get("/member").then((res) => {
-      setData(res.data);
+  const fetch = (page: number) => {
+    api.get(`/member?page=${page}&limit=${limit}`).then((res) => {
+      setData(res.data.member);
+      setRows(res.data.totalRow);
     });
+  };
+
+  const onChangeHandler = (page: number) => {
+    document
+      .querySelector(".rdt_TableBody")
+      ?.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    fetch(page);
+  };
+
+  const onLimitChange = (limit: number, page: number) => {
+    api.get(`/member?page=${page}&limit=${limit}`).then((res) => {
+      setData(res.data.member);
+      setLimit(limit);
+    });
+  };
+  useEffect(() => {
+    fetch(1);
   }, []);
   return (
     <Layout>
@@ -89,6 +110,10 @@ const Liste: FC = () => {
           columns={columns}
           data={data}
           pagination
+          paginationServer
+          paginationTotalRows={rows}
+          onChangePage={onChangeHandler}
+          onChangeRowsPerPage={onLimitChange}
           onRowClicked={(row) => navigate("/member/" + row._id)}
         />
       </div>
