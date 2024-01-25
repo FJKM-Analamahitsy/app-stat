@@ -6,6 +6,7 @@ const {
   listMember,
   getMember,
   exportMembersToCsv,
+  searchMember,
 } = require("../controllers/member.controller");
 
 const route = express.Router();
@@ -16,5 +17,6 @@ route.put("/", updateMember);
 route.get("/", listMember);
 route.get("/get/:id", getMember);
 route.get("/export", exportMembersToCsv);
+route.get("/search", searchMember);
 
 module.exports.member = route;
