@@ -19,7 +19,10 @@ const Member = mongoose.model("Member", {
   baptismYear: String,
   mpandray: String,
   mpandrayAndiany: String,
-  mpandrayN: String,
+  mpandrayN: {
+    type: String,
+    unique: true,
+  },
   family: {
     id: String,
     place: String,
