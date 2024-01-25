@@ -5,6 +5,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import { FC, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Login: FC = () => {
@@ -18,13 +19,18 @@ const Login: FC = () => {
     setData({ ...data, [name]: value });
   };
 
-  const login = async (e: any) => {
+  const login = (e: any) => {
     e.preventDefault();
-    await api.post("/auth", data).then((res) => {
-      sessionStorage.setItem("token", res.data.token);
-      sessionStorage.setItem("user", data.username);
-      navigate("/home");
-    });
+    api
+      .post("/auth", data)
+      .then((res) => {
+        sessionStorage.setItem("token", res.data.token);
+        sessionStorage.setItem("user", data.username);
+        navigate("/home");
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+      });
   };
   return (
     <div className="flex w-screen h-screen bg-[#F4F7F8]">

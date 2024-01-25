@@ -74,7 +74,7 @@ const login = async (req, res) => {
           ),
         });
     }
-    return res.send("Auth error");
+    return res.status(401).send("Auth error");
   } catch (error) {
     res.status(400).send(error.message);
   }
