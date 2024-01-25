@@ -66,15 +66,19 @@ const login = async (req, res) => {
     const user = await User.findOne({ username });
     if (user) {
       const check = await compare(password, user.password);
-      if (check)
+      if (check) {
         return res.send({
           token: jwt.sign(
             { username: user.username, role: user.role },
             process.env.PRIVATE_KEY
           ),
         });
+      } else {
+        return res.status(401).send("Wrong password!");
+      }
+    } else {
+      return res.status(401).send("user does not exist!");
     }
-    return res.status(401).send("Auth error");
   } catch (error) {
     res.status(400).send(error.message);
   }
