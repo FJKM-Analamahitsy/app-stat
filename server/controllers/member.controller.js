@@ -62,6 +62,7 @@ const listMember = async (req, res) => {
 
 const searchMember = async (req, res) => {
   const { q } = req.query;
+  if (q === "") return res.send([]);
   const result = await Member.find({
     $or: [
       { name: { $regex: new RegExp(q, "i") } },
