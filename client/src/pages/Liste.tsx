@@ -5,6 +5,7 @@ import api from "@utils/api";
 import Layout from "layout";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 interface DataRow {
@@ -15,7 +16,44 @@ const Liste: FC = () => {
   const [data, setData] = useState<DataRow[]>([]);
   const [rows, setRows] = useState<number>(0);
   const [limit, setLimit] = useState<number>(10);
+  const [n, setN] = useState<number>(1);
   const navigate = useNavigate();
+  const fetch = (page: number) => {
+    api.get(`/member?page=${page}&limit=${limit}`).then((res) => {
+      setData(res.data.member);
+      setRows(res.data.totalRow);
+    });
+  };
+
+  const onChangeHandler = (page: number) => {
+    setN(page);
+    document
+      .querySelector(".rdt_TableBody")
+      ?.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    fetch(page);
+  };
+
+  const onLimitChange = (limit: number, page: number) => {
+    api.get(`/member?page=${page}&limit=${limit}`).then((res) => {
+      setData(res.data.member);
+      setLimit(limit);
+    });
+  };
+
+  const onDeleteHandler = (id: string) => {
+    const conf = window.confirm("Are you sure to proceed to this action?");
+    if (conf) {
+      api
+        .delete("/member/", { data: { id } })
+        .then((res) => {
+          fetch(n);
+        })
+        .catch(function (err) {
+          toast.error(err.message);
+        });
+    }
+  };
+
   const columns: TableColumn<DataRow>[] = useMemo(
     () => [
       {
@@ -65,6 +103,7 @@ const Liste: FC = () => {
               <FontAwesomeIcon
                 icon={solid("trash")}
                 className="cursor-pointer hover:text-red-500"
+                onClick={() => onDeleteHandler(row._id)}
               />
             </div>
           );
@@ -73,26 +112,7 @@ const Liste: FC = () => {
     ],
     [navigate]
   );
-  const fetch = (page: number) => {
-    api.get(`/member?page=${page}&limit=${limit}`).then((res) => {
-      setData(res.data.member);
-      setRows(res.data.totalRow);
-    });
-  };
 
-  const onChangeHandler = (page: number) => {
-    document
-      .querySelector(".rdt_TableBody")
-      ?.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-    fetch(page);
-  };
-
-  const onLimitChange = (limit: number, page: number) => {
-    api.get(`/member?page=${page}&limit=${limit}`).then((res) => {
-      setData(res.data.member);
-      setLimit(limit);
-    });
-  };
   useEffect(() => {
     fetch(1);
   }, []);
