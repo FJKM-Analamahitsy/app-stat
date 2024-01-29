@@ -1,7 +1,13 @@
 import { AnyAction } from "@reduxjs/toolkit";
 import { setUser, unSetUser } from "@utils/constant";
+import { jwtDecode } from "jwt-decode";
 
-export const userReducer = (state: any = {}, action: AnyAction) => {
+const token = sessionStorage.getItem("token");
+
+export const userReducer = (
+  state: any = token ? jwtDecode(token) : {},
+  action: AnyAction
+) => {
   switch (action.type) {
     case setUser:
       return action.data;
