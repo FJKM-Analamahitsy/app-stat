@@ -1,6 +1,8 @@
 import Logo from "@components/Logo";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { userUnSetAction } from "@redux/actions";
+import { useAppDispatch } from "@redux/hooks";
 import { FC, useState } from "react";
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import { Link, useNavigate } from "react-router-dom";
@@ -25,6 +27,7 @@ const SideMenu: FC = () => {
   ];
   const { pathname } = window.location;
   const [collapse, setCollapse] = useState(window.innerWidth < 769);
+  const dispatch = useAppDispatch();
   window.addEventListener("resize", () => {
     setCollapse(window.innerWidth < 769);
   });
@@ -32,6 +35,7 @@ const SideMenu: FC = () => {
 
   const logout = () => {
     sessionStorage.removeItem("token");
+    dispatch(userUnSetAction());
     navigate("/");
   };
   return (

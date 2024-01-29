@@ -8,9 +8,9 @@ interface InputNewProps
   label?: string;
 }
 
-const InputNew: FC<InputNewProps> = ({ label, ...props }) => {
+const InputNew: FC<InputNewProps> = ({ label, className, ...props }) => {
   return (
-    <div className="relative  bg-white">
+    <div className={`relative  bg-white ${className}`}>
       <input
         type="text"
         id={props.id}

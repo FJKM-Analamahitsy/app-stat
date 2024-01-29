@@ -78,7 +78,7 @@ const NewMember: FC = () => {
               value={data.forname ? data.forname : ""}
               onChange={onChangeHandler}
             />
-            <div className="grid grid-cols-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <RadioButton
                 name="gender"
                 value="lehilahy"
@@ -94,12 +94,11 @@ const NewMember: FC = () => {
                 checked={data.gender === "vehivavy"}
                 onClick={() => setDataHandler("gender", "vehivavy")}
               />
-
               <input
                 type="date"
                 name="birthday"
                 id=""
-                className="border px-2 rounded-[5px] h-[40px] text-grey uppercase"
+                className="border px-2 rounded-[5px] h-[40px] text-grey uppercase col-span-2 md:col-auto"
                 value={data.birthday ? data.birthday : ""}
                 onChange={onChangeHandler}
               />
@@ -141,7 +140,7 @@ const NewMember: FC = () => {
           </Container>
 
           <Container title="Mpandray">
-            <div className="grid grid-cols-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <RadioButton
                 name="mpandray"
                 value="eny"
@@ -162,6 +161,7 @@ const NewMember: FC = () => {
                 name="mpandrayAndiany"
                 value={data.mpandrayAndiany ? data.mpandrayAndiany : ""}
                 onChange={onChangeHandler}
+                className="col-span-2 md:col-auto"
               />
             </div>
             <InputNew
@@ -203,7 +203,7 @@ const NewMember: FC = () => {
           </Container>
 
           <Container title="Asa">
-            <div className="grid grid-cols-3">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
               <RadioButton
                 name="job"
                 value="tena"

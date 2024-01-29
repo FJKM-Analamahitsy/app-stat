@@ -6,7 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { userSetAction } from "@redux/actions";
 import { useAppDispatch } from "@redux/hooks";
 import api from "@utils/api";
+import { jwtDecode } from "jwt-decode";
 import { FC, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Login: FC = () => {
@@ -21,24 +23,27 @@ const Login: FC = () => {
     setData({ ...data, [name]: value });
   };
 
-  const login = async (e: any) => {
+  const login = (e: any) => {
     e.preventDefault();
-    await api.post("/auth", data).then((res) => {
-      sessionStorage.setItem("token", res.data.token);
-      dispatch(userSetAction({ username: data.username }));
-      navigate("/home");
-    });
+    api
+      .post("/auth", data)
+      .then((res) => {
+        sessionStorage.setItem("token", res.data.token);
+        dispatch(userSetAction(jwtDecode(res.data.token)));
+        navigate("/home");
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+      });
   };
   return (
     <div className="flex w-screen h-screen bg-[#F4F7F8]">
       <div className="w-1/2 bg-primary hidden md:block"></div>
       <div className="w-full md:w-1/2 flex justify-center items-center p-8">
         <div className="max-w-[480px]">
-          <div className="w-full flex justify-end px-1 py-2">
-            <Logo />
-          </div>
           <form onSubmit={login} onChange={onChangeHandler}>
-            <div className="bg-white rounded-[5px] h-fit flex flex-col gap-5 px-[3rem] py-[5rem]">
+            <div className="bg-white rounded-[5px] h-fit flex flex-col gap-5 px-[1rem] py-[2rem] md:px-[3rem] md:py-[4rem]">
+              <Logo />
               <h2 className="text-2xl font-bold">Welcome Back!</h2>
               <p className="mb-[1rem]">
                 It is a long established fact that a reader will be distracted

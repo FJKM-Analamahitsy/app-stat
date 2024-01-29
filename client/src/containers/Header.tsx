@@ -6,7 +6,7 @@ import { useAppSelector } from "@redux/hooks";
 import { FC } from "react";
 
 const Header: FC = () => {
-  const user = useAppSelector((state) => state.user);
+  const { username } = useAppSelector((state) => state.user);
   return (
     <div className="w-full h-[70px] border-b flex items-center p-5 justify-between">
       <div className="sm:hidden"></div>
@@ -21,7 +21,7 @@ const Header: FC = () => {
             2
           </div>
         </div>
-        <Avatar label={user.username} reversed hideLabSm />
+        <Avatar label={username} reversed hideLabSm />
       </div>
     </div>
   );
