@@ -28,7 +28,7 @@ const Search: FC = () => {
         onChange={searchHandler}
       />
       {result.length > 0 && (
-        <div className="absolute bg-white w-full shadow-sm mt-2 z-50">
+        <div className="absolute bg-white w-full shadow-md rounded-[5px] border border-bg mt-2 z-50">
           {result.map((el: any, i: number) => {
             return (
               <Link key={i} to={"/member/" + el._id}>

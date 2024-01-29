@@ -1,4 +1,5 @@
 import Avatar from "@components/Avatar";
+import Search from "@components/Search";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
@@ -119,6 +120,10 @@ const Liste: FC = () => {
   return (
     <Layout>
       <div className="p-4">
+        <div className="mb-4 md:hidden">
+          <Search />
+        </div>
+
         <a href={api.defaults.baseURL + "/member/export"} download>
           <div className="bg-primary text-white p-1 px-8 rounded-[5px] w-fit float-right cursor-pointer">
             <FontAwesomeIcon icon={solid("file-arrow-down")} />
