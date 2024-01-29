@@ -37,11 +37,9 @@ const Login: FC = () => {
       <div className="w-1/2 bg-primary hidden md:block"></div>
       <div className="w-full md:w-1/2 flex justify-center items-center p-8">
         <div className="max-w-[480px]">
-          <div className="w-full flex justify-end px-1 py-2">
-            <Logo />
-          </div>
           <form onSubmit={login} onChange={onChangeHandler}>
-            <div className="bg-white rounded-[5px] h-fit flex flex-col gap-5 px-[3rem] py-[5rem]">
+            <div className="bg-white rounded-[5px] h-fit flex flex-col gap-5 px-[1rem] py-[2rem] md:px-[3rem] md:py-[4rem]">
+              <Logo />
               <h2 className="text-2xl font-bold">Welcome Back!</h2>
               <p className="mb-[1rem]">
                 It is a long established fact that a reader will be distracted
