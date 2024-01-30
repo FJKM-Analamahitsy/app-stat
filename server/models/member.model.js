@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Member = mongoose.model("Member", {
   name: String,
   forname: String,
-  birthday: String,
+  birthday: Date,
   birthplace: String,
   gender: String,
   home: String,
@@ -24,6 +24,14 @@ const Member = mongoose.model("Member", {
     id: String,
     place: String,
     rank: Number,
+  },
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
+  last_update: {
+    type: Date,
+    default: Date.now,
   },
 });
 
