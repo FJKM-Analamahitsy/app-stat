@@ -1,5 +1,6 @@
 const { object, string } = require("yup");
 const { Member } = require("../models/member.model");
+const { log } = require("./log.controller");
 const parser = require("json2csv").Parser;
 
 const memberInput = object({
@@ -15,6 +16,7 @@ const createMember = async (req, res) => {
     const input = await memberInput.validate(req.body);
     const newMember = new Member({ ...input });
     await newMember.save();
+    log(req.requester, `creation member ${newMember._id}`);
     return res.send(newMember);
   } catch (error) {
     res.status(400).send(error.message);
@@ -25,6 +27,7 @@ const deleteMember = async (req, res) => {
   try {
     const { id } = await idSchema.validate(req.body);
     const member = await Member.findOneAndDelete({ _id: id });
+    log(req.requester, `delete member ${id}`);
     return res.send(member);
   } catch (error) {
     res.status(400).send(error.message);
@@ -35,6 +38,7 @@ const updateMember = async (req, res) => {
   try {
     const { id, ...body } = await idSchema.validate(req.body);
     await Member.findOneAndUpdate({ _id: id }, { ...body });
+    log(req.requester, `update member ${id}`);
     return res.send("sucess");
   } catch (error) {
     res.status(400).send(error.message);
