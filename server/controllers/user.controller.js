@@ -2,6 +2,7 @@ const { User } = require("../models/user.model");
 const { compare, hashPassword } = require("../utils/bcrypt");
 const { object, string } = require("yup");
 const jwt = require("jsonwebtoken");
+const { log } = require("./log.controller");
 
 const idSchema = object({
   id: string().required(),
@@ -67,6 +68,7 @@ const login = async (req, res) => {
     if (user) {
       const check = await compare(password, user.password);
       if (check) {
+        log(user.username, "connection");
         return res.send({
           token: jwt.sign(
             { username: user.username, role: user.role },
