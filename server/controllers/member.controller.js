@@ -82,32 +82,89 @@ const searchMember = async (req, res) => {
 
 const exportMembersToCsv = async (req, res) => {
   const data = await Member.find().select("-_id");
-  const raw = [];
-  data.map((el) => {
-    raw.push({
-      Anarana: el.name,
-      Fanampiny: el.forname,
-      "L/V": el.gender,
-      Karatra: el.mpandrayN,
-      "taona nahaterahana": el.birthday,
-      "toerana nahaterahana": el.birthplace,
-      adiresy: el.home,
-      tanana: el.city,
-      faritra: el.place,
-      asa: el.job,
-      talenta: el.talent,
-      telephone: el.phone,
-      email: el.mail,
-      fb: el.fb,
-      fialamboly: el.hobby,
-      batisa: el.baptism,
-      "taona batisa": el.baptismYear,
-      mpandray: el.mpandray,
-      "mpandray andiany": el.mpandrayAndiany,
-    });
-  });
-  const prep = new parser();
-  const csv = prep.parse(raw);
+  const { filter } = req.query;
+  const fields = [
+    {
+      label: "Anarana",
+      value: "name",
+    },
+    {
+      label: "Fanampiny",
+      value: "forname",
+    },
+    {
+      label: "L/V",
+      value: "gender",
+    },
+    {
+      label: "Karatra",
+      value: "mpandrayN",
+    },
+    {
+      label: "Taona nahaterahana",
+      value: "birthday",
+    },
+    {
+      label: "Toerana nahaterahana",
+      value: "birthplace",
+    },
+    {
+      label: "Adiresy",
+      value: "home",
+    },
+    {
+      label: "Tanana",
+      value: "city",
+    },
+    {
+      label: "Faritra",
+      value: "place",
+    },
+    {
+      label: "Asa",
+      value: "job",
+    },
+    {
+      label: "Talenta",
+      value: "talent",
+    },
+    {
+      label: "Telephone",
+      value: "phone",
+    },
+    {
+      label: "Email",
+      value: "mail",
+    },
+    {
+      label: "Facebook",
+      value: "fb",
+    },
+    {
+      label: "Fialamboly",
+      value: "hobby",
+    },
+    {
+      label: "Batisa",
+      value: "fb",
+    },
+    {
+      label: "Taona batisa",
+      value: "baptismYear",
+    },
+    {
+      label: "Mpandray",
+      value: "mpandray",
+    },
+    {
+      label: "Mpandray andiany",
+      value: "mpandrayAndiany",
+    },
+  ];
+  const opt = { fields: fields.filter((el) => filter.includes(el.value)) };
+  console.log(opt);
+  const prep = new parser(opt);
+  const csv = prep.parse(data);
   res.header("Content-Type", "text/csv");
   res.attachment("liste.csv");
   return res.send(csv);
