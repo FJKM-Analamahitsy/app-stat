@@ -37,7 +37,10 @@ const deleteMember = async (req, res) => {
 const updateMember = async (req, res) => {
   try {
     const { id, ...body } = await idSchema.validate(req.body);
-    await Member.findOneAndUpdate({ _id: id }, { ...body });
+    await Member.findOneAndUpdate(
+      { _id: id },
+      { ...body, last_update: new Date() }
+    );
     log(req.requester, `update member ${id}`);
     return res.send("sucess");
   } catch (error) {

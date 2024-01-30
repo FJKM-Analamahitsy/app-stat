@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Member = mongoose.model("Member", {
   name: String,
   forname: String,
-  birthday: String,
+  birthday: Date,
   birthplace: String,
   gender: String,
   home: String,
@@ -16,14 +16,20 @@ const Member = mongoose.model("Member", {
   fb: String,
   hobby: String,
   baptism: String,
-  baptismYear: String,
+  baptismYear: Number,
   mpandray: String,
   mpandrayAndiany: String,
-  mpandrayN: String,
-  family: {
-    id: String,
-    place: String,
-    rank: Number,
+  mpandrayN: Number,
+  familyId: String,
+  familyRank: Number,
+  familyPlace: String,
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
+  last_update: {
+    type: Date,
+    default: Date.now,
   },
 });
 
