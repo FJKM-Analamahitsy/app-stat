@@ -4,13 +4,12 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const { auth } = require("./routes/auth");
 const { member } = require("./routes/member");
-const { authMiddlware } = require("./controllers/middleware");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/auth", auth);
-app.use("/member", authMiddlware, member);
+app.use("/member",member);
 
 const port = process.env.PORT || 4000;
 
