@@ -146,7 +146,7 @@ const exportMembersToCsv = async (req, res) => {
     },
     {
       label: "Batisa",
-      value: "fb",
+      value: "batisa",
     },
     {
       label: "Taona batisa",
@@ -162,7 +162,6 @@ const exportMembersToCsv = async (req, res) => {
     },
   ];
   const opt = { fields: fields.filter((el) => filter.includes(el.value)) };
-  console.log(opt);
   const prep = new parser(opt);
   const csv = prep.parse(data);
   res.header("Content-Type", "text/csv");
