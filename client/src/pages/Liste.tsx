@@ -1,4 +1,5 @@
 import Avatar from "@components/Avatar";
+import ExportBtn from "@components/ExportBtn";
 import Search from "@components/Search";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -124,12 +125,7 @@ const Liste: FC = () => {
           <Search />
         </div>
 
-        <a href={api.defaults.baseURL + "/member/export"} download>
-          <div className="bg-primary text-white p-1 px-8 rounded-[5px] w-fit float-right cursor-pointer">
-            <FontAwesomeIcon icon={solid("file-arrow-down")} />
-            <span className="ml-2">Export</span>
-          </div>
-        </a>
+        <ExportBtn />
 
         <DataTable
           columns={columns}

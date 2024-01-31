@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/auth", auth);
-app.use("/member",member);
+app.use("/member", member);
 
 const port = process.env.PORT || 4000;
 
