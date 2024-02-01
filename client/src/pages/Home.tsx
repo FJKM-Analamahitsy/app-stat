@@ -35,16 +35,29 @@ const Home: FC = () => {
             <div className="w-full grid grid-cols-2 gap-4 h-fit">
               {data.map((dp, i) => {
                 return (
-                  <div key={i} className="bg-white p-2 w-full rounded-sm h-fit">
-                    <span className="font-medium text-sm text-slate-500">
+                  <div
+                    key={i}
+                    className={`${
+                      i === 0 ? "bg-primary text-white" : "bg-white "
+                    } p-2 w-full rounded-[5px] h-fit`}
+                  >
+                    <span
+                      className={`font-medium text-sm ${
+                        i === 0 ? "text-slate-50" : "text-slate-500"
+                      }`}
+                    >
                       {dp.label}
                     </span>
                     <div className="flex justify-between">
                       <span className="font-medium text-[2rem]">{dp.n}</span>
-                      <div className="w-[40px] h-[40px] rounded-full flex justify-center items-center border-[2px] border-primary">
-                        <span className="text-[12px] text-primary font-medium">
-                          {dp.p}%
-                        </span>
+                      <div
+                        className={`w-[40px] h-[40px] rounded-full flex justify-center items-center border-2 ${
+                          i === 0
+                            ? "border-white"
+                            : "border-primary text-primary"
+                        }`}
+                      >
+                        <span className="text-[12px] font-medium">{dp.p}%</span>
                       </div>
                     </div>
                   </div>
