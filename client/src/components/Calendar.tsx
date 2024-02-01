@@ -44,7 +44,7 @@ const Calendar: FC = () => {
           onClick={() => changeHandler(-7)}
         />
         <span className="cursor-pointer">
-          <FontAwesomeIcon icon={regular("calendar")} />
+          <FontAwesomeIcon icon={regular("calendar")} size="sm" />
           <span className="font-semibold ml-2">
             {months[m]} {now.getFullYear()}
           </span>
