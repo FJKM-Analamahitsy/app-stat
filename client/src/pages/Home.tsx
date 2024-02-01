@@ -1,4 +1,5 @@
 import Calendar from "@components/Calendar";
+import Sampana from "@containers/Sampana";
 import Layout from "layout";
 import { FC } from "react";
 
@@ -29,7 +30,7 @@ const Home: FC = () => {
     <Layout>
       <div className="bg-slate-50 h-full p-4">
         <div className="flex justify-between gap-4">
-          <div className="grow grid grid-cols-3 gap-4">
+          <div className="grow grid grid-cols-3 gap-4 h-fit">
             {data.map((dp, i) => {
               return (
                 <div key={i} className="bg-white p-2 w-full rounded-sm h-fit">
@@ -50,6 +51,7 @@ const Home: FC = () => {
           </div>
           <div className="w-1/3">
             <Calendar />
+            <Sampana />
           </div>
         </div>
       </div>
