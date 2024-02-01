@@ -10,7 +10,7 @@ const AvatarGroup: FC<AvatarGroupProps> = ({ data }) => {
     <div className="flex">
       {data.map((d, i) => {
         return (
-          <div className={`${i > 0 && "ml-[-0.9rem]"}`}>
+          <div key={i} className={`${i > 0 && "ml-[-0.9rem]"}`}>
             <Avatar label={d} hideLabel />
           </div>
         );
