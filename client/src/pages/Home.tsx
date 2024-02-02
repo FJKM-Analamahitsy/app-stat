@@ -33,7 +33,7 @@ const Home: FC = () => {
   ];
   return (
     <Layout>
-      <div className="bg-slate-50 h-full p-4">
+      <div className="bg-slate-50 h-fit min-h-[calc(100vh-70px)] p-4">
         <div
           className="bg-no-repeat bg-cover rounded-[1rem] bg-white p-4"
           style={{ backgroundImage: `url(${bg})` }}
@@ -42,7 +42,7 @@ const Home: FC = () => {
             <p className="text-[1.5rem] font-medium">FJKM Analamahitsy</p>
             <p className="text-slate-500">SPIA 19</p>
           </div>
-          <div className="w-full grid grid-cols-4 gap-4 h-fit mt-4">
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 h-fit mt-4">
             {data.map((dp, i) => {
               return (
                 <div
@@ -73,14 +73,14 @@ const Home: FC = () => {
             })}
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-4 mt-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
           <div className="col-span-2">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4">
               <DashChart />
               <DashChart />
               <div className="col-span-2 bg-white rounded-[5px] p-2 flex flex-col items-center">
                 <img src={map} alt="" className="w-10/12" />
-                <div className="flex gap-4 mt-2">
+                <div className="flex flex-wrap gap-4 mt-2">
                   <div>
                     <FontAwesomeIcon
                       icon={solid("circle-dot")}
