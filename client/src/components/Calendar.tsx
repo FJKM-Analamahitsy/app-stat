@@ -36,7 +36,7 @@ const Calendar: FC = () => {
     );
   };
   return (
-    <div className="bg-white rounded-t-sm p-4 text-gray-600">
+    <div className="bg-white rounded-t-sm p-4 text-gray-600 h-fit">
       <div className="flex items-center justify-between">
         <FontAwesomeIcon
           icon={solid("chevron-left")}
