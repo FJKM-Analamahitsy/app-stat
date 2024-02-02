@@ -80,6 +80,55 @@ const searchMember = async (req, res) => {
   return res.send(result);
 };
 
+const statistics = async (req, res) => {
+  const total = await Member.countDocuments();
+  const lehilahy = await Member.find({ gender: "lehilahy" }).countDocuments();
+  const vehivavy = await Member.find({ gender: "vehivavy" }).countDocuments();
+  const mpandray = await Member.find({ mpandray: "eny" }).countDocuments();
+  const batisa = await Member.find({ batisa: "eny" }).countDocuments();
+  const avaratra = await Member.find({ place: "avaratra" }).countDocuments();
+  const atsimo = await Member.find({ place: "atsimo" }).countDocuments();
+  const atsinanana = await Member.find({
+    place: "atsinanana",
+  }).countDocuments();
+  const andrefana = await Member.find({ place: "andrefana" }).countDocuments();
+  const stast = {
+    lehilahy: {
+      n: lehilahy,
+      p: ((lehilahy / total) * 100).toFixed(1),
+    },
+    vehivavy: {
+      n: vehivavy,
+      p: ((vehivavy / total) * 100).toFixed(1),
+    },
+    mpandray: {
+      n: mpandray,
+      p: ((mpandray / total) * 100).toFixed(1),
+    },
+    batisa: {
+      n: batisa,
+      p: ((batisa / total) * 100).toFixed(1),
+    },
+    atsimo: {
+      n: atsimo,
+      p: ((atsimo / total) * 100).toFixed(1),
+    },
+    andrefana: {
+      n: andrefana,
+      p: ((andrefana / total) * 100).toFixed(1),
+    },
+    avaratra: {
+      n: avaratra,
+      p: ((avaratra / total) * 100).toFixed(1),
+    },
+    atsinanana: {
+      n: atsinanana,
+      p: ((atsinanana / total) * 100).toFixed(1),
+    },
+  };
+  res.send(stast);
+};
+
 const exportMembersToCsv = async (req, res) => {
   const data = await Member.find().select("-_id");
   const { filter } = req.query;
@@ -177,4 +226,5 @@ module.exports = {
   listMember,
   searchMember,
   exportMembersToCsv,
+  statistics,
 };
