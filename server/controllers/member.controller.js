@@ -95,35 +95,35 @@ const statistics = async (req, res) => {
   const stast = {
     lehilahy: {
       n: lehilahy,
-      p: ((lehilahy / total) * 100).toFixed(1),
+      p: ((lehilahy / total) * 100).toFixed(0),
     },
     vehivavy: {
       n: vehivavy,
-      p: ((vehivavy / total) * 100).toFixed(1),
+      p: ((vehivavy / total) * 100).toFixed(0),
     },
     mpandray: {
       n: mpandray,
-      p: ((mpandray / total) * 100).toFixed(1),
+      p: ((mpandray / total) * 100).toFixed(0),
     },
     batisa: {
       n: batisa,
-      p: ((batisa / total) * 100).toFixed(1),
+      p: ((batisa / total) * 100).toFixed(0),
     },
     atsimo: {
       n: atsimo,
-      p: ((atsimo / total) * 100).toFixed(1),
+      p: ((atsimo / total) * 100).toFixed(0),
     },
     andrefana: {
       n: andrefana,
-      p: ((andrefana / total) * 100).toFixed(1),
+      p: ((andrefana / total) * 100).toFixed(0),
     },
     avaratra: {
       n: avaratra,
-      p: ((avaratra / total) * 100).toFixed(1),
+      p: ((avaratra / total) * 100).toFixed(0),
     },
     atsinanana: {
       n: atsinanana,
-      p: ((atsinanana / total) * 100).toFixed(1),
+      p: ((atsinanana / total) * 100).toFixed(0),
     },
   };
   res.send(stast);
