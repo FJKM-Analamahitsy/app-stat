@@ -8,6 +8,7 @@ import api from "@utils/api";
 
 const Search: FC = () => {
   const [result, setResult] = useState<any>([]);
+  const [focus, setFocus] = useState<boolean>(false);
 
   const searchHandler = (e: any) => {
     api
@@ -26,8 +27,10 @@ const Search: FC = () => {
         }
         placeholder="search"
         onChange={searchHandler}
+        onFocus={() => setFocus(true)}
+        onBlur={() => setFocus(false)}
       />
-      {result.length > 0 && (
+      {focus && result.length > 0 && (
         <div className="absolute bg-white w-full shadow-md rounded-[5px] border border-bg mt-2 z-50">
           {result.map((el: any, i: number) => {
             return (

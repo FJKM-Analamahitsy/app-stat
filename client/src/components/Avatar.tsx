@@ -6,6 +6,7 @@ interface AvatarProps {
   size?: number;
   reversed?: boolean;
   hideLabSm?: boolean;
+  hideLabel?: boolean;
 }
 
 const Avatar: FC<AvatarProps> = ({
@@ -14,6 +15,7 @@ const Avatar: FC<AvatarProps> = ({
   size = 40,
   reversed = false,
   hideLabSm = false,
+  hideLabel = false,
 }) => {
   const name = label?.split(" ");
   return (
@@ -23,7 +25,7 @@ const Avatar: FC<AvatarProps> = ({
       }`}
     >
       <div
-        className="rounded-full bg-bg flex justify-center items-center cursor-pointer overflow-hidden"
+        className="rounded-full bg-bg flex border-2 border-white justify-center items-center cursor-pointer overflow-hidden"
         style={{ width: size, height: size }}
       >
         {img && <img src={img} alt="" className="w-full h-full" />}
@@ -33,7 +35,7 @@ const Avatar: FC<AvatarProps> = ({
           </span>
         )}
       </div>
-      {name && (
+      {name && !hideLabel && (
         <div className={`${hideLabSm && "hidden sm:block"}`}>
           <p className={`leading-[1.1] ${reversed && "text-right"}`}>
             <span className="font-semibold truncate">{name[0]}</span>
