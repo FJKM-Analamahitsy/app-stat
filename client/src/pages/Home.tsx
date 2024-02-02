@@ -26,7 +26,7 @@ const Home: FC = () => {
         >
           <div>
             <p className="text-[1.5rem] font-medium">FJKM Analamahitsy</p>
-            <p className="text-slate-500">SPIA 19</p>
+            <p className="text-slate-500">SP19 Iarivo Avaradrano</p>
           </div>
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 h-fit mt-4">
             {data &&
