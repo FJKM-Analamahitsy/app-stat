@@ -84,21 +84,22 @@ const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
   return (
     <div className="border border-bg p-2 px-4 rounded-[5px] w-full">
       {Object.keys(shema).map((el, i) => {
-        return (
-          <>
-            {data[el] && (
-              <div className="flex gap-4 hover:bg-slate-50 p-2 rounded-[5px] cursor-pointer">
-                <p className="text-gray-700 w-[40px] h-[40px] flex justify-center items-center rounded-full bg-slate-50">
-                  {shema[el].icon}
-                </p>
-                <div>
-                  <p className="text-gray-400 text-sm">{shema[el].label}</p>
-                  <p className="font-medium text-gray-800">{data[el]}</p>
-                </div>
+        if (data[el]) {
+          return (
+            <div
+              key={i}
+              className="flex gap-4 hover:bg-slate-50 p-2 rounded-[5px] cursor-pointer"
+            >
+              <p className="text-gray-700 w-[40px] h-[40px] flex justify-center items-center rounded-full bg-slate-50">
+                {shema[el].icon}
+              </p>
+              <div>
+                <p className="text-gray-400 text-sm">{shema[el].label}</p>
+                <p className="font-medium text-gray-800">{data[el]}</p>
               </div>
-            )}
-          </>
-        );
+            </div>
+          );
+        }
       })}
     </div>
   );
