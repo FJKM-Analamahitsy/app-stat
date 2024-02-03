@@ -16,6 +16,7 @@ const createAdidy = async (req, res) => {
       year: input.year,
       month: input.month,
       mpandray: input.mpandray,
+      type: input.type,
     }).countDocuments();
     if (check > 0) return res.status(400).send("duplicate");
     const newAdidy = new Adidy({ ...input });
