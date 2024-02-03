@@ -11,3 +11,5 @@ const Adidy = mongoose.model("Adidy", {
     default: Date.now,
   },
 });
+
+module.exports = { Adidy };
