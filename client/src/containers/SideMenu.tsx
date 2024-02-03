@@ -24,6 +24,11 @@ const SideMenu: FC = () => {
       path: "/new",
       icon: <FontAwesomeIcon icon={solid("user-plus")} />,
     },
+    {
+      label: "Adidy",
+      path: "/pay",
+      icon: <FontAwesomeIcon icon={solid("id-card")} />,
+    },
   ];
   const { pathname } = window.location;
   const [collapse, setCollapse] = useState(window.innerWidth < 769);
