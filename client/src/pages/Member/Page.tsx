@@ -77,11 +77,11 @@ const Page: FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row p-4 gap-4">
-        <div className="w-full sm:w-1/4 min-w-[250px]">
+      <div className="grid grid-cols-1 md:grid-cols-3 p-4 gap-4">
+        <div className="w-full">
           <MemberDetails data={data} />
         </div>
-        <div className="grow p-2">
+        <div className="col-span-2 p-2">
           <MemberInfoTab />
         </div>
       </div>

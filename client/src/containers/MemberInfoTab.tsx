@@ -1,7 +1,8 @@
 import { FC, useState } from "react";
+import AdidyDetails from "./AdidyDetails";
 
 const MemberInfoTab: FC = () => {
-  const [active, setActive] = useState("History");
+  const [active, setActive] = useState(0);
   const tab = ["History", "Family", "Adidy"];
   return (
     <div>
@@ -10,15 +11,15 @@ const MemberInfoTab: FC = () => {
           return (
             <div
               key={i}
-              className={`p-2 cursor-pointer ${active === t && "bg-bg"}`}
-              onClick={() => setActive(t)}
+              className={`p-2 cursor-pointer ${active === i && "bg-bg"}`}
+              onClick={() => setActive(i)}
             >
               {t}
             </div>
           );
         })}
       </div>
-      <div>{active}</div>
+      <div className="p-4">{active === 2 && <AdidyDetails />}</div>
     </div>
   );
 };

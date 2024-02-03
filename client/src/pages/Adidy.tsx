@@ -3,26 +3,13 @@ import InputNew from "@components/InputNew";
 import Select from "@components/Select";
 import SelectMember from "@components/SelectMember";
 import api from "@utils/api";
+import { MONTHS } from "@utils/constant";
 import Layout from "layout/Layout";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 
 const Adidy: FC = () => {
   const now = useState(new Date())[0];
-  const month = useState([
-    "janvier",
-    "fevrier",
-    "mars",
-    "avril",
-    "mai",
-    "juin",
-    "juillet",
-    "aout",
-    "septembre",
-    "octobre",
-    "novembre",
-    "decembre",
-  ])[0];
   const [data, setData] = useState({
     mpandray: "",
     month: now.getMonth(),
@@ -64,9 +51,9 @@ const Adidy: FC = () => {
         <div className="grid grid-cols-3 gap-4">
           <Select
             defaultValue={data.month}
-            options={[...month]}
+            options={[...MONTHS]}
             onChange={(e) =>
-              setData({ ...data, month: month.indexOf(e.target.value) })
+              setData({ ...data, month: MONTHS.indexOf(e.target.value) })
             }
           />
           <Select

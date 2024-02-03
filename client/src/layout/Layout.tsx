@@ -12,11 +12,11 @@ const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <>
       {token ? (
-        <div className="w-screen h-screen flex">
+        <div className="w-screen h-screen flex overflow-hidden">
           <SideMenu />
           <div className="w-full">
             <Header />
-            <div className="w-full h-[calc(100vh-70px)] overflow-y-auto">
+            <div className="w-full h-[calc(100vh-70px)] overflow-y-auto overflow-x-hidden">
               {children}
             </div>
           </div>
