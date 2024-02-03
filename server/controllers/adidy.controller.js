@@ -12,6 +12,12 @@ const adidyInput = object({
 const createAdidy = async (req, res) => {
   try {
     const input = await adidyInput.validate(req.body);
+    const check = await Adidy.find({
+      year: input.year,
+      month: input.month,
+      mpandray: input.mpandray,
+    }).countDocuments();
+    if (check > 0) return res.status(400).send("duplicate");
     const newAdidy = new Adidy({ ...input });
     await newAdidy.save();
     res.send("success");
@@ -21,7 +27,7 @@ const createAdidy = async (req, res) => {
 };
 
 const deleteAdidy = async (req, res) => {
-  if (!req.body.id) res.status(404).send("id required");
+  if (!req.body.id) return res.status(404).send("id required");
   const adidy = await Adidy.findByIdAndDelete(id);
   res.send("success");
 };
