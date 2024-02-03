@@ -1,6 +1,7 @@
 import Button from "@components/Button";
 import InputNew from "@components/InputNew";
 import Select from "@components/Select";
+import SelectMember from "@components/SelectMember";
 import Layout from "layout/Layout";
 import { FC, useState } from "react";
 
@@ -23,7 +24,7 @@ const Adidy: FC = () => {
   return (
     <Layout>
       <div className="max-w-[500px] py-[2rem] px-4 border border-bg m-4 md:m-auto mt-4 rounded-[5px] flex flex-col gap-8">
-        <InputNew />
+        <SelectMember label="Mpandray" onSelected={(m) => console.log(m)} />
         <Select
           options={["adidy mpandray", "adidy iombonana", "voka-dehibe"]}
         />
