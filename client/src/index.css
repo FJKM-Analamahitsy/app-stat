@@ -6,6 +6,15 @@
   outline: none !important;
 }
 
+*::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(231, 229, 229);
+  border-radius: 5px;
+}
+
 input {
   outline: none;
 }
@@ -63,12 +72,4 @@ input {
 .rdt_TableBody {
   overflow-y: scroll;
   scrollbar-width: none;
-}
-
-.rdt_TableBody::-webkit-scrollbar {
-  width: 3px;
-}
-.rdt_TableBody::-webkit-scrollbar-thumb {
-  background-color: rgb(231, 229, 229);
-  border-radius: 5px;
 }

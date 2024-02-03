@@ -10,7 +10,7 @@ const AdidyDetails: FC = () => {
   return (
     <div className="overflow-x-auto py-2">
       <div className="grid grid-cols-[repeat(13,minmax(40px,1fr))] gap-2 items-center">
-        <div />
+        <div className="sticky left-0 bg-white text-white">.</div>
         {MONTHS.map((m, i) => {
           return (
             <div key={i} className="text-ellipsis overflow-hidden m-auto">
@@ -25,7 +25,7 @@ const AdidyDetails: FC = () => {
             key={i}
             className="grid grid-cols-[repeat(13,minmax(40px,1fr))] gap-2 items-center"
           >
-            <div className="min-w-[200px]">{yrs}</div>
+            <div className="sticky left-0 bg-white">{yrs}</div>
             {Array.from(Array(12).keys()).map((i) => {
               return (
                 <div
