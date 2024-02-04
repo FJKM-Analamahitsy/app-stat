@@ -20,6 +20,8 @@ const AdidyDetails: FC = () => {
   const [rows, setRows] = useState<number>(0);
   const [limit, setLimit] = useState<number>(10);
   const { id } = useParams();
+  const [adMpandray, setAdMpandray] =
+    useState<{ year: number; month: number }[]>();
 
   const fetch = (page: number) => {
     api.get(`/adidy?page=${page}&limit=${limit}&id=${id}`).then((res) => {
@@ -67,6 +69,9 @@ const AdidyDetails: FC = () => {
   useEffect(
     () => {
       fetch(1);
+      api.get(`/adidy/mpandray?id=${id}`).then((res) => {
+        setAdMpandray(res.data);
+      });
     }, // eslint-disable-next-line
     []
   );
@@ -92,10 +97,15 @@ const AdidyDetails: FC = () => {
             >
               <div className="sticky left-0 bg-white">{yrs}</div>
               {Array.from(Array(12).keys()).map((i) => {
+                const isPayed = adMpandray?.filter(
+                  (ad) => ad.year === parseInt(yrs) && ad.month === i + 1
+                );
                 return (
                   <div
                     key={i}
-                    className="w-[12px] h-[12px] bg-primary m-auto rounded-[2px]"
+                    className={`w-[12px] h-[12px] ${
+                      isPayed && isPayed.length > 0 && "bg-primary"
+                    } m-auto rounded-[2px]`}
                   ></div>
                 );
               })}
