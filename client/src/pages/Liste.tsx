@@ -116,9 +116,12 @@ const Liste: FC = () => {
     [navigate]
   );
 
-  useEffect(() => {
-    fetch(1);
-  });
+  useEffect(
+    () => {
+      fetch(1);
+    }, // eslint-disable-next-line
+    []
+  );
   return (
     <Layout>
       <div className="p-4" id="list">

@@ -18,7 +18,7 @@ const AdidyDetails: FC = () => {
   ])[0];
   const [data, setData] = useState<AdidyRow[]>([]);
   const [rows, setRows] = useState<number>(0);
-  const [limit, setLimit] = useState<number>(2);
+  const [limit, setLimit] = useState<number>(10);
   const { id } = useParams();
 
   const fetch = (page: number) => {
@@ -39,7 +39,6 @@ const AdidyDetails: FC = () => {
     });
   };
 
-  // eslint-disable-next-line
   const columns: TableColumn<AdidyRow>[] = useMemo(
     () => [
       {
@@ -62,11 +61,15 @@ const AdidyDetails: FC = () => {
         selector: (row) => row.pay,
       },
     ],
+    // eslint-disable-next-line
     []
   );
-  useEffect(() => {
-    fetch(1);
-  });
+  useEffect(
+    () => {
+      fetch(1);
+    }, // eslint-disable-next-line
+    []
+  );
   return (
     <div>
       <h3 className="font-medium">Adidy Mpandray</h3>
