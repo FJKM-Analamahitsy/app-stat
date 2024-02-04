@@ -34,7 +34,7 @@ const deleteAdidy = async (req, res) => {
 };
 
 const listAdidy = async (req, res) => {
-  const { page = 1, limit = 5, id } = req.query;
+  const { page = 1, limit = 2, id } = req.query;
   if (id === "") return res.status(403).send("id required");
   const member = await Adidy.find({ mpandray: id })
     .limit(limit * 1)

@@ -56,6 +56,7 @@ const Liste: FC = () => {
     }
   };
 
+  // eslint-disable-next-line
   const columns: TableColumn<DataRow>[] = useMemo(
     () => [
       {
@@ -117,7 +118,7 @@ const Liste: FC = () => {
 
   useEffect(() => {
     fetch(1);
-  }, []);
+  });
   return (
     <Layout>
       <div className="p-4" id="list">
