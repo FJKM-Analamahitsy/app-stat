@@ -30,7 +30,7 @@ input {
   height: 100%;
 }
 
-.rdt_Table {
+#list .rdt_Table {
   height: calc(100vh - 200px) !important;
 }
 

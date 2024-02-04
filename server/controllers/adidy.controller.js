@@ -33,4 +33,14 @@ const deleteAdidy = async (req, res) => {
   res.send("success");
 };
 
-module.exports = { createAdidy, deleteAdidy };
+const listAdidy = async (req, res) => {
+  const { page = 1, limit = 5, id } = req.query;
+  if (id === "") return res.status(403).send("id required");
+  const member = await Adidy.find({ mpandray: id })
+    .limit(limit * 1)
+    .skip((page - 1) * limit);
+  const totalRow = await Adidy.find({ mpandray: id }).countDocuments();
+  return res.send({ member, totalRow });
+};
+
+module.exports = { createAdidy, deleteAdidy, listAdidy };
