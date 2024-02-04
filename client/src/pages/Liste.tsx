@@ -56,7 +56,6 @@ const Liste: FC = () => {
     }
   };
 
-  // eslint-disable-next-line
   const columns: TableColumn<DataRow>[] = useMemo(
     () => [
       {
@@ -113,6 +112,7 @@ const Liste: FC = () => {
         },
       },
     ],
+    // eslint-disable-next-line
     [navigate]
   );
 
