@@ -8,6 +8,7 @@ import avatar from "@assets/img/avatar.svg";
 import MemberDetails from "@containers/MemberDetails";
 import MemberInfoTab from "@containers/MemberInfoTab";
 import api from "@utils/api";
+import { formatPoneNumber } from "@utils/helper";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
@@ -65,7 +66,7 @@ const Page: FC = () => {
 
               {data.phone && (
                 <p className="mt-1 cursor-pointer">
-                  {data.phone}{" "}
+                  {formatPoneNumber(data.phone)}{" "}
                   <FontAwesomeIcon
                     icon={solid("phone")}
                     size="sm"
