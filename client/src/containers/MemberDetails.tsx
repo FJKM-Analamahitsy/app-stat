@@ -1,5 +1,6 @@
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { formatPoneNumber } from "@utils/helper";
 import { FC } from "react";
 
 interface MemberDetailsProps {
@@ -98,6 +99,8 @@ const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
                 <p className="font-medium text-gray-800">
                   {el === "birthday"
                     ? new Date(data[el]).toLocaleDateString()
+                    : el === "phone"
+                    ? formatPoneNumber(data[el])
                     : data[el]}
                 </p>
               </div>
