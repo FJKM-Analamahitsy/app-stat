@@ -18,7 +18,7 @@ const AdidyDetails: FC = () => {
   ])[0];
   const [data, setData] = useState<AdidyRow[]>([]);
   const [rows, setRows] = useState<number>(0);
-  const [limit, setLimit] = useState<number>(10);
+  const [limit, setLimit] = useState<number>(5);
   const { id } = useParams();
   const [adMpandray, setAdMpandray] =
     useState<{ year: number; month: number }[]>();
@@ -119,6 +119,8 @@ const AdidyDetails: FC = () => {
         data={data}
         pagination
         paginationServer
+        paginationPerPage={limit}
+        paginationRowsPerPageOptions={[5, 10]}
         paginationTotalRows={rows}
         onChangePage={onChangeHandler}
         onChangeRowsPerPage={onLimitChange}
