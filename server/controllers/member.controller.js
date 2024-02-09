@@ -210,7 +210,11 @@ const exportMembersToCsv = async (req, res) => {
       value: "mpandrayAndiany",
     },
   ];
-  const opt = { fields: fields.filter((el) => filter.includes(el.value)) };
+  const opt = {
+    fields: fields.filter((el) => filter.includes(el.value)),
+    excelString: true,
+    withBOM: true,
+  };
   const prep = new parser(opt);
   const csv = prep.parse(data);
   res.header("Content-Type", "text/csv");
