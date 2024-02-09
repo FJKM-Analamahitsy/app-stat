@@ -52,9 +52,9 @@ const Adidy: FC = () => {
           <Select
             defaultValue={data.month}
             options={[...MONTHS]}
-            onChange={(e) =>
-              setData({ ...data, month: MONTHS.indexOf(e.target.value) })
-            }
+            onChange={(e) => {
+              setData({ ...data, month: MONTHS.indexOf(e.target.value) + 1 });
+            }}
           />
           <Select
             defaultValue={1}
