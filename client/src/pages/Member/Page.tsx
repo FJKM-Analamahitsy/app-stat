@@ -8,7 +8,6 @@ import avatar from "@assets/img/avatar.svg";
 import MemberDetails from "@containers/MemberDetails";
 import MemberInfoTab from "@containers/MemberInfoTab";
 import api from "@utils/api";
-import bg from "@assets/img/bg.svg";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
@@ -32,10 +31,7 @@ const Page: FC = () => {
             </Link>
           </div>
         </div>
-        <div
-          className="w-full h-[30vh]  bg-no-repeat bg-cover overflow-hidden"
-          style={{ backgroundImage: `url(${bg})` }}
-        ></div>
+        <div className="w-full h-[30vh]  bg-no-repeat bg-cover overflow-hidden bg-line-pattern"></div>
         <div className="w-full flex flex-col md:flex-row  items-center md:items-end -translate-y-[6rem] px-[2rem]">
           <Avatar img={avatar} size={200} />
           <div className="flex justify-between px-[2rem] grow ">

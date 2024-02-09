@@ -17,6 +17,9 @@ module.exports = {
       animation: {
         scale_down: "scale_down 1s ease-in 1",
       },
+      backgroundImage: {
+        "line-pattern": "url(/src/assets/img/bg.webp)",
+      },
     },
   },
   plugins: [],
