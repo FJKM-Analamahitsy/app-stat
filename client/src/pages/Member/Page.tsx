@@ -22,7 +22,7 @@ const Page: FC = () => {
   }, [id]);
   return (
     <Layout>
-      <div className="relative">
+      <div className="relative h-[65vh] md:h-[45vh]">
         <div className="w-full p-2 text-primary absolute top-0 left-0">
           <div className="cursor-pointer">
             <Link to="/list">
@@ -31,8 +31,8 @@ const Page: FC = () => {
             </Link>
           </div>
         </div>
-        <div className="w-full h-[25vh] bg-gray-300 overflow-hidden"></div>
-        <div className="w-full flex flex-col md:flex-row  items-center md:items-end -translate-y-14 px-[2rem]">
+        <div className="w-full h-[30vh]  bg-no-repeat bg-cover overflow-hidden bg-line-pattern"></div>
+        <div className="w-full flex flex-col md:flex-row  items-center md:items-end -translate-y-[6rem] px-[2rem]">
           <Avatar img={avatar} size={200} />
           <div className="flex justify-between px-[2rem] grow ">
             <div className="text-center sm:text-left">
@@ -77,11 +77,11 @@ const Page: FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row p-4 gap-4">
-        <div className="w-full sm:w-1/4 min-w-[250px]">
+      <div className="grid grid-cols-1 md:grid-cols-3 p-4 gap-y-6 md:gap-6">
+        <div className="w-full">
           <MemberDetails data={data} />
         </div>
-        <div className="grow p-2">
+        <div className="col-span-2 p-2">
           <MemberInfoTab />
         </div>
       </div>

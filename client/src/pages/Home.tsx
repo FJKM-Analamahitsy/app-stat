@@ -3,7 +3,6 @@ import DashChart from "@containers/DashChart";
 import Sampana from "@containers/Sampana";
 import Layout from "layout";
 import { FC, useEffect, useState } from "react";
-import bg from "@assets/img/bg.svg";
 import map from "@assets/img/world-map.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
@@ -20,10 +19,7 @@ const Home: FC = () => {
   return (
     <Layout>
       <div className="bg-slate-50 h-fit min-h-[calc(100vh-70px)] p-4">
-        <div
-          className="bg-no-repeat bg-cover rounded-[1rem] bg-white p-4"
-          style={{ backgroundImage: `url(${bg})` }}
-        >
+        <div className="bg-no-repeat bg-cover rounded-[1rem] bg-white p-4 bg-line-pattern">
           <div>
             <p className="text-[1.5rem] font-medium">FJKM Analamahitsy</p>
             <p className="text-slate-500">SP19 Iarivo Avaradrano</p>

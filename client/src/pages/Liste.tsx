@@ -112,15 +112,19 @@ const Liste: FC = () => {
         },
       },
     ],
+    // eslint-disable-next-line
     [navigate]
   );
 
-  useEffect(() => {
-    fetch(1);
-  }, []);
+  useEffect(
+    () => {
+      fetch(1);
+    }, // eslint-disable-next-line
+    []
+  );
   return (
     <Layout>
-      <div className="p-4">
+      <div className="p-4" id="list">
         <div className="mb-4 md:hidden">
           <Search />
         </div>

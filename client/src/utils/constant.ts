@@ -79,3 +79,18 @@ export const fields = [
     value: "mpandrayAndiany",
   },
 ];
+
+export const MONTHS = [
+  "janvier",
+  "fevrier",
+  "mars",
+  "avril",
+  "mai",
+  "juin",
+  "juillet",
+  "aout",
+  "septembre",
+  "octobre",
+  "novembre",
+  "decembre",
+];

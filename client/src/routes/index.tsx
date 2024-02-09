@@ -5,6 +5,7 @@ import NewMember from "@pages/Member/New";
 import Page from "@pages/Member/Page";
 import { FC } from "react";
 import { Routes as Router, Route } from "react-router-dom";
+import Adidy from "@pages/Adidy";
 
 const Routes: FC = () => {
   return (
@@ -15,6 +16,7 @@ const Routes: FC = () => {
       <Route path="/list" element={<Liste />} />
       <Route path="/new" element={<NewMember />} />
       <Route path="/edit/:id" element={<NewMember />} />
+      <Route path="/pay" element={<Adidy />} />
     </Router>
   );
 };
