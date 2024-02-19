@@ -4,6 +4,7 @@ import Search from "@components/Search";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
+import { formatPoneNumber } from "@utils/helper";
 import Layout from "layout";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
@@ -88,7 +89,7 @@ const Liste: FC = () => {
       },
       {
         name: "Contact",
-        selector: (row) => row.phone,
+        cell: (row) => formatPoneNumber(row.phone),
         hide: 800,
       },
       {
