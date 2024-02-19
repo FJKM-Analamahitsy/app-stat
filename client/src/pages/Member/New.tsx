@@ -37,8 +37,6 @@ const NewMember: FC = () => {
         setData(res.data);
         setRaw(res.data);
       });
-    } else {
-      setData({});
     }
   }, [id]);
 
