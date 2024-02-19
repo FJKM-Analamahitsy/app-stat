@@ -26,13 +26,17 @@ const Container: FC<ContainerProps> = ({ title, children, childClass }) => {
 };
 
 const NewMember: FC = () => {
+  const [raw, setRaw] = useState<any>({});
   const [data, setData] = useState<any>({});
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
     if (id) {
-      api.get("/member/get/" + id).then((res) => setData(res.data));
+      api.get("/member/get/" + id).then((res) => {
+        setData(res.data);
+        setRaw(res.data);
+      });
     } else {
       setData({});
     }
@@ -282,7 +286,12 @@ const NewMember: FC = () => {
           </Container>
 
           <div className="text-right mt-4">
-            <Button className="text-white bg-primary w-1/3 sm:w-1/4">
+            <Button
+              className="text-white bg-primary w-1/3 sm:w-1/4 disabled:cursor-not-allowed disabled:opacity-60"
+              disabled={
+                id ? JSON.stringify(raw) === JSON.stringify(data) : false
+              }
+            >
               save
             </Button>
           </div>
