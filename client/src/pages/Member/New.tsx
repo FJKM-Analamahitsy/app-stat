@@ -53,7 +53,7 @@ const NewMember: FC = () => {
           if (id) {
             await api
               .put("/member", { ...data, id: data._id })
-              .then(() => navigate("/list"))
+              .then(() => navigate(`/member/${id}`))
               .catch((err) => console.log(err));
           } else {
             await api
