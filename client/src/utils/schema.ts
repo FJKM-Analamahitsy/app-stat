@@ -13,6 +13,7 @@ export interface MemberShema {
   mail?: string;
   fb?: string;
   hobby?: string;
+  sport?: string;
   batisa?: {
     status: boolean;
     year: number;

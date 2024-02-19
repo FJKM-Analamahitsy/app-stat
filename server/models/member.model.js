@@ -15,6 +15,7 @@ const Member = mongoose.model("Member", {
   mail: String,
   fb: String,
   hobby: String,
+  sport: String,
   baptism: String,
   baptismYear: Number,
   mpandray: String,
@@ -23,6 +24,7 @@ const Member = mongoose.model("Member", {
   familyId: String,
   familyRank: Number,
   familyPlace: String,
+  other: String,
   created_at: {
     type: Date,
     default: Date.now,
