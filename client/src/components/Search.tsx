@@ -28,14 +28,19 @@ const Search: FC = () => {
         placeholder="search"
         onChange={searchHandler}
         onFocus={() => setFocus(true)}
-        onBlur={() => setFocus(false)}
+        onBlur={(e) => setTimeout(() => setFocus(false), 500)}
       />
       {focus && result.length > 0 && (
         <div className="absolute bg-white w-full shadow-md rounded-[5px] border border-bg mt-2 z-50">
           {result.map((el: any, i: number) => {
             return (
-              <Link key={i} to={"/member/" + el._id}>
+              <Link
+                key={i}
+                to={"/member/" + el._id}
+                onClick={() => setFocus(false)}
+              >
                 <div
+                  id="search-result"
                   key={i}
                   className="flex items-center justify-between p-2 px-4 hover:bg-bg"
                 >
