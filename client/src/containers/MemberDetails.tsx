@@ -118,6 +118,8 @@ const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
               </div>
             </div>
           );
+        } else {
+          return null;
         }
       })}
     </div>
