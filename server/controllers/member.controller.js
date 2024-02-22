@@ -209,6 +209,10 @@ const exportMembersToCsv = async (req, res) => {
       label: "Mpandray andiany",
       value: "mpandrayAndiany",
     },
+    {
+      label: "Fanamarihana",
+      value: "other",
+    },
   ];
   const opt = {
     fields: fields.filter((el) => filter.includes(el.value)),
