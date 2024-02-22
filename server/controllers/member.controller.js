@@ -85,7 +85,7 @@ const statistics = async (req, res) => {
   const lehilahy = await Member.find({ gender: "lehilahy" }).countDocuments();
   const vehivavy = await Member.find({ gender: "vehivavy" }).countDocuments();
   const mpandray = await Member.find({ mpandray: "eny" }).countDocuments();
-  const batisa = await Member.find({ batisa: "eny" }).countDocuments();
+  const batisa = await Member.find({ baptism: "eny" }).countDocuments();
   const avaratra = await Member.find({ place: "avaratra" }).countDocuments();
   const atsimo = await Member.find({ place: "atsimo" }).countDocuments();
   const atsinanana = await Member.find({
