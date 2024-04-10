@@ -18,7 +18,7 @@ interface DataRow {
 const Liste: FC = () => {
   const [data, setData] = useState<DataRow[]>([]);
   const [rows, setRows] = useState<number>(0);
-  const [limit, setLimit] = useState<number>(10);
+  const [limit, setLimit] = useState<number>(30);
   const [n, setN] = useState<number>(1);
   const navigate = useNavigate();
   const fetch = (page: number) => {
@@ -141,6 +141,7 @@ const Liste: FC = () => {
           onChangePage={onChangeHandler}
           onChangeRowsPerPage={onLimitChange}
           onRowClicked={(row) => navigate("/member/" + row._id)}
+          paginationRowsPerPageOptions={[30, 50, 100]}
         />
       </div>
     </Layout>
