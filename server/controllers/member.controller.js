@@ -61,7 +61,8 @@ const getMember = async (req, res) => {
 const listMember = async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
   const member = await Member.find()
-    .sort({ name: 1 })
+    .sort({ mpandrayN: 1 })
+    .collation({ locale: "en_US", numericOrdering: true })
     .limit(limit * 1)
     .skip((page - 1) * limit);
   const totalRow = await Member.countDocuments();
