@@ -141,6 +141,7 @@ const Liste: FC = () => {
           onChangePage={onChangeHandler}
           onChangeRowsPerPage={onLimitChange}
           onRowClicked={(row) => navigate("/member/" + row._id)}
+          paginationPerPage={limit}
           paginationRowsPerPageOptions={[30, 50, 100]}
         />
       </div>
