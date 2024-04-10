@@ -69,7 +69,7 @@ const listMember = async (req, res) => {
 };
 
 const searchMember = async (req, res) => {
-  const { q } = req.query;
+  const { q, l } = req.query;
   if (q === "") return res.send([]);
   const result = await Member.find({
     $or: [
@@ -77,7 +77,7 @@ const searchMember = async (req, res) => {
       { forname: { $regex: new RegExp(q, "i") } },
       { mpandrayN: { $regex: new RegExp(q, "i") } },
     ],
-  });
+  }).limit(l);
   return res.send(result);
 };
 
