@@ -77,7 +77,7 @@ const searchMember = async (req, res) => {
       { forname: { $regex: new RegExp(q, "i") } },
       { mpandrayN: { $regex: new RegExp(q, "i") } },
     ],
-  }).limit(5);
+  });
   return res.send(result);
 };
 
