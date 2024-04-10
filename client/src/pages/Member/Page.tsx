@@ -63,8 +63,9 @@ const Page: FC = () => {
 
                 <FontAwesomeIcon
                   icon={solid("trash")}
-                  className="text-slate-500 cursor-pointer"
+                  className="text-orange-400 cursor-pointer"
                   onClick={onDeleteHandler}
+                  size="sm"
                 />
               </div>
 
