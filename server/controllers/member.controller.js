@@ -59,9 +59,10 @@ const getMember = async (req, res) => {
 };
 
 const listMember = async (req, res) => {
-  const { page = 1, limit = 10 } = req.query;
+  const { page = 1, limit = 10, karatra, anarana } = req.query;
+  const sort = karatra ? { mpandrayN: karatra } : { name: anarana };
   const member = await Member.find()
-    .sort({ mpandrayN: 1 })
+    .sort({ ...sort })
     .collation({ locale: "en_US", numericOrdering: true })
     .limit(limit * 1)
     .skip((page - 1) * limit);
