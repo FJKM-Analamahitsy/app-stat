@@ -81,6 +81,18 @@ const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
       label: "Talenta",
       icon: <FontAwesomeIcon icon={solid("user-tie")} size="sm" />,
     },
+    hobby: {
+      label: "Fialamboly",
+      icon: <FontAwesomeIcon icon={solid("face-smile")} size="sm" />,
+    },
+    sport: {
+      label: "Fanatajahatena",
+      icon: <FontAwesomeIcon icon={solid("person-swimming")} size="sm" />,
+    },
+    other: {
+      label: "Fanamarihana",
+      icon: <FontAwesomeIcon icon={solid("file-signature")} size="sm" />,
+    },
   };
   return (
     <div className="border border-bg p-2 px-4 rounded-[5px] w-full">
@@ -106,6 +118,8 @@ const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
               </div>
             </div>
           );
+        } else {
+          return null;
         }
       })}
     </div>

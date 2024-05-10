@@ -59,8 +59,11 @@ const getMember = async (req, res) => {
 };
 
 const listMember = async (req, res) => {
-  const { page = 1, limit = 10 } = req.query;
+  const { page = 1, limit = 10, karatra, anarana } = req.query;
+  const sort = karatra ? { mpandrayN: karatra } : { name: anarana };
   const member = await Member.find()
+    .sort({ ...sort })
+    .collation({ locale: "en_US", numericOrdering: true })
     .limit(limit * 1)
     .skip((page - 1) * limit);
   const totalRow = await Member.countDocuments();
@@ -68,7 +71,7 @@ const listMember = async (req, res) => {
 };
 
 const searchMember = async (req, res) => {
-  const { q } = req.query;
+  const { q, l } = req.query;
   if (q === "") return res.send([]);
   const result = await Member.find({
     $or: [
@@ -76,7 +79,7 @@ const searchMember = async (req, res) => {
       { forname: { $regex: new RegExp(q, "i") } },
       { mpandrayN: { $regex: new RegExp(q, "i") } },
     ],
-  }).limit(5);
+  }).limit(l);
   return res.send(result);
 };
 
@@ -85,7 +88,7 @@ const statistics = async (req, res) => {
   const lehilahy = await Member.find({ gender: "lehilahy" }).countDocuments();
   const vehivavy = await Member.find({ gender: "vehivavy" }).countDocuments();
   const mpandray = await Member.find({ mpandray: "eny" }).countDocuments();
-  const batisa = await Member.find({ batisa: "eny" }).countDocuments();
+  const batisa = await Member.find({ baptism: "eny" }).countDocuments();
   const avaratra = await Member.find({ place: "avaratra" }).countDocuments();
   const atsimo = await Member.find({ place: "atsimo" }).countDocuments();
   const atsinanana = await Member.find({
@@ -208,6 +211,10 @@ const exportMembersToCsv = async (req, res) => {
     {
       label: "Mpandray andiany",
       value: "mpandrayAndiany",
+    },
+    {
+      label: "Fanamarihana",
+      value: "other",
     },
   ];
   const opt = {

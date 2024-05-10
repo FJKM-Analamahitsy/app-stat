@@ -4,6 +4,7 @@ import Search from "@components/Search";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
+import { formatPoneNumber } from "@utils/helper";
 import Layout from "layout";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
@@ -17,14 +18,17 @@ interface DataRow {
 const Liste: FC = () => {
   const [data, setData] = useState<DataRow[]>([]);
   const [rows, setRows] = useState<number>(0);
-  const [limit, setLimit] = useState<number>(10);
+  const [limit, setLimit] = useState<number>(30);
+  const [sort, setSort] = useState<any>(["anarana", "asc"]);
   const [n, setN] = useState<number>(1);
   const navigate = useNavigate();
   const fetch = (page: number) => {
-    api.get(`/member?page=${page}&limit=${limit}`).then((res) => {
-      setData(res.data.member);
-      setRows(res.data.totalRow);
-    });
+    api
+      .get(`/member?page=${page}&limit=${limit}&${sort[0]}=${sort[1]}`)
+      .then((res) => {
+        setData(res.data.member);
+        setRows(res.data.totalRow);
+      });
   };
 
   const onChangeHandler = (page: number) => {
@@ -36,10 +40,25 @@ const Liste: FC = () => {
   };
 
   const onLimitChange = (limit: number, page: number) => {
-    api.get(`/member?page=${page}&limit=${limit}`).then((res) => {
-      setData(res.data.member);
-      setLimit(limit);
-    });
+    api
+      .get(`/member?page=${page}&limit=${limit}&${sort[0]}=${sort[1]}`)
+      .then((res) => {
+        setData(res.data.member);
+        setLimit(limit);
+      });
+  };
+
+  const onSortHandler = (col: TableColumn<DataRow>, sort: any, row: any) => {
+    if (col.name) {
+      const name = col.name.toString().toLocaleLowerCase();
+      api
+        .get(`/member?page=${n}&limit=${limit}&${name}=${sort}`)
+        .then((res) => {
+          setData(res.data.member);
+          setLimit(limit);
+        });
+      setSort([name, sort]);
+    }
   };
 
   const onDeleteHandler = (id: string) => {
@@ -60,6 +79,7 @@ const Liste: FC = () => {
     () => [
       {
         name: "Anarana",
+        sortable: true,
         cell: (row) => {
           return (
             <div onClick={() => navigate("/member/" + row._id)}>
@@ -76,7 +96,6 @@ const Liste: FC = () => {
       },
       {
         name: "Mpandray",
-        sortable: true,
         selector: (row) => row.mpandray,
         hide: 800,
       },
@@ -88,7 +107,7 @@ const Liste: FC = () => {
       },
       {
         name: "Contact",
-        selector: (row) => row.phone,
+        cell: (row) => formatPoneNumber(row.phone),
         hide: 800,
       },
       {
@@ -140,6 +159,10 @@ const Liste: FC = () => {
           onChangePage={onChangeHandler}
           onChangeRowsPerPage={onLimitChange}
           onRowClicked={(row) => navigate("/member/" + row._id)}
+          paginationPerPage={limit}
+          paginationRowsPerPageOptions={[30, 50, 100]}
+          sortServer
+          onSort={onSortHandler}
         />
       </div>
     </Layout>

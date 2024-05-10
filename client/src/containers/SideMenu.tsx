@@ -34,7 +34,7 @@ const SideMenu: FC = () => {
   const [collapse, setCollapse] = useState(window.innerWidth < 769);
   const dispatch = useAppDispatch();
   window.addEventListener("resize", () => {
-    setCollapse(window.innerWidth < 769);
+    setCollapse(window.innerWidth < 1024);
   });
   const navigate = useNavigate();
 

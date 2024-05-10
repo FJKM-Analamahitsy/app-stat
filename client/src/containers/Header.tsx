@@ -10,7 +10,7 @@ const Header: FC = () => {
   return (
     <div className="w-full h-[70px] border-b flex items-center p-5 justify-between">
       <div className="sm:hidden"></div>
-      <div className="w-1/3 hidden sm:block">
+      <div className="w-1/3 ml-8 lg:ml-1 hidden sm:block">
         <Search />
       </div>
 

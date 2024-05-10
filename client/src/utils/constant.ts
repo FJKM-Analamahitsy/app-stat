@@ -78,6 +78,10 @@ export const fields = [
     label: "Mpandray andiany",
     value: "mpandrayAndiany",
   },
+  {
+    label: "Fanamarihana",
+    value: "other",
+  },
 ];
 
 export const MONTHS = [

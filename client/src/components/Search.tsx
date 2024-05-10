@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import Input from "./Input";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,14 +9,21 @@ import api from "@utils/api";
 const Search: FC = () => {
   const [result, setResult] = useState<any>([]);
   const [focus, setFocus] = useState<boolean>(false);
+  const container = useRef<HTMLDivElement>(null);
+
+  const onclickoutside = (e: any) => {
+    setFocus(container.current?.contains(e.target) || false);
+  };
 
   const searchHandler = (e: any) => {
     api
-      .get("/member/search?q=" + e.target.value)
+      .get("/member/search?q=" + e.target.value + "&l=30")
       .then((res) => setResult(res.data));
   };
+
+  window.addEventListener("click", onclickoutside);
   return (
-    <div className="relative">
+    <div ref={container} className="relative">
       <Input
         leftIcon={
           <FontAwesomeIcon
@@ -28,10 +35,9 @@ const Search: FC = () => {
         placeholder="search"
         onChange={searchHandler}
         onFocus={() => setFocus(true)}
-        onBlur={(e) => setTimeout(() => setFocus(false), 500)}
       />
       {focus && result.length > 0 && (
-        <div className="absolute bg-white w-full shadow-md rounded-[5px] border border-bg mt-2 z-50">
+        <div className="absolute bg-white w-full shadow-md rounded-[5px] border border-bg mt-2 z-50 max-h-[400px] overflow-y-auto">
           {result.map((el: any, i: number) => {
             return (
               <Link
