@@ -1,8 +1,5 @@
 const cookieParser = (req, res, next) => {
   const index = req.rawHeaders.indexOf("cookie");
-  if (index === -1) {
-    return null;
-  }
   const raw = req.rawHeaders[index + 1].split("=");
   let i = 0;
 
