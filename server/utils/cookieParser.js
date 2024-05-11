@@ -10,7 +10,6 @@ const cookieParser = (req, res, next) => {
 
   while (i < raw.length) {
     result = { ...result, [raw[i]]: raw[i + 1] };
-    console.log(result);
     i = i + 2;
   }
 
