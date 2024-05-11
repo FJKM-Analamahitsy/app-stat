@@ -5,10 +5,12 @@ const mongoose = require("mongoose");
 const { auth } = require("./routes/auth");
 const { member } = require("./routes/member");
 const { adidy } = require("./routes/adidy");
+const { cookieParser } = require("./utils/cookieParser");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cookieParser);
 app.use("/auth", auth);
 app.use("/member", member);
 app.use("/adidy", adidy);

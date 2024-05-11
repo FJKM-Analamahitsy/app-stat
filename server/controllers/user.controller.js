@@ -69,6 +69,11 @@ const login = async (req, res) => {
       const check = await compare(password, user.password);
       if (check) {
         log(user.username, "connection");
+        const token = jwt.sign(
+          { username: user.username, role: user.role },
+          process.env.PRIVATE_KEY
+        );
+        res.cookie("token", token, { httpOnly: true, domain: "localhost" });
         return res.send({
           token: jwt.sign(
             { username: user.username, role: user.role },
