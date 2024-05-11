@@ -29,7 +29,11 @@ const login = async (req, res) => {
           { username: user.username, role: user.role },
           process.env.PRIVATE_KEY
         );
-        res.cookie("token", token, { httpOnly: true, domain: "localhost" });
+        res.cookie("token", token, {
+          httpOnly: true,
+          domain: "localhost",
+          maxAge: 5 * 3600 * 1000,
+        });
         return res.send({
           token: jwt.sign(
             { username: user.username, role: user.role },
