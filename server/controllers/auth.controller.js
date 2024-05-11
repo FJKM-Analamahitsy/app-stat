@@ -12,7 +12,7 @@ const loginInput = object({
 const getMe = async (req, res) => {
   const token = req.cookies.token;
   jwt.verify(token, process.env.PRIVATE_KEY, (err, dec) => {
-    if (err) return res.status(401);
+    if (err) return res.status(401).send("unauthorised");
     return res.send(dec);
   });
 };
