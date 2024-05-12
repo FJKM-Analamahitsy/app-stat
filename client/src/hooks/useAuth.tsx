@@ -25,7 +25,7 @@ const useAuth = () => {
     fetch();
   }, []);
 
-  return { isLogged, loading, fetch };
+  return { isLogged, setIsLogged, loading, fetch };
 };
 
 export default useAuth;

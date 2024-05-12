@@ -1,8 +1,10 @@
 import Logo from "@components/Logo";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useAuth from "@hooks/useAuth";
 import { userUnSetAction } from "@redux/actions";
 import { useAppDispatch } from "@redux/hooks";
+import api from "@utils/api";
 import { FC, useState } from "react";
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import { Link, useNavigate } from "react-router-dom";
@@ -30,6 +32,7 @@ const SideMenu: FC = () => {
       icon: <FontAwesomeIcon icon={solid("id-card")} />,
     },
   ];
+  const { setIsLogged } = useAuth();
   const { pathname } = window.location;
   const [collapse, setCollapse] = useState(window.innerWidth < 769);
   const dispatch = useAppDispatch();
@@ -39,9 +42,11 @@ const SideMenu: FC = () => {
   const navigate = useNavigate();
 
   const logout = () => {
-    sessionStorage.removeItem("token");
-    dispatch(userUnSetAction());
-    navigate("/");
+    api.delete("/auth").then(() => {
+      dispatch(userUnSetAction());
+      setIsLogged(false);
+      navigate("/");
+    });
   };
   return (
     <div className="fixed top-0 left-0 lg:relative h-screen bg-bg z-50">

@@ -11,6 +11,7 @@ const AuthGuard: FC = () => {
   }
 
   if (!loading && isLogged && pathname === "/") {
+    console.log(isLogged);
     return <Navigate to="/home" />;
   }
 
