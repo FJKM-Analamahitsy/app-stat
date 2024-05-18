@@ -4,7 +4,6 @@ import Select from "@components/Select";
 import SelectMember from "@components/SelectMember";
 import api from "@utils/api";
 import { MONTHS } from "@utils/constant";
-import Layout from "layout/Layout";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -37,59 +36,55 @@ const Adidy: FC = () => {
     }
   };
   return (
-    <Layout>
-      <div className="max-w-[500px] py-[2rem] px-4 border border-bg m-4 mt-8 md:mx-auto  rounded-[5px] flex flex-col gap-8">
-        <SelectMember
-          label="Mpandray"
-          onSelected={(m) => setData({ ...data, mpandray: m._id })}
+    <div className="max-w-[500px] py-[2rem] px-4 border border-bg m-4 mt-8 md:mx-auto  rounded-[5px] flex flex-col gap-8">
+      <SelectMember
+        label="Mpandray"
+        onSelected={(m) => setData({ ...data, mpandray: m._id })}
+      />
+      <Select
+        defaultValue={data.type}
+        onChange={(e) => setData({ ...data, type: e.target.value })}
+        options={["adidy mpandray", "adidy iombonana", "voka-dehibe"]}
+      />
+      <div className="grid grid-cols-3 gap-4">
+        <Select
+          defaultValue={data.month}
+          options={[...MONTHS]}
+          onChange={(e) => {
+            setData({ ...data, month: MONTHS.indexOf(e.target.value) + 1 });
+          }}
         />
         <Select
-          defaultValue={data.type}
-          onChange={(e) => setData({ ...data, type: e.target.value })}
-          options={["adidy mpandray", "adidy iombonana", "voka-dehibe"]}
+          defaultValue={1}
+          options={[
+            ...Array.from(Array(12).keys()).map((i) => (i + 1).toString()),
+          ]}
         />
-        <div className="grid grid-cols-3 gap-4">
-          <Select
-            defaultValue={data.month}
-            options={[...MONTHS]}
-            onChange={(e) => {
-              setData({ ...data, month: MONTHS.indexOf(e.target.value) + 1 });
-            }}
-          />
-          <Select
-            defaultValue={1}
-            options={[
-              ...Array.from(Array(12).keys()).map((i) => (i + 1).toString()),
-            ]}
-          />
-          <Select
-            defaultValue={data.year}
-            onChange={(e) =>
-              setData({ ...data, year: parseInt(e.target.value) })
-            }
-            options={[
-              ...Array.from(Array(3).keys()).map((i) =>
-                (now.getFullYear() - i).toString()
-              ),
-            ]}
-          />
-        </div>
-        <InputNew
-          type="number"
-          label="Vola"
-          value={data.pay}
-          onChange={(e) => setData({ ...data, pay: parseInt(e.target.value) })}
+        <Select
+          defaultValue={data.year}
+          onChange={(e) => setData({ ...data, year: parseInt(e.target.value) })}
+          options={[
+            ...Array.from(Array(3).keys()).map((i) =>
+              (now.getFullYear() - i).toString()
+            ),
+          ]}
         />
-        <div className="text-right mt-4">
-          <Button
-            className="text-white bg-primary w-1/3 sm:w-1/4"
-            onClick={submit}
-          >
-            payer
-          </Button>
-        </div>
       </div>
-    </Layout>
+      <InputNew
+        type="number"
+        label="Vola"
+        value={data.pay}
+        onChange={(e) => setData({ ...data, pay: parseInt(e.target.value) })}
+      />
+      <div className="text-right mt-4">
+        <Button
+          className="text-white bg-primary w-1/3 sm:w-1/4"
+          onClick={submit}
+        >
+          payer
+        </Button>
+      </div>
+    </div>
   );
 };
 

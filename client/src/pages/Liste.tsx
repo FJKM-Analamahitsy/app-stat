@@ -142,30 +142,28 @@ const Liste: FC = () => {
     []
   );
   return (
-    <Layout>
-      <div className="p-4" id="list">
-        <div className="mb-4 md:hidden">
-          <Search />
-        </div>
-
-        <ExportBtn />
-
-        <DataTable
-          columns={columns}
-          data={data}
-          pagination
-          paginationServer
-          paginationTotalRows={rows}
-          onChangePage={onChangeHandler}
-          onChangeRowsPerPage={onLimitChange}
-          onRowClicked={(row) => navigate("/member/" + row._id)}
-          paginationPerPage={limit}
-          paginationRowsPerPageOptions={[30, 50, 100]}
-          sortServer
-          onSort={onSortHandler}
-        />
+    <div className="p-4" id="list">
+      <div className="mb-4 md:hidden">
+        <Search />
       </div>
-    </Layout>
+
+      <ExportBtn />
+
+      <DataTable
+        columns={columns}
+        data={data}
+        pagination
+        paginationServer
+        paginationTotalRows={rows}
+        onChangePage={onChangeHandler}
+        onChangeRowsPerPage={onLimitChange}
+        onRowClicked={(row) => navigate("/member/" + row._id)}
+        paginationPerPage={limit}
+        paginationRowsPerPageOptions={[30, 50, 100]}
+        sortServer
+        onSort={onSortHandler}
+      />
+    </div>
   );
 };
 

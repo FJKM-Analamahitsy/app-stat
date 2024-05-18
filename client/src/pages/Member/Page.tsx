@@ -1,7 +1,6 @@
 import Avatar from "@components/Avatar";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Layout from "layout";
 import { FC, useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import avatar from "@assets/img/avatar.svg";
@@ -38,7 +37,7 @@ const Page: FC = () => {
     }
   }, [id]);
   return (
-    <Layout>
+    <>
       <div className="relative h-[65vh] md:h-[45vh]">
         <div className="w-full p-2 text-primary absolute top-0 left-0">
           <div className="cursor-pointer">
@@ -112,7 +111,7 @@ const Page: FC = () => {
           <MemberInfoTab />
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

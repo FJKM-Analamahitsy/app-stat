@@ -7,18 +7,21 @@ import { FC } from "react";
 import { Routes as Router, Route } from "react-router-dom";
 import Adidy from "@pages/Adidy";
 import AuthGuard from "@auth/AuthGuard";
+import Layout from "layout";
 
 const Routes: FC = () => {
   return (
     <Router>
       <Route path="/" element={<AuthGuard />}>
         <Route index element={<Login />} />
-        <Route path="home" element={<Home />} />
-        <Route path="member/:id" element={<Page />} />
-        <Route path="list" element={<Liste />} />
-        <Route path="new" element={<NewMember />} />
-        <Route path="edit/:id" element={<NewMember />} />
-        <Route path="pay" element={<Adidy />} />
+        <Route element={<Layout />}>
+          <Route path="home" element={<Home />} />
+          <Route path="member/:id" element={<Page />} />
+          <Route path="list" element={<Liste />} />
+          <Route path="new" element={<NewMember />} />
+          <Route path="edit/:id" element={<NewMember />} />
+          <Route path="pay" element={<Adidy />} />
+        </Route>
       </Route>
     </Router>
   );

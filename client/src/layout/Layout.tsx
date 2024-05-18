@@ -1,19 +1,16 @@
 import { FC, ReactNode } from "react";
-import SideMenu from "@containers/SideMenu";
+import SideMenu from "./SideMenu";
 import Header from "@containers/Header";
+import { Outlet } from "react-router-dom";
 
-interface LayoutProps {
-  children: ReactNode;
-}
-
-const Layout: FC<LayoutProps> = ({ children }) => {
+const Layout: FC = () => {
   return (
     <div className="w-screen h-screen flex overflow-hidden">
       <SideMenu />
       <div className="w-full">
         <Header />
         <div className="w-full h-[calc(100vh-70px)] overflow-y-auto overflow-x-hidden">
-          {children}
+          <Outlet />
         </div>
       </div>
     </div>
