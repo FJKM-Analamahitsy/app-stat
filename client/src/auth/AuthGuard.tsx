@@ -1,19 +1,14 @@
 import useAuth from "@hooks/useAuth";
-import { FC } from "react";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { FC, useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const AuthGuard: FC = () => {
-  const { isLogged, loading } = useAuth();
-  const { pathname } = useLocation();
+  const { loading, getMe } = useAuth();
+  const navigate = useNavigate();
 
-  if (!loading && !isLogged && pathname !== "/") {
-    return <Navigate to="/" />;
-  }
-
-  if (!loading && isLogged && pathname === "/") {
-    console.log(isLogged);
-    return <Navigate to="/home" />;
-  }
+  useEffect(() => {
+    getMe();
+  }, []);
 
   return <>{loading ? <p>loading...</p> : <Outlet />}</>;
 };

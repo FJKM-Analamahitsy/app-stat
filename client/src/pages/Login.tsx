@@ -7,13 +7,11 @@ import useAuth from "@hooks/useAuth";
 import api from "@utils/api";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 const Login: FC = () => {
   const [showPass, setShowPass] = useState<boolean>(false);
   const [data, setData] = useState<any>({});
-  const { fetch } = useAuth();
-  const navigate = useNavigate();
+  const { getMe } = useAuth();
 
   const onChangeHandler = (e: any) => {
     const name = e.target.name;
@@ -25,10 +23,8 @@ const Login: FC = () => {
     e.preventDefault();
     api
       .post("/auth", data)
-      .then((res) => {
-        fetch().then(() => {
-          navigate("/home");
-        });
+      .then(() => {
+        getMe();
       })
       .catch((err) => {
         toast.error(err.response.data);

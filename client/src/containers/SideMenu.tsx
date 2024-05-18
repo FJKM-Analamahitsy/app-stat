@@ -1,7 +1,6 @@
 import Logo from "@components/Logo";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import useAuth from "@hooks/useAuth";
 import { userUnSetAction } from "@redux/actions";
 import { useAppDispatch } from "@redux/hooks";
 import api from "@utils/api";
@@ -32,7 +31,6 @@ const SideMenu: FC = () => {
       icon: <FontAwesomeIcon icon={solid("id-card")} />,
     },
   ];
-  const { setIsLogged } = useAuth();
   const { pathname } = window.location;
   const [collapse, setCollapse] = useState(window.innerWidth < 769);
   const dispatch = useAppDispatch();
@@ -44,7 +42,6 @@ const SideMenu: FC = () => {
   const logout = () => {
     api.delete("/auth").then(() => {
       dispatch(userUnSetAction());
-      setIsLogged(false);
       navigate("/");
     });
   };

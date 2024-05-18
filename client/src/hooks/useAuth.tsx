@@ -1,31 +1,30 @@
 import { userSetAction } from "@redux/actions";
 import { useAppDispatch } from "@redux/hooks";
 import api from "@utils/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const useAuth = () => {
   const [loading, setLoading] = useState(true);
-  const [isLogged, setIsLogged] = useState(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const fetch = () => {
+  const getMe = () => {
+    setLoading(true);
     return api
       .get("auth")
       .then((res) => {
+        navigate("/home");
         dispatch(userSetAction(res.data));
-        setIsLogged(true);
         setLoading(false);
       })
       .catch(() => {
         setLoading(false);
+        navigate("/");
       });
   };
 
-  useEffect(() => {
-    fetch();
-  }, []);
-
-  return { isLogged, setIsLogged, loading, fetch };
+  return { loading, getMe };
 };
 
 export default useAuth;
