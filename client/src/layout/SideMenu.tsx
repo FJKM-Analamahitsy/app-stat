@@ -3,34 +3,13 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { userUnSetAction } from "@redux/actions";
 import { useAppDispatch } from "@redux/hooks";
+import MenuData from "@utils/Menu";
 import api from "@utils/api";
 import { FC, useState } from "react";
-import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
+import { Menu, MenuItem, Sidebar, SubMenu } from "react-pro-sidebar";
 import { Link, useNavigate } from "react-router-dom";
 
 const SideMenu: FC = () => {
-  const menu = [
-    {
-      label: "Home",
-      path: "/home",
-      icon: <FontAwesomeIcon icon={solid("home")} />,
-    },
-    {
-      label: "Liste",
-      path: "/list",
-      icon: <FontAwesomeIcon icon={solid("users")} />,
-    },
-    {
-      label: "New",
-      path: "/new",
-      icon: <FontAwesomeIcon icon={solid("user-plus")} />,
-    },
-    {
-      label: "Adidy",
-      path: "/pay",
-      icon: <FontAwesomeIcon icon={solid("id-card")} />,
-    },
-  ];
   const { pathname } = window.location;
   const [collapse, setCollapse] = useState(window.innerWidth < 769);
   const dispatch = useAppDispatch();
@@ -63,34 +42,33 @@ const SideMenu: FC = () => {
         <div className="p-2 h-[70px] relative">
           <Logo />
         </div>
-        <div className="pr-4 h-[calc(100vh-86px)] flex flex-col justify-between">
+        <div className="h-[calc(100vh-86px)] flex flex-col justify-between">
           <Menu>
-            {menu.map((mn, i) => {
-              return (
-                <MenuItem
-                  key={i}
-                  component={<Link to={mn.path} />}
-                  rootStyles={{ padding: "0" }}
-                >
-                  <div className="flex gap-3 h-full">
-                    <div
-                      className={`h-full w-[15px] rounded-r-lg ${
-                        pathname.includes(mn.path) && "bg-primary"
-                      }`}
-                    />
-                    <div
-                      className={`${
-                        pathname.includes(mn.path)
-                          ? "bg-primary text-white"
-                          : "text-grey"
-                      } h-full w-full flex items-center rounded-[5px] px-4 gap-2`}
-                    >
-                      {mn.icon}
-                      <span>{mn.label}</span>
-                    </div>
-                  </div>
-                </MenuItem>
-              );
+            {MenuData.map((mn, i) => {
+              if (mn.submenu) {
+                return (
+                  <SubMenu key={i} label={mn.label} icon={mn.icon}>
+                    {mn.submenu.map((sm, i) => {
+                      return (
+                        <MenuItem key={i} component={<Link to={sm.path} />}>
+                          {sm.label}
+                        </MenuItem>
+                      );
+                    })}
+                  </SubMenu>
+                );
+              } else {
+                return (
+                  <MenuItem
+                    key={i}
+                    component={<Link to={mn.path} />}
+                    rootStyles={{}}
+                    icon={mn.icon}
+                  >
+                    {mn.label}
+                  </MenuItem>
+                );
+              }
             })}
           </Menu>
 

@@ -19,7 +19,7 @@ input {
   outline: none;
 }
 
-.ps-menu-button {
+/* .ps-menu-button {
   padding: 0 !important;
   height: 40px !important;
   margin: 1rem 0px;
@@ -28,7 +28,7 @@ input {
 .ps-menu-button > span {
   display: block;
   height: 100%;
-}
+} */
 
 #list .rdt_Table {
   height: calc(100vh - 200px) !important;
