@@ -141,7 +141,7 @@ const Liste: FC = () => {
     []
   );
   return (
-    <div className="p-4" id="list">
+    <div className="p-4 bg-white rounded" id="list">
       <div className="mb-4 md:hidden">
         <Search />
       </div>

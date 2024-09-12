@@ -38,7 +38,7 @@ const Page: FC = () => {
   }, [id]);
   return (
     <>
-      <div className="relative h-[65vh] md:h-[45vh]">
+      <div className="relative h-[65vh] bg-white md:h-[45vh] rounded-t overflow-hidden">
         <div className="w-full p-2 text-primary absolute top-0 left-0">
           <div className="cursor-pointer">
             <Link to="/mpandray">
@@ -103,7 +103,7 @@ const Page: FC = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 p-4 gap-y-6 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 p-4 gap-y-6 md:gap-6 bg-white rounded-b">
         <div className="w-full">
           <MemberDetails data={data} />
         </div>

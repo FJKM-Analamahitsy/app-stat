@@ -36,7 +36,7 @@ const Adidy: FC = () => {
     }
   };
   return (
-    <div className="max-w-[500px] py-[2rem] px-4 border border-bg m-4 mt-8 md:mx-auto  rounded-[5px] flex flex-col gap-8">
+    <div className="max-w-[500px] py-[2rem] px-4 bg-white border border-bg m-4 mt-8 md:mx-auto  rounded-[5px] flex flex-col gap-8">
       <SelectMember
         label="Mpandray"
         onSelected={(m) => setData({ ...data, mpandray: m._id })}

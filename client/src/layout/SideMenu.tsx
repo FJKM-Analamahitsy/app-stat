@@ -34,11 +34,7 @@ const SideMenu: FC = () => {
         />
       </div>
 
-      <Sidebar
-        className="h-full !border-0"
-        collapsed={collapse}
-        collapsedWidth="0"
-      >
+      <Sidebar className="h-full" collapsed={collapse} collapsedWidth="0">
         <div className="p-2 h-[70px] relative">
           <Logo />
         </div>

@@ -9,7 +9,7 @@ const Layout: FC = () => {
       <SideMenu />
       <div className="w-full">
         <Header />
-        <div className="w-full h-[calc(100vh-70px)] overflow-y-auto overflow-x-hidden">
+        <div className="w-full h-[calc(100vh-70px)] overflow-y-auto overflow-x-hidden p-4 bg-slate-50">
           <Outlet />
         </div>
       </div>

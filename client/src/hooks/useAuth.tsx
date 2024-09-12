@@ -14,7 +14,6 @@ const useAuth = () => {
     return api
       .get("auth")
       .then((res) => {
-        navigate("/home");
         dispatch(userSetAction(res.data));
         setLoading(false);
       })
