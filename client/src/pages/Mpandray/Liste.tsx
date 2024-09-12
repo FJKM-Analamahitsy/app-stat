@@ -5,7 +5,6 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import { formatPoneNumber } from "@utils/helper";
-import Layout from "layout";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import toast from "react-hot-toast";
@@ -82,7 +81,7 @@ const Liste: FC = () => {
         sortable: true,
         cell: (row) => {
           return (
-            <div onClick={() => navigate("/member/" + row._id)}>
+            <div onClick={() => navigate("/mpandray/" + row._id)}>
               <Avatar label={`${row.name} ${row.forname ? row.forname : ""}`} />
             </div>
           );
@@ -119,7 +118,7 @@ const Liste: FC = () => {
               <FontAwesomeIcon
                 icon={solid("user-pen")}
                 className="cursor-pointer hover:text-slate-500"
-                onClick={() => navigate("/edit/" + row._id)}
+                onClick={() => navigate("/mpandray/edit/" + row._id)}
               />
               <FontAwesomeIcon
                 icon={solid("trash")}
@@ -157,7 +156,7 @@ const Liste: FC = () => {
         paginationTotalRows={rows}
         onChangePage={onChangeHandler}
         onChangeRowsPerPage={onLimitChange}
-        onRowClicked={(row) => navigate("/member/" + row._id)}
+        onRowClicked={(row) => navigate("/mpandray/" + row._id)}
         paginationPerPage={limit}
         paginationRowsPerPageOptions={[30, 50, 100]}
         sortServer

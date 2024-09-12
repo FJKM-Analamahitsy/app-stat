@@ -25,7 +25,7 @@ const SideMenu: FC = () => {
     });
   };
   return (
-    <div className="fixed top-0 left-0 lg:relative h-screen bg-bg z-50">
+    <div className="fixed top-0 left-0 lg:relative h-screen bg-white z-50">
       <div className="h-[68px] bg-white absolute left-full flex justify-center items-center px-4 lg:hidden">
         <FontAwesomeIcon
           icon={solid("bars")}
