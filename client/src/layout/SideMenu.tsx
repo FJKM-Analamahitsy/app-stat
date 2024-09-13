@@ -7,7 +7,7 @@ import MenuData from "@utils/Menu";
 import api from "@utils/api";
 import { FC, useState } from "react";
 import { Menu, MenuItem, Sidebar, SubMenu } from "react-pro-sidebar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const SideMenu: FC = () => {
   const [collapse, setCollapse] = useState(window.innerWidth < 769);
@@ -15,6 +15,7 @@ const SideMenu: FC = () => {
   window.addEventListener("resize", () => {
     setCollapse(window.innerWidth < 1024);
   });
+  const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const logout = () => {
@@ -39,11 +40,11 @@ const SideMenu: FC = () => {
         </div>
         <div className="h-[calc(100vh-86px)] flex flex-col justify-between">
           <Menu>
-            {MenuData.map((mn, i) => {
+            {MenuData.map((mn: any, i: number) => {
               if (mn.submenu) {
                 return (
                   <SubMenu key={i} label={mn.label} icon={mn.icon}>
-                    {mn.submenu.map((sm, i) => {
+                    {mn.submenu.map((sm: any, i: number) => {
                       return (
                         <MenuItem key={i} component={<Link to={sm.path} />}>
                           {sm.label}
@@ -57,7 +58,11 @@ const SideMenu: FC = () => {
                   <MenuItem
                     key={i}
                     component={<Link to={mn.path} />}
-                    rootStyles={{}}
+                    className={`${
+                      pathname === mn.path
+                        ? "bg-primary text-white"
+                        : "hover:bg-slate-50"
+                    }`}
                     icon={mn.icon}
                   >
                     {mn.label}
@@ -68,19 +73,18 @@ const SideMenu: FC = () => {
           </Menu>
 
           <Menu>
-            <MenuItem rootStyles={{ padding: "0" }} onClick={logout}>
-              <div className="flex gap-3 h-full">
-                <div className={`h-full w-[15px] rounded-r-lg`} />
-                <div
-                  className={`text-grey h-full w-full flex items-center rounded-[5px] px-4 gap-2`}
-                >
-                  <FontAwesomeIcon
-                    icon={solid("right-from-bracket")}
-                    className="-rotate-180"
-                  />
-                  <span>Logout</span>
-                </div>
-              </div>
+            <MenuItem
+              rootStyles={{ padding: "0" }}
+              onClick={logout}
+              className="hover:bg-slate-50"
+              icon={
+                <FontAwesomeIcon
+                  icon={solid("right-from-bracket")}
+                  className="-rotate-180"
+                />
+              }
+            >
+              Logout
             </MenuItem>
           </Menu>
         </div>

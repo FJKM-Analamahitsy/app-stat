@@ -16,13 +16,13 @@ const Routes: FC = () => {
         <Route index element={<Login />} />
         <Route element={<Layout />}>
           <Route path="home" element={<Home />} />
-          <Route path="mpandray">
+          <Route path="christian">
             <Route index element={<Liste />} />
             <Route path=":id" element={<Page />} />
             <Route path="new" element={<NewMember />} />
             <Route path="edit/:id" element={<NewMember />} />
-            <Route path="adidy" element={<Adidy />} />
           </Route>
+          <Route path="contribution" element={<Adidy />} />
         </Route>
       </Route>
     </Router>
