@@ -43,7 +43,7 @@ const Page: FC = () => {
       <div className="relative h-[65vh] bg-white md:h-[45vh] rounded-t overflow-hidden">
         <div className="w-full p-2 text-primary absolute top-0 left-0">
           <div className="cursor-pointer">
-            <Link to="/mpandray">
+            <Link to="/christian">
               <FontAwesomeIcon icon={solid("arrow-left-long")} />
               <span className="ml-2">Back to list</span>
             </Link>
@@ -56,7 +56,7 @@ const Page: FC = () => {
             <div className="text-center sm:text-left">
               <div className="flex gap-4 items-center">
                 <Link
-                  to={`/mpandray/edit/${id}`}
+                  to={`/christian/edit/${id}`}
                   className="text-primary cursor-pointer text-center md:text-left"
                 >
                   <FontAwesomeIcon icon={solid("user-pen")} />

@@ -33,7 +33,7 @@ const Family: FC<Props> = ({ data, rank }) => {
               if (fam._id !== data._id) {
                 return (
                   <div
-                    onClick={() => navigate("/mpandray/" + fam._id)}
+                    onClick={() => navigate("/christian/" + fam._id)}
                     className="cursor-pointer my-4"
                     key={i}
                   >

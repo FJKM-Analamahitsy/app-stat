@@ -81,7 +81,7 @@ const Liste: FC = () => {
         sortable: true,
         cell: (row) => {
           return (
-            <div onClick={() => navigate("/mpandray/" + row._id)}>
+            <div onClick={() => navigate("/christian/" + row._id)}>
               <Avatar label={`${row.name} ${row.forname ? row.forname : ""}`} />
             </div>
           );
@@ -118,7 +118,7 @@ const Liste: FC = () => {
               <FontAwesomeIcon
                 icon={solid("user-pen")}
                 className="cursor-pointer hover:text-slate-500"
-                onClick={() => navigate("/mpandray/edit/" + row._id)}
+                onClick={() => navigate("/christian/edit/" + row._id)}
               />
               <FontAwesomeIcon
                 icon={solid("trash")}
@@ -156,7 +156,7 @@ const Liste: FC = () => {
         paginationTotalRows={rows}
         onChangePage={onChangeHandler}
         onChangeRowsPerPage={onLimitChange}
-        onRowClicked={(row) => navigate("/mpandray/" + row._id)}
+        onRowClicked={(row) => navigate("/christian/" + row._id)}
         paginationPerPage={limit}
         paginationRowsPerPageOptions={[30, 50, 100]}
         sortServer
