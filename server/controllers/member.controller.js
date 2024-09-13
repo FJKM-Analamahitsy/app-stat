@@ -59,7 +59,14 @@ const getMember = async (req, res) => {
   try {
     const { id } = await idSchema.validate(req.params);
     const member = await Member.findOne({ _id: id });
-    return res.send(member);
+    let result = { ...member._doc };
+    if (member.familyRank !== 1) {
+      const father = await Member.findOne({ _id: member.familyId }).select(
+        "name forname"
+      );
+      result = { ...result, familyId: father };
+    }
+    return res.send(result);
   } catch (error) {
     res.status(400).send(error.message);
   }

@@ -256,7 +256,7 @@ const NewMember: FC = () => {
           />
         </Container>
 
-        <Container title="Hobby">
+        <Container title="Samihafa">
           <InputNew
             label="Fialamboly"
             name="hobby"
@@ -275,6 +275,11 @@ const NewMember: FC = () => {
           <SelectMember
             label="Raim-pianakaviana"
             onSelected={(m) => setData({ ...data, familyId: m._id })}
+            defaultValue={
+              typeof data.familyId === "object"
+                ? `${data.familyId.name} ${data.familyId.forname}`
+                : ""
+            }
           />
           <select
             className="rounded border"
@@ -291,9 +296,9 @@ const NewMember: FC = () => {
           </select>
         </Container>
 
-        <Container title="Other" childClass="!grid-cols-1">
+        <Container title="Fanamarihana" childClass="!grid-cols-1">
           <textarea
-            name="other"
+            name="Hafa"
             id=""
             className="border px-2 rounded-[5px] text-grey h-[10vh] outline-none w-full"
             placeholder="fanamarihana manokana"

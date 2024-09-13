@@ -12,9 +12,12 @@ const Family: FC<Props> = ({ data, rank }) => {
   const [family, setFamily] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    api.get(`/member/family/${data.familyId}`).then((data: any) => {
-      setFamily(data.data);
-    });
+    data.familyId &&
+      api
+        .get(`/member/family/${data.familyId._id || data.familyId}`)
+        .then((data: any) => {
+          setFamily(data.data);
+        });
   }, [data]);
   return (
     <div>

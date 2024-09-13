@@ -105,7 +105,7 @@ const Page: FC = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 p-4 gap-y-6 md:gap-6 bg-white rounded-b">
+      <div className="grid grid-cols-1 md:grid-cols-3 p-4 gap-y-6 md:gap-6 bg-white rounded-b min-h-[43vh]">
         <div className="w-full">
           <MemberDetails data={data} />
         </div>
