@@ -42,7 +42,7 @@ const Search: FC = () => {
             return (
               <Link
                 key={i}
-                to={"/mpandray/" + el._id}
+                to={"/christian/" + el._id}
                 onClick={() => setFocus(false)}
               >
                 <div

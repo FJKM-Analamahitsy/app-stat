@@ -4,6 +4,9 @@
 
 * {
   outline: none !important;
+}
+
+body {
   color: rgb(13, 6, 55);
 }
 

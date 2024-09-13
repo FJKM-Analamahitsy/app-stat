@@ -60,7 +60,7 @@ const SideMenu: FC = () => {
                     component={<Link to={mn.path} />}
                     className={`${
                       pathname === mn.path
-                        ? "bg-primary text-white"
+                        ? "bg-primary !text-white"
                         : "hover:bg-slate-50"
                     }`}
                     icon={mn.icon}

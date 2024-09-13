@@ -54,12 +54,12 @@ const NewMember: FC = () => {
         if (id) {
           await api
             .put("/member", { ...data, id: data._id })
-            .then(() => navigate(`/mpandray/${id}`))
+            .then(() => navigate(`/christian/${id}`))
             .catch((err) => console.log(err));
         } else {
           await api
             .post("/member", data)
-            .then(() => navigate("/mpandray"))
+            .then(() => navigate("/christian"))
             .catch((err) => console.log(err));
         }
       }}
@@ -175,7 +175,7 @@ const NewMember: FC = () => {
 
         <Container title="Fonenana">
           <InputNew
-            label="Home"
+            label="Trano"
             name="home"
             value={data.home ? data.home : ""}
             onChange={onChangeHandler}
