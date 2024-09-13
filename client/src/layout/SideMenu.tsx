@@ -35,7 +35,7 @@ const SideMenu: FC = () => {
       </div>
 
       <Sidebar className="h-full" collapsed={collapse} collapsedWidth="0">
-        <div className="p-2 h-[70px] relative">
+        <div className="p-2 px-8 flex items-center h-[70px] relative">
           <Logo />
         </div>
         <div className="h-[calc(100vh-86px)] flex flex-col justify-between">
