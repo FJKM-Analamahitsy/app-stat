@@ -2,18 +2,22 @@ import { userSetAction } from "@redux/actions";
 import { useAppDispatch } from "@redux/hooks";
 import api from "@utils/api";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const useAuth = () => {
   const [loading, setLoading] = useState(true);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const getMe = () => {
     setLoading(true);
     return api
       .get("auth")
       .then((res) => {
+        if (pathname === "/") {
+          navigate("/home");
+        }
         dispatch(userSetAction(res.data));
         setLoading(false);
       })
