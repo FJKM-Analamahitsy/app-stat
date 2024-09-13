@@ -5,9 +5,13 @@ import { Outlet } from "react-router-dom";
 const AuthGuard: FC = () => {
   const { loading, getMe } = useAuth();
 
-  useEffect(() => {
-    getMe();
-  }, []);
+  useEffect(
+    () => {
+      getMe();
+    },
+    // eslint-disable-next-line
+    []
+  );
 
   return <>{loading ? <p>loading...</p> : <Outlet />}</>;
 };

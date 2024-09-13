@@ -59,6 +59,7 @@ const Home: FC = () => {
                   </div>
                 );
               }
+              return null;
             })}
         </div>
       </div>
@@ -82,6 +83,7 @@ const Home: FC = () => {
                         </div>
                       );
                     }
+                    return null;
                   })}
               </div>
             </div>

@@ -10,7 +10,6 @@ import { Menu, MenuItem, Sidebar, SubMenu } from "react-pro-sidebar";
 import { Link, useNavigate } from "react-router-dom";
 
 const SideMenu: FC = () => {
-  const { pathname } = window.location;
   const [collapse, setCollapse] = useState(window.innerWidth < 769);
   const dispatch = useAppDispatch();
   window.addEventListener("resize", () => {

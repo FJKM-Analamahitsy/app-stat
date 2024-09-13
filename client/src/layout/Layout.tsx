@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import SideMenu from "./SideMenu";
 import Header from "@containers/Header";
 import { Outlet } from "react-router-dom";
