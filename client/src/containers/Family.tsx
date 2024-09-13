@@ -1,4 +1,3 @@
-import Avatar from "@components/Avatar";
 import api from "@utils/api";
 import { FAMILYRANK } from "@utils/constant";
 import { FC, useEffect, useState } from "react";
@@ -32,7 +31,7 @@ const Family: FC<Props> = ({ data, rank }) => {
                 return (
                   <div
                     onClick={() => navigate("/mpandray/" + fam._id)}
-                    className="cursor-pointer my-2"
+                    className="cursor-pointer my-4"
                     key={i}
                   >
                     <div className={`flex items-center gap-4`}>
