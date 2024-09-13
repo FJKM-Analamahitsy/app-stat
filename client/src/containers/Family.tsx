@@ -20,7 +20,7 @@ const Family: FC<Props> = ({ data, rank }) => {
         });
   }, [data]);
   return (
-    <div>
+    <div className="p-4">
       <p>
         <span className="font-medium">Fiankohonana :</span>{" "}
         {FAMILYRANK[rank - 1]}

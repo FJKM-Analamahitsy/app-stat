@@ -19,9 +19,9 @@ const Adidy: FC = () => {
   const [monthEnd, setMonthhEnd] = useState(now.getMonth());
   const submit = () => {
     if (data.mpandray !== "" && data.pay !== 0) {
-      const n = monthEnd - data.month + 1;
+      const n = data.type === "adidy mpandray" ? monthEnd - data.month + 1 : 1;
       let i = 0;
-      const pay = +(data.pay / n).toFixed(2);
+      const pay = n > 1 ? +(data.pay / n).toFixed(2) : data.pay;
       do {
         const topay = { ...data, pay, month: data.month + i };
         api
@@ -55,6 +55,7 @@ const Adidy: FC = () => {
         value={data.type}
         onChange={(e) => setData({ ...data, type: e.target.value })}
         options={["adidy mpandray", "adidy iombonana", "voka-dehibe"]}
+        valueIndex={false}
       />
       <div className="grid grid-cols-3 gap-4">
         <Select

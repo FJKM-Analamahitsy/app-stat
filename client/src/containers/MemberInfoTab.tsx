@@ -6,7 +6,7 @@ interface Props {
 
 const MemberInfoTab: FC<Props> = ({ children }) => {
   const [active, setActive] = useState(0);
-  const tab = ["Ankohonana", "Adidy"];
+  const tab = ["Ny tena", "Ankohonana", "Adidy mpandray", "Adidy samihafa"];
   const child = Children.map(children, (child) => {
     if (isValidElement(child)) {
       return child;
@@ -27,7 +27,7 @@ const MemberInfoTab: FC<Props> = ({ children }) => {
           );
         })}
       </div>
-      <div className="p-4">{child && child[active]}</div>
+      <div className="">{child && child[active]}</div>
     </div>
   );
 };

@@ -43,7 +43,7 @@ const Search: FC = () => {
         onFocus={() => setFocus(true)}
       />
       {focus && result.length > 0 && (
-        <div className="absolute bg-white w-full shadow-md rounded-[5px] border border-bg mt-2 z-50 max-h-[400px] overflow-y-auto">
+        <div className="absolute bg-white min-w-full w-full md:w-auto shadow-md rounded-[5px] border border-bg mt-2 z-50 max-h-[400px] overflow-y-auto">
           {result.map((el: any, i: number) => {
             return (
               <Link

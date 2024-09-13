@@ -95,7 +95,7 @@ const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
     },
   };
   return (
-    <div className="border border-bg p-2 px-4 rounded-[5px] w-full">
+    <div className="rounded-[5px] py-4 w-full">
       {Object.keys(shema).map((el, i) => {
         if (data[el]) {
           return (
