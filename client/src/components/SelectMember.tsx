@@ -1,17 +1,22 @@
 import api from "@utils/api";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Avatar from "./Avatar";
 import InputNew from "./InputNew";
 
 interface SelectMemberProps {
   label?: string;
   onSelected: (member: any) => void;
+  defaultValue?: string;
 }
 
-const SelectMember: FC<SelectMemberProps> = ({ label, onSelected }) => {
+const SelectMember: FC<SelectMemberProps> = ({
+  label,
+  onSelected,
+  defaultValue = "",
+}) => {
   const [result, setResult] = useState<any>([]);
   const [focus, setFocus] = useState<boolean>(false);
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState<string>(defaultValue);
 
   const searchHandler = (e: any) => {
     setValue(e.target.value);
@@ -19,6 +24,10 @@ const SelectMember: FC<SelectMemberProps> = ({ label, onSelected }) => {
       .get("/member/search?q=" + e.target.value)
       .then((res) => setResult(res.data));
   };
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
   return (
     <div className="relative">
       <InputNew

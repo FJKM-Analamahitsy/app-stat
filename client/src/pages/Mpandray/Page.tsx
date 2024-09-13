@@ -9,6 +9,8 @@ import MemberInfoTab from "@containers/MemberInfoTab";
 import api from "@utils/api";
 import { formatPoneNumber } from "@utils/helper";
 import toast from "react-hot-toast";
+import Family from "@containers/Family";
+import AdidyDetails from "@containers/AdidyDetails";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
@@ -103,12 +105,15 @@ const Page: FC = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 p-4 gap-y-6 md:gap-6 bg-white rounded-b">
+      <div className="grid grid-cols-1 md:grid-cols-3 p-4 gap-y-6 md:gap-6 bg-white rounded-b min-h-[43vh]">
         <div className="w-full">
           <MemberDetails data={data} />
         </div>
         <div className="col-span-2 p-2">
-          <MemberInfoTab />
+          <MemberInfoTab>
+            <Family data={data} rank={data.familyRank} />
+            <AdidyDetails />
+          </MemberInfoTab>
         </div>
       </div>
     </>

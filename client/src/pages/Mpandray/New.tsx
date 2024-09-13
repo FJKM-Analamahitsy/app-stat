@@ -1,6 +1,7 @@
 import Button from "@components/Button";
 import InputNew from "@components/InputNew";
 import RadioButton from "@components/RadioButton";
+import SelectMember from "@components/SelectMember";
 import api from "@utils/api";
 import { FC, ReactNode, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -26,7 +27,7 @@ const Container: FC<ContainerProps> = ({ title, children, childClass }) => {
 
 const NewMember: FC = () => {
   const [raw, setRaw] = useState<any>({});
-  const [data, setData] = useState<any>({});
+  const [data, setData] = useState<any>({ familyRank: 1 });
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -53,12 +54,12 @@ const NewMember: FC = () => {
         if (id) {
           await api
             .put("/member", { ...data, id: data._id })
-            .then(() => navigate(`/member/${id}`))
+            .then(() => navigate(`/mpandray/${id}`))
             .catch((err) => console.log(err));
         } else {
           await api
             .post("/member", data)
-            .then(() => navigate("/list"))
+            .then(() => navigate("/mpandray"))
             .catch((err) => console.log(err));
         }
       }}
@@ -172,7 +173,7 @@ const NewMember: FC = () => {
           />
         </Container>
 
-        <Container title="Adress">
+        <Container title="Fonenana">
           <InputNew
             label="Home"
             name="home"
@@ -234,7 +235,7 @@ const NewMember: FC = () => {
           />
         </Container>
 
-        <Container title="Contact">
+        <Container title="Fifandraisana">
           <InputNew
             label="Telephone"
             name="phone"
@@ -255,7 +256,7 @@ const NewMember: FC = () => {
           />
         </Container>
 
-        <Container title="Hobby">
+        <Container title="Samihafa">
           <InputNew
             label="Fialamboly"
             name="hobby"
@@ -270,9 +271,34 @@ const NewMember: FC = () => {
           />
         </Container>
 
-        <Container title="Other" childClass="!grid-cols-1">
+        <Container title="Ankohonana">
+          <SelectMember
+            label="Raim-pianakaviana"
+            onSelected={(m) => setData({ ...data, familyId: m._id })}
+            defaultValue={
+              typeof data.familyId === "object"
+                ? `${data.familyId.name} ${data.familyId.forname}`
+                : ""
+            }
+          />
+          <select
+            className="rounded border"
+            name="familyRank"
+            onChange={(e) =>
+              setData({ ...data, familyRank: parseInt(e.target.value) })
+            }
+            value={data.familyRank ? data.familyRank.toString() : "1"}
+          >
+            <option value="1">Ray</option>
+            <option value="2">Reny</option>
+            <option value="3">Zanaka</option>
+            <option value="4">Hafa</option>
+          </select>
+        </Container>
+
+        <Container title="Fanamarihana" childClass="!grid-cols-1">
           <textarea
-            name="other"
+            name="Hafa"
             id=""
             className="border px-2 rounded-[5px] text-grey h-[10vh] outline-none w-full"
             placeholder="fanamarihana manokana"

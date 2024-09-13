@@ -1,9 +1,17 @@
-import { FC, useState } from "react";
-import AdidyDetails from "./AdidyDetails";
+import { Children, FC, isValidElement, ReactNode, useState } from "react";
 
-const MemberInfoTab: FC = () => {
+interface Props {
+  children: ReactNode;
+}
+
+const MemberInfoTab: FC<Props> = ({ children }) => {
   const [active, setActive] = useState(0);
-  const tab = ["History", "Family", "Adidy"];
+  const tab = ["Ankohonana", "Adidy"];
+  const child = Children.map(children, (child) => {
+    if (isValidElement(child)) {
+      return child;
+    }
+  });
   return (
     <div>
       <div className="flex gap-4 w-full border-b border-b-bg">
@@ -19,7 +27,7 @@ const MemberInfoTab: FC = () => {
           );
         })}
       </div>
-      <div className="p-4">{active === 2 && <AdidyDetails />}</div>
+      <div className="p-4">{child && child[active]}</div>
     </div>
   );
 };

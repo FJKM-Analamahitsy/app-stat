@@ -15,6 +15,9 @@ const createMember = async (req, res) => {
   try {
     const input = await memberInput.validate(req.body);
     const newMember = new Member({ ...input });
+    if (input.familyRank === 1) {
+      newMember.familyId = newMember._id;
+    }
     await newMember.save();
     log(req.requester, `creation member ${newMember._id}`);
     return res.send(newMember);
@@ -39,7 +42,11 @@ const updateMember = async (req, res) => {
     const { id, ...body } = await idSchema.validate(req.body);
     await Member.findOneAndUpdate(
       { _id: id },
-      { ...body, last_update: new Date() }
+      {
+        ...body,
+        familyId: +body.familyRank === 1 ? id : body.familyId,
+        last_update: new Date(),
+      }
     );
     log(req.requester, `update member ${id}`);
     return res.send("sucess");
@@ -52,7 +59,14 @@ const getMember = async (req, res) => {
   try {
     const { id } = await idSchema.validate(req.params);
     const member = await Member.findOne({ _id: id });
-    return res.send(member);
+    let result = { ...member._doc };
+    if (member.familyRank !== 1) {
+      const father = await Member.findOne({ _id: member.familyId }).select(
+        "name forname"
+      );
+      result = { ...result, familyId: father };
+    }
+    return res.send(result);
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -229,6 +243,14 @@ const exportMembersToCsv = async (req, res) => {
   return res.send(csv);
 };
 
+const getFamily = async (req, res) => {
+  const { id } = req.params;
+  const result = await Member.find({ familyId: id })
+    .sort("familyRank")
+    .select("name forname familyRank");
+  return res.send(result);
+};
+
 module.exports = {
   createMember,
   deleteMember,
@@ -238,4 +260,5 @@ module.exports = {
   searchMember,
   exportMembersToCsv,
   statistics,
+  getFamily,
 };
