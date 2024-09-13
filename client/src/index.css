@@ -4,6 +4,7 @@
 
 * {
   outline: none !important;
+  color: rgb(13, 6, 55);
 }
 
 *::-webkit-scrollbar {
