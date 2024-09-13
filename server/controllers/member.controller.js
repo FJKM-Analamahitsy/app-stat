@@ -229,6 +229,14 @@ const exportMembersToCsv = async (req, res) => {
   return res.send(csv);
 };
 
+const getFamily = async (req, res) => {
+  const { id } = req.params;
+  const result = await Member.find({ familyId: id })
+    .sort("familyRank")
+    .select("name forname familyRank");
+  return res.send(result);
+};
+
 module.exports = {
   createMember,
   deleteMember,
@@ -238,4 +246,5 @@ module.exports = {
   searchMember,
   exportMembersToCsv,
   statistics,
+  getFamily,
 };

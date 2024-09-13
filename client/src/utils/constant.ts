@@ -99,4 +99,4 @@ export const MONTHS = [
   "decembre",
 ];
 
-
+export const FAMILYRANK = ["Ray", "Reny", "Zanaka", "hafa"];
