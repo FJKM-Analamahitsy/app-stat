@@ -16,23 +16,33 @@ const Adidy: FC = () => {
     pay: 0,
     type: "adidy mpandray",
   });
+  const [monthEnd, setMonthhEnd] = useState(now.getMonth());
   const submit = () => {
     if (data.mpandray !== "" && data.pay !== 0) {
-      api
-        .post("/adidy", data)
-        .then((res) => {
-          setData({
-            mpandray: "",
-            month: now.getMonth(),
-            year: now.getFullYear(),
-            pay: 0,
-            type: "adidy mpandray",
+      const n = monthEnd - data.month + 1;
+      let i = 0;
+      const pay = +(data.pay / n).toFixed(2);
+      do {
+        const topay = { ...data, pay, month: data.month + i };
+        api
+          .post("/adidy", topay)
+          .then((res) => {
+            if (i === n) {
+              setData({
+                mpandray: "",
+                month: now.getMonth(),
+                year: now.getFullYear(),
+                pay: 0,
+                type: "adidy mpandray",
+              });
+              toast.success("Operation reussi, Merci!");
+            }
+          })
+          .catch((err) => {
+            toast.error(err.response.data);
           });
-          toast.success("Operation reussi, Merci!");
-        })
-        .catch((err) => {
-          toast.error(err.response.data);
-        });
+        i++;
+      } while (i < n);
     }
   };
   return (
@@ -42,32 +52,35 @@ const Adidy: FC = () => {
         onSelected={(m) => setData({ ...data, mpandray: m._id })}
       />
       <Select
-        defaultValue={data.type}
+        value={data.type}
         onChange={(e) => setData({ ...data, type: e.target.value })}
         options={["adidy mpandray", "adidy iombonana", "voka-dehibe"]}
       />
       <div className="grid grid-cols-3 gap-4">
         <Select
-          defaultValue={data.month}
+          value={data.month}
           options={[...MONTHS]}
           onChange={(e) => {
-            setData({ ...data, month: MONTHS.indexOf(e.target.value) + 1 });
+            setData({ ...data, month: +e.target.value });
+            setMonthhEnd(+e.target.value);
           }}
         />
         <Select
-          defaultValue={1}
-          options={[
-            ...Array.from(Array(12).keys()).map((i) => (i + 1).toString()),
-          ]}
+          value={monthEnd}
+          options={[...MONTHS]}
+          onChange={(e) => {
+            setMonthhEnd(Math.max(data.month, +e.target.value));
+          }}
         />
         <Select
-          defaultValue={data.year}
+          value={data.year}
           onChange={(e) => setData({ ...data, year: parseInt(e.target.value) })}
           options={[
-            ...Array.from(Array(3).keys()).map((i) =>
-              (now.getFullYear() - i).toString()
+            ...Array.from(Array(4).keys()).map((i) =>
+              (now.getFullYear() + 1 - i).toString()
             ),
           ]}
+          valueIndex={false}
         />
       </div>
       <InputNew
@@ -77,11 +90,8 @@ const Adidy: FC = () => {
         onChange={(e) => setData({ ...data, pay: parseInt(e.target.value) })}
       />
       <div className="text-right mt-4">
-        <Button
-          className="text-white bg-primary w-1/3 sm:w-1/4"
-          onClick={submit}
-        >
-          payer
+        <Button className="text-white bg-primary w-full" onClick={submit}>
+          pay
         </Button>
       </div>
     </div>

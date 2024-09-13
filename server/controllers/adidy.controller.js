@@ -29,7 +29,7 @@ const createAdidy = async (req, res) => {
 
 const deleteAdidy = async (req, res) => {
   if (!req.body.id) return res.status(404).send("id required");
-  const adidy = await Adidy.findByIdAndDelete(id);
+  await Adidy.findByIdAndDelete(id);
   res.send("success");
 };
 

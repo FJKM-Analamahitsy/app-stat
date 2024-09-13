@@ -1,5 +1,5 @@
 import api from "@utils/api";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import Avatar from "./Avatar";
 import InputNew from "./InputNew";
 
@@ -17,19 +17,31 @@ const SelectMember: FC<SelectMemberProps> = ({
   const [result, setResult] = useState<any>([]);
   const [focus, setFocus] = useState<boolean>(false);
   const [value, setValue] = useState<string>(defaultValue);
+  const [timer, setTimer] = useState<any>();
+  const container = useRef<HTMLDivElement>(null);
+
+  const onclickoutside = (e: any) => {
+    setFocus(container.current?.contains(e.target) || false);
+  };
 
   const searchHandler = (e: any) => {
     setValue(e.target.value);
-    api
-      .get("/member/search?q=" + e.target.value)
-      .then((res) => setResult(res.data));
+    clearTimeout(timer);
+    setTimer(
+      setTimeout(() => {
+        api
+          .get("/member/search?q=" + e.target.value)
+          .then((res) => setResult(res.data));
+      }, 500)
+    );
   };
 
   useEffect(() => {
     setValue(defaultValue);
   }, [defaultValue]);
+  window.addEventListener("click", onclickoutside);
   return (
-    <div className="relative">
+    <div ref={container} className="relative">
       <InputNew
         value={value}
         label={label}
@@ -37,7 +49,7 @@ const SelectMember: FC<SelectMemberProps> = ({
         onFocus={() => setFocus(true)}
       />
       {focus && result.length > 0 && (
-        <div className="absolute bg-white w-full shadow-md rounded-[5px] border border-bg mt-2 z-50">
+        <div className="absolute bg-white w-full shadow-md rounded-[5px] border border-bg mt-2 z-50 max-h-[300px] overflow-y-auto">
           {result.map((el: any, i: number) => {
             return (
               <div

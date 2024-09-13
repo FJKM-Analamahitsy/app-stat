@@ -10,15 +10,21 @@ const Search: FC = () => {
   const [result, setResult] = useState<any>([]);
   const [focus, setFocus] = useState<boolean>(false);
   const container = useRef<HTMLDivElement>(null);
+  const [timer, setTimer] = useState<any>();
 
   const onclickoutside = (e: any) => {
     setFocus(container.current?.contains(e.target) || false);
   };
 
   const searchHandler = (e: any) => {
-    api
-      .get("/member/search?q=" + e.target.value + "&l=30")
-      .then((res) => setResult(res.data));
+    clearTimeout(timer);
+    setTimer(
+      setTimeout(() => {
+        api
+          .get("/member/search?q=" + e.target.value)
+          .then((res) => setResult(res.data));
+      }, 500)
+    );
   };
 
   window.addEventListener("click", onclickoutside);
