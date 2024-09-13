@@ -6,4 +6,5 @@ export default axios.create({
     device: navigator.userAgent,
     Authorization: sessionStorage.getItem("token"),
   },
+  withCredentials: true,
 });

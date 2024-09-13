@@ -9,6 +9,8 @@ module.exports = {
       "@utils": path.resolve(__dirname, "./src/utils/"),
       "@redux": path.resolve(__dirname, "./src/redux/"),
       "@layout": path.resolve(__dirname, "./src/layout/"),
+      "@auth": path.resolve(__dirname, "./src/auth/"),
+      "@hooks": path.resolve(__dirname, "./src/hooks/"),
     },
   },
 };

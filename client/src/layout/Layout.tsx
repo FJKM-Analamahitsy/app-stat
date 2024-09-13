@@ -1,30 +1,19 @@
-import { FC, ReactNode } from "react";
-import SideMenu from "@containers/SideMenu";
+import { FC } from "react";
+import SideMenu from "./SideMenu";
 import Header from "@containers/Header";
-import { Navigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-interface LayoutProps {
-  children: ReactNode;
-}
-
-const Layout: FC<LayoutProps> = ({ children }) => {
-  const token = sessionStorage.getItem("token");
+const Layout: FC = () => {
   return (
-    <>
-      {token ? (
-        <div className="w-screen h-screen flex overflow-hidden">
-          <SideMenu />
-          <div className="w-full">
-            <Header />
-            <div className="w-full h-[calc(100vh-70px)] overflow-y-auto overflow-x-hidden">
-              {children}
-            </div>
-          </div>
+    <div className="w-screen h-screen flex overflow-hidden">
+      <SideMenu />
+      <div className="w-full">
+        <Header />
+        <div className="w-full h-[calc(100vh-70px)] overflow-y-auto overflow-x-hidden p-4 bg-slate-50">
+          <Outlet />
         </div>
-      ) : (
-        <Navigate to="/" />
-      )}
-    </>
+      </div>
+    </div>
   );
 };
 

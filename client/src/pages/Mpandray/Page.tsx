@@ -1,7 +1,6 @@
 import Avatar from "@components/Avatar";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Layout from "layout";
 import { FC, useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import avatar from "@assets/img/avatar.svg";
@@ -38,11 +37,11 @@ const Page: FC = () => {
     }
   }, [id]);
   return (
-    <Layout>
-      <div className="relative h-[65vh] md:h-[45vh]">
+    <>
+      <div className="relative h-[65vh] bg-white md:h-[45vh] rounded-t overflow-hidden">
         <div className="w-full p-2 text-primary absolute top-0 left-0">
           <div className="cursor-pointer">
-            <Link to="/list">
+            <Link to="/mpandray">
               <FontAwesomeIcon icon={solid("arrow-left-long")} />
               <span className="ml-2">Back to list</span>
             </Link>
@@ -55,7 +54,7 @@ const Page: FC = () => {
             <div className="text-center sm:text-left">
               <div className="flex gap-4 items-center">
                 <Link
-                  to={`/edit/${id}`}
+                  to={`/mpandray/edit/${id}`}
                   className="text-primary cursor-pointer text-center md:text-left"
                 >
                   <FontAwesomeIcon icon={solid("user-pen")} />
@@ -104,7 +103,7 @@ const Page: FC = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 p-4 gap-y-6 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 p-4 gap-y-6 md:gap-6 bg-white rounded-b">
         <div className="w-full">
           <MemberDetails data={data} />
         </div>
@@ -112,7 +111,7 @@ const Page: FC = () => {
           <MemberInfoTab />
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 

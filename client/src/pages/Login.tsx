@@ -3,17 +3,15 @@ import Input from "@components/Input";
 import Logo from "@components/Logo";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { userSetAction } from "@redux/actions";
-import { useAppDispatch } from "@redux/hooks";
+import useAuth from "@hooks/useAuth";
 import api from "@utils/api";
-import { jwtDecode } from "jwt-decode";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 
 const Login: FC = () => {
   const [showPass, setShowPass] = useState<boolean>(false);
   const [data, setData] = useState<any>({});
-  const dispatch = useAppDispatch();
+  const { getMe } = useAuth();
 
   const onChangeHandler = (e: any) => {
     const name = e.target.name;
@@ -25,12 +23,8 @@ const Login: FC = () => {
     e.preventDefault();
     api
       .post("/auth", data)
-      .then((res) => {
-        sessionStorage.setItem("token", res.data.token);
-        dispatch(
-          userSetAction({ ...jwtDecode(res.data.token), token: res.data.token })
-        );
-        window.location.href = "/home";
+      .then(() => {
+        getMe();
       })
       .catch((err) => {
         toast.error(err.response.data);

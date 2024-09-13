@@ -23,7 +23,9 @@
       "@pages/*": ["pages/*"],
       "@utils/*": ["utils/*"],
       "@redux/*": ["redux/*"],
-      "@layout/": ["layout/"]
+      "@layout/": ["layout/"],
+      "@auth/*": ["auth/*"],
+      "@hooks/*": ["hooks/*"]
     }
   },
   "include": ["src"]
