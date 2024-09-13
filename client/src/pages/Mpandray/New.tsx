@@ -27,7 +27,7 @@ const Container: FC<ContainerProps> = ({ title, children, childClass }) => {
 
 const NewMember: FC = () => {
   const [raw, setRaw] = useState<any>({});
-  const [data, setData] = useState<any>({});
+  const [data, setData] = useState<any>({ familyRank: 1 });
   const navigate = useNavigate();
   const { id } = useParams();
 

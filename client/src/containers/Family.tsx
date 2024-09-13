@@ -20,7 +20,8 @@ const Family: FC<Props> = ({ data, rank }) => {
   return (
     <div>
       <p>
-        <span className="font-medium">Fiankohonana :</span> {FAMILYRANK[rank]}
+        <span className="font-medium">Fiankohonana :</span>{" "}
+        {FAMILYRANK[rank - 1]}
       </p>
       <div>
         <p className="my-3 font-medium">Fianakaviana</p>
@@ -50,7 +51,7 @@ const Family: FC<Props> = ({ data, rank }) => {
                           </span>
                           <br />
                           <span className="block truncate w-full">
-                            {FAMILYRANK[fam.familyRank]}
+                            {FAMILYRANK[fam.familyRank - 1]}
                           </span>
                         </p>
                       </div>

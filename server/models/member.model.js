@@ -22,7 +22,10 @@ const Member = mongoose.model("Member", {
   mpandrayAndiany: String,
   mpandrayN: String,
   familyId: String,
-  familyRank: Number,
+  familyRank: {
+    type: Number,
+    default: 1,
+  },
   familyPlace: String,
   other: String,
   created_at: {

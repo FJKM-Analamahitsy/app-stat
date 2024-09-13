@@ -15,6 +15,9 @@ const createMember = async (req, res) => {
   try {
     const input = await memberInput.validate(req.body);
     const newMember = new Member({ ...input });
+    if (input.familyRank === 1) {
+      newMember.familyId = newMember._id;
+    }
     await newMember.save();
     log(req.requester, `creation member ${newMember._id}`);
     return res.send(newMember);
