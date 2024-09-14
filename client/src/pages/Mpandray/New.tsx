@@ -65,7 +65,7 @@ const NewMember: FC = () => {
       }}
     >
       <div className="px-[2rem] py-[3rem] flex flex-col gap-4 bg-white">
-        <Container title="General">
+        <Container title="Ny Tena">
           <InputNew
             label="Anarana"
             name="name"
