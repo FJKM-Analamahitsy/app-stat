@@ -4,7 +4,7 @@ import Select from "@components/Select";
 import SelectMember from "@components/SelectMember";
 import api from "@utils/api";
 import { MONTHS } from "@utils/constant";
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 const Adidy: FC = () => {
@@ -17,6 +17,7 @@ const Adidy: FC = () => {
     type: "adidy mpandray",
   });
   const [monthEnd, setMonthhEnd] = useState(now.getMonth());
+  const memeberInput = useRef<any>(null);
   const submit = async () => {
     if (data.mpandray !== "" && data.pay !== 0) {
       const n = data.type === "adidy mpandray" ? monthEnd - data.month + 1 : 1;
@@ -41,6 +42,7 @@ const Adidy: FC = () => {
             pay: 0,
             type: "adidy mpandray",
           });
+          memeberInput.current.reset();
           toast.success("Paiment saved successfully, Thanks!");
         }
         i++;
@@ -50,6 +52,7 @@ const Adidy: FC = () => {
   return (
     <div className="max-w-[500px] py-[2rem] px-4 bg-white border border-bg m-4 mt-8 md:mx-auto  rounded-[5px] flex flex-col gap-8">
       <SelectMember
+        ref={memeberInput}
         label="Mpandray"
         onSelected={(m) => setData({ ...data, mpandray: m._id })}
       />
