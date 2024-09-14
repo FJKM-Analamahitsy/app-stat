@@ -85,18 +85,18 @@ export const fields = [
 ];
 
 export const MONTHS = [
-  "janvier",
-  "fevrier",
-  "mars",
-  "avril",
-  "mai",
-  "juin",
-  "juillet",
-  "aout",
-  "septembre",
-  "octobre",
-  "novembre",
-  "decembre",
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
 ];
 
 export const FAMILYRANK = ["Ray", "Reny", "Zanaka", "hafa"];

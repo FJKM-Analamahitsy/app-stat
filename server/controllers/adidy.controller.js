@@ -1,6 +1,21 @@
 const { object, string, number } = require("yup");
 const { Adidy } = require("../models/adidy.model");
 
+const MONTHS = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+];
+
 const adidyInput = object({
   type: string().required(),
   year: number().required(),
@@ -18,7 +33,12 @@ const createAdidy = async (req, res) => {
       mpandray: input.mpandray,
       type: input.type,
     }).countDocuments();
-    if (check > 0) return res.status(400).send("duplicate");
+    if (check > 0)
+      return res
+        .status(400)
+        .send(
+          `contribution of ${MONTHS[input.month]},${input.year} already paid.`
+        );
     const newAdidy = new Adidy({ ...input });
     await newAdidy.save();
     res.send("success");

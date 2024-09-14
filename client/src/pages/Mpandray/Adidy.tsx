@@ -17,30 +17,32 @@ const Adidy: FC = () => {
     type: "adidy mpandray",
   });
   const [monthEnd, setMonthhEnd] = useState(now.getMonth());
-  const submit = () => {
+  const submit = async () => {
     if (data.mpandray !== "" && data.pay !== 0) {
       const n = data.type === "adidy mpandray" ? monthEnd - data.month + 1 : 1;
       let i = 0;
       const pay = n > 1 ? +(data.pay / n).toFixed(2) : data.pay;
+      let errorStatus = 0;
       do {
         const topay = { ...data, pay, month: data.month + i };
-        api
-          .post("/adidy", topay)
-          .then((res) => {
-            if (i === n) {
-              setData({
-                mpandray: "",
-                month: now.getMonth(),
-                year: now.getFullYear(),
-                pay: 0,
-                type: "adidy mpandray",
-              });
-              toast.success("Operation reussi, Merci!");
-            }
-          })
-          .catch((err) => {
-            toast.error(err.response.data);
+        try {
+          await api.post("/adidy", topay);
+        } catch (error: any) {
+          errorStatus++;
+          toast.error(error.response.data);
+        }
+        console.log(n);
+
+        if (i === n - 1 && errorStatus === 0) {
+          setData({
+            mpandray: "",
+            month: now.getMonth(),
+            year: now.getFullYear(),
+            pay: 0,
+            type: "adidy mpandray",
           });
+          toast.success("Paiment saved successfully, Thanks!");
+        }
         i++;
       } while (i < n);
     }
