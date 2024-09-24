@@ -5,9 +5,10 @@ import { FC, useEffect, useRef, useState } from "react";
 interface Props {
   options: string[];
   onChange: (val: string) => void;
+  defaultValue?: string;
 }
 
-const SelectMultiple: FC<Props> = ({ options, onChange }) => {
+const SelectMultiple: FC<Props> = ({ options, onChange, defaultValue }) => {
   const container = useRef<HTMLDivElement>(null);
   const [opts, setOpts] = useState(options);
   const [values, setValues] = useState<string[]>([]);
@@ -32,6 +33,12 @@ const SelectMultiple: FC<Props> = ({ options, onChange }) => {
   useEffect(() => {
     onChange(values.join(" "));
   }, [values]);
+
+  useEffect(() => {
+    if (defaultValue && defaultValue?.trim() !== "") {
+      setValues(defaultValue?.split(" "));
+    }
+  }, [defaultValue]);
 
   window.addEventListener("click", onclickoutside);
 
