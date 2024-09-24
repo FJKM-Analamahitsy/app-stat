@@ -2,7 +2,9 @@ import Button from "@components/Button";
 import InputNew from "@components/InputNew";
 import RadioButton from "@components/RadioButton";
 import SelectMember from "@components/SelectMember";
+import SelectMultiple from "@components/SelectMultiple";
 import api from "@utils/api";
+import { SMPANA } from "@utils/constant";
 import { FC, ReactNode, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -294,6 +296,13 @@ const NewMember: FC = () => {
             <option value="3">Zanaka</option>
             <option value="4">Hafa</option>
           </select>
+        </Container>
+
+        <Container title="Sampana">
+          <SelectMultiple
+            options={SMPANA}
+            onChange={(val) => setData({ ...data, sampana: val })}
+          />
         </Container>
 
         <Container title="Fanamarihana" childClass="!grid-cols-1">
