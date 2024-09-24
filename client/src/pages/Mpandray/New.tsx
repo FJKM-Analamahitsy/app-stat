@@ -98,20 +98,13 @@ const NewMember: FC = () => {
               onClick={() => setDataHandler("gender", "vehivavy")}
             />
             <input
-              type="date"
+              type="month"
               name="birthday"
-              id=""
               className="border px-2 rounded-[5px] h-[40px] text-grey uppercase col-span-2 md:col-auto"
               value={data.birthday ? data.birthday : ""}
               onChange={onChangeHandler}
             />
           </div>
-          <InputNew
-            label="Toerana nahaterahana"
-            name="birthplace"
-            value={data.birthplace ? data.birthplace : ""}
-            onChange={onChangeHandler}
-          />
         </Container>
 
         <Container title="Batisa">
@@ -203,38 +196,6 @@ const NewMember: FC = () => {
             <option value="atsinanana">Atsinanana</option>
             <option value="andrefana">Andrefana</option>
           </select>
-        </Container>
-
-        <Container title="Asa">
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-            <RadioButton
-              name="job"
-              value="tena"
-              onChange={onChangeHandler}
-              checked={data.job === "tena"}
-              onClick={() => setDataHandler("job", "tena")}
-            />
-            <RadioButton
-              name="job"
-              value="tsy miankina"
-              onChange={onChangeHandler}
-              checked={data.job === "tsy miankina"}
-              onClick={() => setDataHandler("job", "tsy miankina")}
-            />
-            <RadioButton
-              name="job"
-              value="fanjakana"
-              onChange={onChangeHandler}
-              checked={data.job === "fanjakana"}
-              onClick={() => setDataHandler("job", "fanjakana")}
-            />
-          </div>
-          <InputNew
-            label="Talenta"
-            name="talent"
-            value={data.talent ? data.talent : ""}
-            onChange={onChangeHandler}
-          />
         </Container>
 
         <Container title="Fifandraisana">
