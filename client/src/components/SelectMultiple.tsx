@@ -65,7 +65,7 @@ const SelectMultiple: FC<Props> = ({ options, onChange }) => {
         }}
       />
       {focus && (
-        <div className="w-full absolute top-full left-0 shadow border bg-white">
+        <div className="w-full absolute top-full left-0 max-h-[200px] overflow-y-auto shadow border bg-white">
           {opts.map((opt, i) => {
             return (
               <div
