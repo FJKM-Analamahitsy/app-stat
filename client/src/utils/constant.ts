@@ -101,4 +101,24 @@ export const MONTHS = [
 
 export const FAMILYRANK = ["Ray", "Reny", "Zanaka", "hafa"];
 
-export const SAMPANA = ["AFA", "SAFIF", "AMA", "ANTEMA"];
+export const SAMPANA = [
+  "AFA",
+  "SAFIF",
+  "AMA",
+  "ANTEMA",
+  "VODROM-BAVAKA",
+  "MAITIMOLALY",
+  "SEKOLY_ALAHADY",
+  "SFS",
+  "SAMPATI",
+  "SVM",
+  "VFL",
+  "AFF",
+  "CENTRE_MEDICAL",
+  "SLK",
+  "STK_MOZIKA",
+  "ENGLISH_CLUB",
+  "VSMAM",
+  "DORKASY",
+  "FLD",
+];

@@ -74,3 +74,7 @@ input {
   overflow-y: scroll;
   scrollbar-width: none;
 }
+
+.ps-submenu-content {
+  height: 200px !important;
+}

@@ -30,7 +30,7 @@ const MenuData: any = [
   {
     label: "Sampana",
     icon: <FontAwesomeIcon icon={solid("users")} />,
-    submenu: SAMPANA.map((v) => ({ path: `/sampana/${v}`, label: v })),
+    submenu: SAMPANA.sort().map((v) => ({ path: `/sampana/${v}`, label: v })),
   },
 ];
 
