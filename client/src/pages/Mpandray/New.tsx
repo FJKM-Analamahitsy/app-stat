@@ -1,10 +1,11 @@
 import Button from "@components/Button";
 import InputNew from "@components/InputNew";
 import RadioButton from "@components/RadioButton";
+import Select from "@components/Select";
 import SelectMember from "@components/SelectMember";
 import SelectMultiple from "@components/SelectMultiple";
 import api from "@utils/api";
-import { SAMPANA } from "@utils/constant";
+import { MONTHS, SAMPANA } from "@utils/constant";
 import { FC, ReactNode, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -97,12 +98,11 @@ const NewMember: FC = () => {
               checked={data.gender === "vehivavy"}
               onClick={() => setDataHandler("gender", "vehivavy")}
             />
-            <input
-              type="month"
-              name="birthday"
-              className="border px-2 rounded-[5px] h-[40px] text-grey uppercase col-span-2 md:col-auto"
-              value={data.birthday ? data.birthday : ""}
-              onChange={onChangeHandler}
+
+            <Select
+              value={data.birthday}
+              options={[...MONTHS]}
+              onChange={(e) => setData({ ...data, birthday: e.target.value })}
             />
           </div>
         </Container>
