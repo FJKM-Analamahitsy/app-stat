@@ -8,6 +8,7 @@ import { Routes as Router, Route } from "react-router-dom";
 import Adidy from "@pages/Mpandray/Adidy";
 import AuthGuard from "@auth/AuthGuard";
 import Layout from "layout";
+import ListeSampana from "@pages/Sampana";
 
 const Routes: FC = () => {
   return (
@@ -22,6 +23,7 @@ const Routes: FC = () => {
             <Route path="new" element={<NewMember />} />
             <Route path="edit/:id" element={<NewMember />} />
           </Route>
+          <Route path="sampana/:name" element={<ListeSampana />} />
           <Route path="contribution" element={<Adidy />} />
         </Route>
       </Route>

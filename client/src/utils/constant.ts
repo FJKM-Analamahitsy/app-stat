@@ -101,4 +101,4 @@ export const MONTHS = [
 
 export const FAMILYRANK = ["Ray", "Reny", "Zanaka", "hafa"];
 
-export const SMPANA = ["AFA", "SAFIF", "AMA", "ANTEMA"];
+export const SAMPANA = ["AFA", "SAFIF", "AMA", "ANTEMA"];

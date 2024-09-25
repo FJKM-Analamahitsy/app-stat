@@ -73,14 +73,18 @@ const getMember = async (req, res) => {
 };
 
 const listMember = async (req, res) => {
-  const { page = 1, limit = 10, karatra, anarana } = req.query;
+  const { page = 1, limit = 10, karatra, anarana, sampana } = req.query;
   const sort = karatra ? { mpandrayN: karatra } : { name: anarana };
+  const filter = sampana
+    ? { sampana: { $regex: new RegExp(sampana, "i") } }
+    : {};
   const member = await Member.find()
     .sort({ ...sort })
     .collation({ locale: "en_US", numericOrdering: true })
     .limit(limit * 1)
-    .skip((page - 1) * limit);
-  const totalRow = await Member.countDocuments();
+    .skip((page - 1) * limit)
+    .where({ ...filter });
+  const totalRow = await Member.where({ ...filter }).countDocuments();
   return res.send({ member, totalRow });
 };
 
@@ -147,8 +151,13 @@ const statistics = async (req, res) => {
 };
 
 const exportMembersToCsv = async (req, res) => {
-  const data = await Member.find().select("-_id");
-  const { filter } = req.query;
+  const { filter, sampana } = req.query;
+  const where = sampana
+    ? { sampana: { $regex: new RegExp(sampana, "i") } }
+    : {};
+  const data = await Member.find()
+    .where({ ...where })
+    .select("-_id");
   const fields = [
     {
       label: "Anarana",

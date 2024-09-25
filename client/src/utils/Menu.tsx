@@ -1,5 +1,6 @@
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SAMPANA } from "./constant";
 
 const MenuData: any = [
   {
@@ -24,6 +25,12 @@ const MenuData: any = [
     label: "Contribution",
     path: "/contribution",
     icon: <FontAwesomeIcon icon={solid("money-bills")} />,
+  },
+
+  {
+    label: "Sampana",
+    icon: <FontAwesomeIcon icon={solid("users")} />,
+    submenu: SAMPANA.map((v) => ({ path: `/sampana/${v}`, label: v })),
   },
 ];
 

@@ -46,7 +46,15 @@ const SideMenu: FC = () => {
                   <SubMenu key={i} label={mn.label} icon={mn.icon}>
                     {mn.submenu.map((sm: any, i: number) => {
                       return (
-                        <MenuItem key={i} component={<Link to={sm.path} />}>
+                        <MenuItem
+                          className={`${
+                            pathname === sm.path
+                              ? "bg-primary !text-white"
+                              : "hover:bg-slate-50"
+                          }`}
+                          key={i}
+                          component={<Link to={sm.path} />}
+                        >
                           {sm.label}
                         </MenuItem>
                       );

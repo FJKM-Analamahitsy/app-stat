@@ -146,7 +146,9 @@ const Liste: FC = () => {
         <Search />
       </div>
 
-      <ExportBtn />
+      <div className="flex justify-end w-full">
+        <ExportBtn />
+      </div>
 
       <DataTable
         columns={columns}
