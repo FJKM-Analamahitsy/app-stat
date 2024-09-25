@@ -102,7 +102,9 @@ const NewMember: FC = () => {
             <Select
               value={data.birthday}
               options={[...MONTHS]}
-              onChange={(e) => setData({ ...data, birthday: e.target.value })}
+              valueIndex={false}
+              name="birthday"
+              onChange={onChangeHandler}
             />
           </div>
         </Container>

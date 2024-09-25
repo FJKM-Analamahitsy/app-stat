@@ -109,11 +109,7 @@ const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
               <div>
                 <p className="text-gray-400 text-sm">{shema[el].label}</p>
                 <p className="font-medium text-gray-800">
-                  {el === "birthday"
-                    ? new Date(data[el]).toLocaleDateString()
-                    : el === "phone"
-                    ? formatPoneNumber(data[el])
-                    : data[el]}
+                  {el === "phone" ? formatPoneNumber(data[el]) : data[el]}
                 </p>
               </div>
             </div>
