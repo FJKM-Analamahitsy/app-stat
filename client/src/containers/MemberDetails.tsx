@@ -73,9 +73,9 @@ const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
       label: "Faritra",
       icon: <FontAwesomeIcon icon={solid("home-alt")} size="sm" />,
     },
-    job: {
-      label: "Asa",
-      icon: <FontAwesomeIcon icon={solid("user-tie")} size="sm" />,
+    sampana: {
+      label: "Sampana",
+      icon: <FontAwesomeIcon icon={solid("users")} size="sm" />,
     },
     talent: {
       label: "Talenta",

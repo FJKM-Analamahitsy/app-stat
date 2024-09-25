@@ -263,6 +263,7 @@ const NewMember: FC = () => {
           <SelectMultiple
             options={SMPANA}
             onChange={(val) => setData({ ...data, sampana: val })}
+            defaultValue={data.sampana}
           />
         </Container>
 
