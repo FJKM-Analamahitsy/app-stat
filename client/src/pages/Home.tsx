@@ -16,7 +16,7 @@ const Home: FC = () => {
     api.get("/member/stat").then((res) => setData(res.data));
   }, []);
   return (
-    <div className="bg-slate-50 h-fit min-h-[calc(100vh-70px)] p-4">
+    <div className="bg-slate-50 h-fit p-4">
       <div className="bg-no-repeat bg-cover rounded-[1rem] bg-white p-4 bg-line-pattern">
         <div>
           <p className="text-[1.5rem] font-medium">FJKM Analamahitsy</p>
@@ -64,37 +64,26 @@ const Home: FC = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
-        <div className="col-span-2">
-          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4">
-            <DashChart />
-            <DashChart />
-            <div className="col-span-2 bg-white rounded-[5px] p-2 flex flex-col items-center">
-              <img src={map} alt="" className="w-10/12" />
-              <div className="flex flex-wrap gap-4 mt-2 [&>*:nth-child(1)]:text-primary [&>*:nth-child(2)]:text-green-500 [&>*:nth-child(3)]:text-red-500 [&>*:nth-child(4)]:text-purple-500">
-                {data &&
-                  faritra.map((fr, i) => {
-                    if (data[fr]) {
-                      return (
-                        <div key={i}>
-                          <FontAwesomeIcon icon={solid("circle-dot")} />
-                          <span className="ml-2 capitalize text-slate-600">
-                            {fr} {data[fr].n} ({data[fr].p}%)
-                          </span>
-                        </div>
-                      );
-                    }
-                    return null;
-                  })}
-              </div>
-            </div>
+        <div className="col-span-2 bg-white rounded-[5px] p-2 h-fit flex flex-col items-center">
+          <DashChart title={`${data && data.total} Christians`} />
+          <div className="flex overflow-auto w-full p-4  gap-4 mt-2 [&>*:nth-child(1)]:text-primary [&>*:nth-child(2)]:text-green-500 [&>*:nth-child(3)]:text-red-500 [&>*:nth-child(4)]:text-purple-500">
+            {data &&
+              faritra.map((fr, i) => {
+                if (data[fr]) {
+                  return (
+                    <div key={i} className="flex items-center">
+                      <FontAwesomeIcon icon={solid("circle-dot")} />
+                      <span className="ml-2 capitalize text-slate-600 whitespace-nowrap">
+                        {fr} {data[fr].n} ({data[fr].p}%)
+                      </span>
+                    </div>
+                  );
+                }
+                return null;
+              })}
           </div>
         </div>
-        <div>
-          <Calendar />
-          <div className="mt-4">
-            <Sampana />
-          </div>
-        </div>
+        <Sampana />
       </div>
     </div>
   );

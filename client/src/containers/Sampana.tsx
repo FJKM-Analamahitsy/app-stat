@@ -1,9 +1,17 @@
 import AvatarGroup from "@components/AvatarGroup";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FC } from "react";
+import api from "@utils/api";
+import { FC, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Sampana: FC = () => {
+  const [data, setData] = useState<any>({});
+  useEffect(() => {
+    api.get("/member/stat/sampana").then((res) => {
+      setData(res.data);
+    });
+  }, []);
   return (
     <div className="bg-white p-4 rounded-[5px]">
       <div className="text-slate-600 mb-2">
@@ -11,17 +19,25 @@ const Sampana: FC = () => {
         <span className="font-medium text-[18px] ml-2">Sampana</span>
       </div>
 
-      <div className="border border-slate-100 p-2 rounded-[4px] flex justify-between">
-        <div className="flex gap-2">
-          <div className="border-r-2 px-1">logo</div>
-          <div>
-            <p className="font-medium">AFA</p>
-            <p className="text-primary text-[12px]">125 membre</p>
-          </div>
-        </div>
-        <div>
-          <AvatarGroup data={["tojo", "mimi", "avotra"]} />
-        </div>
+      <div className="max-h-[calc(100vh-400px)] overflow-y-auto">
+        {Object.keys(data).map((sm, i) => {
+          return (
+            <div
+              key={i}
+              className="border border-slate-100 p-2 rounded-[4px] flex justify-between mb-4"
+            >
+              <div className="flex gap-2">
+                <div>
+                  <p className="font-medium">{sm}</p>
+                  <p className="text-primary text-[12px]">{data[sm]} membre</p>
+                </div>
+              </div>
+              <Link to={`/sampana/${sm}`}>
+                <AvatarGroup data={["mi", "er"]} />
+              </Link>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

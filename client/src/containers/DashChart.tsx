@@ -1,55 +1,56 @@
-import { FC } from "react";
-import { Line } from "react-chartjs-2";
+import { FC, useEffect, useState } from "react";
+import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   PointElement,
-  LineElement,
   Title,
   Tooltip,
   Legend,
+  BarElement,
 } from "chart.js";
+import api from "@utils/api";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
 );
 
-const DashChart: FC = () => {
+interface Props {
+  title: string;
+}
+
+const DashChart: FC<Props> = ({ title }) => {
+  const [data, setData] = useState({});
   const options = {
     responsive: true,
   };
 
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ];
-
-  const data = {
-    labels,
+  const chart = {
+    labels: Object.keys(data).map((v) => v.slice(0, 3)),
     datasets: [
       {
-        label: "Mpandray",
-        data: labels.map(() => 10),
+        label: title,
+        data: Object.values(data),
         borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        backgroundColor: "rgba(53, 162, 235, 0.7)",
       },
     ],
   };
+  useEffect(() => {
+    api.get("/member/stat/monthly").then((res) => {
+      setData(res.data);
+    });
+  }, []);
   return (
-    <div className="bg-white rounded-[5px] p-4">
-      <Line options={options} data={data} className="w-full" />
+    <div className="bg-white rounded-[5px] p-4 w-full">
+      <Bar options={options} data={chart} className="w-full h-full" />
     </div>
   );
 };

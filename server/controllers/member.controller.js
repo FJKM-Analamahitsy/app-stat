@@ -146,6 +146,7 @@ const statistics = async (req, res) => {
       n: atsinanana,
       p: ((atsinanana / total) * 100).toFixed(0),
     },
+    total,
   };
   res.send(stast);
 };
