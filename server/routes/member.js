@@ -9,6 +9,8 @@ const {
   searchMember,
   statistics,
   getFamily,
+  getLastKaratra,
+  checkKaratra,
 } = require("../controllers/member.controller");
 const { authMiddlware } = require("../controllers/middleware");
 
@@ -23,5 +25,7 @@ route.get("/export", exportMembersToCsv);
 route.get("/search", authMiddlware, searchMember);
 route.get("/stat", authMiddlware, statistics);
 route.get("/family/:id", getFamily);
+route.get("/lastKaratra", getLastKaratra);
+route.get("/check/:num", checkKaratra);
 
 module.exports.member = route;

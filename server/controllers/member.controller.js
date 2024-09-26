@@ -260,6 +260,21 @@ const getFamily = async (req, res) => {
   return res.send(result);
 };
 
+const getLastKaratra = async (req, res) => {
+  const result = await Member.find()
+    .sort({ mpandrayN: "desc" })
+    .collation({ locale: "en_US", numericOrdering: true })
+    .limit(1)
+    .select("-_id mpandrayN");
+  return res.json(+result[0].mpandrayN);
+};
+
+const checkKaratra = async (req, res) => {
+  const { num } = req.params;
+  const result = await Member.where({ mpandrayN: num }).countDocuments();
+  return res.json(result > 0);
+};
+
 module.exports = {
   createMember,
   deleteMember,
@@ -270,4 +285,6 @@ module.exports = {
   exportMembersToCsv,
   statistics,
   getFamily,
+  checkKaratra,
+  getLastKaratra,
 };
