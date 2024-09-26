@@ -107,7 +107,7 @@ export const SAMPANA = [
   "AMA",
   "ANTEMA",
   "VODROM-BAVAKA",
-  "MAITIMOLALY",
+  "MAINTIMOLALY",
   "SEKOLY_ALAHADY",
   "SFS",
   "SAMPATI",

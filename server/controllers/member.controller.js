@@ -275,6 +275,65 @@ const checkKaratra = async (req, res) => {
   return res.json(result > 0);
 };
 
+const statPerBirthMonth = async (req, res) => {
+  const month = [
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december",
+  ];
+  let result = {};
+  for (let i = 0; i < month.length; i++) {
+    const m = month[i];
+    const count = await Member.where({ birthday: m }).countDocuments();
+    result = { ...result, [m]: count };
+  }
+
+  return res.json(result);
+};
+
+const statPerSampana = async (req, res) => {
+  const sampana = [
+    "AFA",
+    "SAFIF",
+    "AMA",
+    "ANTEMA",
+    "VODROM-BAVAKA",
+    "MAINTIMOLALY",
+    "SEKOLY_ALAHADY",
+    "SFS",
+    "SAMPATI",
+    "SVM",
+    "VFL",
+    "AFF",
+    "CENTRE_MEDICAL",
+    "SLK",
+    "STK_MOZIKA",
+    "ENGLISH_CLUB",
+    "VSMAM",
+    "DORKASY",
+    "FLD",
+  ];
+  let result = {};
+  for (let i = 0; i < sampana.length; i++) {
+    const m = sampana[i];
+    const count = await Member.where({
+      sampana: { $regex: new RegExp(m, "i") },
+    }).countDocuments();
+    result = { ...result, [m]: count };
+  }
+
+  return res.json(result);
+};
+
 module.exports = {
   createMember,
   deleteMember,
@@ -287,4 +346,6 @@ module.exports = {
   getFamily,
   checkKaratra,
   getLastKaratra,
+  statPerBirthMonth,
+  statPerSampana,
 };

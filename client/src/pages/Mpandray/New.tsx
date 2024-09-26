@@ -232,13 +232,13 @@ const NewMember: FC = () => {
 
         <Container title="Samihafa">
           <InputNew
-            label="Fialamboly"
+            label="Fialam-boly"
             name="hobby"
             value={data.hobby ? data.hobby : ""}
             onChange={onChangeHandler}
           />
           <InputNew
-            label="Fanatanjahatena"
+            label="Fanatanjahan-tena"
             name="sport"
             value={data.sport ? data.sport : ""}
             onChange={onChangeHandler}

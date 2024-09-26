@@ -11,6 +11,8 @@ const {
   getFamily,
   getLastKaratra,
   checkKaratra,
+  statPerBirthMonth,
+  statPerSampana,
 } = require("../controllers/member.controller");
 const { authMiddlware } = require("../controllers/middleware");
 
@@ -24,6 +26,8 @@ route.get("/get/:id", authMiddlware, getMember);
 route.get("/export", exportMembersToCsv);
 route.get("/search", authMiddlware, searchMember);
 route.get("/stat", authMiddlware, statistics);
+route.get("/stat/monthly", statPerBirthMonth);
+route.get("/stat/sampana", statPerSampana);
 route.get("/family/:id", getFamily);
 route.get("/lastKaratra", getLastKaratra);
 route.get("/check/:num", checkKaratra);
