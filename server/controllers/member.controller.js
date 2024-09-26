@@ -266,7 +266,7 @@ const getLastKaratra = async (req, res) => {
     .collation({ locale: "en_US", numericOrdering: true })
     .limit(1)
     .select("-_id mpandrayN");
-  return res.json(+result[0].mpandrayN);
+  return res.json(+result[0].mpandrayN + 1);
 };
 
 const checkKaratra = async (req, res) => {

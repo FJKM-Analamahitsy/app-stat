@@ -34,6 +34,12 @@ const NewMember: FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const getLastKaratra = () => {
+    api.get("/member/lastKaratra").then((res) => {
+      setData({ ...data, mpandray: "eny", mpandrayN: res.data });
+    });
+  };
+
   useEffect(() => {
     if (id) {
       api.get("/member/get/" + id).then((res) => {
@@ -144,7 +150,10 @@ const NewMember: FC = () => {
               value="eny"
               onChange={onChangeHandler}
               checked={data.mpandray === "eny"}
-              onClick={() => setDataHandler("mpandray", "eny")}
+              onClick={() => {
+                setDataHandler("mpandray", "eny");
+                !data.mpandrayN && getLastKaratra();
+              }}
             />
             <RadioButton
               name="mpandray"
