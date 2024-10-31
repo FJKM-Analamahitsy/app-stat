@@ -1,6 +1,5 @@
 import Button from "@components/Button";
 import Input from "@components/Input";
-import Logo from "@components/Logo";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAuth from "@hooks/useAuth";
@@ -9,7 +8,6 @@ import { FC, useState } from "react";
 import toast from "react-hot-toast";
 import church from "@assets/img/church.svg";
 import fjkm from "@assets/img/fjkm.png";
-import { Link } from "react-router-dom";
 
 const Login: FC = () => {
   const [showPass, setShowPass] = useState<boolean>(false);
@@ -75,12 +73,6 @@ const Login: FC = () => {
                 <span>keep me sign in</span>
               </p>
               <Button className="bg-primary text-white">Login</Button>
-              <Link
-                className="text-center text-primary underline mt-2"
-                to="/contribution"
-              >
-                contribution
-              </Link>
             </div>
           </form>
         </div>
