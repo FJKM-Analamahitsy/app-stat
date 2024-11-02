@@ -61,7 +61,7 @@ const FormUser: FC<Props> = ({ children, data, profile, success }) => {
             type="password"
             placeholder="******"
             name="password"
-            required
+            required={!data}
             value={input.password}
             onChange={onChangeHandler}
           />

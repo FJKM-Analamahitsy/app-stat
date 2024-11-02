@@ -41,6 +41,7 @@ const ProfilePage: FC = () => {
   const submit = () => {
     if (name !== "") {
       if (id) {
+        console.log("upda");
         api.patch("/profile/" + id, { name, permission }).then((res) => {
           navigate("/profile");
         });
@@ -53,10 +54,12 @@ const ProfilePage: FC = () => {
   };
 
   useEffect(() => {
-    api.get(`/profile/${id}`).then((res) => {
-      setPermission(res.data.permission);
-      setName(res.data.name);
-    });
+    if (id) {
+      api.get(`/profile/${id}`).then((res) => {
+        setPermission(res.data.permission);
+        setName(res.data.name);
+      });
+    }
   }, [id]);
   return (
     <div className="bg-white h-full p-4">
