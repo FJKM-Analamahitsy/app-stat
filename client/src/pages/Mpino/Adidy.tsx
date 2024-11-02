@@ -1,65 +1,34 @@
 import Button from "@components/Button";
 import InputNew from "@components/InputNew";
 import Select from "@components/Select";
-import SelectMember from "@components/SelectMember";
 import api from "@utils/api";
 import { MONTHS } from "@utils/constant";
 import { FC, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
-const Adidy: FC = () => {
+interface Props {
+  mpandray: string;
+}
+
+const Adidy: FC<Props> = ({ mpandray }) => {
   const now = useState(new Date())[0];
   const [data, setData] = useState({
-    mpandray: "",
+    mpandray,
     month: now.getMonth(),
     year: now.getFullYear(),
-    pay: 0,
+    pay: "",
     type: "adidy mpandray",
   });
   const [monthEnd, setMonthhEnd] = useState(now.getMonth());
-  const memeberInput = useRef<any>(null);
-  const submit = async () => {
-    if (data.mpandray !== "" && data.pay !== 0) {
-      const n = data.type === "adidy mpandray" ? monthEnd - data.month + 1 : 1;
-      let i = 0;
-      const pay = n > 1 ? +(data.pay / n).toFixed(2) : data.pay;
-      let errorStatus = 0;
-      do {
-        const topay = { ...data, pay, month: data.month + i };
-        try {
-          await api.post("/adidy", topay);
-        } catch (error: any) {
-          errorStatus++;
-          toast.error(error.response.data);
-        }
-        console.log(n);
-
-        if (i === n - 1 && errorStatus === 0) {
-          setData({
-            mpandray: "",
-            month: now.getMonth(),
-            year: now.getFullYear(),
-            pay: 0,
-            type: "adidy mpandray",
-          });
-          memeberInput.current.reset();
-          toast.success("Paiment saved successfully, Thanks!");
-        }
-        i++;
-      } while (i < n);
-    }
-  };
+  const submit = async () => {};
   return (
-    <div className="max-w-[500px] py-[2rem] px-4 bg-white border border-bg m-4 mt-8 md:mx-auto  rounded-[5px] flex flex-col gap-8">
-      <SelectMember
-        ref={memeberInput}
-        label="Mpandray"
-        onSelected={(m) => setData({ ...data, mpandray: m._id })}
-      />
+    <div className="min-w-[50vw] text-[20px] py-[2rem] px-6 bg-white border border-bg m-4 mt-8 md:mx-auto  rounded-[5px] flex flex-col gap-8">
       <Select
         value={data.type}
-        onChange={(e) => setData({ ...data, type: e.target.value })}
-        options={["adidy mpandray", "adidy iombonana", "voka-dehibe"]}
+        onChange={(e) =>
+          setData({ ...data, type: e.target.value.toLowerCase() })
+        }
+        options={["Adidin' ny mpandray", "Adidy iombonana", "Voka-dehibe"]}
         valueIndex={false}
       />
       <div className="grid grid-cols-3 gap-4">
@@ -90,14 +59,18 @@ const Adidy: FC = () => {
         />
       </div>
       <InputNew
-        type="number"
         label="Vola"
         value={data.pay}
-        onChange={(e) => setData({ ...data, pay: parseInt(e.target.value) })}
+        onChange={(e) => {
+          let cval = e.target.value;
+          const mtt = cval.replace(/\s|,|\./g, "");
+          cval = new Intl.NumberFormat("de-FR").format(+mtt);
+          setData({ ...data, pay: cval });
+        }}
       />
       <div className="text-right mt-4">
         <Button className="text-white bg-primary w-full" onClick={submit}>
-          pay
+          Payer
         </Button>
       </div>
     </div>

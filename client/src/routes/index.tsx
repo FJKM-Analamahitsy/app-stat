@@ -33,7 +33,6 @@ const Routes: FC = () => {
           </Route>
           <Route path="users" element={<UserList />} />
           <Route path="sampana/:name" element={<ListeSampana />} />
-          <Route path="contribution" element={<Adidy />} />
         </Route>
       </Route>
     </Router>

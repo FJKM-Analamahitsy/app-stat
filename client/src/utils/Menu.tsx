@@ -25,13 +25,6 @@ const MenuData: any = [
   },
 
   {
-    label: "Contribution",
-    path: "/contribution",
-    icon: <FontAwesomeIcon icon={solid("money-bills")} />,
-    auth: "contribution",
-  },
-
-  {
     label: "Sampana",
     icon: <FontAwesomeIcon icon={solid("users")} />,
     submenu: SAMPANA.sort().map((v) => ({ path: `/sampana/${v}`, label: v })),

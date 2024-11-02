@@ -12,6 +12,9 @@ import toast from "react-hot-toast";
 import Family from "@containers/Family";
 import AdidyDetails from "@containers/AdidyDetails";
 import AdidySamihafa from "@containers/AdidySamihafa";
+import Modal from "@components/Modal";
+import Button from "@components/Button";
+import Adidy from "./Adidy";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
@@ -107,7 +110,13 @@ const Page: FC = () => {
         </div>
       </div>
       <div className="p-4 gap-y-6 md:gap-6 bg-white rounded-b min-h-[43vh]">
-        <div className="col-span-2 p-2">
+        <Modal>
+          <Button className="bg-primary text-white mb-4 max-w-[150px]">
+            Contribute
+          </Button>
+          <Adidy mpandray={id || ""} />
+        </Modal>
+        <div className="col-span-2">
           <MemberInfoTab>
             <MemberDetails data={data} />
             <Family data={data} rank={data.familyRank} />
