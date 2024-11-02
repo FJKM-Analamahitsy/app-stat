@@ -149,9 +149,6 @@ const ListeSampana: FC = () => {
         <p className="text-lg font-medium">{name}</p>
         <ExportBtn sampana={name} />
       </div>
-      <div className="mb-4 md:hidden">
-        <Search />
-      </div>
 
       <DataTable
         columns={columns}

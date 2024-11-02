@@ -20,10 +20,13 @@ const Liste: FC = () => {
   const [limit, setLimit] = useState<number>(30);
   const [sort, setSort] = useState<any>(["anarana", "asc"]);
   const [n, setN] = useState<number>(1);
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const fetch = (page: number) => {
     api
-      .get(`/member?page=${page}&limit=${limit}&${sort[0]}=${sort[1]}`)
+      .get(
+        `/member?page=${page}&limit=${limit}&${sort[0]}=${sort[1]}&search=${query}`
+      )
       .then((res) => {
         setData(res.data.member);
         setRows(res.data.totalRow);
@@ -134,6 +137,14 @@ const Liste: FC = () => {
     [navigate]
   );
 
+  useEffect(() => {
+    if (query.trim() !== "") {
+      fetch(n);
+    } else {
+      fetch(1);
+    }
+  }, [query]);
+
   useEffect(
     () => {
       fetch(1);
@@ -142,12 +153,15 @@ const Liste: FC = () => {
   );
   return (
     <div className="p-4 bg-white rounded" id="list">
-      <div className="mb-4 md:hidden">
-        <Search />
-      </div>
-
-      <div className="flex justify-end w-full">
-        <ExportBtn />
+      <div className="flex justify-between w-full">
+        <div className="w-2/5">
+          <Search
+            onSearch={(query) => {
+              setN(1);
+              setQuery(query);
+            }}
+          />
+        </div>
       </div>
 
       <DataTable

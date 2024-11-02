@@ -73,11 +73,22 @@ const getMember = async (req, res) => {
 };
 
 const listMember = async (req, res) => {
-  const { page = 1, limit = 10, karatra, anarana, sampana } = req.query;
+  const { page = 1, limit = 10, karatra, anarana, sampana, search } = req.query;
   const sort = karatra ? { mpandrayN: karatra } : { name: anarana };
-  const filter = sampana
-    ? { sampana: { $regex: new RegExp(sampana, "i") } }
-    : {};
+  let filter = {};
+  if (sampana) {
+    filter = { ...filter, sampana: { $regex: new RegExp(sampana, "i") } };
+  }
+  if (search) {
+    filter = {
+      ...filter,
+      $or: [
+        { name: { $regex: new RegExp(search, "i") } },
+        { forname: { $regex: new RegExp(search, "i") } },
+        { mpandrayN: { $regex: new RegExp(search, "i") } },
+      ],
+    };
+  }
   const member = await Member.find()
     .sort({ ...sort })
     .collation({ locale: "en_US", numericOrdering: true })
