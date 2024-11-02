@@ -1,11 +1,11 @@
-import Liste from "@pages/Mpandray/Liste";
+import Liste from "@pages/Mpino/Liste";
 import Home from "@pages/Home";
 import Login from "@pages/Login";
-import NewMember from "@pages/Mpandray/New";
-import Page from "@pages/Mpandray/Page";
+import NewMember from "@pages/Mpino/New";
+import Page from "@pages/Mpino/Page";
 import { FC } from "react";
 import { Routes as Router, Route } from "react-router-dom";
-import Adidy from "@pages/Mpandray/Adidy";
+import Adidy from "@pages/Mpino/Adidy";
 import AuthGuard from "@auth/AuthGuard";
 import Layout from "layout";
 import ListeSampana from "@pages/Sampana";
