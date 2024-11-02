@@ -43,7 +43,6 @@ const SideMenu: FC = () => {
           <Menu>
             {MenuData.map((mn: any, i: number) => {
               const permission = user.profile.permission;
-              console.log(mn.auth);
               if (permission.GET.indexOf(mn.auth) !== -1) {
                 if (mn.submenu) {
                   return (

@@ -1,3 +1,4 @@
+import { useAppSelector } from "@redux/hooks";
 import { Children, FC, isValidElement, ReactNode, useState } from "react";
 
 interface Props {
@@ -5,7 +6,9 @@ interface Props {
 }
 
 const MemberInfoTab: FC<Props> = ({ children }) => {
-  const [active, setActive] = useState(0);
+  const user = useAppSelector((state) => state.user);
+  const [active, setActive] = useState(user.profile.tabInPage[0]);
+
   const tab = ["Ny tena", "Ankohonana", "Adidy mpandray", "Adidy samihafa"];
   const child = Children.map(children, (child) => {
     if (isValidElement(child)) {
@@ -15,14 +18,14 @@ const MemberInfoTab: FC<Props> = ({ children }) => {
   return (
     <div>
       <div className="flex gap-4 w-full border-b border-b-bg">
-        {tab.map((t, i) => {
+        {user.profile.tabInPage.map((t: number) => {
           return (
             <div
-              key={i}
-              className={`p-2 cursor-pointer ${active === i && "bg-bg"}`}
-              onClick={() => setActive(i)}
+              key={t}
+              className={`p-2 cursor-pointer ${active === t && "bg-bg"}`}
+              onClick={() => setActive(t)}
             >
-              {t}
+              {tab[t]}
             </div>
           );
         })}

@@ -11,6 +11,7 @@ const Profile = mongoose.model("Profile", {
     DELETE: [String],
     PATCH: [String],
   },
+  tabInPage: [Number],
 });
 
 module.exports = { Profile };

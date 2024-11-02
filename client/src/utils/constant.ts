@@ -132,3 +132,5 @@ export const APP_OPTIONS = [
   "profile",
   "users",
 ];
+
+export const TAB_OPTIONS = ["info", "family", "contrib", "other"];
