@@ -11,6 +11,7 @@ import Layout from "layout";
 import ListeSampana from "@pages/Sampana";
 import ProfileList from "@pages/Profile/List";
 import ProfilePage from "@pages/Profile/Page";
+import UserList from "@pages/Users/List";
 
 const Routes: FC = () => {
   return (
@@ -30,6 +31,7 @@ const Routes: FC = () => {
             <Route path="new" element={<ProfilePage />} />
             <Route path=":id" element={<ProfilePage />} />
           </Route>
+          <Route path="users" element={<UserList />} />
           <Route path="sampana/:name" element={<ListeSampana />} />
           <Route path="contribution" element={<Adidy />} />
         </Route>

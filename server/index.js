@@ -7,6 +7,7 @@ const { member } = require("./routes/member");
 const { adidy } = require("./routes/adidy");
 const { cookieParser } = require("./utils/cookieParser");
 const { profile } = require("./routes/profile");
+const { users } = require("./routes/users");
 
 const app = express();
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use("/auth", auth);
 app.use("/member", member);
 app.use("/adidy", adidy);
 app.use("/profile", profile);
+app.use("/users", users);
 
 const port = process.env.PORT || 4000;
 

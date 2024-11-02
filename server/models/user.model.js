@@ -10,7 +10,6 @@ const User = mongoose.model("User", {
     ref: "Profile",
   },
   password: String,
-  role: String,
 });
 
 module.exports = { User };
