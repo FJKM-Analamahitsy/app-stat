@@ -123,4 +123,12 @@ export const SAMPANA = [
   "FLD",
 ];
 
-export const APP_OPTIONS = ["dash", "member", "contribution", "sampana"];
+export const APP_OPTIONS = [
+  "dash",
+  "member",
+  "newmember",
+  "contribution",
+  "sampana",
+  "profile",
+  "users",
+];

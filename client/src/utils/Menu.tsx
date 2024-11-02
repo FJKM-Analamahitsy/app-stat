@@ -7,40 +7,47 @@ const MenuData: any = [
     label: "Dashboard",
     path: "/home",
     icon: <FontAwesomeIcon icon={solid("border-all")} />,
+    auth: "dash",
   },
 
   {
     label: "List",
     path: "/christian",
     icon: <FontAwesomeIcon icon={solid("list")} />,
+    auth: "member",
   },
 
   {
     label: "New",
     path: "/christian/new",
     icon: <FontAwesomeIcon icon={solid("user-plus")} />,
+    auth: "newmember",
   },
 
   {
     label: "Contribution",
     path: "/contribution",
     icon: <FontAwesomeIcon icon={solid("money-bills")} />,
+    auth: "contribution",
   },
 
   {
     label: "Sampana",
     icon: <FontAwesomeIcon icon={solid("users")} />,
     submenu: SAMPANA.sort().map((v) => ({ path: `/sampana/${v}`, label: v })),
+    auth: "sampana",
   },
   {
     label: "Profile",
     path: "/profile",
     icon: <FontAwesomeIcon icon={solid("users")} />,
+    auth: "profile",
   },
   {
     label: "Users",
     path: "/users",
     icon: <FontAwesomeIcon icon={solid("users")} />,
+    auth: "users",
   },
 ];
 

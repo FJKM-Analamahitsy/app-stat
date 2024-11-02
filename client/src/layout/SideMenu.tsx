@@ -2,7 +2,7 @@ import Logo from "@components/Logo";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { userUnSetAction } from "@redux/actions";
-import { useAppDispatch } from "@redux/hooks";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import MenuData from "@utils/Menu";
 import api from "@utils/api";
 import { FC, useState } from "react";
@@ -17,6 +17,7 @@ const SideMenu: FC = () => {
   });
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const user = useAppSelector((state) => state.user);
 
   const logout = () => {
     api.delete("/auth").then(() => {
@@ -41,41 +42,45 @@ const SideMenu: FC = () => {
         <div className="h-[calc(100vh-86px)] flex flex-col justify-between">
           <Menu>
             {MenuData.map((mn: any, i: number) => {
-              if (mn.submenu) {
-                return (
-                  <SubMenu key={i} label={mn.label} icon={mn.icon}>
-                    {mn.submenu.map((sm: any, i: number) => {
-                      return (
-                        <MenuItem
-                          className={`${
-                            pathname === sm.path
-                              ? "bg-primary !text-white"
-                              : "hover:bg-slate-50"
-                          }`}
-                          key={i}
-                          component={<Link to={sm.path} />}
-                        >
-                          {sm.label}
-                        </MenuItem>
-                      );
-                    })}
-                  </SubMenu>
-                );
-              } else {
-                return (
-                  <MenuItem
-                    key={i}
-                    component={<Link to={mn.path} />}
-                    className={`${
-                      pathname === mn.path
-                        ? "bg-primary !text-white"
-                        : "hover:bg-slate-50"
-                    }`}
-                    icon={mn.icon}
-                  >
-                    {mn.label}
-                  </MenuItem>
-                );
+              const permission = user.profile.permission;
+              console.log(mn.auth);
+              if (permission.GET.indexOf(mn.auth) !== -1) {
+                if (mn.submenu) {
+                  return (
+                    <SubMenu key={i} label={mn.label} icon={mn.icon}>
+                      {mn.submenu.map((sm: any, i: number) => {
+                        return (
+                          <MenuItem
+                            className={`${
+                              pathname === sm.path
+                                ? "bg-primary !text-white"
+                                : "hover:bg-slate-50"
+                            }`}
+                            key={i}
+                            component={<Link to={sm.path} />}
+                          >
+                            {sm.label}
+                          </MenuItem>
+                        );
+                      })}
+                    </SubMenu>
+                  );
+                } else {
+                  return (
+                    <MenuItem
+                      key={i}
+                      component={<Link to={mn.path} />}
+                      className={`${
+                        pathname === mn.path
+                          ? "bg-primary !text-white"
+                          : "hover:bg-slate-50"
+                      }`}
+                      icon={mn.icon}
+                    >
+                      {mn.label}
+                    </MenuItem>
+                  );
+                }
               }
             })}
           </Menu>
