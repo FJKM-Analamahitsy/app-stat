@@ -17,7 +17,7 @@ const Select: FC<SelectProps> = ({ options, valueIndex = true, ...props }) => {
     >
       {options.map((opt, i) => {
         return (
-          <option key={i} value={valueIndex ? i : opt} className="capitalize">
+          <option key={i} value={valueIndex ? i : opt}>
             {opt}
           </option>
         );

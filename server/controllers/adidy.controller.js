@@ -1,5 +1,5 @@
 const { object, string, number } = require("yup");
-const { Adidy } = require("../models/adidy.model");
+const { Adidy, Compta } = require("../models/adidy.model");
 
 const MONTHS = [
   "january",
@@ -26,20 +26,9 @@ const adidyInput = object({
 
 const createAdidy = async (req, res) => {
   try {
-    const input = await adidyInput.validate(req.body);
-    const check = await Adidy.find({
-      year: input.year,
-      month: input.month,
-      mpandray: input.mpandray,
-      type: input.type,
-    }).countDocuments();
-    if (check > 0)
-      return res
-        .status(400)
-        .send(
-          `contribution of ${MONTHS[input.month]},${input.year} already paid.`
-        );
-    const newAdidy = new Adidy({ ...input });
+    const compta = new Compta(req.body.compta);
+    await compta.save();
+    const newAdidy = new Adidy(req.body.trace);
     await newAdidy.save();
     res.send("success");
   } catch (error) {

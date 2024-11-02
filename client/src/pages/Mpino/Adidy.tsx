@@ -20,14 +20,30 @@ const Adidy: FC<Props> = ({ mpandray }) => {
     type: "adidy mpandray",
   });
   const [monthEnd, setMonthhEnd] = useState(now.getMonth());
-  const submit = async () => {};
+  const submit = async () => {
+    const compta = {
+      mpandray,
+      mtt: parseInt(data.pay.replace(/\./g, "")),
+      note: `${data.type} ${MONTHS[data.month]}-${MONTHS[monthEnd]}`,
+    };
+    const month = [];
+    for (let i = data.month; i <= monthEnd; i++) {
+      month.push(i);
+    }
+    const trace = {
+      mpandray,
+      year: data.year,
+      month,
+    };
+    api.post("/adidy", { compta, trace }).then((res) => {
+      console.log(res);
+    });
+  };
   return (
     <div className="min-w-[50vw] text-[20px] py-[2rem] px-6 bg-white border border-bg m-4 mt-8 md:mx-auto  rounded-[5px] flex flex-col gap-8">
       <Select
         value={data.type}
-        onChange={(e) =>
-          setData({ ...data, type: e.target.value.toLowerCase() })
-        }
+        onChange={(e) => setData({ ...data, type: e.target.value })}
         options={["Adidin' ny mpandray", "Adidy iombonana", "Voka-dehibe"]}
         valueIndex={false}
       />
