@@ -1,8 +1,17 @@
 const { Profile } = require("../models/profile.model");
 
+const getAllProfile = async (req, res) => {
+  const profiles = await Profile.find();
+  res.json(profiles);
+};
+
+const getProfile = async (req, res) => {
+  const profiles = await Profile.findById(req.params.id);
+  res.json(profiles);
+};
+
 const createProfile = async (req, res) => {
   try {
-    console.log(req.body);
     const newProfile = new Profile({ ...req.body });
     await newProfile.save();
     return res.send();
@@ -14,8 +23,7 @@ const createProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
-    const { body } = req.body;
-    await Profile.findOneAndUpdate({ _id: req.params.id }, { ...body });
+    await Profile.findOneAndUpdate({ _id: req.params.id }, { ...req.body });
     return res.send("sucess");
   } catch (error) {
     res.status(400).send(error.message);
@@ -31,4 +39,10 @@ const deleteProfile = async (req, res) => {
   }
 };
 
-module.exports = { createProfile, updateProfile, deleteProfile };
+module.exports = {
+  createProfile,
+  updateProfile,
+  deleteProfile,
+  getProfile,
+  getAllProfile,
+};
