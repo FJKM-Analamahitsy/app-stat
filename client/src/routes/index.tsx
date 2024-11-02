@@ -9,6 +9,8 @@ import Adidy from "@pages/Mpandray/Adidy";
 import AuthGuard from "@auth/AuthGuard";
 import Layout from "layout";
 import ListeSampana from "@pages/Sampana";
+import ProfileList from "@pages/Profile/List";
+import ProfilePage from "@pages/Profile/Page";
 
 const Routes: FC = () => {
   return (
@@ -22,6 +24,11 @@ const Routes: FC = () => {
             <Route path=":id" element={<Page />} />
             <Route path="new" element={<NewMember />} />
             <Route path="edit/:id" element={<NewMember />} />
+          </Route>
+          <Route path="profile">
+            <Route index element={<ProfileList />} />
+            <Route path="new" element={<ProfilePage />} />
+            <Route path=":id" element={<ProfilePage />} />
           </Route>
           <Route path="sampana/:name" element={<ListeSampana />} />
           <Route path="contribution" element={<Adidy />} />

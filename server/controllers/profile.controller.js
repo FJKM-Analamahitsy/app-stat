@@ -2,10 +2,12 @@ const { Profile } = require("../models/profile.model");
 
 const createProfile = async (req, res) => {
   try {
-    const newProfile = new Profile({ ...req.data });
+    console.log(req.body);
+    const newProfile = new Profile({ ...req.body });
     await newProfile.save();
     return res.send();
   } catch (error) {
+    console.log(error);
     res.status(400).send();
   }
 };

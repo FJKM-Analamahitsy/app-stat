@@ -122,3 +122,5 @@ export const SAMPANA = [
   "DORKASY",
   "FLD",
 ];
+
+export const APP_OPTIONS = ["dash", "member", "contribution", "sampana"];

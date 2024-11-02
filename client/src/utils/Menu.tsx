@@ -32,6 +32,16 @@ const MenuData: any = [
     icon: <FontAwesomeIcon icon={solid("users")} />,
     submenu: SAMPANA.sort().map((v) => ({ path: `/sampana/${v}`, label: v })),
   },
+  {
+    label: "Profile",
+    path: "/profile",
+    icon: <FontAwesomeIcon icon={solid("users")} />,
+  },
+  {
+    label: "Users",
+    path: "/users",
+    icon: <FontAwesomeIcon icon={solid("users")} />,
+  },
 ];
 
 export default MenuData;
