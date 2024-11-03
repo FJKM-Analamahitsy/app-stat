@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Member = mongoose.model("Member", {
   name: String,
   forname: String,
+  fullname: String,
   birthday: String,
   gender: String,
   home: String,
@@ -19,7 +20,7 @@ const Member = mongoose.model("Member", {
   mpandray: String,
   mpandrayAndiany: String,
   mpandrayN: String,
-  familyId: String,
+  familyId: Number,
   sampana: String,
   familyRank: {
     type: Number,

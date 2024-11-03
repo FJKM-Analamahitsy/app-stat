@@ -14,7 +14,10 @@ const idSchema = object({
 const createMember = async (req, res) => {
   try {
     const input = await memberInput.validate(req.body);
-    const newMember = new Member({ ...input });
+    const newMember = new Member({
+      ...input,
+      fullname: `${input.name} ${input.forname}`,
+    });
     if (input.familyRank === 1) {
       newMember.familyId = newMember._id;
     }
@@ -90,8 +93,7 @@ const listMember = async (req, res) => {
     filter = {
       ...filter,
       $or: [
-        { name: { $regex: new RegExp(search, "i") } },
-        { forname: { $regex: new RegExp(search, "i") } },
+        { fullname: { $regex: new RegExp(search, "i") } },
         { mpandrayN: { $regex: new RegExp(search, "i") } },
       ],
     };
