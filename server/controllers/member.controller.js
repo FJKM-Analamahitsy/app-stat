@@ -263,7 +263,7 @@ const getFamily = async (req, res) => {
   const { id } = req.params;
   const result = await Member.find({ familyId: id })
     .sort("familyRank")
-    .select("name forname familyRank");
+    .select("name fullname familyRank famHead");
   return res.send(result);
 };
 

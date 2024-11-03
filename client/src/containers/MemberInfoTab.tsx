@@ -7,7 +7,7 @@ interface Props {
 
 const MemberInfoTab: FC<Props> = ({ children }) => {
   const user = useAppSelector((state) => state.user);
-  const [active, setActive] = useState(user.profile.tabInPage[0]);
+  const [active, setActive] = useState(user.profile.tabInPage.sort()[0]);
 
   const tab = ["Ny tena", "Ankohonana", "Adidy mpandray", "Adidy samihafa"];
   const child = Children.map(children, (child) => {

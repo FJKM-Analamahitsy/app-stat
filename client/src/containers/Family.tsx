@@ -20,7 +20,8 @@ const Family: FC<Props> = ({ data }) => {
     <div className="p-4">
       <p>
         <span className="font-medium">Fiankohonana :</span>{" "}
-        {FAMILYRANK[data.familyRank - 1]}
+        {FAMILYRANK[data.familyRank - 1]}{" "}
+        {data.famHead ? "(Loha-mpianakaviana)" : ""}
       </p>
       <div>
         <p className="my-3 font-medium">Fianakaviana</p>
@@ -46,11 +47,12 @@ const Family: FC<Props> = ({ data }) => {
                       <div>
                         <p className="leading-[1.1]">
                           <span className="font-semibold truncate">
-                            {fam.name + " " + fam.forname}
+                            {fam.fullname}
                           </span>
                           <br />
                           <span className="block truncate w-full">
-                            {FAMILYRANK[fam.familyRank - 1]}
+                            {FAMILYRANK[fam.familyRank - 1]}{" "}
+                            {fam.famHead ? "(Loha-mpianakaviana)" : ""}
                           </span>
                         </p>
                       </div>
