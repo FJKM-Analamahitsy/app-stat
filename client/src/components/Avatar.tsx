@@ -4,6 +4,7 @@ interface AvatarProps {
   img?: string;
   label?: string;
   size?: number;
+  textSize?: number;
   reversed?: boolean;
   hideLabSm?: boolean;
   hideLabel?: boolean;
@@ -16,6 +17,7 @@ const Avatar: FC<AvatarProps> = ({
   reversed = false,
   hideLabSm = false,
   hideLabel = false,
+  textSize = 16,
 }) => {
   const name = label?.split(" ");
   return (
@@ -30,7 +32,10 @@ const Avatar: FC<AvatarProps> = ({
       >
         {img && <img src={img} alt="" className="w-full h-full" />}
         {name && (
-          <span className="font-medium text-grey uppercase">
+          <span
+            style={{ fontSize: textSize }}
+            className="font-medium text-grey uppercase"
+          >
             {name[0][0] + name[0][1]}
           </span>
         )}
