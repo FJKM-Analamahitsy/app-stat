@@ -75,12 +75,6 @@ const Login: FC = () => {
                 <span>keep me sign in</span>
               </p>
               <Button className="bg-primary text-white">Login</Button>
-              <Link
-                className="text-center text-primary underline mt-2"
-                to="/contribution"
-              >
-                contribution
-              </Link>
             </div>
           </form>
         </div>

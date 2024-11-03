@@ -34,7 +34,7 @@ const login = async (req, res) => {
         );
         res.cookie("token", token, {
           httpOnly: true,
-          domain: "localhost",
+          domain: process.env.DOMAIN,
           maxAge: 5 * 3600 * 1000,
         });
         return res.send({
