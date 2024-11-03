@@ -5,25 +5,22 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   data: any;
-  rank: number;
 }
 
-const Family: FC<Props> = ({ data, rank }) => {
+const Family: FC<Props> = ({ data }) => {
   const [family, setFamily] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     data.familyId &&
-      api
-        .get(`/member/family/${data.familyId._id || data.familyId}`)
-        .then((data: any) => {
-          setFamily(data.data);
-        });
+      api.get(`/member/family/${data.familyId}`).then((data: any) => {
+        setFamily(data.data);
+      });
   }, [data]);
   return (
     <div className="p-4">
       <p>
         <span className="font-medium">Fiankohonana :</span>{" "}
-        {FAMILYRANK[rank - 1]}
+        {FAMILYRANK[data.familyRank - 1]}
       </p>
       <div>
         <p className="my-3 font-medium">Fianakaviana</p>

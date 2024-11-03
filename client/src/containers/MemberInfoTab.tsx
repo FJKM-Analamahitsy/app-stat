@@ -18,7 +18,7 @@ const MemberInfoTab: FC<Props> = ({ children }) => {
   return (
     <div>
       <div className="flex gap-4 w-full border-b border-b-bg">
-        {user.profile.tabInPage.map((t: number) => {
+        {user.profile.tabInPage.sort().map((t: number) => {
           return (
             <div
               key={t}

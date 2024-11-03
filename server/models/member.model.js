@@ -7,7 +7,6 @@ const Member = mongoose.model("Member", {
   birthday: String,
   gender: String,
   home: String,
-  city: String,
   place: String,
   talent: String,
   phone: String,
@@ -22,6 +21,7 @@ const Member = mongoose.model("Member", {
   mpandrayN: String,
   familyId: Number,
   sampana: String,
+  famHead: Boolean,
   familyRank: {
     type: Number,
     default: 1,

@@ -86,7 +86,7 @@ export const fields = [
 
 export const MONTHS = [
   "Janvier",
-  "Febvrier",
+  "Fevrier",
   "Mars",
   "Avril",
   "Mai",

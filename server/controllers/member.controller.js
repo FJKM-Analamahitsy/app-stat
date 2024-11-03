@@ -18,9 +18,6 @@ const createMember = async (req, res) => {
       ...input,
       fullname: `${input.name} ${input.forname}`,
     });
-    if (input.familyRank === 1) {
-      newMember.familyId = newMember._id;
-    }
     await newMember.save();
     log(req.requester, `creation member ${newMember._id}`);
     return res.send(newMember);
@@ -64,10 +61,11 @@ const getMember = async (req, res) => {
     const member = await Member.findOne({ _id: id });
     let result = { ...member._doc };
     if (member.familyRank !== 1) {
-      const father = await Member.findOne({ _id: member.familyId }).select(
-        "name forname"
-      );
-      result = { ...result, familyId: father };
+      const adress = await Member.findOne({
+        familyId: member.familyId,
+        familyRank: 1,
+      }).select("-_id home place");
+      result = { ...result, ...adress._doc };
     }
     return res.send(result);
   } catch (error) {
@@ -275,7 +273,7 @@ const getLastKaratra = async (req, res) => {
     .collation({ locale: "en_US", numericOrdering: true })
     .limit(1)
     .select("-_id mpandrayN");
-  return res.json(+result[0].mpandrayN + 1);
+  return res.json(result[0] ? +result[0].mpandrayN + 1 : 1);
 };
 
 const checkKaratra = async (req, res) => {

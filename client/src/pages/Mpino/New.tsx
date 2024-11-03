@@ -2,7 +2,6 @@ import Button from "@components/Button";
 import InputNew from "@components/InputNew";
 import RadioButton from "@components/RadioButton";
 import Select from "@components/Select";
-import SelectMember from "@components/SelectMember";
 import SelectMultiple from "@components/SelectMultiple";
 import api from "@utils/api";
 import { MONTHS, SAMPANA } from "@utils/constant";
@@ -30,7 +29,7 @@ const Container: FC<ContainerProps> = ({ title, children, childClass }) => {
 
 const NewMember: FC = () => {
   const [raw, setRaw] = useState<any>({});
-  const [data, setData] = useState<any>({ familyRank: 1 });
+  const [data, setData] = useState<any>({ familyRank: 1, famHead: false });
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -53,11 +52,11 @@ const NewMember: FC = () => {
     setDataHandler(e.target.name, e.target.value);
   };
   const setDataHandler = (name: string, value: string) => {
+    console.log(data);
     setData({ ...data, [name]: value });
   };
   return (
     <form
-      onChange={onChangeHandler}
       onSubmit={async (e) => {
         e.preventDefault();
         if (id) {
@@ -78,6 +77,7 @@ const NewMember: FC = () => {
           <InputNew
             label="Anarana"
             name="name"
+            className="[&>input]:uppercase"
             required
             value={data.name ? data.name : ""}
             onChange={onChangeHandler}
@@ -85,6 +85,7 @@ const NewMember: FC = () => {
           <InputNew
             label="Fanampiny"
             name="forname"
+            className="[&>input]:capitalize"
             value={data.forname ? data.forname : ""}
             onChange={onChangeHandler}
           />
@@ -179,35 +180,66 @@ const NewMember: FC = () => {
           />
         </Container>
 
-        <Container title="Fonenana">
+        <Container title="Ankohonana">
           <InputNew
-            label="Trano"
-            name="home"
-            value={data.home ? data.home : ""}
-            onChange={onChangeHandler}
+            label="Numero"
+            type="number"
+            onChange={(e) => {
+              setData({ ...data, familyId: +e.target.value });
+            }}
           />
-          <InputNew
-            label="Tanana"
-            name="city"
-            value={data.city ? data.city : ""}
-            onChange={onChangeHandler}
-          />
+          <div className="flex gap-3">
+            <input
+              type="checkbox"
+              className="w-5"
+              name="famHead"
+              value={data.famHead}
+              onChange={(e) => {
+                setData({ ...data, famHead: e.target.checked });
+              }}
+            />
+            <p className="mt-1 text-lg">Loha-mpianakaviana</p>
+          </div>
           <select
-            name="place"
-            id=""
-            className="border px-2 rounded-[5px] text-grey h-[40px] outline-none"
-            value={data.place ? data.place : ""}
-            onChange={onChangeHandler}
+            className="rounded border p-3 px-1"
+            name="familyRank"
+            onChange={(e) =>
+              setData({ ...data, familyRank: parseInt(e.target.value) })
+            }
+            value={data.familyRank ? data.familyRank.toString() : "1"}
           >
-            <option value="" defaultChecked>
-              Faritra
-            </option>
-            <option value="atsimo">Atsimo</option>
-            <option value="avaratra">Avaratra</option>
-            <option value="atsinanana">Atsinanana</option>
-            <option value="andrefana">Andrefana</option>
+            <option value="1">Ray</option>
+            <option value="2">Reny</option>
+            <option value="3">Zanaka</option>
+            <option value="4">Hafa</option>
           </select>
         </Container>
+
+        {data.famHead && (
+          <Container title="Fonenana">
+            <InputNew
+              label="Trano"
+              name="home"
+              value={data.home ? data.home : ""}
+              onChange={onChangeHandler}
+            />
+            <select
+              name="place"
+              id=""
+              className="border px-2 rounded-[5px] text-grey h-[40px] outline-none"
+              value={data.place ? data.place : ""}
+              onChange={onChangeHandler}
+            >
+              <option value="" defaultChecked>
+                Faritra
+              </option>
+              <option value="atsimo">Atsimo</option>
+              <option value="avaratra">Avaratra</option>
+              <option value="atsinanana">Atsinanana</option>
+              <option value="andrefana">Andrefana</option>
+            </select>
+          </Container>
+        )}
 
         <Container title="Fifandraisana">
           <InputNew
@@ -245,31 +277,6 @@ const NewMember: FC = () => {
           />
         </Container>
 
-        <Container title="Ankohonana">
-          <SelectMember
-            label="Raim-pianakaviana"
-            onSelected={(m) => setData({ ...data, familyId: m._id })}
-            defaultValue={
-              typeof data.familyId === "object"
-                ? `${data.familyId.name} ${data.familyId.forname}`
-                : ""
-            }
-          />
-          <select
-            className="rounded border"
-            name="familyRank"
-            onChange={(e) =>
-              setData({ ...data, familyRank: parseInt(e.target.value) })
-            }
-            value={data.familyRank ? data.familyRank.toString() : "1"}
-          >
-            <option value="1">Ray</option>
-            <option value="2">Reny</option>
-            <option value="3">Zanaka</option>
-            <option value="4">Hafa</option>
-          </select>
-        </Container>
-
         <Container title="Sampana">
           <SelectMultiple
             options={SAMPANA}
@@ -280,8 +287,7 @@ const NewMember: FC = () => {
 
         <Container title="Fanamarihana" childClass="!grid-cols-1">
           <textarea
-            name="Hafa"
-            id=""
+            name="other"
             className="border px-2 rounded-[5px] text-grey h-[10vh] outline-none w-full"
             placeholder="fanamarihana manokana"
             value={data.other ? data.other : ""}
@@ -294,7 +300,7 @@ const NewMember: FC = () => {
             className="text-white bg-primary w-1/3 sm:w-1/4 disabled:cursor-not-allowed disabled:opacity-60"
             disabled={id ? JSON.stringify(raw) === JSON.stringify(data) : false}
           >
-            save
+            enregistrer
           </Button>
         </div>
       </div>

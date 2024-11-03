@@ -132,7 +132,7 @@ const Page: FC = () => {
         <div className="col-span-2">
           <MemberInfoTab>
             <MemberDetails data={data} />
-            <Family data={data} rank={data.familyRank} />
+            <Family data={data} />
             <AdidyDetails data={trace} />
             <AdidySamihafa />
           </MemberInfoTab>
