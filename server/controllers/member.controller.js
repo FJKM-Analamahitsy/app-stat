@@ -75,8 +75,8 @@ const getMember = async (req, res) => {
 const listMember = async (req, res) => {
   const { page = 1, limit = 10, karatra, anarana, sampana, search } = req.query;
   let sort = {};
-  if (karatra || search) {
-    sort = { ...sort, mpandrayN: "asc" };
+  if (karatra) {
+    sort = { ...sort, mpandrayN: karatra };
   }
 
   if (karatra) {
@@ -95,6 +95,7 @@ const listMember = async (req, res) => {
         { mpandrayN: { $regex: new RegExp(search, "i") } },
       ],
     };
+    sort = { ...sort, mpandrayN: "asc" };
   }
   const member = await Member.find()
     .sort({ ...sort })
