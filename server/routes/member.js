@@ -6,7 +6,6 @@ const {
   listMember,
   getMember,
   exportMembersToCsv,
-  searchMember,
   statistics,
   getFamily,
   getLastKaratra,
@@ -14,18 +13,16 @@ const {
   statPerBirthMonth,
   statPerSampana,
 } = require("../controllers/member.controller");
-const { authMiddlware } = require("../controllers/middleware");
 
 const route = express.Router();
 
-route.post("/", authMiddlware, createMember);
-route.delete("/", authMiddlware, deleteMember);
-route.put("/", authMiddlware, updateMember);
-route.get("/", authMiddlware, listMember);
-route.get("/get/:id", authMiddlware, getMember);
+route.post("/", createMember);
+route.delete("/", deleteMember);
+route.put("/", updateMember);
+route.get("/", listMember);
+route.get("/get/:id", getMember);
 route.get("/export", exportMembersToCsv);
-route.get("/search", authMiddlware, searchMember);
-route.get("/stat", authMiddlware, statistics);
+route.get("/stat", statistics);
 route.get("/stat/monthly", statPerBirthMonth);
 route.get("/stat/sampana", statPerSampana);
 route.get("/family/:id", getFamily);

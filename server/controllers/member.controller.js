@@ -107,19 +107,6 @@ const listMember = async (req, res) => {
   return res.send({ member, totalRow });
 };
 
-const searchMember = async (req, res) => {
-  const { q, l } = req.query;
-  if (q === "") return res.send([]);
-  const result = await Member.find({
-    $or: [
-      { name: { $regex: new RegExp(q, "i") } },
-      { forname: { $regex: new RegExp(q, "i") } },
-      { mpandrayN: { $regex: new RegExp(q, "i") } },
-    ],
-  }).limit(l);
-  return res.send(result);
-};
-
 const statistics = async (req, res) => {
   const total = await Member.countDocuments();
   const lehilahy = await Member.find({ gender: "lehilahy" }).countDocuments();
@@ -360,7 +347,6 @@ module.exports = {
   updateMember,
   getMember,
   listMember,
-  searchMember,
   exportMembersToCsv,
   statistics,
   getFamily,

@@ -8,6 +8,7 @@ const { adidy } = require("./routes/adidy");
 const { cookieParser } = require("./utils/cookieParser");
 const { profile } = require("./routes/profile");
 const { users } = require("./routes/users");
+const { authMiddlware } = require("./middleware/middleware");
 
 const app = express();
 app.use(express.json());
@@ -19,10 +20,10 @@ app.use(
 );
 app.use(cookieParser);
 app.use("/auth", auth);
-app.use("/member", member);
-app.use("/adidy", adidy);
-app.use("/profile", profile);
-app.use("/users", users);
+app.use("/member", authMiddlware, member);
+app.use("/adidy", authMiddlware, adidy);
+app.use("/profile", authMiddlware, profile);
+app.use("/users", authMiddlware, users);
 
 const port = process.env.PORT || 4000;
 

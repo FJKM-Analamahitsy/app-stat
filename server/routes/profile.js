@@ -1,5 +1,4 @@
 const express = require("express");
-const { authMiddlware } = require("../controllers/middleware");
 const {
   updateProfile,
   createProfile,
@@ -10,10 +9,10 @@ const {
 
 const route = express.Router();
 
-route.get("/", authMiddlware, getAllProfile);
-route.get("/:id", authMiddlware, getProfile);
-route.post("/", authMiddlware, createProfile);
-route.patch("/:id", authMiddlware, updateProfile);
-route.delete("/:id", authMiddlware, deleteProfile);
+route.get("/", getAllProfile);
+route.get("/:id", getProfile);
+route.post("/", createProfile);
+route.patch("/:id", updateProfile);
+route.delete("/:id", deleteProfile);
 
 module.exports.profile = route;
