@@ -8,9 +8,10 @@ import toast from "react-hot-toast";
 
 interface Props {
   mpandray: string;
+  success: () => void;
 }
 
-const Adidy: FC<Props> = ({ mpandray }) => {
+const Adidy: FC<Props> = ({ mpandray, success }) => {
   const now = useState(new Date())[0];
   const [data, setData] = useState({
     mpandray,
@@ -36,9 +37,10 @@ const Adidy: FC<Props> = ({ mpandray }) => {
       month,
     };
     api.post("/adidy", { compta, trace }).then((res) => {
-      console.log(res);
+      success();
     });
   };
+
   return (
     <div className="min-w-[50vw] text-[20px] py-[2rem] px-6 bg-white border border-bg m-4 mt-8 md:mx-auto  rounded-[5px] flex flex-col gap-8">
       <Select

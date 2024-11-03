@@ -1,7 +1,7 @@
 import Avatar from "@components/Avatar";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import avatar from "@assets/img/avatar.svg";
 import MemberDetails from "@containers/MemberDetails";
@@ -20,6 +20,8 @@ const Page: FC = () => {
   const [data, setData] = useState<any>({});
   const { id } = useParams();
   const navigate = useNavigate();
+  const [trace, setTrace] = useState<any>([]);
+  const modal = useRef<any>(null);
 
   const onDeleteHandler = () => {
     const conf = window.confirm("Are you sure to proceed to this action?");
@@ -35,9 +37,14 @@ const Page: FC = () => {
     }
   };
 
+  const getTrace = () => {
+    api.get("/adidy/trace/" + id).then((res) => setTrace(res.data));
+  };
+
   useEffect(() => {
     if (id) {
       api.get("/member/get/" + id).then((res) => setData(res.data));
+      getTrace();
     } else {
       setData({});
     }
@@ -110,17 +117,23 @@ const Page: FC = () => {
         </div>
       </div>
       <div className="p-4 gap-y-6 md:gap-6 bg-white rounded-b min-h-[43vh]">
-        <Modal>
+        <Modal ref={modal}>
           <Button className="bg-primary text-white mb-4 max-w-[150px]">
             Contribute
           </Button>
-          <Adidy mpandray={id || ""} />
+          <Adidy
+            mpandray={id || ""}
+            success={() => {
+              getTrace();
+              modal.current.close();
+            }}
+          />
         </Modal>
         <div className="col-span-2">
           <MemberInfoTab>
             <MemberDetails data={data} />
             <Family data={data} rank={data.familyRank} />
-            <AdidyDetails />
+            <AdidyDetails data={trace} />
             <AdidySamihafa />
           </MemberInfoTab>
         </div>

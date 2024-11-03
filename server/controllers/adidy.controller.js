@@ -26,11 +26,32 @@ const adidyInput = object({
 
 const createAdidy = async (req, res) => {
   try {
+    const { mpandray, year } = req.body.trace;
+    const check = await Adidy.findOne({ mpandray, year });
+    if (check) {
+      await check.updateOne({
+        month: [...check.month, ...req.body.trace.month],
+      });
+    } else {
+      const newAdidy = new Adidy(req.body.trace);
+      await newAdidy.save();
+    }
     const compta = new Compta(req.body.compta);
     await compta.save();
-    const newAdidy = new Adidy(req.body.trace);
-    await newAdidy.save();
     res.send("success");
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+const getAdidyTrace = async (req, res) => {
+  try {
+    const result = await Adidy.find({ mpandray: req.params.id })
+      .sort({
+        year: "desc",
+      })
+      .limit(4);
+    res.json(result);
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -62,4 +83,10 @@ const adidympandray = async (req, res) => {
   return res.send(result);
 };
 
-module.exports = { createAdidy, deleteAdidy, listAdidy, adidympandray };
+module.exports = {
+  createAdidy,
+  deleteAdidy,
+  listAdidy,
+  adidympandray,
+  getAdidyTrace,
+};
