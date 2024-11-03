@@ -36,7 +36,7 @@ const createAdidy = async (req, res) => {
       const newAdidy = new Adidy(req.body.trace);
       await newAdidy.save();
     }
-    const compta = new Compta(req.body.compta);
+    const compta = new Compta({ ...req.body.compta, createBy: req.requester });
     await compta.save();
     res.send("success");
   } catch (error) {

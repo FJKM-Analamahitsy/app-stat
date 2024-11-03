@@ -10,6 +10,7 @@ const Adidy = mongoose.model("Adidy", {
 });
 
 const Compta = mongoose.model("Compta", {
+  createBy: String,
   date: {
     type: Date,
     default: Date.now,
