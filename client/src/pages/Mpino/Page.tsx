@@ -15,6 +15,7 @@ import AdidySamihafa from "@containers/AdidySamihafa";
 import Modal from "@components/Modal";
 import Button from "@components/Button";
 import Adidy from "./Adidy";
+import ChangeStatus from "@containers/ChangeStatus";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
@@ -70,6 +71,7 @@ const Page: FC = () => {
                   data.lastPayDate
                 )}`}
               />
+              <ChangeStatus data={data} />
             </div>
             <div className="text-center sm:text-left">
               <p className="font-semibold text-lg text-center md:text-left">
