@@ -7,7 +7,7 @@ import avatar from "@assets/img/avatar.svg";
 import MemberDetails from "@containers/MemberDetails";
 import MemberInfoTab from "@containers/MemberInfoTab";
 import api from "@utils/api";
-import { formatPoneNumber } from "@utils/helper";
+import { formatPoneNumber, memberStatus } from "@utils/helper";
 import toast from "react-hot-toast";
 import Family from "@containers/Family";
 import AdidyDetails from "@containers/AdidyDetails";
@@ -63,7 +63,14 @@ const Page: FC = () => {
         <div className="w-full h-[20vh]  bg-no-repeat bg-cover overflow-hidden bg-line-pattern"></div>
         <div className="w-full flex flex-col md:flex-row  items-center md:items-end -translate-y-[6rem] px-[2rem]">
           <Avatar label={data.name} hideLabel size={200} textSize={54} />
-          <div className="flex justify-between px-[2rem] grow translate-y-2">
+          <div className={`px-[2rem] grow translate-y-2 `}>
+            <div>
+              <div
+                className={`w-5 aspect-square bg-bg rounded ${memberStatus(
+                  data.lastPayDate
+                )}`}
+              />
+            </div>
             <div className="text-center sm:text-left">
               <p className="font-semibold text-lg text-center md:text-left">
                 <span>{data.name}</span>

@@ -22,9 +22,18 @@ const Member = mongoose.model("Member", {
   familyId: Number,
   sampana: String,
   famHead: Boolean,
+  status: {
+    type: Boolean,
+    default: true,
+  },
+  statusNote: String,
   familyRank: {
     type: Number,
     default: 1,
+  },
+  lastPayDate: {
+    type: Date,
+    default: Date.now,
   },
   familyPlace: String,
   other: String,

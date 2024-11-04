@@ -7,3 +7,15 @@ export const formatPoneNumber = (num: string) => {
   }
   return null;
 };
+
+export const memberStatus = (date: string) => {
+  const diff = new Date().getTime() - new Date(date).getTime();
+  const days = diff / 1000 / 60 / 60 / 24;
+  if (days <= 90) {
+    return "bg-primary";
+  } else if (days <= 180) {
+    return "bg-orange-400";
+  } else {
+    return "bg-red-400";
+  }
+};

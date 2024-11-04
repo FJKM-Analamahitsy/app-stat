@@ -4,7 +4,7 @@ import Search from "@components/Search";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
-import { formatPoneNumber } from "@utils/helper";
+import { formatPoneNumber, memberStatus } from "@utils/helper";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import toast from "react-hot-toast";
@@ -79,6 +79,20 @@ const Liste: FC = () => {
 
   const columns: TableColumn<DataRow>[] = useMemo(
     () => [
+      {
+        name: "#",
+        center: true,
+        maxWidth: "40px",
+        cell: (row) => {
+          return (
+            <div
+              className={`w-5 aspect-square bg-bg rounded ${memberStatus(
+                row.lastPayDate
+              )}`}
+            />
+          );
+        },
+      },
       {
         name: "Anarana",
         sortable: true,

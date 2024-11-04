@@ -1,5 +1,6 @@
 const { object, string, number } = require("yup");
 const { Adidy, Compta } = require("../models/adidy.model");
+const { Member } = require("../models/member.model");
 
 const MONTHS = [
   "january",
@@ -38,6 +39,7 @@ const createAdidy = async (req, res) => {
     }
     const compta = new Compta({ ...req.body.compta, createBy: req.requester });
     await compta.save();
+    await Member.findByIdAndUpdate(mpandray, { lastPayDate: new Date() });
     res.send("success");
   } catch (error) {
     res.status(400).send(error.message);
