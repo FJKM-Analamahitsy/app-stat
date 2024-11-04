@@ -8,14 +8,14 @@ export const formatPoneNumber = (num: string) => {
   return null;
 };
 
-export const memberStatus = (date: string) => {
+export const memberStatus = (date: string, border = false) => {
   const diff = new Date().getTime() - new Date(date).getTime();
   const days = diff / 1000 / 60 / 60 / 24;
   if (days <= 90) {
-    return "bg-primary";
+    return !border ? "bg-primary" : " border-white";
   } else if (days <= 180) {
-    return "bg-orange-400";
+    return !border ? "bg-orange-400" : "!border-[1px] border-orange-400";
   } else {
-    return "bg-red-400";
+    return !border ? "bg-red-400" : "!border-[1px] border-red-400";
   }
 };

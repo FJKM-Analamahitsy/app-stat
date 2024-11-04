@@ -80,26 +80,15 @@ const Liste: FC = () => {
   const columns: TableColumn<DataRow>[] = useMemo(
     () => [
       {
-        name: "#",
-        center: true,
-        maxWidth: "40px",
-        cell: (row) => {
-          return (
-            <div
-              className={`w-5 aspect-square bg-bg rounded ${memberStatus(
-                row.lastPayDate
-              )}`}
-            />
-          );
-        },
-      },
-      {
         name: "Anarana",
         sortable: true,
         cell: (row) => {
           return (
-            <div onClick={() => navigate("/christian/" + row._id)}>
-              <Avatar label={`${row.name} ${row.forname ? row.forname : ""}`} />
+            <div onClick={() => navigate("/christian/" + row._id)} className="">
+              <Avatar
+                label={`${row.name} ${row.forname ? row.forname : ""}`}
+                className={memberStatus(row.lastPayDate, true)}
+              />
             </div>
           );
         },

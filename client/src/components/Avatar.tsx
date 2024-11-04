@@ -8,6 +8,7 @@ interface AvatarProps {
   reversed?: boolean;
   hideLabSm?: boolean;
   hideLabel?: boolean;
+  className?: string;
 }
 
 const Avatar: FC<AvatarProps> = ({
@@ -18,6 +19,7 @@ const Avatar: FC<AvatarProps> = ({
   hideLabSm = false,
   hideLabel = false,
   textSize = 16,
+  className = "border-white",
 }) => {
   const name = label?.split(" ");
   return (
@@ -27,7 +29,7 @@ const Avatar: FC<AvatarProps> = ({
       }`}
     >
       <div
-        className="rounded-full bg-bg flex border-2 border-white justify-center items-center cursor-pointer overflow-hidden"
+        className={`rounded-full bg-bg flex border-2 justify-center items-center cursor-pointer overflow-hidden ${className}`}
         style={{ width: size, height: size }}
       >
         {img && <img src={img} alt="" className="w-full h-full" />}
