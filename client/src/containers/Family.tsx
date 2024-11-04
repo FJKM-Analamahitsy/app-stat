@@ -18,50 +18,39 @@ const Family: FC<Props> = ({ data }) => {
   }, [data]);
   return (
     <div className="p-4">
-      <p>
-        <span className="font-medium">Fiankohonana :</span>{" "}
-        {FAMILYRANK[data.familyRank - 1]}{" "}
-        {data.famHead ? "(Loha-mpianakaviana)" : ""}
-      </p>
       <div>
-        <p className="my-3 font-medium">Fianakaviana</p>
-        <div>
-          {family &&
-            family.map((fam: any, i: number) => {
-              if (fam._id !== data._id) {
-                return (
+        <div className="grid grid-cols-2">
+          {family.map((fam: any, i: number) => {
+            return (
+              <div
+                onClick={() => navigate("/christian/" + fam._id)}
+                className={`cursor-pointer p-6 max-w-[300px] rounded m-auto w-full ${
+                  fam._id === data._id ? "bg-primary text-white" : "hover:bg-bg"
+                }`}
+                key={i}
+              >
+                <div className={`flex flex-col items-center gap-4`}>
                   <div
-                    onClick={() => navigate("/christian/" + fam._id)}
-                    className="cursor-pointer my-4"
-                    key={i}
+                    className="rounded-full bg-bg flex border-2 border-white justify-center items-center cursor-pointer overflow-hidden"
+                    style={{ width: 60, height: 60 }}
                   >
-                    <div className={`flex items-center gap-4`}>
-                      <div
-                        className="rounded-full bg-bg flex border-2 border-white justify-center items-center cursor-pointer overflow-hidden"
-                        style={{ width: 40, height: 40 }}
-                      >
-                        <span className="font-medium text-grey uppercase">
-                          {fam.name.slice(0, 2)}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="leading-[1.1]">
-                          <span className="font-semibold truncate">
-                            {fam.fullname}
-                          </span>
-                          <br />
-                          <span className="block truncate w-full">
-                            {FAMILYRANK[fam.familyRank - 1]}{" "}
-                            {fam.famHead ? "(Loha-mpianakaviana)" : ""}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
+                    <span className="font-medium text-grey uppercase">
+                      {fam.name.slice(0, 2)}
+                    </span>
                   </div>
-                );
-              }
-              return null;
-            })}
+                  <div>
+                    <p className="font-semibold truncate max-w-[280px] text-center">
+                      {fam.fullname}
+                    </p>
+                    <p className="text-center">
+                      {FAMILYRANK[fam.familyRank - 1]}{" "}
+                      {fam.famHead ? "(Loha-mpianakaviana)" : ""}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
