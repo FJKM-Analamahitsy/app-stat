@@ -184,6 +184,7 @@ const NewMember: FC = () => {
           <InputNew
             label="Numero"
             type="number"
+            value={data.familyId ? data.familyId : ""}
             onChange={(e) => {
               setData({ ...data, familyId: +e.target.value });
             }}
@@ -193,7 +194,7 @@ const NewMember: FC = () => {
               type="checkbox"
               className="w-5"
               name="famHead"
-              value={data.famHead}
+              checked={data.famHead}
               onChange={(e) => {
                 setData({ ...data, famHead: e.target.checked });
               }}
@@ -245,6 +246,8 @@ const NewMember: FC = () => {
           <InputNew
             label="Telephone"
             name="phone"
+            maxLength={10}
+            placeholder=""
             value={data.phone ? data.phone : ""}
             onChange={onChangeHandler}
           />

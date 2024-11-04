@@ -44,7 +44,6 @@ const updateMember = async (req, res) => {
       { _id: id },
       {
         ...body,
-        familyId: +body.familyRank === 1 ? id : body.familyId,
         last_update: new Date(),
       }
     );

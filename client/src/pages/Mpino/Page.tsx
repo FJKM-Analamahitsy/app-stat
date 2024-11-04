@@ -50,8 +50,8 @@ const Page: FC = () => {
     }
   }, [id]);
   return (
-    <>
-      <div className="relative h-[45vh] bg-white md:h-[37vh] rounded-t overflow-hidden">
+    <div className="min-h-full bg-white">
+      <div className="relative h-[45vh] md:h-[37vh] rounded-t overflow-hidden">
         <div className="w-full p-2 text-primary absolute top-0 left-0">
           <div className="cursor-pointer">
             <Link to="/christian">
@@ -75,7 +75,7 @@ const Page: FC = () => {
           </div>
         </div>
       </div>
-      <div className="p-4 gap-y-6 md:gap-6 bg-white rounded-b min-h-[43vh] ">
+      <div className="p-4 gap-y-6 md:gap-6 rounded-b min-h-[43vh] ">
         <div className="mb-4 flex gap-4">
           <Modal ref={modal}>
             <Button className="bg-primary text-white mb-4 max-w-[150px]">
@@ -121,7 +121,7 @@ const Page: FC = () => {
           </MemberInfoTab>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

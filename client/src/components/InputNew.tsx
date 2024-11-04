@@ -11,7 +11,12 @@ interface InputNewProps
   label?: string;
 }
 
-const InputNew: FC<InputNewProps> = ({ label, className, ...props }) => {
+const InputNew: FC<InputNewProps> = ({
+  label,
+  className,
+  placeholder = "",
+  ...props
+}) => {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
   const [timer, setTtimer] = useState<any>();
@@ -40,10 +45,10 @@ const InputNew: FC<InputNewProps> = ({ label, className, ...props }) => {
         type="text"
         id={props.id}
         className="relative text-grey  z-10 peer bg-transparent h-10 w-full rounded-[5px]  placeholder-transparent ring-1 px-2 ring-gray-200 focus:ring-2 focus:ring-sky-200 focus:outline-none "
-        placeholder="Type inside me"
         onKeyUp={(e: any) =>
           props.name === "mpandrayN" && check(e.target.value)
         }
+        placeholder={placeholder}
         {...props}
       />
       {props.name === "mpandrayN" && (
