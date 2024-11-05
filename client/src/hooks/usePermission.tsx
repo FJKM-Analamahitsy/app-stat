@@ -1,0 +1,13 @@
+import { useAppSelector } from "@redux/hooks";
+
+const usePermission = (key: string) => {
+  const user = useAppSelector((state) => state.user);
+  const permission = user.profile.permission;
+  return {
+    canPost: permission.POST.indexOf(key) !== -1,
+    canUpdate: permission.PATCH.indexOf(key) !== -1,
+    canDelete: permission.DEKETE.indexOf(key) !== -1,
+  };
+};
+
+export default usePermission;
