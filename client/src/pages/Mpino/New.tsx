@@ -5,7 +5,8 @@ import Select from "@components/Select";
 import SelectMultiple from "@components/SelectMultiple";
 import api from "@utils/api";
 import { MONTHS, SAMPANA } from "@utils/constant";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { FC, ReactNode, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 
 interface ContainerProps {
@@ -32,6 +33,7 @@ const NewMember: FC = () => {
   const [data, setData] = useState<any>({ familyRank: 1, famHead: false });
   const navigate = useNavigate();
   const { id } = useParams();
+  const container = useRef<HTMLDivElement>(null);
 
   const getLastKaratra = () => {
     api.get("/member/lastKaratra").then((res) => {
@@ -52,27 +54,36 @@ const NewMember: FC = () => {
     setDataHandler(e.target.name, e.target.value);
   };
   const setDataHandler = (name: string, value: string) => {
-    console.log(data);
     setData({ ...data, [name]: value });
   };
   return (
     <form
-      onSubmit={async (e) => {
+      onSubmit={(e) => {
         e.preventDefault();
         if (id) {
-          await api
+          api
             .patch("/member/" + data._id, data)
             .then(() => navigate(`/christian/${id}`))
             .catch((err) => console.log(err));
         } else {
-          await api
+          api
             .post("/member", data)
-            .then(() => navigate("/christian"))
+            .then(() => {
+              setData({ familyRank: 1, famHead: false });
+              container.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+              toast.success("données insérées");
+            })
             .catch((err) => console.log(err));
         }
       }}
     >
-      <div className="px-[2rem] py-[3rem] flex flex-col gap-4 bg-white">
+      <div
+        ref={container}
+        className="px-[2rem] py-[3rem] flex flex-col gap-4 bg-white"
+      >
         <Container title="Ny Tena">
           <InputNew
             label="Anarana"
