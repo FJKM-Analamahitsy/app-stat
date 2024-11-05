@@ -44,7 +44,7 @@ const Avatar: FC<AvatarProps> = ({
       </div>
       {name && !hideLabel && (
         <div className={`${hideLabSm && "hidden sm:block"}`}>
-          <p className={`leading-[1.1] ${reversed && "text-right"}`}>
+          <p className={`leading-[1.3] ${reversed && "text-right"}`}>
             <span className="font-semibold truncate">{name[0]}</span>
             <br />
             <span className="block truncate w-full">
