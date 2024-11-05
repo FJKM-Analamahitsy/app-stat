@@ -78,7 +78,7 @@ const listMember = async (req, res) => {
     sort = { ...sort, mpandrayN: karatra };
   }
 
-  if (karatra) {
+  if (anarana) {
     sort = { ...sort, name: anarana };
   }
   let filter = {};
