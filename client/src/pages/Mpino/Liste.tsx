@@ -1,5 +1,7 @@
 import Avatar from "@components/Avatar";
+import Button from "@components/Button";
 import ExportBtn from "@components/ExportBtn";
+import Popup from "@components/Popup";
 import Search from "@components/Search";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -165,6 +167,59 @@ const Liste: FC = () => {
             }}
           />
         </div>
+        <Popup>
+          <Button className="bg-bg">
+            <FontAwesomeIcon icon={solid("filter")} className="mr-3" /> Filtre
+          </Button>
+          <div className="shadow border min-w-[300px] max-h-[450px] overflow-y-auto bg-white rounded p-4 flex flex-col gap-4">
+            <div>
+              <p className="my-2">Mpandray</p>
+              <select className="bg-bg w-full p-3 px-1 rounded">
+                <option value="">Tous</option>
+                <option value="eny">Eny</option>
+                <option value="tsia">Tsia</option>
+              </select>
+            </div>
+
+            <div>
+              <p className="my-2">Batisa</p>
+              <select className="bg-bg w-full p-3 px-1 rounded">
+                <option value="">Tous</option>
+                <option value="eny">Eny</option>
+                <option value="tsia">Tsia</option>
+              </select>
+            </div>
+
+            <div>
+              <p className="my-2">Faritra</p>
+              <select className="bg-bg w-full p-3 px-1 rounded">
+                <option value="">Tous</option>
+                <option value="atsimo">Atsimo</option>
+                <option value="andrefana">Andrefana</option>
+                <option value="atsinanana">Atsinanana</option>
+                <option value="avaratra">Avaratra</option>
+              </select>
+            </div>
+
+            <div>
+              <p className="my-2">L/V</p>
+              <select className="bg-bg w-full p-3 px-1 rounded">
+                <option value="">Tous</option>
+                <option value="lehilahy">Lehilahy</option>
+                <option value="vehivavy">Vehivavy</option>
+              </select>
+            </div>
+
+            <div>
+              <p className="my-2">Statut</p>
+              <select className="bg-bg w-full p-3 px-1 rounded">
+                <option value="">Tous</option>
+                <option value="lehilahy">Activer</option>
+                <option value="vehivavy">Desactiver</option>
+              </select>
+            </div>
+          </div>
+        </Popup>
       </div>
 
       <DataTable
