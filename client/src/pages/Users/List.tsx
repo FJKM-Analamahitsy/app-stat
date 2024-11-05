@@ -5,6 +5,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import DataTable, { TableColumn } from "react-data-table-component";
+import Avatar from "@components/Avatar";
 
 const UserList: FC = () => {
   const [data, setData] = useState([]);
@@ -32,7 +33,9 @@ const UserList: FC = () => {
     () => [
       {
         name: "Name",
-        selector: (row) => row.username,
+        cell: (row) => {
+          return <Avatar label={row.username} />;
+        },
       },
       {
         name: "Profile",
@@ -73,14 +76,23 @@ const UserList: FC = () => {
     getProfile();
   }, []);
   return (
-    <div className="bg-white p-4 h-full">
+    <div className="bg-white p-4 h-full overflow-y-auto">
       <div>
         <FormUser profile={profiles} success={fetch}>
-          <Button className="bg-primary text-white max-w-[200px]">New</Button>
+          <Button className="bg-primary text-white min-w-[150px]">
+            <FontAwesomeIcon icon={solid("add")} className="mr-2" /> New
+          </Button>
         </FormUser>
       </div>
       <div className="mt-4">
-        <DataTable columns={columns} data={data} />
+        <DataTable
+          columns={columns}
+          data={data}
+          pagination
+          paginationPerPage={5}
+          paginationRowsPerPageOptions={[5, 10, 20]}
+          className="h-[calc(100vh-250px)] !overflow-y-auto"
+        />
       </div>
     </div>
   );

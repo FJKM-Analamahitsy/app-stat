@@ -157,7 +157,7 @@ const Liste: FC = () => {
     []
   );
   return (
-    <div className="p-4 bg-white rounded" id="list">
+    <div className="p-4 bg-white rounded h-full">
       <div className="flex justify-between w-full">
         <div className="w-2/5">
           <Search
@@ -235,6 +235,7 @@ const Liste: FC = () => {
         paginationRowsPerPageOptions={[30, 50, 100]}
         sortServer
         onSort={onSortHandler}
+        className="h-[calc(100vh-250px)] !overflow-y-auto"
       />
     </div>
   );

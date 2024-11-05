@@ -44,7 +44,11 @@ const FormUser: FC<Props> = ({ children, data, profile, success }) => {
   return (
     <Modal ref={modal}>
       <>{children}</>
-      <form ref={form} onSubmit={submit} className="flex flex-col gap-4">
+      <form
+        ref={form}
+        onSubmit={submit}
+        className="flex flex-col gap-4 bg-white p-6 rounded min-w-[30vw]"
+      >
         <div>
           <p>username</p>
           <Input

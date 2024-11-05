@@ -1,3 +1,4 @@
+import Avatar from "@components/Avatar";
 import Button from "@components/Button";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,7 +26,9 @@ const ProfileList: FC = () => {
     () => [
       {
         name: "Name",
-        selector: (row) => row.name,
+        cell: (row) => {
+          return <Avatar label={row.name} />;
+        },
       },
       {
         name: "Action",
@@ -59,10 +62,19 @@ const ProfileList: FC = () => {
   return (
     <div className="bg-white h-full p-4">
       <Link to="new" className="flex">
-        <Button className="bg-primary text-white max-w-[200px]">New</Button>
+        <Button className="bg-primary text-white min-w-[150px]">
+          <FontAwesomeIcon icon={solid("add")} className="mr-2" /> New
+        </Button>
       </Link>
       <div>
-        <DataTable columns={columns} data={data} />
+        <DataTable
+          columns={columns}
+          data={data}
+          pagination
+          paginationPerPage={5}
+          paginationRowsPerPageOptions={[5, 10, 20]}
+          className="h-[calc(100vh-250px)] !overflow-y-auto"
+        />
       </div>
     </div>
   );
