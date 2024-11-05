@@ -51,7 +51,7 @@ const Page: FC = () => {
   }, [id]);
   return (
     <div className="min-h-full bg-white">
-      <div className="relative h-[45vh] md:h-[37vh] rounded-t overflow-hidden">
+      <div className="relative h-[400px] md:h-[37vh] rounded-t overflow-hidden">
         <div className="w-full p-2 text-primary absolute top-0 left-0">
           <div className="cursor-pointer">
             <Link to="/christian">

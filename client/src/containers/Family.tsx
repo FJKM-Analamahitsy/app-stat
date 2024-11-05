@@ -39,7 +39,7 @@ const Family: FC<Props> = ({ data }) => {
                     </span>
                   </div>
                   <div>
-                    <p className="font-semibold truncate max-w-[280px] text-center">
+                    <p className="font-semibold truncate max-w-[250px] text-center">
                       {fam.fullname}
                     </p>
                     <p className="text-center">

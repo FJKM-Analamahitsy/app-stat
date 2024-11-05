@@ -222,21 +222,23 @@ const Liste: FC = () => {
         </Popup>
       </div>
 
-      <DataTable
-        columns={columns}
-        data={data}
-        pagination
-        paginationServer
-        paginationTotalRows={rows}
-        onChangePage={onChangeHandler}
-        onChangeRowsPerPage={onLimitChange}
-        onRowClicked={(row) => navigate("/christian/" + row._id)}
-        paginationPerPage={limit}
-        paginationRowsPerPageOptions={[30, 50, 100]}
-        sortServer
-        onSort={onSortHandler}
-        className="h-[calc(100vh-250px)] !overflow-y-auto"
-      />
+      <div className="mt-4">
+        <DataTable
+          columns={columns}
+          data={data}
+          pagination
+          paginationServer
+          paginationTotalRows={rows}
+          onChangePage={onChangeHandler}
+          onChangeRowsPerPage={onLimitChange}
+          onRowClicked={(row) => navigate("/christian/" + row._id)}
+          paginationPerPage={limit}
+          paginationRowsPerPageOptions={[30, 50, 100]}
+          sortServer
+          onSort={onSortHandler}
+          className="h-[calc(100vh-250px)] !overflow-y-auto"
+        />
+      </div>
     </div>
   );
 };

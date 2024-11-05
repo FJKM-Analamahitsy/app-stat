@@ -66,7 +66,7 @@ const ProfileList: FC = () => {
           <FontAwesomeIcon icon={solid("add")} className="mr-2" /> New
         </Button>
       </Link>
-      <div>
+      <div className="mt-4">
         <DataTable
           columns={columns}
           data={data}
