@@ -17,7 +17,6 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
       username: "admin",
       password: await hashPassword("adM123"),
       profile: doc._id,
-      yarn,
     });
     await admin.save();
     console.log("install done");

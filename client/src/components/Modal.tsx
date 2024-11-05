@@ -1,55 +1,79 @@
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Children,
+  FC,
   ReactElement,
+  ReactNode,
   forwardRef,
   isValidElement,
+  useEffect,
   useImperativeHandle,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
 
 interface ModalProps {
   children: ReactElement[];
-  autoShow?: boolean;
+  onClose?: () => void;
+  className?: string;
 }
 
+interface ContentProps {
+  children: ReactNode;
+}
+
+const ModalContent: FC<ContentProps> = ({ children }) => {
+  return createPortal(<>{children}</>, document.body);
+};
+
 const Modal = forwardRef<any, ModalProps>(
-  ({ children, autoShow = false }, ref) => {
-    const [show, setShow] = useState<boolean>(autoShow);
+  ({ children, onClose, className }, ref) => {
+    const [show, setShow] = useState(false);
     const child = Children.map(children, (child) => {
       if (isValidElement(child)) {
         return child;
       }
     });
-    useImperativeHandle(ref, () => ({
-      close() {
-        setShow(false);
-      },
-      open() {
-        setShow(true);
-      },
-    }));
+
+    const close = () => {
+      setShow(false);
+      onClose && onClose();
+    };
+    useImperativeHandle(ref, () => {
+      return {
+        show() {
+          setShow(true);
+        },
+        close() {
+          close();
+        },
+      };
+    });
+
+    useEffect(() => {
+      const onKeyPress = (e: any) => {
+        if (e.key === "Escape") {
+          setShow(false);
+        }
+      };
+      window.addEventListener("keydown", onKeyPress);
+      return () => window.removeEventListener("keydown", onKeyPress);
+    }, []);
 
     return (
       <>
-        <div onClick={() => setShow(true)}>{child[0]}</div>
+        <div onClick={() => setShow(true)} className={className}>
+          {child[0]}
+        </div>
         {show && (
-          <div className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center z-50">
-            <div className="bg-white min-w-[30vw] p-4 py-5 animate-scale rounded-sm">
-              {child[1]}
+          <ModalContent>
+            <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center z-50 cursor-auto">
+              <div className="animate-drop m-6">{child[1]}</div>
+              <div
+                className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 -z-10"
+                onClick={close}
+              ></div>
             </div>
-            <div
-              className="w-full h-full bg-black bg-opacity-50 absolute top-0 left-0 -z-10"
-              onClick={() => setShow(false)}
-            />
-            <div
-              className="absolute top-5 right-5 rounded-full bg-gray-400 w-[2rem] h-[2rem] flex justify-center items-center cursor-pointer"
-              onClick={() => setShow(false)}
-            >
-              <FontAwesomeIcon icon={solid("close")} color="#fff" />
-            </div>
-          </div>
+          </ModalContent>
         )}
       </>
     );
