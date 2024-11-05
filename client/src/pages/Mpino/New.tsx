@@ -61,7 +61,7 @@ const NewMember: FC = () => {
         e.preventDefault();
         if (id) {
           await api
-            .put("/member", { ...data, id: data._id })
+            .patch("/member/" + data._id, data)
             .then(() => navigate(`/christian/${id}`))
             .catch((err) => console.log(err));
         } else {

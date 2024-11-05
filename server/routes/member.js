@@ -18,7 +18,7 @@ const route = express.Router();
 
 route.post("/", createMember);
 route.delete("/", deleteMember);
-route.put("/", updateMember);
+route.patch("/:id", updateMember);
 route.get("/", listMember);
 route.get("/get/:id", getMember);
 route.get("/export", exportMembersToCsv);

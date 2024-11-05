@@ -3,11 +3,10 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC, useEffect, useRef, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import avatar from "@assets/img/avatar.svg";
 import MemberDetails from "@containers/MemberDetails";
 import MemberInfoTab from "@containers/MemberInfoTab";
 import api from "@utils/api";
-import { formatPoneNumber, memberStatus } from "@utils/helper";
+import { memberStatus } from "@utils/helper";
 import toast from "react-hot-toast";
 import Family from "@containers/Family";
 import AdidyDetails from "@containers/AdidyDetails";
@@ -64,14 +63,17 @@ const Page: FC = () => {
         <div className="w-full h-[20vh]  bg-no-repeat bg-cover overflow-hidden bg-line-pattern"></div>
         <div className="w-full flex flex-col md:flex-row  items-center md:items-end -translate-y-[6rem] px-[2rem]">
           <Avatar label={data.name} hideLabel size={200} textSize={54} />
-          <div className={`px-[2rem] grow translate-y-2 `}>
-            <div>
+          <div className={`px-[2rem] grow `}>
+            <div className="flex gap-3 justify-center md:justify-start my-4">
               <div
                 className={`w-5 aspect-square bg-bg rounded ${memberStatus(
                   data.lastPayDate
                 )}`}
               />
-              <ChangeStatus data={data} />
+              <ChangeStatus
+                data={data}
+                onsuccess={(dt) => setData({ ...data, ...dt })}
+              />
             </div>
             <div className="text-center sm:text-left">
               <p className="font-semibold text-lg text-center md:text-left">
@@ -80,6 +82,7 @@ const Page: FC = () => {
                 <span>{data.forname}</span>
               </p>
               <p className="text-center md:text-left">#{data.mpandrayN}</p>
+              <p className="text-center md:text-left h-6">{data.statusNote}</p>
             </div>
           </div>
         </div>
