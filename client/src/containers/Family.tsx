@@ -19,12 +19,12 @@ const Family: FC<Props> = ({ data }) => {
   return (
     <div className="p-4">
       <div>
-        <div className="grid grid-cols-2">
+        <div className="flex flex-wrap gap-6">
           {family.map((fam: any, i: number) => {
             return (
               <div
                 onClick={() => navigate("/christian/" + fam._id)}
-                className={`cursor-pointer p-6 max-w-[300px] rounded m-auto w-full ${
+                className={`cursor-pointer p-6 max-w-[300px] rounded border w-full ${
                   fam._id === data._id ? "bg-primary text-white" : "hover:bg-bg"
                 }`}
                 key={i}
