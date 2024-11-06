@@ -4,22 +4,14 @@ import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { useParams } from "react-router-dom";
 
-interface AdidyRow {
-  created_at: string;
-  type: string;
-  pay: string;
-  month: number;
-  year: number;
-}
-
-const AdidySamihafa: FC = () => {
-  const [data, setData] = useState<AdidyRow[]>([]);
+const Compta: FC = () => {
+  const [data, setData] = useState<any[]>([]);
   const [rows, setRows] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
   const { id } = useParams();
 
   const fetch = (page: number) => {
-    api.get(`/adidy?page=${page}&limit=${limit}&id=${id}`).then((res) => {
+    api.get(`/adidy?page=${page}&limit=${limit}`).then((res) => {
       setData(res.data.member);
       setRows(res.data.totalRow);
     });
@@ -36,15 +28,14 @@ const AdidySamihafa: FC = () => {
     });
   };
 
-  const columns: TableColumn<AdidyRow>[] = useMemo(
+  const columns: TableColumn<any>[] = useMemo(
     () => [
       {
         name: "Date",
         cell: (row) => {
           return (
             <div>
-              <p>{new Date(row.created_at).toDateString()}</p>
-              <p>{new Date(row.created_at).toLocaleTimeString()}</p>
+              <p>{new Date(row.date).toDateString()}</p>
             </div>
           );
         },
@@ -59,7 +50,7 @@ const AdidySamihafa: FC = () => {
       },
       {
         name: "Vola",
-        selector: (row) => row.pay,
+        selector: (row) => Intl.NumberFormat("de-FR").format(row.mtt),
       },
     ],
     // eslint-disable-next-line
@@ -88,4 +79,4 @@ const AdidySamihafa: FC = () => {
   );
 };
 
-export default AdidySamihafa;
+export default Compta;

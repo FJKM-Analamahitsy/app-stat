@@ -11,6 +11,10 @@ const Adidy = mongoose.model("Adidy", {
 
 const Compta = mongoose.model("Compta", {
   createBy: String,
+  type: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "AdidyType",
+  },
   date: {
     type: Date,
     default: Date.now,
@@ -20,7 +24,11 @@ const Compta = mongoose.model("Compta", {
     ref: "Member",
   },
   mtt: Number,
-  note: String,
+  month: [Number],
 });
 
-module.exports = { Adidy, Compta };
+const AdidyType = mongoose.model("AdidyType", {
+  name: String,
+});
+
+module.exports = { Adidy, Compta, AdidyType };

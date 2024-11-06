@@ -1,29 +1,5 @@
-const { object, string, number } = require("yup");
-const { Adidy, Compta } = require("../models/adidy.model");
+const { Adidy, Compta, AdidyType } = require("../models/adidy.model");
 const { Member } = require("../models/member.model");
-
-const MONTHS = [
-  "january",
-  "february",
-  "march",
-  "april",
-  "may",
-  "june",
-  "july",
-  "august",
-  "september",
-  "october",
-  "november",
-  "december",
-];
-
-const adidyInput = object({
-  type: string().required(),
-  year: number().required(),
-  month: number().required(),
-  mpandray: string().required(),
-  pay: number().required(),
-});
 
 const createAdidy = async (req, res) => {
   try {
@@ -65,30 +41,60 @@ const deleteAdidy = async (req, res) => {
   res.send("success");
 };
 
-const listAdidy = async (req, res) => {
-  const { page = 1, limit = 2, id } = req.query;
-  if (!id) return res.status(403).send("id required");
-  const member = await Adidy.find({ mpandray: id })
+const getCompta = async (req, res) => {
+  const { page = 1, limit = 2, ...filter } = req.query;
+  const member = await Compta.find({ ...filter })
     .limit(limit * 1)
     .skip((page - 1) * limit);
-  const totalRow = await Adidy.find({ mpandray: id }).countDocuments();
+  const totalRow = await Compta.find({ ...filter }).countDocuments();
   return res.send({ member, totalRow });
 };
 
-const adidympandray = async (req, res) => {
-  const { id } = req.query;
-  if (!id) return res.status(403).send("id required");
-  const result = await Adidy.find({
-    mpandray: id,
-    type: "adidy mpandray",
-  }).select("month year -_id");
-  return res.send(result);
+const getType = async (req, res) => {
+  try {
+    const type = await AdidyType.find();
+    res.json(type);
+  } catch (error) {
+    res.status(400).send();
+  }
+};
+
+const createType = async (req, res) => {
+  try {
+    const type = new AdidyType({ ...req.body });
+    await type.save();
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send();
+  }
+};
+
+const updateType = async (req, res) => {
+  try {
+    await AdidyType.findByIdAndUpdate(req.params.id, { ...req.body });
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send();
+  }
+};
+
+const deleteType = async (req, res) => {
+  try {
+    const type = new AdidyType({ ...req.body });
+    await AdidyType.findByIdAndDelete(req.params.id);
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send();
+  }
 };
 
 module.exports = {
   createAdidy,
   deleteAdidy,
-  listAdidy,
-  adidympandray,
+  getCompta,
   getAdidyTrace,
+  getType,
+  createType,
+  updateType,
+  deleteType,
 };

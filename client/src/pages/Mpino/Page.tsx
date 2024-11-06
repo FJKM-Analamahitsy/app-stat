@@ -10,12 +10,12 @@ import { memberStatus } from "@utils/helper";
 import toast from "react-hot-toast";
 import Family from "@containers/Family";
 import AdidyDetails from "@containers/AdidyDetails";
-import AdidySamihafa from "@containers/AdidySamihafa";
 import Modal from "@components/Modal";
 import Button from "@components/Button";
 import Adidy from "./Adidy";
 import ChangeStatus from "@containers/ChangeStatus";
 import usePermission from "@hooks/usePermission";
+import Compta from "@containers/Compta";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
@@ -140,7 +140,7 @@ const Page: FC = () => {
             <MemberDetails data={data} />
             <Family data={data} />
             <AdidyDetails data={trace} />
-            <AdidySamihafa />
+            <Compta />
           </MemberInfoTab>
         </div>
       </div>
