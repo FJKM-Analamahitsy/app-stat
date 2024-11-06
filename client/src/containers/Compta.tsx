@@ -25,7 +25,7 @@ const Compta: FC<Props> = ({ className }) => {
       .get(
         `/adidy?page=${page}&limit=${limit}${start ? `&start=${start}` : ""}${
           end ? `&end=${end}` : ""
-        }`
+        }${id ? `&mpandray=${id}` : ""}`
       )
       .then((res) => {
         setData(res.data);
@@ -49,6 +49,7 @@ const Compta: FC<Props> = ({ className }) => {
       {
         name: "Mpino",
         grow: 3,
+        omit: id !== undefined,
         cell: (row) => (
           <Link to={`/christian/${row.mpandray._id}`}>
             <Avatar label={row.mpandray.fullname} />

@@ -1,6 +1,7 @@
 const { date } = require("yup");
 const { Adidy, Compta, AdidyType } = require("../models/adidy.model");
 const { Member } = require("../models/member.model");
+const { default: mongoose } = require("mongoose");
 
 const createAdidy = async (req, res) => {
   try {
@@ -51,7 +52,7 @@ const deleteAdidy = async (req, res) => {
 };
 
 const getCompta = async (req, res) => {
-  const { page = 1, limit = 2, start, end } = req.query;
+  const { page = 1, limit = 2, start, end, mpandray } = req.query;
   let filter = {};
   if (start) {
     filter = {
@@ -70,6 +71,10 @@ const getCompta = async (req, res) => {
         $lte: new Date(end),
       },
     };
+  }
+
+  if (mpandray) {
+    filter = { ...filter, mpandray: new mongoose.Types.ObjectId(mpandray) };
   }
 
   let member = await Compta.aggregate([
