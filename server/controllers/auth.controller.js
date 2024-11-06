@@ -11,9 +11,12 @@ const loginInput = object({
 
 const getMe = async (req, res) => {
   const token = req.cookies.token;
-  jwt.verify(token, process.env.PRIVATE_KEY, (err, dec) => {
+  jwt.verify(token, process.env.PRIVATE_KEY, async (err, dec) => {
     if (err) return res.status(401).send("unauthorised");
-    return res.send(dec);
+    const user = await User.findById(dec.id)
+      .select("username")
+      .populate("profile");
+    return res.send(user);
   });
 };
 
@@ -26,12 +29,12 @@ const login = async (req, res) => {
       if (check) {
         log(user.username, "connection");
         const token = jwt.sign(
-          { username: user.username, role: user.role },
+          { username: user.username, id: user._id },
           process.env.PRIVATE_KEY
         );
         res.cookie("token", token, {
           httpOnly: true,
-          domain: "localhost",
+          domain: process.env.DOMAIN,
           maxAge: 5 * 3600 * 1000,
         });
         return res.send({

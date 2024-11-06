@@ -14,10 +14,10 @@ const idSchema = object({
 const createMember = async (req, res) => {
   try {
     const input = await memberInput.validate(req.body);
-    const newMember = new Member({ ...input });
-    if (input.familyRank === 1) {
-      newMember.familyId = newMember._id;
-    }
+    const newMember = new Member({
+      ...input,
+      fullname: `${input.name} ${input.forname}`,
+    });
     await newMember.save();
     log(req.requester, `creation member ${newMember._id}`);
     return res.send(newMember);
@@ -39,16 +39,14 @@ const deleteMember = async (req, res) => {
 
 const updateMember = async (req, res) => {
   try {
-    const { id, ...body } = await idSchema.validate(req.body);
     await Member.findOneAndUpdate(
-      { _id: id },
+      { _id: req.params.id },
       {
-        ...body,
-        familyId: +body.familyRank === 1 ? id : body.familyId,
+        ...req.body,
         last_update: new Date(),
       }
     );
-    log(req.requester, `update member ${id}`);
+    log(req.requester, `update member ${req.params.id}`);
     return res.send("sucess");
   } catch (error) {
     res.status(400).send(error.message);
@@ -61,10 +59,11 @@ const getMember = async (req, res) => {
     const member = await Member.findOne({ _id: id });
     let result = { ...member._doc };
     if (member.familyRank !== 1) {
-      const father = await Member.findOne({ _id: member.familyId }).select(
-        "name forname"
-      );
-      result = { ...result, familyId: father };
+      const adress = await Member.findOne({
+        familyId: member.familyId,
+        familyRank: 1,
+      }).select("-_id home place");
+      result = { ...result, ...adress._doc };
     }
     return res.send(result);
   } catch (error) {
@@ -73,28 +72,45 @@ const getMember = async (req, res) => {
 };
 
 const listMember = async (req, res) => {
-  const { page = 1, limit = 10, karatra, anarana } = req.query;
-  const sort = karatra ? { mpandrayN: karatra } : { name: anarana };
+  const {
+    page = 1,
+    limit = 10,
+    karatra,
+    anarana,
+    sampana,
+    search,
+    ...cfil
+  } = req.query;
+  let sort = {};
+  if (karatra) {
+    sort = { ...sort, mpandrayN: karatra };
+  }
+
+  if (anarana) {
+    sort = { ...sort, name: anarana };
+  }
+  let filter = { ...cfil };
+  if (sampana) {
+    filter = { ...filter, sampana: { $regex: new RegExp(sampana, "i") } };
+  }
+  if (search) {
+    filter = {
+      ...filter,
+      $or: [
+        { fullname: { $regex: new RegExp(search, "i") } },
+        { mpandrayN: { $regex: new RegExp(search, "i") } },
+      ],
+    };
+    sort = { ...sort, mpandrayN: "asc" };
+  }
   const member = await Member.find()
     .sort({ ...sort })
     .collation({ locale: "en_US", numericOrdering: true })
     .limit(limit * 1)
-    .skip((page - 1) * limit);
-  const totalRow = await Member.countDocuments();
+    .skip((page - 1) * limit)
+    .where({ ...filter });
+  const totalRow = await Member.where({ ...filter }).countDocuments();
   return res.send({ member, totalRow });
-};
-
-const searchMember = async (req, res) => {
-  const { q, l } = req.query;
-  if (q === "") return res.send([]);
-  const result = await Member.find({
-    $or: [
-      { name: { $regex: new RegExp(q, "i") } },
-      { forname: { $regex: new RegExp(q, "i") } },
-      { mpandrayN: { $regex: new RegExp(q, "i") } },
-    ],
-  }).limit(l);
-  return res.send(result);
 };
 
 const statistics = async (req, res) => {
@@ -142,13 +158,19 @@ const statistics = async (req, res) => {
       n: atsinanana,
       p: ((atsinanana / total) * 100).toFixed(0),
     },
+    total,
   };
   res.send(stast);
 };
 
 const exportMembersToCsv = async (req, res) => {
-  const data = await Member.find().select("-_id");
-  const { filter } = req.query;
+  const { filter, sampana } = req.query;
+  const where = sampana
+    ? { sampana: { $regex: new RegExp(sampana, "i") } }
+    : {};
+  const data = await Member.find()
+    .where({ ...where })
+    .select("-_id");
   const fields = [
     {
       label: "Anarana",
@@ -247,8 +269,82 @@ const getFamily = async (req, res) => {
   const { id } = req.params;
   const result = await Member.find({ familyId: id })
     .sort("familyRank")
-    .select("name forname familyRank");
+    .select("name fullname familyRank famHead");
   return res.send(result);
+};
+
+const getLastKaratra = async (req, res) => {
+  const result = await Member.find()
+    .sort({ mpandrayN: "desc" })
+    .collation({ locale: "en_US", numericOrdering: true })
+    .limit(1)
+    .select("-_id mpandrayN");
+  return res.json(result[0] ? +result[0].mpandrayN + 1 : 1);
+};
+
+const checkKaratra = async (req, res) => {
+  const { num } = req.params;
+  const result = await Member.where({ mpandrayN: num }).countDocuments();
+  return res.json(result > 0);
+};
+
+const statPerBirthMonth = async (req, res) => {
+  const month = [
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december",
+  ];
+  let result = {};
+  for (let i = 0; i < month.length; i++) {
+    const m = month[i];
+    const count = await Member.where({ birthday: m }).countDocuments();
+    result = { ...result, [m]: count };
+  }
+
+  return res.json(result);
+};
+
+const statPerSampana = async (req, res) => {
+  const sampana = [
+    "AFA",
+    "SAFIF",
+    "AMA",
+    "ANTEMA",
+    "VODROM-BAVAKA",
+    "MAINTIMOLALY",
+    "SEKOLY_ALAHADY",
+    "SFS",
+    "SAMPATI",
+    "SVM",
+    "VFL",
+    "AFF",
+    "CENTRE_MEDICAL",
+    "SLK",
+    "STK_MOZIKA",
+    "ENGLISH_CLUB",
+    "VSMAM",
+    "DORKASY",
+    "FLD",
+  ];
+  let result = {};
+  for (let i = 0; i < sampana.length; i++) {
+    const m = sampana[i];
+    const count = await Member.where({
+      sampana: { $regex: new RegExp(m, "i") },
+    }).countDocuments();
+    result = { ...result, [m]: count };
+  }
+
+  return res.json(result);
 };
 
 module.exports = {
@@ -257,8 +353,11 @@ module.exports = {
   updateMember,
   getMember,
   listMember,
-  searchMember,
   exportMembersToCsv,
   statistics,
   getFamily,
+  checkKaratra,
+  getLastKaratra,
+  statPerBirthMonth,
+  statPerSampana,
 };

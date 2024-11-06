@@ -1,9 +1,12 @@
 import Button from "@components/Button";
 import InputNew from "@components/InputNew";
 import RadioButton from "@components/RadioButton";
-import SelectMember from "@components/SelectMember";
+import Select from "@components/Select";
+import SelectMultiple from "@components/SelectMultiple";
 import api from "@utils/api";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { MONTHS, SAMPANA } from "@utils/constant";
+import { FC, ReactNode, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 
 interface ContainerProps {
@@ -27,9 +30,16 @@ const Container: FC<ContainerProps> = ({ title, children, childClass }) => {
 
 const NewMember: FC = () => {
   const [raw, setRaw] = useState<any>({});
-  const [data, setData] = useState<any>({ familyRank: 1 });
+  const [data, setData] = useState<any>({ familyRank: 1, famHead: false });
   const navigate = useNavigate();
   const { id } = useParams();
+  const container = useRef<HTMLDivElement>(null);
+
+  const getLastKaratra = () => {
+    api.get("/member/lastKaratra").then((res) => {
+      setData({ ...data, mpandray: "eny", mpandrayN: res.data });
+    });
+  };
 
   useEffect(() => {
     if (id) {
@@ -48,27 +58,37 @@ const NewMember: FC = () => {
   };
   return (
     <form
-      onChange={onChangeHandler}
-      onSubmit={async (e) => {
+      onSubmit={(e) => {
         e.preventDefault();
         if (id) {
-          await api
-            .put("/member", { ...data, id: data._id })
-            .then(() => navigate(`/mpandray/${id}`))
+          api
+            .patch("/member/" + data._id, data)
+            .then(() => navigate(`/christian/${id}`))
             .catch((err) => console.log(err));
         } else {
-          await api
+          api
             .post("/member", data)
-            .then(() => navigate("/mpandray"))
+            .then(() => {
+              setData({ familyRank: 1, famHead: false });
+              container.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+              toast.success("données insérées");
+            })
             .catch((err) => console.log(err));
         }
       }}
     >
-      <div className="px-[2rem] py-[3rem] flex flex-col gap-4 bg-white">
-        <Container title="General">
+      <div
+        ref={container}
+        className="px-[2rem] py-[3rem] flex flex-col gap-4 bg-white"
+      >
+        <Container title="Ny Tena">
           <InputNew
             label="Anarana"
             name="name"
+            className="[&>input]:uppercase"
             required
             value={data.name ? data.name : ""}
             onChange={onChangeHandler}
@@ -76,6 +96,7 @@ const NewMember: FC = () => {
           <InputNew
             label="Fanampiny"
             name="forname"
+            className="[&>input]:capitalize"
             value={data.forname ? data.forname : ""}
             onChange={onChangeHandler}
           />
@@ -95,21 +116,15 @@ const NewMember: FC = () => {
               checked={data.gender === "vehivavy"}
               onClick={() => setDataHandler("gender", "vehivavy")}
             />
-            <input
-              type="date"
+
+            <Select
+              value={data.birthday}
+              options={[...MONTHS]}
+              valueIndex={false}
               name="birthday"
-              id=""
-              className="border px-2 rounded-[5px] h-[40px] text-grey uppercase col-span-2 md:col-auto"
-              value={data.birthday ? data.birthday : ""}
               onChange={onChangeHandler}
             />
           </div>
-          <InputNew
-            label="Toerana nahaterahana"
-            name="birthplace"
-            value={data.birthplace ? data.birthplace : ""}
-            onChange={onChangeHandler}
-          />
         </Container>
 
         <Container title="Batisa">
@@ -147,7 +162,10 @@ const NewMember: FC = () => {
               value="eny"
               onChange={onChangeHandler}
               checked={data.mpandray === "eny"}
-              onClick={() => setDataHandler("mpandray", "eny")}
+              onClick={() => {
+                setDataHandler("mpandray", "eny");
+                !data.mpandrayN && getLastKaratra();
+              }}
             />
             <RadioButton
               name="mpandray"
@@ -173,72 +191,74 @@ const NewMember: FC = () => {
           />
         </Container>
 
-        <Container title="Fonenana">
+        <Container title="Ankohonana">
           <InputNew
-            label="Home"
-            name="home"
-            value={data.home ? data.home : ""}
-            onChange={onChangeHandler}
+            label="Numero"
+            type="number"
+            value={data.familyId ? data.familyId : ""}
+            onChange={(e) => {
+              setData({ ...data, familyId: +e.target.value });
+            }}
           />
-          <InputNew
-            label="Tanana"
-            name="city"
-            value={data.city ? data.city : ""}
-            onChange={onChangeHandler}
-          />
+          <div className="flex gap-3">
+            <input
+              type="checkbox"
+              className="w-5"
+              name="famHead"
+              checked={data.famHead}
+              onChange={(e) => {
+                setData({ ...data, famHead: e.target.checked });
+              }}
+            />
+            <p className="mt-1 text-lg">Loha-mpianakaviana</p>
+          </div>
           <select
-            name="place"
-            id=""
-            className="border px-2 rounded-[5px] text-grey h-[40px] outline-none"
-            value={data.place ? data.place : ""}
-            onChange={onChangeHandler}
+            className="rounded border p-3 px-1"
+            name="familyRank"
+            onChange={(e) =>
+              setData({ ...data, familyRank: parseInt(e.target.value) })
+            }
+            value={data.familyRank ? data.familyRank.toString() : "1"}
           >
-            <option value="" defaultChecked>
-              Faritra
-            </option>
-            <option value="atsimo">Atsimo</option>
-            <option value="avaratra">Avaratra</option>
-            <option value="atsinanana">Atsinanana</option>
-            <option value="andrefana">Andrefana</option>
+            <option value="1">Ray</option>
+            <option value="2">Reny</option>
+            <option value="3">Zanaka</option>
+            <option value="4">Hafa</option>
           </select>
         </Container>
 
-        <Container title="Asa">
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-            <RadioButton
-              name="job"
-              value="tena"
+        {data.famHead && (
+          <Container title="Fonenana">
+            <InputNew
+              label="Trano"
+              name="home"
+              value={data.home ? data.home : ""}
               onChange={onChangeHandler}
-              checked={data.job === "tena"}
-              onClick={() => setDataHandler("job", "tena")}
             />
-            <RadioButton
-              name="job"
-              value="tsy miankina"
+            <select
+              name="place"
+              id=""
+              className="border px-2 rounded-[5px] text-grey h-[40px] outline-none"
+              value={data.place ? data.place : ""}
               onChange={onChangeHandler}
-              checked={data.job === "tsy miankina"}
-              onClick={() => setDataHandler("job", "tsy miankina")}
-            />
-            <RadioButton
-              name="job"
-              value="fanjakana"
-              onChange={onChangeHandler}
-              checked={data.job === "fanjakana"}
-              onClick={() => setDataHandler("job", "fanjakana")}
-            />
-          </div>
-          <InputNew
-            label="Talenta"
-            name="talent"
-            value={data.talent ? data.talent : ""}
-            onChange={onChangeHandler}
-          />
-        </Container>
+            >
+              <option value="" defaultChecked>
+                Faritra
+              </option>
+              <option value="atsimo">Atsimo</option>
+              <option value="avaratra">Avaratra</option>
+              <option value="atsinanana">Atsinanana</option>
+              <option value="andrefana">Andrefana</option>
+            </select>
+          </Container>
+        )}
 
         <Container title="Fifandraisana">
           <InputNew
             label="Telephone"
             name="phone"
+            maxLength={10}
+            placeholder=""
             value={data.phone ? data.phone : ""}
             onChange={onChangeHandler}
           />
@@ -258,48 +278,30 @@ const NewMember: FC = () => {
 
         <Container title="Samihafa">
           <InputNew
-            label="Fialamboly"
+            label="Fialam-boly"
             name="hobby"
             value={data.hobby ? data.hobby : ""}
             onChange={onChangeHandler}
           />
           <InputNew
-            label="Fanatanjahatena"
+            label="Fanatanjahan-tena"
             name="sport"
             value={data.sport ? data.sport : ""}
             onChange={onChangeHandler}
           />
         </Container>
 
-        <Container title="Ankohonana">
-          <SelectMember
-            label="Raim-pianakaviana"
-            onSelected={(m) => setData({ ...data, familyId: m._id })}
-            defaultValue={
-              typeof data.familyId === "object"
-                ? `${data.familyId.name} ${data.familyId.forname}`
-                : ""
-            }
+        <Container title="Sampana">
+          <SelectMultiple
+            options={SAMPANA}
+            onChange={(val) => setData({ ...data, sampana: val })}
+            defaultValue={data.sampana}
           />
-          <select
-            className="rounded border"
-            name="familyRank"
-            onChange={(e) =>
-              setData({ ...data, familyRank: parseInt(e.target.value) })
-            }
-            value={data.familyRank ? data.familyRank.toString() : "1"}
-          >
-            <option value="1">Ray</option>
-            <option value="2">Reny</option>
-            <option value="3">Zanaka</option>
-            <option value="4">Hafa</option>
-          </select>
         </Container>
 
         <Container title="Fanamarihana" childClass="!grid-cols-1">
           <textarea
-            name="Hafa"
-            id=""
+            name="other"
             className="border px-2 rounded-[5px] text-grey h-[10vh] outline-none w-full"
             placeholder="fanamarihana manokana"
             value={data.other ? data.other : ""}
@@ -312,7 +314,7 @@ const NewMember: FC = () => {
             className="text-white bg-primary w-1/3 sm:w-1/4 disabled:cursor-not-allowed disabled:opacity-60"
             disabled={id ? JSON.stringify(raw) === JSON.stringify(data) : false}
           >
-            save
+            enregistrer
           </Button>
         </div>
       </div>

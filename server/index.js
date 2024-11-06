@@ -6,14 +6,24 @@ const { auth } = require("./routes/auth");
 const { member } = require("./routes/member");
 const { adidy } = require("./routes/adidy");
 const { cookieParser } = require("./utils/cookieParser");
+const { profile } = require("./routes/profile");
+const { users } = require("./routes/users");
+const { authMiddlware } = require("./middleware/middleware");
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(
+  cors({
+    origin: ["http://localhost", "http://localhost:3000", process.env.CLIENT],
+    credentials: true,
+  })
+);
 app.use(cookieParser);
 app.use("/auth", auth);
-app.use("/member", member);
-app.use("/adidy", adidy);
+app.use("/member", authMiddlware, member);
+app.use("/adidy", authMiddlware, adidy);
+app.use("/profile", authMiddlware, profile);
+app.use("/users", authMiddlware, users);
 
 const port = process.env.PORT || 4000;
 

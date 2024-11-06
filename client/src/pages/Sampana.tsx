@@ -8,22 +8,25 @@ import { formatPoneNumber } from "@utils/helper";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface DataRow {
   [key: string]: string;
 }
 
-const Liste: FC = () => {
+const ListeSampana: FC = () => {
   const [data, setData] = useState<DataRow[]>([]);
   const [rows, setRows] = useState<number>(0);
   const [limit, setLimit] = useState<number>(30);
   const [sort, setSort] = useState<any>(["anarana", "asc"]);
   const [n, setN] = useState<number>(1);
   const navigate = useNavigate();
+  const { name } = useParams();
   const fetch = (page: number) => {
     api
-      .get(`/member?page=${page}&limit=${limit}&${sort[0]}=${sort[1]}`)
+      .get(
+        `/member?page=${page}&limit=${limit}&${sort[0]}=${sort[1]}&sampana=${name}`
+      )
       .then((res) => {
         setData(res.data.member);
         setRows(res.data.totalRow);
@@ -81,7 +84,7 @@ const Liste: FC = () => {
         sortable: true,
         cell: (row) => {
           return (
-            <div onClick={() => navigate("/mpandray/" + row._id)}>
+            <div onClick={() => navigate("/christian/" + row._id)}>
               <Avatar label={`${row.name} ${row.forname ? row.forname : ""}`} />
             </div>
           );
@@ -118,7 +121,7 @@ const Liste: FC = () => {
               <FontAwesomeIcon
                 icon={solid("user-pen")}
                 className="cursor-pointer hover:text-slate-500"
-                onClick={() => navigate("/mpandray/edit/" + row._id)}
+                onClick={() => navigate("/christian/edit/" + row._id)}
               />
               <FontAwesomeIcon
                 icon={solid("trash")}
@@ -138,15 +141,14 @@ const Liste: FC = () => {
     () => {
       fetch(1);
     }, // eslint-disable-next-line
-    []
+    [name]
   );
   return (
     <div className="p-4 bg-white rounded" id="list">
-      <div className="mb-4 md:hidden">
-        <Search />
+      <div className="flex justify-between my-2">
+        <p className="text-lg font-medium">{name}</p>
+        <ExportBtn sampana={name} />
       </div>
-
-      <ExportBtn />
 
       <DataTable
         columns={columns}
@@ -156,7 +158,7 @@ const Liste: FC = () => {
         paginationTotalRows={rows}
         onChangePage={onChangeHandler}
         onChangeRowsPerPage={onLimitChange}
-        onRowClicked={(row) => navigate("/mpandray/" + row._id)}
+        onRowClicked={(row) => navigate("/christian/" + row._id)}
         paginationPerPage={limit}
         paginationRowsPerPageOptions={[30, 50, 100]}
         sortServer
@@ -166,4 +168,4 @@ const Liste: FC = () => {
   );
 };
 
-export default Liste;
+export default ListeSampana;

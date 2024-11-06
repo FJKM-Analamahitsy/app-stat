@@ -7,6 +7,9 @@ import useAuth from "@hooks/useAuth";
 import api from "@utils/api";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
+import church from "@assets/img/church.svg";
+import fjkm from "@assets/img/fjkm.png";
+import { Link } from "react-router-dom";
 
 const Login: FC = () => {
   const [showPass, setShowPass] = useState<boolean>(false);
@@ -32,17 +35,21 @@ const Login: FC = () => {
   };
   return (
     <div className="flex w-screen h-screen bg-[#F4F7F8]">
-      <div className="w-1/2 bg-primary hidden md:block"></div>
+      <div className="w-1/2 bg-primary md:flex justify-end items-end hidden relative">
+        <img src={church} alt="" className="w-auto" />
+        <img src={fjkm} alt="" className="absolute top-2 left-2 w-8" />
+      </div>
       <div className="w-full md:w-1/2 flex justify-center items-center p-8">
         <div className="max-w-[480px]">
           <form onSubmit={login} onChange={onChangeHandler}>
             <div className="bg-white rounded-[5px] h-fit flex flex-col gap-5 px-[1rem] py-[2rem] md:px-[3rem] md:py-[4rem]">
-              <Logo />
-              <h2 className="text-2xl font-bold">Welcome Back!</h2>
-              <p className="mb-[1rem]">
-                It is a long established fact that a reader will be distracted
-                by the readable content of a page
-              </p>
+              <div className="mb-4">
+                <h2 className="text-2xl font-bold text-primary">Nomery 1:2</h2>
+                <p className="mt-1 italic">
+                  Alao isa ny fiangonana, dia ny Zanak'Israely rehetra,araka ny
+                  fokony,sy ny fianakaviany avy, ary araka ny anarany tsirairay.
+                </p>
+              </div>
               <Input
                 leftIcon={<FontAwesomeIcon icon={solid("user")} size="sm" />}
                 placeholder="Username"

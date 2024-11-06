@@ -1,15 +1,26 @@
 const mongoose = require("mongoose");
 
 const Adidy = mongoose.model("Adidy", {
-  type: String,
   year: Number,
-  month: Number,
-  mpandray: String,
-  pay: Number,
-  created_at: {
-    type: Date,
-    default: Date.now,
+  month: [Number],
+  mpandray: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Member",
   },
 });
 
-module.exports = { Adidy };
+const Compta = mongoose.model("Compta", {
+  createBy: String,
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  mpandray: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Member",
+  },
+  mtt: Number,
+  note: String,
+});
+
+module.exports = { Adidy, Compta };

@@ -5,64 +5,52 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   data: any;
-  rank: number;
 }
 
-const Family: FC<Props> = ({ data, rank }) => {
+const Family: FC<Props> = ({ data }) => {
   const [family, setFamily] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     data.familyId &&
-      api
-        .get(`/member/family/${data.familyId._id || data.familyId}`)
-        .then((data: any) => {
-          setFamily(data.data);
-        });
+      api.get(`/member/family/${data.familyId}`).then((data: any) => {
+        setFamily(data.data);
+      });
   }, [data]);
   return (
-    <div>
-      <p>
-        <span className="font-medium">Fiankohonana :</span>{" "}
-        {FAMILYRANK[rank - 1]}
-      </p>
+    <div className="p-4">
       <div>
-        <p className="my-3 font-medium">Fianakaviana</p>
-        <div>
-          {family &&
-            family.map((fam: any, i: number) => {
-              if (fam._id !== data._id) {
-                return (
+        <div className="flex flex-wrap gap-6">
+          {family.map((fam: any, i: number) => {
+            return (
+              <div
+                onClick={() => navigate("/christian/" + fam._id)}
+                className={`cursor-pointer p-6 max-w-[300px] rounded border w-full ${
+                  fam._id === data._id ? "bg-primary text-white" : "hover:bg-bg"
+                }`}
+                key={i}
+              >
+                <div className={`flex flex-col items-center gap-4`}>
                   <div
-                    onClick={() => navigate("/mpandray/" + fam._id)}
-                    className="cursor-pointer my-4"
-                    key={i}
+                    className="rounded-full bg-bg flex border-2 border-white justify-center items-center cursor-pointer overflow-hidden"
+                    style={{ width: 60, height: 60 }}
                   >
-                    <div className={`flex items-center gap-4`}>
-                      <div
-                        className="rounded-full bg-bg flex border-2 border-white justify-center items-center cursor-pointer overflow-hidden"
-                        style={{ width: 40, height: 40 }}
-                      >
-                        <span className="font-medium text-grey uppercase">
-                          {fam.name.slice(0, 2)}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="leading-[1.1]">
-                          <span className="font-semibold truncate">
-                            {fam.name + " " + fam.forname}
-                          </span>
-                          <br />
-                          <span className="block truncate w-full">
-                            {FAMILYRANK[fam.familyRank - 1]}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
+                    <span className="font-medium text-grey uppercase">
+                      {fam.name.slice(0, 2)}
+                    </span>
                   </div>
-                );
-              }
-              return null;
-            })}
+                  <div>
+                    <p className="font-semibold truncate max-w-[250px] text-center">
+                      {fam.fullname}
+                    </p>
+                    <p className="text-center">
+                      {FAMILYRANK[fam.familyRank - 1]}{" "}
+                      {fam.famHead ? "(Loha-mpianakaviana)" : ""}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

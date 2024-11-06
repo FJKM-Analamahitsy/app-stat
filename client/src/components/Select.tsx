@@ -6,9 +6,10 @@ interface SelectProps
     HTMLSelectElement
   > {
   options: string[];
+  valueIndex?: boolean;
 }
 
-const Select: FC<SelectProps> = ({ options, ...props }) => {
+const Select: FC<SelectProps> = ({ options, valueIndex = true, ...props }) => {
   return (
     <select
       className="w-full border px-2 rounded-[5px] text-grey h-[40px] outline-none"
@@ -16,7 +17,7 @@ const Select: FC<SelectProps> = ({ options, ...props }) => {
     >
       {options.map((opt, i) => {
         return (
-          <option key={i} value={opt} className="capitalize">
+          <option key={i} value={valueIndex ? i : opt}>
             {opt}
           </option>
         );

@@ -6,7 +6,7 @@ interface ButtonProps
   > {}
 const Button: FC<ButtonProps> = ({ children, className, ...props }) => {
   return (
-    <button className={`p-[8px] rounded-[5px] w-full ${className}`} {...props}>
+    <button className={`p-[8px] rounded-[5px] px-4 ${className}`} {...props}>
       {children}
     </button>
   );

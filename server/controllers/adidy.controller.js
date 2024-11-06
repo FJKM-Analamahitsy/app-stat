@@ -1,5 +1,21 @@
 const { object, string, number } = require("yup");
-const { Adidy } = require("../models/adidy.model");
+const { Adidy, Compta } = require("../models/adidy.model");
+const { Member } = require("../models/member.model");
+
+const MONTHS = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+];
 
 const adidyInput = object({
   type: string().required(),
@@ -11,17 +27,33 @@ const adidyInput = object({
 
 const createAdidy = async (req, res) => {
   try {
-    const input = await adidyInput.validate(req.body);
-    const check = await Adidy.find({
-      year: input.year,
-      month: input.month,
-      mpandray: input.mpandray,
-      type: input.type,
-    }).countDocuments();
-    if (check > 0) return res.status(400).send("duplicate");
-    const newAdidy = new Adidy({ ...input });
-    await newAdidy.save();
+    const { mpandray, year } = req.body.trace;
+    const check = await Adidy.findOne({ mpandray, year });
+    if (check) {
+      await check.updateOne({
+        month: [...check.month, ...req.body.trace.month],
+      });
+    } else {
+      const newAdidy = new Adidy(req.body.trace);
+      await newAdidy.save();
+    }
+    const compta = new Compta({ ...req.body.compta, createBy: req.requester });
+    await compta.save();
+    await Member.findByIdAndUpdate(mpandray, { lastPayDate: new Date() });
     res.send("success");
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+const getAdidyTrace = async (req, res) => {
+  try {
+    const result = await Adidy.find({ mpandray: req.params.id })
+      .sort({
+        year: "desc",
+      })
+      .limit(4);
+    res.json(result);
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -29,7 +61,7 @@ const createAdidy = async (req, res) => {
 
 const deleteAdidy = async (req, res) => {
   if (!req.body.id) return res.status(404).send("id required");
-  const adidy = await Adidy.findByIdAndDelete(id);
+  await Adidy.findByIdAndDelete(id);
   res.send("success");
 };
 
@@ -53,4 +85,10 @@ const adidympandray = async (req, res) => {
   return res.send(result);
 };
 
-module.exports = { createAdidy, deleteAdidy, listAdidy, adidympandray };
+module.exports = {
+  createAdidy,
+  deleteAdidy,
+  listAdidy,
+  adidympandray,
+  getAdidyTrace,
+};

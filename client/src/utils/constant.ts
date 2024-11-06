@@ -85,18 +85,52 @@ export const fields = [
 ];
 
 export const MONTHS = [
-  "janvier",
-  "fevrier",
-  "mars",
-  "avril",
-  "mai",
-  "juin",
-  "juillet",
-  "aout",
-  "septembre",
-  "octobre",
-  "novembre",
-  "decembre",
+  "Janvier",
+  "Fevrier",
+  "Mars",
+  "Avril",
+  "Mai",
+  "Juin",
+  "Juillet",
+  "Aout",
+  "Septembre",
+  "Octobre",
+  "Novembre",
+  "Decembre",
 ];
 
 export const FAMILYRANK = ["Ray", "Reny", "Zanaka", "hafa"];
+
+export const SAMPANA = [
+  "AFA",
+  "SAFIF",
+  "AMA",
+  "ANTEMA",
+  "VODROM-BAVAKA",
+  "MAINTIMOLALY",
+  "SEKOLY_ALAHADY",
+  "SFS",
+  "SAMPATI",
+  "SVM",
+  "VFL",
+  "AFF",
+  "CENTRE_MEDICAL",
+  "SLK",
+  "STK_MOZIKA",
+  "ENGLISH_CLUB",
+  "VSMAM",
+  "DORKASY",
+  "FLD",
+];
+
+export const APP_OPTIONS = [
+  "dash",
+  "member",
+  "newmember",
+  "contribution",
+  "sampana",
+  "profile",
+  "users",
+];
+
+export const TAB_OPTIONS = ["info", "family", "contrib", "other"];

@@ -1,38 +1,46 @@
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SAMPANA } from "./constant";
 
-const MenuData = [
+const MenuData: any = [
   {
-    label: "Home",
+    label: "Dashboard",
     path: "/home",
-    icon: <FontAwesomeIcon icon={solid("home")} />,
+    icon: <FontAwesomeIcon icon={solid("border-all")} />,
+    auth: "dash",
   },
 
   {
-    label: "Mpandray",
+    label: "List",
+    path: "/christian",
+    icon: <FontAwesomeIcon icon={solid("list")} />,
+    auth: "member",
+  },
+
+  {
+    label: "New",
+    path: "/christian/new",
+    icon: <FontAwesomeIcon icon={solid("user-plus")} />,
+    auth: "newmember",
+  },
+
+  {
+    label: "Sampana",
     icon: <FontAwesomeIcon icon={solid("users")} />,
-    submenu: [
-      {
-        label: "Liste",
-        path: "/mpandray",
-        icon: <FontAwesomeIcon icon={solid("users")} />,
-      },
-      {
-        label: "Nouveau",
-        path: "/mpandray/new",
-        icon: <FontAwesomeIcon icon={solid("users")} />,
-      },
-      {
-        label: "Adidy",
-        path: "/mpandray/adidy",
-        icon: <FontAwesomeIcon icon={solid("users")} />,
-      },
-    ],
+    submenu: SAMPANA.sort().map((v) => ({ path: `/sampana/${v}`, label: v })),
+    auth: "sampana",
   },
   {
-    label: "Utilisateur",
-    path: "/user",
+    label: "Profile",
+    path: "/profile",
     icon: <FontAwesomeIcon icon={solid("users")} />,
+    auth: "profile",
+  },
+  {
+    label: "Users",
+    path: "/users",
+    icon: <FontAwesomeIcon icon={solid("users")} />,
+    auth: "users",
   },
 ];
 

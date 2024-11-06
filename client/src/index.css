@@ -6,6 +6,10 @@
   outline: none !important;
 }
 
+body {
+  color: rgb(13, 6, 55);
+}
+
 *::-webkit-scrollbar {
   width: 3px;
   height: 3px;
@@ -23,30 +27,16 @@ input {
   background-color: #ffffff !important;
 }
 
-/* .ps-menu-button {
-  padding: 0 !important;
-  height: 40px !important;
-  margin: 1rem 0px;
-}
-
-.ps-menu-button > span {
-  display: block;
-  height: 100%;
-} */
-
-#list .rdt_Table {
-  height: calc(100vh - 200px) !important;
-}
-
-@media screen and (max-width: 375px) {
-  .rdt_Table {
-    height: calc(100vh - 250px) !important;
-  }
+.ps-menu-button:hover {
+  background-color: rgba(255, 255, 255, 0) !important;
 }
 
 .rdt_TableHead {
   font-weight: 700 !important;
   font-size: 16px !important;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .rdt_TableHeadRow {
@@ -73,7 +63,35 @@ input {
   padding: 0.8rem 5px !important;
 }
 
-.rdt_TableBody {
-  overflow-y: scroll;
-  scrollbar-width: none;
+.ps-submenu-content {
+  height: 285px !important;
+}
+
+.switch {
+  @apply w-11 h-0 cursor-pointer inline-block;
+  @apply focus:outline-0 dark:focus:outline-0;
+  @apply border-0 dark:border-0;
+  @apply focus:ring-offset-transparent dark:focus:ring-offset-transparent;
+  @apply focus:ring-transparent dark:focus:ring-transparent;
+  @apply focus-within:ring-0 dark:focus-within:ring-0;
+  @apply focus:shadow-none dark:focus:shadow-none;
+
+  @apply after:absolute before:absolute;
+  @apply after:top-0 before:top-0;
+  @apply after:block before:inline-block;
+  @apply before:rounded-full after:rounded-full;
+
+  @apply after:content-[''] after:w-4 after:h-4 after:mt-0.5 after:ml-0.5;
+  @apply after:shadow-md after:duration-100;
+
+  @apply before:content-[''] before:w-10 before:h-full;
+  @apply before:shadow-[inset_0_0_#000];
+
+  @apply after:bg-white dark:after:bg-gray-50;
+  @apply before:bg-gray-300 dark:before:bg-gray-600;
+  @apply before:checked:bg-blue-500 dark:before:checked:bg-blue-500;
+  @apply checked:after:duration-300 checked:after:translate-x-4;
+
+  @apply disabled:after:bg-opacity-75 disabled:cursor-not-allowed;
+  @apply disabled:checked:before:bg-opacity-40;
 }

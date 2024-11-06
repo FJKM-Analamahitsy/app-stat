@@ -73,9 +73,9 @@ const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
       label: "Faritra",
       icon: <FontAwesomeIcon icon={solid("home-alt")} size="sm" />,
     },
-    job: {
-      label: "Asa",
-      icon: <FontAwesomeIcon icon={solid("user-tie")} size="sm" />,
+    sampana: {
+      label: "Sampana",
+      icon: <FontAwesomeIcon icon={solid("users")} size="sm" />,
     },
     talent: {
       label: "Talenta",
@@ -95,7 +95,7 @@ const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
     },
   };
   return (
-    <div className="border border-bg p-2 px-4 rounded-[5px] w-full">
+    <div className="rounded-[5px] py-4 w-full">
       {Object.keys(shema).map((el, i) => {
         if (data[el]) {
           return (
@@ -109,11 +109,7 @@ const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
               <div>
                 <p className="text-gray-400 text-sm">{shema[el].label}</p>
                 <p className="font-medium text-gray-800">
-                  {el === "birthday"
-                    ? new Date(data[el]).toLocaleDateString()
-                    : el === "phone"
-                    ? formatPoneNumber(data[el])
-                    : data[el]}
+                  {el === "phone" ? formatPoneNumber(data[el]) : data[el]}
                 </p>
               </div>
             </div>

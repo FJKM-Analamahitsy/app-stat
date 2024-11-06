@@ -4,9 +4,11 @@ interface AvatarProps {
   img?: string;
   label?: string;
   size?: number;
+  textSize?: number;
   reversed?: boolean;
   hideLabSm?: boolean;
   hideLabel?: boolean;
+  className?: string;
 }
 
 const Avatar: FC<AvatarProps> = ({
@@ -16,6 +18,8 @@ const Avatar: FC<AvatarProps> = ({
   reversed = false,
   hideLabSm = false,
   hideLabel = false,
+  textSize = 16,
+  className = "border-white",
 }) => {
   const name = label?.split(" ");
   return (
@@ -25,19 +29,22 @@ const Avatar: FC<AvatarProps> = ({
       }`}
     >
       <div
-        className="rounded-full bg-bg flex border-2 border-white justify-center items-center cursor-pointer overflow-hidden"
+        className={`rounded-full bg-bg flex border-2 justify-center items-center cursor-pointer overflow-hidden ${className}`}
         style={{ width: size, height: size }}
       >
         {img && <img src={img} alt="" className="w-full h-full" />}
         {name && (
-          <span className="font-medium text-grey uppercase">
+          <span
+            style={{ fontSize: textSize }}
+            className="font-medium text-grey uppercase"
+          >
             {name[0][0] + name[0][1]}
           </span>
         )}
       </div>
       {name && !hideLabel && (
         <div className={`${hideLabSm && "hidden sm:block"}`}>
-          <p className={`leading-[1.1] ${reversed && "text-right"}`}>
+          <p className={`leading-[1.3] ${reversed && "text-right"}`}>
             <span className="font-semibold truncate">{name[0]}</span>
             <br />
             <span className="block truncate w-full">

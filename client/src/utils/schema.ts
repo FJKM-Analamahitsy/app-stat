@@ -1,7 +1,7 @@
 export interface MemberShema {
   name: string;
   forname?: string;
-  birthday?: Date;
+  birthday?: string;
   birthplace?: string;
   gender?: string;
   adress?: string;

@@ -5,7 +5,11 @@ import Button from "./Button";
 import { fields } from "@utils/constant";
 import api from "@utils/api";
 
-const ExportBtn: FC = () => {
+interface Props {
+  sampana?: string;
+}
+
+const ExportBtn: FC<Props> = ({ sampana }) => {
   const [show, setShow] = useState<boolean>(false);
   const [filter, setFilter] = useState<string[]>([]);
   const close = () => {
@@ -15,7 +19,7 @@ const ExportBtn: FC = () => {
   return (
     <>
       <div
-        className="bg-primary text-white p-1 px-8 rounded-[5px] w-fit float-right cursor-pointer"
+        className="bg-primary text-white p-1 px-8 rounded-[5px] w-fit cursor-pointer"
         onClick={() => setShow(true)}
       >
         <FontAwesomeIcon icon={solid("file-arrow-down")} />
@@ -78,7 +82,9 @@ const ExportBtn: FC = () => {
               <a
                 href={`${
                   api.defaults.baseURL
-                }/member/export?filter=${filter.join("|")}`}
+                }/member/export?filter=${filter.join("|")}${
+                  sampana ? `&sampana=${sampana}` : ""
+                }`}
                 onClick={close}
               >
                 <Button className="bg-primary text-white">export</Button>
