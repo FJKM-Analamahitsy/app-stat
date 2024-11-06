@@ -1,6 +1,5 @@
 import Avatar from "@components/Avatar";
 import Button from "@components/Button";
-import ExportBtn from "@components/ExportBtn";
 import Popup from "@components/Popup";
 import Search from "@components/Search";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
@@ -24,10 +23,14 @@ const Liste: FC = () => {
   const [n, setN] = useState<number>(1);
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
+  const [filter, setFilter] = useState<any>({});
+
   const fetch = (page: number) => {
     api
       .get(
-        `/member?page=${page}&limit=${limit}&${sort[0]}=${sort[1]}&search=${query}`
+        `/member?page=${page}&limit=${limit}&${sort[0]}=${
+          sort[1]
+        }&search=${query}&${prepFilter()}`
       )
       .then((res) => {
         setData(res.data.member);
@@ -142,6 +145,17 @@ const Liste: FC = () => {
     [navigate]
   );
 
+  const prepFilter = () => {
+    return Object.keys(filter)
+      .map((k) => (filter[k] && filter[k] !== "" ? `${k}=${filter[k]}` : null))
+      .filter((v) => v !== null)
+      .join("&");
+  };
+
+  useEffect(() => {
+    fetch(1);
+  }, [filter]);
+
   useEffect(() => {
     if (query.trim() !== "") {
       fetch(n);
@@ -174,7 +188,13 @@ const Liste: FC = () => {
           <div className="shadow border min-w-[300px] max-h-[450px] overflow-y-auto bg-white rounded p-4 flex flex-col gap-4">
             <div>
               <p className="my-2">Mpandray</p>
-              <select className="bg-bg w-full p-3 px-1 rounded">
+              <select
+                className="bg-bg w-full p-3 px-1 rounded"
+                value={filter.mpandray}
+                onChange={(e) => {
+                  setFilter({ ...filter, mpandray: e.target.value });
+                }}
+              >
                 <option value="">Tous</option>
                 <option value="eny">Eny</option>
                 <option value="tsia">Tsia</option>
@@ -183,7 +203,13 @@ const Liste: FC = () => {
 
             <div>
               <p className="my-2">Batisa</p>
-              <select className="bg-bg w-full p-3 px-1 rounded">
+              <select
+                className="bg-bg w-full p-3 px-1 rounded"
+                value={filter.batisa}
+                onChange={(e) => {
+                  setFilter({ ...filter, batisa: e.target.value });
+                }}
+              >
                 <option value="">Tous</option>
                 <option value="eny">Eny</option>
                 <option value="tsia">Tsia</option>
@@ -192,7 +218,13 @@ const Liste: FC = () => {
 
             <div>
               <p className="my-2">Faritra</p>
-              <select className="bg-bg w-full p-3 px-1 rounded">
+              <select
+                className="bg-bg w-full p-3 px-1 rounded"
+                value={filter.place}
+                onChange={(e) => {
+                  setFilter({ ...filter, place: e.target.value });
+                }}
+              >
                 <option value="">Tous</option>
                 <option value="atsimo">Atsimo</option>
                 <option value="andrefana">Andrefana</option>
@@ -203,7 +235,13 @@ const Liste: FC = () => {
 
             <div>
               <p className="my-2">L/V</p>
-              <select className="bg-bg w-full p-3 px-1 rounded">
+              <select
+                className="bg-bg w-full p-3 px-1 rounded"
+                value={filter.gender}
+                onChange={(e) => {
+                  setFilter({ ...filter, gender: e.target.value });
+                }}
+              >
                 <option value="">Tous</option>
                 <option value="lehilahy">Lehilahy</option>
                 <option value="vehivavy">Vehivavy</option>
@@ -212,7 +250,13 @@ const Liste: FC = () => {
 
             <div>
               <p className="my-2">Statut</p>
-              <select className="bg-bg w-full p-3 px-1 rounded">
+              <select
+                className="bg-bg w-full p-3 px-1 rounded"
+                value={filter.status}
+                onChange={(e) => {
+                  setFilter({ ...filter, status: e.target.value });
+                }}
+              >
                 <option value="">Tous</option>
                 <option value="lehilahy">Activer</option>
                 <option value="vehivavy">Desactiver</option>

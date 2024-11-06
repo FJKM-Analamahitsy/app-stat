@@ -72,7 +72,15 @@ const getMember = async (req, res) => {
 };
 
 const listMember = async (req, res) => {
-  const { page = 1, limit = 10, karatra, anarana, sampana, search } = req.query;
+  const {
+    page = 1,
+    limit = 10,
+    karatra,
+    anarana,
+    sampana,
+    search,
+    ...cfil
+  } = req.query;
   let sort = {};
   if (karatra) {
     sort = { ...sort, mpandrayN: karatra };
@@ -81,7 +89,7 @@ const listMember = async (req, res) => {
   if (anarana) {
     sort = { ...sort, name: anarana };
   }
-  let filter = {};
+  let filter = { ...cfil };
   if (sampana) {
     filter = { ...filter, sampana: { $regex: new RegExp(sampana, "i") } };
   }
