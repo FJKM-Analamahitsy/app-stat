@@ -12,6 +12,7 @@ import ListeSampana from "@pages/Sampana";
 import ProfileList from "@pages/Profile/List";
 import ProfilePage from "@pages/Profile/Page";
 import UserList from "@pages/Users/List";
+import AdidyType from "@pages/Adidy/Type";
 
 const Routes: FC = () => {
   return (
@@ -33,6 +34,7 @@ const Routes: FC = () => {
           </Route>
           <Route path="users" element={<UserList />} />
           <Route path="sampana/:name" element={<ListeSampana />} />
+          <Route path="adidytype" element={<AdidyType />} />
         </Route>
       </Route>
     </Router>

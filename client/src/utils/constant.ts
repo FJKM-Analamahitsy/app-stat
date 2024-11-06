@@ -131,6 +131,7 @@ export const APP_OPTIONS = [
   "sampana",
   "profile",
   "users",
+  "adidytype",
 ];
 
 export const TAB_OPTIONS = ["info", "family", "contrib", "other"];
