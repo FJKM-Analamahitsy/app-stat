@@ -1,3 +1,4 @@
+const { date } = require("yup");
 const { Adidy, Compta, AdidyType } = require("../models/adidy.model");
 const { Member } = require("../models/member.model");
 
@@ -50,14 +51,67 @@ const deleteAdidy = async (req, res) => {
 };
 
 const getCompta = async (req, res) => {
-  const { page = 1, limit = 2, ...filter } = req.query;
-  const member = await Compta.find({ ...filter })
-    .limit(limit * 1)
-    .skip((page - 1) * limit)
-    .sort({ date: "desc" })
-    .populate("type mpandray");
-  const totalRow = await Compta.find({ ...filter }).countDocuments();
-  return res.send({ member, totalRow });
+  const { page = 1, limit = 2, start, end } = req.query;
+  let filter = {};
+  if (start) {
+    filter = {
+      ...filter,
+      date: {
+        $gte: new Date(start),
+      },
+    };
+  }
+
+  if (end) {
+    filter = {
+      ...filter,
+      date: {
+        ...filter.date,
+        $lte: new Date(end),
+      },
+    };
+  }
+
+  let member = await Compta.aggregate([
+    {
+      $match: { ...filter },
+    },
+    {
+      $sort: {
+        date: -1,
+      },
+    },
+    {
+      $skip: (page - 1) * parseInt(limit),
+    },
+    {
+      $limit: parseInt(limit),
+    },
+  ]);
+
+  member = await Compta.populate(member, { path: "type" });
+  member = await Compta.populate(member, { path: "mpandray" });
+
+  const totalRow = await Compta.aggregate([
+    {
+      $match: { ...filter },
+    },
+    {
+      $count: "mtt",
+    },
+  ]);
+  const sum = await Compta.aggregate([
+    {
+      $match: { ...filter },
+    },
+
+    { $group: { _id: null, mtt: { $sum: "$mtt" } } },
+  ]);
+  return res.send({
+    member,
+    totalRow: totalRow.length > 0 ? totalRow[0].mtt : 0,
+    sum: sum.length > 0 ? sum[0].mtt : 0,
+  });
 };
 
 const getType = async (req, res) => {

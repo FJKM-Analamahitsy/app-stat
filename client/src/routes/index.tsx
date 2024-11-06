@@ -5,7 +5,6 @@ import NewMember from "@pages/Mpino/New";
 import Page from "@pages/Mpino/Page";
 import { FC } from "react";
 import { Routes as Router, Route } from "react-router-dom";
-import Adidy from "@pages/Mpino/Adidy";
 import AuthGuard from "@auth/AuthGuard";
 import Layout from "layout";
 import ListeSampana from "@pages/Sampana";
@@ -13,6 +12,7 @@ import ProfileList from "@pages/Profile/List";
 import ProfilePage from "@pages/Profile/Page";
 import UserList from "@pages/Users/List";
 import AdidyType from "@pages/Adidy/Type";
+import Journal from "@pages/Adidy/List";
 
 const Routes: FC = () => {
   return (
@@ -35,6 +35,7 @@ const Routes: FC = () => {
           <Route path="users" element={<UserList />} />
           <Route path="sampana/:name" element={<ListeSampana />} />
           <Route path="adidytype" element={<AdidyType />} />
+          <Route path="journal" element={<Journal />} />
         </Route>
       </Route>
     </Router>

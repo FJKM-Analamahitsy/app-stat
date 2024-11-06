@@ -93,7 +93,7 @@ const Liste: FC = () => {
           return (
             <div onClick={() => navigate("/christian/" + row._id)} className="">
               <Avatar
-                label={`${row.name} ${row.forname ? row.forname : ""}`}
+                label={`${row.fullname}`}
                 className={memberStatus(row.lastPayDate, true)}
               />
             </div>
