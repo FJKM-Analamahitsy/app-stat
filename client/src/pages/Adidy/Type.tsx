@@ -104,7 +104,11 @@ const AdidyType: FC = () => {
         </AdMOdal>
       </div>
       <div>
-        <DataTable columns={columns} data={data} />
+        <DataTable
+          columns={columns}
+          data={data}
+          className="h-[calc(100vh-250px)] !overflow-y-auto"
+        />
       </div>
     </div>
   );
