@@ -4,9 +4,9 @@ const usePermission = (key: string) => {
   const user = useAppSelector((state) => state.user);
   const permission = user.profile.permission;
   return {
-    canPost: permission.POST.indexOf(key) !== -1,
-    canUpdate: permission.PATCH.indexOf(key) !== -1,
-    canDelete: permission.DEKETE.indexOf(key) !== -1,
+    canPost: permission.POST && permission.POST.indexOf(key) !== -1,
+    canUpdate: permission.PATCH && permission.PATCH.indexOf(key) !== -1,
+    canDelete: permission.DEKETE && permission.DEKETE.indexOf(key) !== -1,
   };
 };
 

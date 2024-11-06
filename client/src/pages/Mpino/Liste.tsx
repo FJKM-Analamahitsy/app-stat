@@ -4,6 +4,7 @@ import Popup from "@components/Popup";
 import Search from "@components/Search";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import usePermission from "@hooks/usePermission";
 import api from "@utils/api";
 import { formatPoneNumber, memberStatus } from "@utils/helper";
 import { FC, useEffect, useMemo, useState } from "react";
@@ -24,6 +25,7 @@ const Liste: FC = () => {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const [filter, setFilter] = useState<any>({});
+  const { canDelete, canUpdate } = usePermission("member");
 
   const fetch = (page: number) => {
     api
@@ -123,19 +125,24 @@ const Liste: FC = () => {
       {
         name: "Action",
         center: true,
+        omit: !canDelete && !canUpdate,
         cell: (row) => {
           return (
             <div className="flex gap-8">
-              <FontAwesomeIcon
-                icon={solid("user-pen")}
-                className="cursor-pointer hover:text-slate-500"
-                onClick={() => navigate("/christian/edit/" + row._id)}
-              />
-              <FontAwesomeIcon
-                icon={solid("trash")}
-                className="cursor-pointer hover:text-red-500"
-                onClick={() => onDeleteHandler(row._id)}
-              />
+              {canUpdate && (
+                <FontAwesomeIcon
+                  icon={solid("user-pen")}
+                  className="cursor-pointer hover:text-slate-500"
+                  onClick={() => navigate("/christian/edit/" + row._id)}
+                />
+              )}
+              {canDelete && (
+                <FontAwesomeIcon
+                  icon={solid("trash")}
+                  className="cursor-pointer hover:text-red-500"
+                  onClick={() => onDeleteHandler(row._id)}
+                />
+              )}
             </div>
           );
         },

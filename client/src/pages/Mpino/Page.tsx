@@ -15,6 +15,7 @@ import Modal from "@components/Modal";
 import Button from "@components/Button";
 import Adidy from "./Adidy";
 import ChangeStatus from "@containers/ChangeStatus";
+import usePermission from "@hooks/usePermission";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
@@ -22,6 +23,8 @@ const Page: FC = () => {
   const navigate = useNavigate();
   const [trace, setTrace] = useState<any>([]);
   const modal = useRef<any>(null);
+  const { canUpdate, canDelete } = usePermission("member");
+  const { canPost } = usePermission("contribution");
 
   const onDeleteHandler = () => {
     const conf = window.confirm("Are you sure to proceed to this action?");
@@ -70,10 +73,12 @@ const Page: FC = () => {
                   data.lastPayDate
                 )}`}
               />
-              <ChangeStatus
-                data={data}
-                onsuccess={(dt) => setData({ ...data, ...dt })}
-              />
+              {canUpdate && (
+                <ChangeStatus
+                  data={data}
+                  onsuccess={(dt) => setData({ ...data, ...dt })}
+                />
+              )}
             </div>
             <div className="text-center sm:text-left">
               <p className="font-semibold text-lg text-center md:text-left">
@@ -89,39 +94,45 @@ const Page: FC = () => {
       </div>
       <div className="p-4 gap-y-6 md:gap-6 rounded-b min-h-[43vh] ">
         <div className="mb-4 flex gap-4">
-          <Modal ref={modal}>
-            <Button className="bg-primary text-white mb-4 max-w-[150px]">
-              Contribute
-            </Button>
-            <Adidy
-              mpandray={id || ""}
-              success={() => {
-                getTrace();
-                modal.current.close();
-              }}
-            />
-          </Modal>
-          <Link to={`/christian/edit/${id}`}>
-            <Button className="bg-primary text-white mb-4 max-w-[150px]">
+          {canPost && (
+            <Modal ref={modal}>
+              <Button className="bg-primary text-white mb-4 max-w-[150px]">
+                Contribute
+              </Button>
+              <Adidy
+                mpandray={id || ""}
+                success={() => {
+                  getTrace();
+                  modal.current.close();
+                }}
+              />
+            </Modal>
+          )}
+          {canUpdate && (
+            <Link to={`/christian/edit/${id}`}>
+              <Button className="bg-primary text-white mb-4 max-w-[150px]">
+                <FontAwesomeIcon
+                  icon={solid("user-edit")}
+                  className="text-white cursor-pointer mr-2"
+                  size="sm"
+                />
+                Modifier
+              </Button>
+            </Link>
+          )}
+
+          {canDelete && (
+            <Button
+              className="bg-primary text-white mb-4 w-fit"
+              onClick={() => onDeleteHandler()}
+            >
               <FontAwesomeIcon
-                icon={solid("user-edit")}
-                className="text-white cursor-pointer mr-2"
+                icon={solid("trash")}
+                className="text-white cursor-pointer"
                 size="sm"
               />
-              Modifier
             </Button>
-          </Link>
-
-          <Button
-            className="bg-primary text-white mb-4 w-fit"
-            onClick={() => onDeleteHandler()}
-          >
-            <FontAwesomeIcon
-              icon={solid("trash")}
-              className="text-white cursor-pointer"
-              size="sm"
-            />
-          </Button>
+          )}
         </div>
 
         <div className="col-span-2">
