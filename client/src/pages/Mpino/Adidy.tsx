@@ -18,21 +18,22 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
     month: now.getMonth(),
     year: now.getFullYear(),
     pay: "",
-    type: "adidy mpandray",
+    type: "",
   });
   const [monthEnd, setMonthhEnd] = useState(now.getMonth());
   const [types, setTypes] = useState([]);
   const submit = async () => {
-    const compta = {
-      type: data.type,
-      mpandray,
-      mtt: parseInt(data.pay.replace(/\./g, "")),
-      note: `${data.type} ${MONTHS[data.month]}-${MONTHS[monthEnd]}`,
-    };
     const month = [];
     for (let i = data.month; i <= monthEnd; i++) {
       month.push(i);
     }
+    const compta = {
+      type: data.type,
+      mpandray,
+      mtt: parseInt(data.pay.replace(/\./g, "")),
+      month,
+      year: data.year,
+    };
     const trace = {
       mpandray,
       year: data.year,
@@ -44,7 +45,10 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
   };
 
   useEffect(() => {
-    api.get("/adidy/type").then((res) => setTypes(res.data));
+    api.get("/adidy/type").then((res) => {
+      setData({ ...data, type: res.data[0]._id });
+      setTypes(res.data);
+    });
   }, []);
 
   return (

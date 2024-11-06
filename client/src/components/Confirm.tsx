@@ -30,8 +30,8 @@ const Confirm: FC<ConfirmProps> = ({
         ) : (
           <p className="max-w-[400px] my-1">
             Attention! <br />
-            cette action est irréversible et supprimera{" "}
-            <span className="font-semibold">{type}</span> définitivement.
+            cette action est irréversible et supprimera ce donneé
+            définitivement.
           </p>
         )}
 
@@ -52,7 +52,7 @@ const Confirm: FC<ConfirmProps> = ({
           <Button
             autoFocus
             type="submit"
-            className="bg-secondary text-white "
+            className="bg-primary text-white "
             disabled={loading}
           >
             continuer

@@ -10,7 +10,7 @@ const MemberInfoTab: FC<Props> = ({ children }) => {
   const user = useAppSelector((state) => state.user);
   const [active, setActive] = useState(user.profile.tabInPage.sort()[0]);
 
-  const tab = ["Ny tena", "Ankohonana", "Adidy mpandray", "Adidy samihafa"];
+  const tab = ["Ny tena", "Ankohonana", "Adidy mpandray", "Adidy vita"];
   const child = Children.map(children, (child) => {
     if (isValidElement(child)) {
       return child;

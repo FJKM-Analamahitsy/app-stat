@@ -1,3 +1,8 @@
+import Avatar from "@components/Avatar";
+import Button from "@components/Button";
+import Confirm from "@components/Confirm";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import { MONTHS } from "@utils/constant";
 import { FC, useEffect, useMemo, useState } from "react";
@@ -31,6 +36,10 @@ const Compta: FC = () => {
   const columns: TableColumn<any>[] = useMemo(
     () => [
       {
+        name: "Ajouter par",
+        selector: (row) => <Avatar label={row.createBy} />,
+      },
+      {
         name: "Date",
         cell: (row) => {
           return (
@@ -42,15 +51,40 @@ const Compta: FC = () => {
       },
       {
         name: "Adidy",
-        selector: (row) => row.type,
+        selector: (row) => row.type.name,
       },
       {
         name: "Volana",
-        selector: (row) => `${MONTHS[row.month]},${row.year}`,
+        selector: (row) =>
+          ` ${
+            row.month.length > 1
+              ? MONTHS[row.month[0]] +
+                " - " +
+                MONTHS[row.month[row.month.length - 1]]
+              : MONTHS[row.month[0]]
+          }`,
       },
       {
         name: "Vola",
         selector: (row) => Intl.NumberFormat("de-FR").format(row.mtt),
+      },
+      {
+        name: "Action",
+        cell: (row) => {
+          return (
+            <Confirm
+              onContinue={() => {
+                api.delete("/adidy/" + row._id).then(() => {
+                  setData(data.filter((v) => v._id !== row._id));
+                });
+              }}
+            >
+              <Button>
+                <FontAwesomeIcon icon={solid("trash")} />
+              </Button>
+            </Confirm>
+          );
+        },
       },
     ],
     // eslint-disable-next-line

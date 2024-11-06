@@ -36,16 +36,26 @@ const getAdidyTrace = async (req, res) => {
 };
 
 const deleteAdidy = async (req, res) => {
-  if (!req.body.id) return res.status(404).send("id required");
-  await Adidy.findByIdAndDelete(id);
-  res.send("success");
+  if (!req.params.id) return res.status(404).send("id required");
+  const adidy = await Compta.findByIdAndDelete(req.params.id);
+  const trace = await Adidy.findOne({
+    mpandray: adidy.mpandray,
+    year: adidy.year,
+  });
+
+  await trace.updateOne({
+    month: trace.month.filter((v) => !adidy.month.includes(v)),
+  });
+  res.send();
 };
 
 const getCompta = async (req, res) => {
   const { page = 1, limit = 2, ...filter } = req.query;
   const member = await Compta.find({ ...filter })
     .limit(limit * 1)
-    .skip((page - 1) * limit);
+    .skip((page - 1) * limit)
+    .sort({ date: "desc" })
+    .populate("type mpandray");
   const totalRow = await Compta.find({ ...filter }).countDocuments();
   return res.send({ member, totalRow });
 };

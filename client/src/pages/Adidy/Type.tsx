@@ -40,16 +40,20 @@ const AdMOdal: FC<Props> = ({ children, onsuccess, data }) => {
           e.preventDefault();
           submit();
         }}
-        className="bg-white p-4 min-w-[30vw]"
+        className="bg-white p-4 min-w-[30vw] rounded"
       >
+        <p className="mb-4 font-medium text-lg">Karazana adidy</p>
         <InputNew
-          label="name"
+          label="Nom"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
         />
         <div className="text-end mt-4">
-          <Button className="bg-primary text-white">save</Button>
+          <Button className="bg-primary text-white min-w-[150px]">
+            <FontAwesomeIcon icon={solid("save")} className="mr-2" />{" "}
+            Enregistrer
+          </Button>
         </div>
       </form>
     </Modal>
@@ -62,7 +66,7 @@ const AdidyType: FC = () => {
   const columns: TableColumn<any>[] = useMemo(
     () => [
       {
-        name: "Name",
+        name: "Nom",
         selector: (row) => row.name,
       },
       {
@@ -100,7 +104,10 @@ const AdidyType: FC = () => {
     <div className="p-4 h-full bg-white">
       <div>
         <AdMOdal onsuccess={fetch}>
-          <Button className="bg-primary text-white">New</Button>
+          <Button className="bg-primary text-white min-w-[150ox]">
+            <FontAwesomeIcon icon={solid("add")} className="mr-2" />
+            Nouveau
+          </Button>
         </AdMOdal>
       </div>
       <div>
