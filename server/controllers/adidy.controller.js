@@ -1,4 +1,3 @@
-const { date } = require("yup");
 const { Adidy, Compta, AdidyType } = require("../models/adidy.model");
 const { Member } = require("../models/member.model");
 const { default: mongoose } = require("mongoose");
@@ -18,7 +17,8 @@ const createAdidy = async (req, res) => {
     const compta = new Compta({ ...req.body.compta, createBy: req.requester });
     await compta.save();
     await Member.findByIdAndUpdate(mpandray, { lastPayDate: new Date() });
-    res.send("success");
+    const result = await compta.populate("mpandray type");
+    res.json(result);
   } catch (error) {
     res.status(400).send(error.message);
   }

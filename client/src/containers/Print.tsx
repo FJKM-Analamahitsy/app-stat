@@ -6,11 +6,17 @@ import { useReactToPrint } from "react-to-print";
 interface Props {
   children: ReactNode;
   data: any;
+  onsuccess?: () => void;
 }
 
-const Print: FC<Props> = ({ children, data }) => {
+const Print: FC<Props> = ({ children, data, onsuccess }) => {
   const contentRef = useRef<HTMLDivElement>(null);
-  const print = useReactToPrint({ contentRef });
+  const print = useReactToPrint({
+    contentRef,
+    onAfterPrint() {
+      onsuccess && onsuccess();
+    },
+  });
   return (
     <div>
       <div onClick={() => print()}>{children}</div>

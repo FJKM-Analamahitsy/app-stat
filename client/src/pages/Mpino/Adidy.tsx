@@ -1,6 +1,7 @@
 import Button from "@components/Button";
 import InputNew from "@components/InputNew";
 import Select from "@components/Select";
+import Print from "@containers/Print";
 import api from "@utils/api";
 import { MONTHS } from "@utils/constant";
 import { FC, useEffect, useRef, useState } from "react";
@@ -20,6 +21,9 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
     pay: "",
     type: "",
   });
+  const [pData, setPdata] = useState();
+  const printButton = useRef<HTMLButtonElement>(null);
+
   const [monthEnd, setMonthhEnd] = useState(now.getMonth());
   const [types, setTypes] = useState([]);
   const submit = async () => {
@@ -40,9 +44,13 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       month,
     };
     api.post("/adidy", { compta, trace }).then((res) => {
-      success();
+      setPdata(res.data);
     });
   };
+
+  useEffect(() => {
+    pData && printButton.current?.click();
+  }, [pData]);
 
   useEffect(() => {
     api.get("/adidy/type").then((res) => {
@@ -59,7 +67,11 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
         onChange={(e) => setData({ ...data, type: e.target.value })}
       >
         {types.map((t: any, i: number) => {
-          return <option value={t._id}>{t.name}</option>;
+          return (
+            <option key={i} value={t._id}>
+              {t.name}
+            </option>
+          );
         })}
       </select>
       <div className="grid grid-cols-3 gap-4">
@@ -104,6 +116,13 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
           Payer
         </Button>
       </div>
+      {pData && (
+        <div className="hidden">
+          <Print data={pData} onsuccess={success}>
+            <button ref={printButton}></button>
+          </Print>
+        </div>
+      )}
     </div>
   );
 };
