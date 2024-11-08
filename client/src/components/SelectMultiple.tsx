@@ -30,9 +30,12 @@ const SelectMultiple: FC<Props> = ({ options, onChange, defaultValue }) => {
     setFocus(container.current?.contains(e.target) || false);
   };
 
-  useEffect(() => {
-    onChange(values.join(" "));
-  }, [values]);
+  useEffect(
+    () => {
+      onChange(values.join(" "));
+    }, // eslint-disable-next-line
+    [values]
+  );
 
   useEffect(() => {
     if (defaultValue && defaultValue?.trim() !== "") {

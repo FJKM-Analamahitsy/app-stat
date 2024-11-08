@@ -44,14 +44,17 @@ const Page: FC = () => {
     api.get("/adidy/trace/" + id).then((res) => setTrace(res.data));
   };
 
-  useEffect(() => {
-    if (id) {
-      api.get("/member/get/" + id).then((res) => setData(res.data));
-      getTrace();
-    } else {
-      setData({});
-    }
-  }, [id]);
+  useEffect(
+    () => {
+      if (id) {
+        api.get("/member/get/" + id).then((res) => setData(res.data));
+        getTrace();
+      } else {
+        setData({});
+      }
+    }, // eslint-disable-next-line
+    [id]
+  );
   return (
     <div className="min-h-full bg-white">
       <div className="relative h-[400px] md:h-[37vh] rounded-t overflow-hidden">

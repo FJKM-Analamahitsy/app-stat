@@ -159,17 +159,23 @@ const Liste: FC = () => {
       .join("&");
   };
 
-  useEffect(() => {
-    fetch(1);
-  }, [filter]);
-
-  useEffect(() => {
-    if (query.trim() !== "") {
-      fetch(n);
-    } else {
+  useEffect(
+    () => {
       fetch(1);
-    }
-  }, [query]);
+    }, // eslint-disable-next-line
+    [filter]
+  );
+
+  useEffect(
+    () => {
+      if (query.trim() !== "") {
+        fetch(n);
+      } else {
+        fetch(1);
+      }
+    }, // eslint-disable-next-line
+    [query]
+  );
 
   useEffect(
     () => {

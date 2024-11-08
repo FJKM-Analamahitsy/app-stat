@@ -1,5 +1,6 @@
 import Avatar from "@components/Avatar";
 import Button from "@components/Button";
+import Confirm from "@components/Confirm";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
@@ -38,27 +39,30 @@ const ProfileList: FC = () => {
               <Link to={row._id}>
                 <FontAwesomeIcon icon={solid("edit")} />
               </Link>
-              <FontAwesomeIcon
-                icon={solid("trash")}
-                onClick={() => {
-                  const conf = window.confirm("Want to proceed?");
-                  if (conf) {
-                    onDelete(row._id);
-                  }
+              <Confirm
+                onContinue={() => {
+                  onDelete(row._id);
                 }}
-              />
+              >
+                <FontAwesomeIcon icon={solid("trash")} />
+              </Confirm>
             </div>
           );
         },
         center: true,
       },
     ],
-    [onDelete]
+    // eslint-disable-next-line
+    []
   );
 
-  useEffect(() => {
-    fetch();
-  }, []);
+  useEffect(
+    () => {
+      fetch();
+    },
+    // eslint-disable-next-line
+    []
+  );
   return (
     <div className="bg-white h-full p-4">
       <Link to="new" className="flex">

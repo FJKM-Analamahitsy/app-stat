@@ -68,6 +68,7 @@ const UserList: FC = () => {
         center: true,
       },
     ],
+    // eslint-disable-next-line
     [onDelete]
   );
 

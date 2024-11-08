@@ -1,6 +1,5 @@
 import Avatar from "@components/Avatar";
 import ExportBtn from "@components/ExportBtn";
-import Search from "@components/Search";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";

@@ -44,7 +44,7 @@ const ProfilePage: FC = () => {
     if (check === -1) {
       setTab([...tabInPage, val]);
     } else {
-      setTab(tabInPage.filter((v) => v != val));
+      setTab(tabInPage.filter((v) => v !== val));
     }
   };
 

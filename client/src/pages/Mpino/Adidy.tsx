@@ -44,6 +44,7 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       month,
     };
     api.post("/adidy", { compta, trace }).then((res) => {
+      toast.success("Pré a imprimer");
       setPdata(res.data);
     });
   };
@@ -52,12 +53,15 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
     pData && printButton.current?.click();
   }, [pData]);
 
-  useEffect(() => {
-    api.get("/adidy/type").then((res) => {
-      setData({ ...data, type: res.data[0]._id });
-      setTypes(res.data);
-    });
-  }, []);
+  useEffect(
+    () => {
+      api.get("/adidy/type").then((res) => {
+        setData({ ...data, type: res.data[0]._id });
+        setTypes(res.data);
+      });
+    }, // eslint-disable-next-line
+    []
+  );
 
   return (
     <div className="min-w-[50vw] text-[20px] py-[2rem] px-6 bg-white border border-bg m-4 mt-8 md:mx-auto  rounded-[5px] flex flex-col gap-8">
