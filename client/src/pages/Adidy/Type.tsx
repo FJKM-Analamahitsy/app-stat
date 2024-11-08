@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import { FC, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
+import toast from "react-hot-toast";
 
 interface Props {
   children: ReactNode;
@@ -80,9 +81,17 @@ const AdidyType: FC = () => {
               </AdMOdal>
               <Confirm
                 onContinue={() => {
-                  api.delete("/adidy/type/" + row._id).then(() => {
-                    fetch();
+                  const request = api
+                    .delete("/adidy/type/" + row._id)
+                    .then(() => {
+                      fetch();
+                    });
+                  toast.promise(request, {
+                    loading: "En attente...",
+                    success: "Données supprimées avec succès",
+                    error: "Une erreur se produit.",
                   });
+                  return request;
                 }}
               >
                 <FontAwesomeIcon icon={solid("trash")} />

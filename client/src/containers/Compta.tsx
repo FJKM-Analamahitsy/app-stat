@@ -10,6 +10,7 @@ import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { Link, useParams } from "react-router-dom";
 import Print from "./Print";
+import toast from "react-hot-toast";
 
 interface Props {
   className?: string;
@@ -98,9 +99,15 @@ const Compta: FC<Props> = ({ className }) => {
               </Print>
               <Confirm
                 onContinue={() => {
-                  api.delete("/adidy/" + row._id).then(() => {
-                    setData(data.member.filter((v: any) => v._id !== row._id));
+                  const request = api.delete("/adidy/" + row._id).then(() => {
+                    fetch(1);
                   });
+                  toast.promise(request, {
+                    loading: "En attente...",
+                    success: "Données supprimées avec succès",
+                    error: "Une erreur se produit.",
+                  });
+                  return request;
                 }}
               >
                 <Button>
@@ -113,7 +120,7 @@ const Compta: FC<Props> = ({ className }) => {
       },
     ],
     // eslint-disable-next-line
-    []
+    [data]
   );
   useEffect(
     () => {

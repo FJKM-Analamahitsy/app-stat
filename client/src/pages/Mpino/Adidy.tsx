@@ -43,9 +43,13 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       year: data.year,
       month,
     };
-    api.post("/adidy", { compta, trace }).then((res) => {
-      toast.success("Pré a imprimer");
+    const request = api.post("/adidy", { compta, trace }).then((res) => {
       setPdata(res.data);
+    });
+    toast.promise(request, {
+      loading: "En attente...",
+      success: "Pré a imprimer",
+      error: "Une erreur se produit.",
     });
   };
 

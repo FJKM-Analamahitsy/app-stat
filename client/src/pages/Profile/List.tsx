@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 const ProfileList: FC = () => {
@@ -18,9 +19,15 @@ const ProfileList: FC = () => {
   };
 
   const onDelete = (id: string) => {
-    api.delete(`/profile/${id}`).then(() => {
+    const request = api.delete(`/profile/${id}`).then(() => {
       fetch();
     });
+    toast.promise(request, {
+      loading: "En attente...",
+      success: "Données supprimées avec succès",
+      error: "Une erreur se produit.",
+    });
+    return request;
   };
 
   const columns: TableColumn<any>[] = useMemo(
@@ -41,7 +48,7 @@ const ProfileList: FC = () => {
               </Link>
               <Confirm
                 onContinue={() => {
-                  onDelete(row._id);
+                  return onDelete(row._id);
                 }}
               >
                 <FontAwesomeIcon icon={solid("trash")} />

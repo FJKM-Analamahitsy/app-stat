@@ -1,27 +1,24 @@
-import { FC, ReactNode, useRef, useState } from "react";
+import { FC, ReactNode, useRef } from "react";
 import Modal from "./Modal";
 import Button from "./Button";
 
 interface ConfirmProps {
   children: ReactNode;
   title?: string;
-  type?: string;
   text?: string;
-  onContinue: () => void;
+  onContinue: () => Promise<any>;
 }
 
 const Confirm: FC<ConfirmProps> = ({
   children,
-  type = "le fournisseur",
   title = "Confirmer",
   text,
   onContinue,
 }) => {
-  const [loading, setLoading] = useState(false);
-  const refDelModal = useRef<any>(null);
+  const modal = useRef<any>(null);
   return (
-    <Modal ref={refDelModal}>
-      <div onClick={() => setLoading(false)}>{children}</div>
+    <Modal ref={modal}>
+      <div>{children}</div>
       <div className="bg-white p-6 rounded text-base overflow-hidden relative m-8 min-w-[20vw]">
         <div className="w-full absolute left-0 top-0 bg-secondary h-1" />
         <h3 className="text-black font-semibold">{title} ?</h3>
@@ -38,23 +35,19 @@ const Confirm: FC<ConfirmProps> = ({
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            setLoading(true);
-            onContinue();
+            onContinue().then(() => {
+              modal.current.close();
+            });
           }}
           className="flex justify-end mt-4 gap-3"
         >
           <Button
             className="bg-gray-200 text-white"
-            onClick={() => refDelModal.current.close()}
+            onClick={() => modal.current.close()}
           >
             annuler
           </Button>
-          <Button
-            autoFocus
-            type="submit"
-            className="bg-primary text-white "
-            disabled={loading}
-          >
+          <Button autoFocus type="submit" className="bg-primary text-white ">
             continuer
           </Button>
         </form>
