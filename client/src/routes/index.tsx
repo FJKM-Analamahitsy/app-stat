@@ -13,6 +13,7 @@ import ProfilePage from "@pages/Profile/Page";
 import UserList from "@pages/Users/List";
 import AdidyType from "@pages/Adidy/Type";
 import Journal from "@pages/Adidy/List";
+import PrintPage from "@pages/Print";
 
 const Routes: FC = () => {
   return (
@@ -37,6 +38,7 @@ const Routes: FC = () => {
           <Route path="adidytype" element={<AdidyType />} />
           <Route path="journal" element={<Journal />} />
         </Route>
+        <Route path="print/:id" element={<PrintPage />} />
       </Route>
     </Router>
   );

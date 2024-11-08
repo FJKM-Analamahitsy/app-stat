@@ -128,6 +128,11 @@ const getType = async (req, res) => {
   }
 };
 
+const getComptaById = async (req, res) => {
+  const result = await Compta.findById(req.params.id).populate("type mpandray");
+  res.json(result);
+};
+
 const createType = async (req, res) => {
   try {
     const type = new AdidyType({ ...req.body });
@@ -161,6 +166,7 @@ module.exports = {
   createAdidy,
   deleteAdidy,
   getCompta,
+  getComptaById,
   getAdidyTrace,
   getType,
   createType,

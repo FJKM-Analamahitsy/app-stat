@@ -94,9 +94,17 @@ const Compta: FC<Props> = ({ className }) => {
         cell: (row) => {
           return (
             <div className="flex justify-evenly items-center w-full">
-              <Print data={row}>
+              {/* <Print data={row}>
                 <FontAwesomeIcon icon={solid("print")} />
-              </Print>
+              </Print> */}
+              <FontAwesomeIcon
+                icon={solid("print")}
+                onClick={() => {
+                  let params = `scrollbars=no,resizable=no,fullscreen=yes,status=no,location=no,toolbar=no,menubar=no,
+                width=500,height=600,left=-1000,top=-1000`;
+                  window.open("/print/" + row._id, "Receipt", params);
+                }}
+              />
               <Confirm
                 onContinue={() => {
                   const request = api.delete("/adidy/" + row._id).then(() => {
