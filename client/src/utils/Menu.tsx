@@ -31,16 +31,19 @@ const MenuData: any = [
     auth: "sampana",
   },
   {
-    label: "Journal",
-    path: "/journal",
-    icon: <FontAwesomeIcon icon={solid("file-lines")} />,
-    auth: "contribution",
-  },
-  {
     label: "Adidy",
-    path: "/adidytype",
     icon: <FontAwesomeIcon icon={solid("money-bill")} />,
     auth: "adidytype",
+    submenu: [
+      {
+        path: "/journal",
+        label: "Liste",
+      },
+      {
+        path: "/adidytype",
+        label: "Type",
+      },
+    ],
   },
   {
     label: "Profile",

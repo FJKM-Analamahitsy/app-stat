@@ -5,6 +5,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import { MONTHS } from "@utils/constant";
+import dayjs from "dayjs";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { Link, useParams } from "react-router-dom";
@@ -48,7 +49,7 @@ const Compta: FC<Props> = ({ className }) => {
       },
       {
         name: "Mpino",
-        grow: 3,
+        grow: 2,
         omit: id !== undefined,
         cell: (row) => (
           <Link to={`/christian/${row.mpandray._id}`}>
@@ -61,7 +62,7 @@ const Compta: FC<Props> = ({ className }) => {
         cell: (row) => {
           return (
             <div>
-              <p>{new Date(row.date).toDateString()}</p>
+              <p>{dayjs(row.date).format("DD MMM, YYYY")}</p>
             </div>
           );
         },

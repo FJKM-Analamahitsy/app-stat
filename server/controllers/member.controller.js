@@ -16,7 +16,7 @@ const createMember = async (req, res) => {
     const input = await memberInput.validate(req.body);
     const newMember = new Member({
       ...input,
-      fullname: `${input.name} ${input.forname}`,
+      fullname: `${input.name}${input.forname ? ` ${input.forname}` : ""}`,
     });
     await newMember.save();
     log(req.requester, `creation member ${newMember._id}`);
@@ -39,10 +39,12 @@ const deleteMember = async (req, res) => {
 
 const updateMember = async (req, res) => {
   try {
+    const input = await memberInput.validate(req.body);
     await Member.findOneAndUpdate(
       { _id: req.params.id },
       {
-        ...req.body,
+        ...input,
+        fullname: `${input.name}${input.forname ? ` ${input.forname}` : ""}`,
         last_update: new Date(),
       }
     );
