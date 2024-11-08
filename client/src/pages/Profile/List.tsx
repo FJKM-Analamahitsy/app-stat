@@ -34,7 +34,7 @@ const ProfileList: FC = () => {
         name: "Action",
         cell: (row) => {
           return (
-            <div className="flex gap-4">
+            <div className="flex justify-evenly items-center w-full">
               <Link to={row._id}>
                 <FontAwesomeIcon icon={solid("edit")} />
               </Link>

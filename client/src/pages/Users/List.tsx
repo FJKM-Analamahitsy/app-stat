@@ -45,7 +45,7 @@ const UserList: FC = () => {
         name: "Action",
         cell: (row) => {
           return (
-            <div className="flex gap-4">
+            <div className="flex justify-evenly items-center w-full">
               <FormUser
                 data={{ ...row, profile: row.profile._id }}
                 profile={profiles}
