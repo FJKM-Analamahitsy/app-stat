@@ -21,8 +21,8 @@ const Print: FC<Props> = ({ children, data, onsuccess }) => {
     <div>
       <div onClick={() => print()}>{children}</div>
       <div className="hidden">
-        <div ref={contentRef} className="p-4">
-          <div className="  text-center py-4">
+        <div ref={contentRef} className="p-1 [&>*]:text-[12px]">
+          <div className="text-center py-2">
             <p className="uppercase font-medium">
               Fiagonan'i Jesoa Kristy eto Madagasikara
             </p>
@@ -32,25 +32,25 @@ const Print: FC<Props> = ({ children, data, onsuccess }) => {
             </p>
             <p>Oha. 22. 8</p>
           </div>
-          <div className="flex flex-col gap-5 p-4">
-            <div className="flex justify-between items-center gap-4">
+          <div className="flex flex-col gap-3 mt-4">
+            <div className="flex justify-between items-start gap-2">
               <p>Nom: </p>
               <div className="border-b border-dashed grow"></div>
-              <p>
+              <p className="text-end">
                 <span className="uppercase">{data.mpandray.name}</span>{" "}
                 <span className="capitalize">{data.mpandray.forname}</span>
               </p>
             </div>
-            <div className="flex justify-between items-center gap-4">
+            <div className="flex justify-between items-center gap-2">
               <p>Date: </p>
               <div className="border-b border-dashed grow"></div>
               <p>{dayjs(data.date).format("DD MMM YYYY")}</p>
             </div>
 
-            <div className="flex justify-between items-center gap-4">
+            <div className="flex justify-between items-start gap-2">
               <p>Libellé: </p>
               <div className="border-b border-dashed grow"></div>
-              <p>{`${data.type.name} ${
+              <p className="text-end">{`${data.type.name} ${
                 data.month.length > 1
                   ? MONTHS[data.month[0]] +
                     " - " +
@@ -59,20 +59,13 @@ const Print: FC<Props> = ({ children, data, onsuccess }) => {
               }`}</p>
             </div>
 
-            <div className="flex justify-between items-center gap-4">
+            <div className="flex justify-between items-center gap-2">
               <p>Montant: </p>
               <div className="border-b border-dashed grow"></div>
               <p>{Intl.NumberFormat("de-FR").format(data.mtt)} MGA</p>
             </div>
-            <div className="grid grid-cols-2 mt-4 border-t border-dashed pt-4">
-              <p className="">Signature</p>
-              <p className="text-end">Signature</p>
-              <p className="mt-20">{data.createBy}</p>
-              <p className="text-end mt-20">{data.mpandray.forname}</p>
-            </div>
           </div>
-          <p className="text-center">Misaotra tompoko!</p>
-          <div className="w-full border-b-2 border-dashed mt-8" />
+          <p className="text-center mt-6">Misaotra tompoko!</p>
         </div>
       </div>
     </div>
