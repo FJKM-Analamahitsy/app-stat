@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { Link, useParams } from "react-router-dom";
+import Print from "./Print";
 
 interface Props {
   className?: string;
@@ -88,19 +89,25 @@ const Compta: FC<Props> = ({ className }) => {
       },
       {
         name: "Action",
+        center: true,
         cell: (row) => {
           return (
-            <Confirm
-              onContinue={() => {
-                api.delete("/adidy/" + row._id).then(() => {
-                  setData(data.member.filter((v: any) => v._id !== row._id));
-                });
-              }}
-            >
-              <Button>
-                <FontAwesomeIcon icon={solid("trash")} />
-              </Button>
-            </Confirm>
+            <div className="flex justify-evenly items-center w-full">
+              <Print data={row}>
+                <FontAwesomeIcon icon={solid("print")} />
+              </Print>
+              <Confirm
+                onContinue={() => {
+                  api.delete("/adidy/" + row._id).then(() => {
+                    setData(data.member.filter((v: any) => v._id !== row._id));
+                  });
+                }}
+              >
+                <Button>
+                  <FontAwesomeIcon icon={solid("trash")} />
+                </Button>
+              </Confirm>
+            </div>
           );
         },
       },
