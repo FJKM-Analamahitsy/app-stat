@@ -137,7 +137,8 @@ const Compta: FC<Props> = ({ className }) => {
   useEffect(
     () => {
       fetch(1);
-    }, // eslint-disable-next-line
+    },
+    // eslint-disable-next-line
     [start, end, limit]
   );
   return (
