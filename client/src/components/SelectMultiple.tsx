@@ -65,7 +65,7 @@ const SelectMultiple: FC<Props> = ({ options, onChange, defaultValue }) => {
       <input
         type="text"
         className="bg-transparent grow"
-        placeholder="search"
+        placeholder="recherche"
         onChange={(e) => {
           setOpts(
             options.filter((v) =>
