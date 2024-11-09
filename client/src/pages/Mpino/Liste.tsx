@@ -49,7 +49,7 @@ const Liste: FC = () => {
   const onChangeHandler = (page: number) => {
     setN(page);
     document
-      .querySelector(".rdt_TableBody")
+      .querySelector(".christian")
       ?.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     fetch(page);
   };
@@ -170,7 +170,8 @@ const Liste: FC = () => {
       if (JSON.stringify(filter) !== JSON.stringify({})) {
         fetch(1);
       }
-    }, // eslint-disable-next-line
+    },
+    // eslint-disable-next-line
     [filter]
   );
 
@@ -179,14 +180,16 @@ const Liste: FC = () => {
       if (query.trim() !== "") {
         fetch(n);
       }
-    }, // eslint-disable-next-line
+    },
+    // eslint-disable-next-line
     [query]
   );
 
   useEffect(
     () => {
       fetch(1);
-    }, // eslint-disable-next-line
+    },
+    // eslint-disable-next-line
     []
   );
   return (
@@ -303,7 +306,7 @@ const Liste: FC = () => {
           paginationRowsPerPageOptions={[30, 50, 100]}
           sortServer
           onSort={onSortHandler}
-          className="h-[calc(100vh-250px)] !overflow-y-auto"
+          className="h-[calc(100vh-250px)] !overflow-y-auto christian"
         />
       </div>
     </div>

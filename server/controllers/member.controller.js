@@ -103,7 +103,7 @@ const listMember = async (req, res) => {
         { mpandrayN: { $regex: new RegExp(search, "i") } },
       ],
     };
-    sort = { ...sort, mpandrayN: "asc" };
+    sort = { mpandrayN: "asc" };
   }
   const member = await Member.find()
     .sort({ ...sort })
