@@ -107,9 +107,9 @@ const SideMenu: FC = () => {
         </div>
       </Sidebar>
       <>
-        {isMobile && !collapse && (
+        {!collapse && (
           <div
-            className="absolute bg-slate-400 bg-opacity-10 w-screen h-full top-0"
+            className="md:hidden absolute bg-slate-400 bg-opacity-10 w-screen h-full top-0"
             onClick={() => setCollapse(true)}
           ></div>
         )}
