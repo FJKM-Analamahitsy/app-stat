@@ -5,6 +5,7 @@ import Print from "@containers/Print";
 import api from "@utils/api";
 import { MONTHS } from "@utils/constant";
 import { FC, useEffect, useRef, useState } from "react";
+import { isMobile } from "react-device-detect";
 import toast from "react-hot-toast";
 
 interface Props {
@@ -21,7 +22,7 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
     pay: "",
     type: "",
   });
-  const [pData, setPdata] = useState();
+  const [pData, setPdata] = useState<any>();
   const printButton = useRef<HTMLButtonElement>(null);
 
   const [monthEnd, setMonthhEnd] = useState(now.getMonth());
@@ -54,7 +55,15 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
   };
 
   useEffect(() => {
-    pData && printButton.current?.click();
+    if (pData) {
+      if (isMobile) {
+        let params = `scrollbars=no,resizable=no,fullscreen=yes,status=no,location=no,toolbar=no,menubar=no,
+        width=500,height=600,left=-1000,top=-1000`;
+        window.open("/print/" + pData._id, "Receipt", params);
+      } else {
+        printButton.current?.click();
+      }
+    }
   }, [pData]);
 
   useEffect(

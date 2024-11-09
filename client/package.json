@@ -24,6 +24,7 @@
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-data-table-component": "^7.6.2",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-pro-sidebar": "^1.1.0-alpha.1",

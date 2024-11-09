@@ -11,6 +11,7 @@ import DataTable, { TableColumn } from "react-data-table-component";
 import { Link, useParams } from "react-router-dom";
 import Print from "./Print";
 import toast from "react-hot-toast";
+import { isMobile } from "react-device-detect";
 
 interface Props {
   className?: string;
@@ -94,17 +95,20 @@ const Compta: FC<Props> = ({ className }) => {
         cell: (row) => {
           return (
             <div className="flex justify-evenly items-center w-full">
-              {/* <Print data={row}>
-                <FontAwesomeIcon icon={solid("print")} />
-              </Print> */}
-              <FontAwesomeIcon
-                icon={solid("print")}
-                onClick={() => {
-                  let params = `scrollbars=no,resizable=no,fullscreen=yes,status=no,location=no,toolbar=no,menubar=no,
+              {isMobile ? (
+                <FontAwesomeIcon
+                  icon={solid("print")}
+                  onClick={() => {
+                    let params = `scrollbars=no,resizable=no,fullscreen=yes,status=no,location=no,toolbar=no,menubar=no,
                 width=500,height=600,left=-1000,top=-1000`;
-                  window.open("/print/" + row._id, "Receipt", params);
-                }}
-              />
+                    window.open("/print/" + row._id, "Receipt", params);
+                  }}
+                />
+              ) : (
+                <Print data={row}>
+                  <FontAwesomeIcon icon={solid("print")} />
+                </Print>
+              )}
               <Confirm
                 onContinue={() => {
                   const request = api.delete("/adidy/" + row._id).then(() => {
