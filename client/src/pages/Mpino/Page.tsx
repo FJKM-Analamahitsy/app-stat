@@ -57,15 +57,7 @@ const Page: FC = () => {
   );
   return (
     <div className="min-h-full bg-white">
-      <div className="relative h-[400px] md:h-[37vh] rounded-t overflow-hidden">
-        <div className="w-full p-2 text-primary absolute top-0 left-0">
-          <div className="cursor-pointer">
-            <Link to="/christian">
-              <FontAwesomeIcon icon={solid("arrow-left-long")} />
-              <span className="ml-2">Back to list</span>
-            </Link>
-          </div>
-        </div>
+      <div className="relative h-[430px] md:h-[37vh] rounded-t overflow-hidden">
         <div className="w-full h-[20vh]  bg-no-repeat bg-cover overflow-hidden bg-line-pattern"></div>
         <div className="w-full flex flex-col md:flex-row  items-center md:items-end -translate-y-[6rem] px-[2rem]">
           <Avatar label={data.name} hideLabel size={200} textSize={54} />
@@ -96,11 +88,16 @@ const Page: FC = () => {
         </div>
       </div>
       <div className="p-4 gap-y-6 md:gap-6 rounded-b min-h-[43vh] ">
-        <div className="mb-4 flex gap-4">
+        <div className="mb-4 flex justify-evenly md:justify-start gap-4">
           {canPost && (
             <Modal ref={modal}>
-              <Button className="bg-primary text-white mb-4 max-w-[150px]">
-                Contribute
+              <Button className="bg-primary text-white mb-4 ">
+                <FontAwesomeIcon
+                  icon={solid("money-bill-1-wave")}
+                  className="text-white cursor-pointer md:mr-2"
+                  size="sm"
+                />
+                <span className="hidden md:inline-block">Handray adidy</span>
               </Button>
               <Adidy
                 mpandray={id || ""}
@@ -116,10 +113,10 @@ const Page: FC = () => {
               <Button className="bg-primary text-white mb-4 max-w-[150px]">
                 <FontAwesomeIcon
                   icon={solid("user-edit")}
-                  className="text-white cursor-pointer mr-2"
+                  className="text-white cursor-pointer md:mr-2"
                   size="sm"
                 />
-                Modifier
+                <span className="hidden md:inline-block">Modifier</span>
               </Button>
             </Link>
           )}
