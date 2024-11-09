@@ -63,6 +63,7 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       } else {
         printButton.current?.click();
       }
+      success();
     }
   }, [pData]);
 
