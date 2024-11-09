@@ -1,6 +1,5 @@
 import Button from "@components/Button";
 import Input from "@components/Input";
-import Logo from "@components/Logo";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAuth from "@hooks/useAuth";
@@ -9,7 +8,6 @@ import { FC, useState } from "react";
 import toast from "react-hot-toast";
 import church from "@assets/img/church.svg";
 import fjkm from "@assets/img/fjkm.png";
-import { Link } from "react-router-dom";
 
 const Login: FC = () => {
   const [showPass, setShowPass] = useState<boolean>(false);
@@ -24,14 +22,15 @@ const Login: FC = () => {
 
   const login = (e: any) => {
     e.preventDefault();
-    api
-      .post("/auth", data)
-      .then(() => {
-        getMe();
-      })
-      .catch((err) => {
-        toast.error(err.response.data);
-      });
+    const request = api.post("/auth", data).then(() => {
+      getMe();
+    });
+
+    toast.promise(request, {
+      loading: "En attante...",
+      success: "succées",
+      error: "Une erreur se produit pendant l'operation",
+    });
   };
   return (
     <div className="flex w-screen h-screen bg-[#F4F7F8]">
@@ -52,13 +51,13 @@ const Login: FC = () => {
               </div>
               <Input
                 leftIcon={<FontAwesomeIcon icon={solid("user")} size="sm" />}
-                placeholder="Username"
+                placeholder="Nom d'utilisateur"
                 required
                 name="username"
               />
               <Input
                 leftIcon={<FontAwesomeIcon icon={solid("lock")} size="sm" />}
-                placeholder="Password"
+                placeholder="Mot de passe"
                 type={showPass ? "text" : "password"}
                 rightIcon={
                   <FontAwesomeIcon
@@ -72,9 +71,9 @@ const Login: FC = () => {
               />
               <p className="text-right">
                 <input type="checkbox" className="m-1" />
-                <span>keep me sign in</span>
+                <span>souvien de moi</span>
               </p>
-              <Button className="bg-primary text-white">Login</Button>
+              <Button className="bg-primary text-white">se connecter</Button>
             </div>
           </form>
         </div>
