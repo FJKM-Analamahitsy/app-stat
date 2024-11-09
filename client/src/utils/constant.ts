@@ -121,6 +121,7 @@ export const SAMPANA = [
   "VSMAM",
   "DORKASY",
   "FLD",
+  "KATEKOMENA",
 ];
 
 export const APP_OPTIONS = [
