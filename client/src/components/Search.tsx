@@ -30,7 +30,7 @@ const Search: FC<Props> = ({ onSearch }) => {
             size="sm"
           />
         }
-        placeholder="search"
+        placeholder="recherche"
         onChange={searchHandler}
       />
     </div>

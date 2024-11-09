@@ -28,7 +28,7 @@ const Liste: FC = () => {
   const { canDelete, canUpdate } = usePermission("member");
 
   const fetch = (page: number) => {
-    api
+    const request = api
       .get(
         `/member?page=${page}&limit=${limit}&${sort[0]}=${
           sort[1]
@@ -38,6 +38,12 @@ const Liste: FC = () => {
         setData(res.data.member);
         setRows(res.data.totalRow);
       });
+
+    toast.promise(request, {
+      loading: "chargement...",
+      success: "succées",
+      error: "Une erreur se produit. veuillez reessayer plus tard.",
+    });
   };
 
   const onChangeHandler = (page: number) => {
@@ -161,7 +167,9 @@ const Liste: FC = () => {
 
   useEffect(
     () => {
-      fetch(1);
+      if (JSON.stringify(filter) !== JSON.stringify({})) {
+        fetch(1);
+      }
     }, // eslint-disable-next-line
     [filter]
   );
@@ -170,8 +178,6 @@ const Liste: FC = () => {
     () => {
       if (query.trim() !== "") {
         fetch(n);
-      } else {
-        fetch(1);
       }
     }, // eslint-disable-next-line
     [query]
@@ -189,8 +195,12 @@ const Liste: FC = () => {
         <div className="w-2/5">
           <Search
             onSearch={(query) => {
-              setN(1);
-              setQuery(query);
+              if (query.trim() === "") {
+                fetch(1);
+              } else {
+                setN(1);
+                setQuery(query);
+              }
             }}
           />
         </div>
