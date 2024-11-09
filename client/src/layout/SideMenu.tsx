@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import MenuData from "@utils/Menu";
 import api from "@utils/api";
 import { FC, useState } from "react";
-import { isMobile, isTablet } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 import { Menu, MenuItem, Sidebar, SubMenu } from "react-pro-sidebar";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
