@@ -76,8 +76,8 @@ const Page: FC = () => {
               )}
             </div>
             <div className="text-center sm:text-left">
-              <p className="font-semibold text-lg text-center md:text-left">
-                <span>{data.name}</span>
+              <p className="text-lg text-center md:text-left">
+                <span className="uppercase font-semibold ">{data.name}</span>
                 <br />
                 <span>{data.forname}</span>
               </p>

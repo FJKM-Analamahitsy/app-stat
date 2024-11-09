@@ -51,7 +51,7 @@ const Compta: FC<Props> = ({ className }) => {
         selector: (row) => <Avatar label={row.createBy} />,
       },
       {
-        name: "Mpino",
+        name: "Chretien",
         grow: 2,
         omit: id !== undefined,
         cell: (row) => (
@@ -71,11 +71,11 @@ const Compta: FC<Props> = ({ className }) => {
         },
       },
       {
-        name: "Adidy",
+        name: "Type",
         selector: (row) => row.type.name,
       },
       {
-        name: "Volana",
+        name: "Mois",
         selector: (row) =>
           ` ${
             row.month.length > 1
@@ -86,7 +86,7 @@ const Compta: FC<Props> = ({ className }) => {
           }`,
       },
       {
-        name: "Vola",
+        name: "Montant",
         selector: (row) => Intl.NumberFormat("de-FR").format(row.mtt),
       },
       {
@@ -151,7 +151,7 @@ const Compta: FC<Props> = ({ className }) => {
           />
           <input
             type="date"
-            className="bg-bg p-2 rounded"
+            className="bg-bg p-2 rounded mt-4 md:mt-0"
             onChange={(e) => setEnd(e.target.value)}
           />
         </div>
