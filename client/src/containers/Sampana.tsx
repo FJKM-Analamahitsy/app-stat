@@ -3,7 +3,6 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import { FC, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 const Sampana: FC = () => {
   const [data, setData] = useState<any>({});
@@ -29,12 +28,14 @@ const Sampana: FC = () => {
               <div className="flex gap-2">
                 <div>
                   <p className="font-medium">{sm}</p>
-                  <p className="text-primary text-[12px]">{data[sm]} membre</p>
+                  <p className="text-primary text-[12px]">
+                    {data[sm]} membre(s)
+                  </p>
                 </div>
               </div>
-              <Link to={`/sampana/${sm}`}>
+              <div>
                 <AvatarGroup data={["mi", "er"]} />
-              </Link>
+              </div>
             </div>
           );
         })}

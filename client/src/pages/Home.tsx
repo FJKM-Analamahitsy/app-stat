@@ -65,7 +65,7 @@ const Home: FC = () => {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
         <div className="col-span-2 bg-white rounded-[5px] p-2 h-fit flex flex-col items-center">
-          <DashChart title={`${data && data.total} Christians`} />
+          <DashChart title={`${data && data.total} Chretiens`} />
           <div className="flex overflow-auto w-full p-4  gap-4 mt-2 [&>*:nth-child(1)]:text-primary [&>*:nth-child(2)]:text-green-500 [&>*:nth-child(3)]:text-red-500 [&>*:nth-child(4)]:text-purple-500">
             {data &&
               faritra.map((fr, i) => {
