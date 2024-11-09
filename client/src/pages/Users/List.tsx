@@ -81,7 +81,7 @@ const UserList: FC = () => {
       <div>
         <FormUser profile={profiles} success={fetch}>
           <Button className="bg-primary text-white min-w-[150px]">
-            <FontAwesomeIcon icon={solid("add")} className="mr-2" /> New
+            <FontAwesomeIcon icon={solid("add")} className="mr-2" /> Nouveau
           </Button>
         </FormUser>
       </div>

@@ -74,7 +74,7 @@ const ProfileList: FC = () => {
     <div className="bg-white h-full p-4">
       <Link to="new" className="flex">
         <Button className="bg-primary text-white min-w-[150px]">
-          <FontAwesomeIcon icon={solid("add")} className="mr-2" /> New
+          <FontAwesomeIcon icon={solid("add")} className="mr-2" /> Nouveau
         </Button>
       </Link>
       <div className="mt-4">

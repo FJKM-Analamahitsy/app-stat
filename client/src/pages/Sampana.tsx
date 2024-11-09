@@ -142,7 +142,7 @@ const ListeSampana: FC = () => {
     [name]
   );
   return (
-    <div className="p-4 bg-white rounded" id="list">
+    <div className="p-4 bg-white rounded h-full" id="list">
       <div className="flex justify-between my-2">
         <p className="text-lg font-medium">{name}</p>
       </div>
