@@ -1,8 +1,6 @@
-import Calendar from "@components/Calendar";
 import DashChart from "@containers/DashChart";
 import Sampana from "@containers/Sampana";
 import { FC, useEffect, useState } from "react";
-import map from "@assets/img/world-map.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import api from "@utils/api";
