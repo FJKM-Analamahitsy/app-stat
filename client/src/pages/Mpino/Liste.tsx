@@ -35,6 +35,9 @@ const Liste: FC = () => {
         }&search=${query}&${prepFilter()}`
       )
       .then((res) => {
+        document
+          .querySelector(".christian")
+          ?.scrollTo({ top: 0, left: 0, behavior: "smooth" });
         setData(res.data.member);
         setRows(res.data.totalRow);
       });
@@ -48,9 +51,6 @@ const Liste: FC = () => {
 
   const onChangeHandler = (page: number) => {
     setN(page);
-    document
-      .querySelector(".christian")
-      ?.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     fetch(page);
   };
 
