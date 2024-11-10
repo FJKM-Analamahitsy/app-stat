@@ -29,6 +29,11 @@ const Receipt: FC<Props> = ({ data }) => {
           </p>
         </div>
         <div className="flex justify-between items-center gap-2">
+          <p>N Mpandray: </p>
+          <div className="border-b border-dashed grow"></div>
+          <p>{data.mpandray.mpandrayN}</p>
+        </div>
+        <div className="flex justify-between items-center gap-2">
           <p>Date: </p>
           <div className="border-b border-dashed grow"></div>
           <p>{dayjs(data.date).format("DD/MM/YY HH:MM")}</p>
@@ -43,7 +48,7 @@ const Receipt: FC<Props> = ({ data }) => {
                 " - " +
                 MONTHS[data.month[data.month.length - 1]]
               : MONTHS[data.month[0]]
-          }`}</p>
+          } ${data.year}`}</p>
         </div>
 
         <div className="flex justify-between items-center gap-2">

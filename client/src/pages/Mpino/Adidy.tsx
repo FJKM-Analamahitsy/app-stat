@@ -46,20 +46,15 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       year: data.year,
       month,
     };
-    const request = api.post("/adidy", { compta, trace }).then((res) => {
+    api.post("/adidy", { compta, trace }).then((res) => {
       setPdata(res.data);
-    });
-    toast.promise(request, {
-      loading: "En attente...",
-      success: "Pré a imprimer",
-      error: "Une erreur se produit.",
     });
   };
 
   useEffect(() => {
     if (pData) {
       if (isMobile) {
-        sessionStorage.setItem("prev", "/christian/" + mpandray);
+        sessionStorage.setItem("prev", window.location.pathname);
         navigate("/print/" + pData._id);
       } else {
         printButton.current?.click();

@@ -100,7 +100,7 @@ const Compta: FC<Props> = ({ className }) => {
                 <FontAwesomeIcon
                   icon={solid("print")}
                   onClick={() => {
-                    sessionStorage.setItem("prev", "/journal");
+                    sessionStorage.setItem("prev", window.location.pathname);
                     navigate("/print/" + row._id);
                   }}
                 />

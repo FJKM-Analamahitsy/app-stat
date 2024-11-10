@@ -8,10 +8,12 @@ const PrintPage: FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   useEffect(() => {
-    data && window.print();
-    window.addEventListener("afterprint", () => {
-      navigate(sessionStorage.getItem("prev") || "/");
-    });
+    if (data) {
+      window.print();
+      window.addEventListener("afterprint", () => {
+        navigate(sessionStorage.getItem("prev") || "/");
+      });
+    }
   }, [data]);
   useEffect(() => {
     api.get(`/adidy/byid/${id}`).then((res) => {
