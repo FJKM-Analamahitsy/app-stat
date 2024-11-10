@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import MenuData from "@utils/Menu";
 import api from "@utils/api";
 import { FC, useState } from "react";
-import { isMobile } from "react-device-detect";
 import { Menu, MenuItem, Sidebar, SubMenu } from "react-pro-sidebar";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -60,7 +59,9 @@ const SideMenu: FC = () => {
                             }`}
                             key={i}
                             component={<Link to={sm.path} />}
-                            onClick={() => isMobile && setCollapse(true)}
+                            onClick={() =>
+                              window.innerWidth < 1024 && setCollapse(true)
+                            }
                           >
                             {sm.label}
                           </MenuItem>
@@ -79,7 +80,9 @@ const SideMenu: FC = () => {
                           : "hover:bg-slate-50"
                       }`}
                       icon={mn.icon}
-                      onClick={() => isMobile && setCollapse(true)}
+                      onClick={() =>
+                        window.innerWidth < 1024 && setCollapse(true)
+                      }
                     >
                       {mn.label}
                     </MenuItem>
