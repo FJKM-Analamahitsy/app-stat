@@ -7,6 +7,7 @@ import { MONTHS } from "@utils/constant";
 import { FC, useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   mpandray: string;
@@ -24,6 +25,7 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
   });
   const [pData, setPdata] = useState<any>();
   const printButton = useRef<HTMLButtonElement>(null);
+  const navigate = useNavigate();
 
   const [monthEnd, setMonthhEnd] = useState(now.getMonth());
   const [types, setTypes] = useState([]);
@@ -57,9 +59,8 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
   useEffect(() => {
     if (pData) {
       if (isMobile) {
-        let params = `scrollbars=no,resizable=no,fullscreen=yes,status=no,location=no,toolbar=no,menubar=no,
-        width=500,height=600,left=-1000,top=-1000`;
-        window.open("/print/" + pData._id, "Receipt", params);
+        sessionStorage.setItem("prev", "/christian/" + mpandray);
+        navigate("/print/" + pData._id);
       } else {
         printButton.current?.click();
       }

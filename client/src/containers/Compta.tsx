@@ -8,7 +8,7 @@ import { MONTHS } from "@utils/constant";
 import dayjs from "dayjs";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Print from "./Print";
 import toast from "react-hot-toast";
 import { isMobile } from "react-device-detect";
@@ -23,6 +23,7 @@ const Compta: FC<Props> = ({ className }) => {
   const [start, setStart] = useState<string>();
   const [end, setEnd] = useState<string>();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const fetch = (page: number) => {
     api
@@ -99,9 +100,8 @@ const Compta: FC<Props> = ({ className }) => {
                 <FontAwesomeIcon
                   icon={solid("print")}
                   onClick={() => {
-                    let params = `scrollbars=no,resizable=no,fullscreen=yes,status=no,location=no,toolbar=no,menubar=no,
-                width=500,height=600,left=-1000,top=-1000`;
-                    window.open("/print/" + row._id, "Receipt", params);
+                    sessionStorage.setItem("prev", "/journal");
+                    navigate("/print/" + row._id);
                   }}
                 />
               ) : (
