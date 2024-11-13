@@ -10,15 +10,15 @@ const ComptBoard: FC = () => {
   const columns: TableColumn<any>[] = useMemo(
     () => [
       {
-        name: "date",
-        cell: (row) => dayjs(row._id.date).format("DD-MMM-YYYY"),
+        name: "Date",
+        cell: (row) => dayjs(row._id.date).format("DD MMM, YYYY"),
       },
       {
-        name: "Diakona",
+        name: "Diacre",
         cell: (row) => <Avatar label={row._id.createBy} />,
       },
       {
-        name: "Mpino",
+        name: "Chretien",
         center: true,
         cell: (row) => row.count,
       },

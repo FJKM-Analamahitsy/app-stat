@@ -48,8 +48,8 @@ const Compta: FC<Props> = ({ className }) => {
   const columns: TableColumn<any>[] = useMemo(
     () => [
       {
-        name: "Ajouter par",
-        selector: (row) => <Avatar label={row.createBy} />,
+        name: "Diacre",
+        cell: (row) => <Avatar label={row.createBy} />,
       },
       {
         name: "Chretien",
@@ -72,23 +72,19 @@ const Compta: FC<Props> = ({ className }) => {
         },
       },
       {
-        name: "Type",
-        selector: (row) => row.type.name,
-      },
-      {
-        name: "Mois",
-        selector: (row) =>
-          ` ${
+        name: "Libellé",
+        cell: (row) =>
+          `${row.type.name} ${
             row.month.length > 1
               ? MONTHS[row.month[0]] +
                 " - " +
                 MONTHS[row.month[row.month.length - 1]]
               : MONTHS[row.month[0]]
-          }`,
+          } ${row.year}`,
       },
       {
         name: "Montant",
-        selector: (row) => Intl.NumberFormat("de-FR").format(row.mtt),
+        cell: (row) => Intl.NumberFormat("de-FR").format(row.mtt),
       },
       {
         name: "Action",
