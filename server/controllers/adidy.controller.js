@@ -133,6 +133,35 @@ const getComptaById = async (req, res) => {
   res.json(result);
 };
 
+const getDailySummary = async (req, res) => {
+  const result = await Compta.aggregate([
+    {
+      $project: {
+        date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+        createBy: "$createBy",
+        mtt: "$mtt",
+      },
+    },
+    {
+      $match: {
+        date: req.query.date,
+      },
+    },
+    {
+      $group: {
+        _id: {
+          date: "$date",
+          createBy: "$createBy",
+        },
+        count: { $sum: 1 },
+        sum: { $sum: "$mtt" },
+      },
+    },
+  ]);
+
+  res.json(result);
+};
+
 const createType = async (req, res) => {
   try {
     const type = new AdidyType({ ...req.body });
@@ -169,6 +198,7 @@ module.exports = {
   getComptaById,
   getAdidyTrace,
   getType,
+  getDailySummary,
   createType,
   updateType,
   deleteType,

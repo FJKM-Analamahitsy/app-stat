@@ -36,11 +36,15 @@ const MenuData: any = [
     auth: "adidytype",
     submenu: [
       {
-        path: "/journal",
+        path: "/adidy",
+        label: "Resumé",
+      },
+      {
+        path: "/adidy/list",
         label: "Liste",
       },
       {
-        path: "/adidytype",
+        path: "/adidy/type",
         label: "Type",
       },
     ],

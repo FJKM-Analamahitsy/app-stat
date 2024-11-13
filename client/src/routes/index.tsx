@@ -14,6 +14,7 @@ import UserList from "@pages/Users/List";
 import AdidyType from "@pages/Adidy/Type";
 import Journal from "@pages/Adidy/List";
 import PrintPage from "@pages/Print";
+import ComptBoard from "@pages/Adidy/Board";
 
 const Routes: FC = () => {
   return (
@@ -35,8 +36,11 @@ const Routes: FC = () => {
           </Route>
           <Route path="users" element={<UserList />} />
           <Route path="sampana/:name" element={<ListeSampana />} />
-          <Route path="adidytype" element={<AdidyType />} />
-          <Route path="journal" element={<Journal />} />
+          <Route path="adidy">
+            <Route index element={<ComptBoard />} />
+            <Route path="type" element={<AdidyType />} />
+            <Route path="list" element={<Journal />} />
+          </Route>
         </Route>
         <Route path="print/:id" element={<PrintPage />} />
       </Route>
