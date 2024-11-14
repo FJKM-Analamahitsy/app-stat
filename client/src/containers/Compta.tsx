@@ -19,19 +19,24 @@ interface Props {
 
 const Compta: FC<Props> = ({ className }) => {
   const [data, setData] = useState<any>({});
+  const [creator, setCreator] = useState<any>([]);
   const [limit, setLimit] = useState<number>(5);
-  const [start, setStart] = useState<string>();
-  const [end, setEnd] = useState<string>();
+  const [filter, setFilter] = useState<any>({});
   const { id } = useParams();
   const navigate = useNavigate();
 
   const fetch = (page: number) => {
+    const params = new URLSearchParams();
+    Object.keys(filter).forEach((k: any) => {
+      if (filter[k] && filter[k] !== "") {
+        params.set(k, filter[k]);
+      } else {
+        params.delete(k);
+      }
+    });
+    console.log(params.toString());
     api
-      .get(
-        `/adidy?page=${page}&limit=${limit}${start ? `&start=${start}` : ""}${
-          end ? `&end=${end}` : ""
-        }${id ? `&mpandray=${id}` : ""}`
-      )
+      .get(`/adidy?page=${page}&limit=${limit}&${params.toString()}`)
       .then((res) => {
         setData(res.data);
       });
@@ -135,22 +140,40 @@ const Compta: FC<Props> = ({ className }) => {
       fetch(1);
     },
     // eslint-disable-next-line
-    [start, end, limit]
+    [filter, limit]
   );
+  useEffect(() => {
+    api.get("/adidy/creator").then((res) => {
+      setCreator(res.data);
+    });
+  }, []);
   return (
     <div className="p-4">
       <div className="flex justify-between items-center">
-        <div>
+        <div className="flex gap-4 mt-4 md:mt-0">
           <input
             type="date"
-            className="bg-bg p-2 rounded mr-3"
-            onChange={(e) => setStart(e.target.value)}
+            className="bg-bg p-2 rounded"
+            onChange={(e) => setFilter({ ...filter, start: e.target.value })}
           />
           <input
             type="date"
-            className="bg-bg p-2 rounded mt-4 md:mt-0"
-            onChange={(e) => setEnd(e.target.value)}
+            className="bg-bg p-2 rounded "
+            onChange={(e) => setFilter({ ...filter, end: e.target.value })}
           />
+          <select
+            className="bg-bg p-2 rounded"
+            onChange={(e) => setFilter({ ...filter, creator: e.target.value })}
+          >
+            <option value="">Tous</option>
+            {creator.map((c: any, i: number) => {
+              return (
+                <option key={i} value={c._id.createBy}>
+                  {c._id.createBy}
+                </option>
+              );
+            })}
+          </select>
         </div>
         <div className="font-medium text-lg">
           Total: {Intl.NumberFormat("de-FR").format(data.sum)} MGA

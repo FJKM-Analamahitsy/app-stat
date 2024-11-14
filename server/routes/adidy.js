@@ -10,6 +10,7 @@ const {
   deleteType,
   getComptaById,
   getDailySummary,
+  getAllCreator,
 } = require("../controllers/adidy.controller");
 
 const route = express.Router();
@@ -19,6 +20,7 @@ route.get("/", getCompta);
 route.get("/byid/:id", getComptaById);
 route.get("/type", getType);
 route.get("/summary/daily", getDailySummary);
+route.get("/creator", getAllCreator);
 route.post("/type", createType);
 route.post("/", createAdidy);
 route.patch("/type/:id", updateType);

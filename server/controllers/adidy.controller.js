@@ -52,7 +52,7 @@ const deleteAdidy = async (req, res) => {
 };
 
 const getCompta = async (req, res) => {
-  const { page = 1, limit = 2, start, end, mpandray } = req.query;
+  const { page = 1, limit = 2, start, end, mpandray, creator } = req.query;
   let filter = {};
   if (start) {
     filter = {
@@ -75,6 +75,10 @@ const getCompta = async (req, res) => {
 
   if (mpandray) {
     filter = { ...filter, mpandray: new mongoose.Types.ObjectId(mpandray) };
+  }
+
+  if (creator) {
+    filter = { ...filter, createBy: creator };
   }
 
   let member = await Compta.aggregate([
@@ -162,6 +166,20 @@ const getDailySummary = async (req, res) => {
   res.json(result);
 };
 
+const getAllCreator = async (req, res) => {
+  const result = await Compta.aggregate([
+    {
+      $group: {
+        _id: {
+          createBy: "$createBy",
+        },
+      },
+    },
+  ]);
+
+  res.json(result);
+};
+
 const createType = async (req, res) => {
   try {
     const type = new AdidyType({ ...req.body });
@@ -199,6 +217,7 @@ module.exports = {
   getAdidyTrace,
   getType,
   getDailySummary,
+  getAllCreator,
   createType,
   updateType,
   deleteType,
