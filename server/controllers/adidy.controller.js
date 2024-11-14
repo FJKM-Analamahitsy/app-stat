@@ -177,6 +177,44 @@ const getDailySummary = async (req, res) => {
   res.json([...result, ...total]);
 };
 
+const getAnnualySummary = async (req, res) => {
+  const result = await Compta.aggregate([
+    {
+      $sort: {
+        date: 1,
+      },
+    },
+    {
+      $project: {
+        date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+        year: { $dateToString: { format: "%Y", date: "$date" } },
+        mtt: "$mtt",
+      },
+    },
+    {
+      $match: {
+        year: req.query.year,
+      },
+    },
+    {
+      $group: {
+        _id: {
+          date: "$date",
+        },
+        count: { $sum: 1 },
+        sum: { $sum: "$mtt" },
+      },
+    },
+    {
+      $sort: {
+        "_id.date": 1,
+      },
+    },
+  ]);
+
+  res.json(result);
+};
+
 const getAllCreator = async (req, res) => {
   const result = await Compta.aggregate([
     {
@@ -228,6 +266,7 @@ module.exports = {
   getAdidyTrace,
   getType,
   getDailySummary,
+  getAnnualySummary,
   getAllCreator,
   createType,
   updateType,

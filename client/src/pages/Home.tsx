@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import api from "@utils/api";
+import ChartAdidy from "@containers/ChartAdidy";
 
 const Home: FC = () => {
   const [data, setData] = useState<any>();
@@ -82,6 +83,9 @@ const Home: FC = () => {
           </div>
         </div>
         <Sampana />
+      </div>
+      <div className="mt-4">
+        <ChartAdidy />
       </div>
     </div>
   );
