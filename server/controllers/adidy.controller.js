@@ -138,7 +138,7 @@ const getComptaById = async (req, res) => {
 };
 
 const getDailySummary = async (req, res) => {
-  const result = await Compta.aggregate([
+  const pipeline = [
     {
       $project: {
         date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
@@ -161,9 +161,20 @@ const getDailySummary = async (req, res) => {
         sum: { $sum: "$mtt" },
       },
     },
+  ];
+  const result = await Compta.aggregate([...pipeline]);
+  const total = await Compta.aggregate([
+    ...pipeline,
+    {
+      $group: {
+        _id: null,
+        count: { $sum: "$count" },
+        sum: { $sum: "$sum" },
+      },
+    },
   ]);
 
-  res.json(result);
+  res.json([...result, ...total]);
 };
 
 const getAllCreator = async (req, res) => {

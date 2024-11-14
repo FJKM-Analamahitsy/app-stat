@@ -11,11 +11,12 @@ const ComptBoard: FC = () => {
     () => [
       {
         name: "Date",
-        cell: (row) => dayjs(row._id.date).format("DD MMM, YYYY"),
+        cell: (row) =>
+          row._id ? dayjs(row._id.date).format("DD MMM, YYYY") : "Total",
       },
       {
         name: "Diacre",
-        cell: (row) => <Avatar label={row._id.createBy} />,
+        cell: (row) => row._id && <Avatar label={row._id.createBy} />,
       },
       {
         name: "Chretien",
@@ -37,7 +38,7 @@ const ComptBoard: FC = () => {
   }, [date]);
   return (
     <div className="bg-white h-full p-4">
-      <div>
+      <div className="flex justify-between">
         <input
           type="date"
           className="bg-bg p-2 rounded mr-3"
@@ -46,7 +47,7 @@ const ComptBoard: FC = () => {
         />
       </div>
       <div>
-        <DataTable columns={columns} data={data} striped highlightOnHover />
+        <DataTable columns={columns} data={data} />
       </div>
     </div>
   );
