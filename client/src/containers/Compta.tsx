@@ -71,7 +71,7 @@ const Compta: FC<Props> = ({ className }) => {
         cell: (row) => {
           return (
             <div>
-              <p>{dayjs(row.date).format("DD MMM, YYYY")}</p>
+              <p>{dayjs(row.date).format("DD MMM, YYYY  HH:MM")}</p>
             </div>
           );
         },
