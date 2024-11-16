@@ -34,7 +34,10 @@ const Compta: FC<Props> = ({ className }) => {
         params.delete(k);
       }
     });
-    console.log(params.toString());
+
+    if (id) {
+      params.set("mpandray", id);
+    }
     api
       .get(`/adidy?page=${page}&limit=${limit}&${params.toString()}`)
       .then((res) => {

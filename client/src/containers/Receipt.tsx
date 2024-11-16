@@ -29,7 +29,7 @@ const Receipt: FC<Props> = ({ data }) => {
           </p>
         </div>
         <div className="flex justify-between items-center gap-2">
-          <p>N Mpandray: </p>
+          <p>Karatra lah. </p>
           <div className="border-b border-dashed grow"></div>
           <p>{data.mpandray.mpandrayN}</p>
         </div>
