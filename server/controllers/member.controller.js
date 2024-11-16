@@ -65,7 +65,9 @@ const getMember = async (req, res) => {
         familyId: member.familyId,
         familyRank: 1,
       }).select("-_id home place");
-      result = { ...result, ...adress._doc };
+      if (adress) {
+        result = { ...result, ...adress._doc };
+      }
     }
     return res.send(result);
   } catch (error) {
