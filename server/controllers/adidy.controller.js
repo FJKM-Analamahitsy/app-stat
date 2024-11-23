@@ -4,9 +4,6 @@ const { default: mongoose } = require("mongoose");
 const escpos = require("escpos");
 escpos.Network = require("escpos-network");
 
-const device = new escpos.Network("192.168.123.100", 9100);
-const printer = new escpos.Printer(device);
-
 const MONTHS = [
   "Janvier",
   "Fevrier",
@@ -23,6 +20,8 @@ const MONTHS = [
 ];
 
 const print = (data) => {
+  const device = new escpos.Network("192.168.123.100", 9100);
+  const printer = new escpos.Printer(device);
   device.open((err) => {
     printer
       .align("ct")
@@ -33,7 +32,7 @@ const print = (data) => {
       .newLine()
       .style("i")
       .text(`"Aoka ny olona rehetra samy hanao`)
-      .text(`"araka izay inian'ny fony avy..." Oha. 22. 8`)
+      .text(`araka izay inian'ny fony avy..." Oha. 22. 8`)
       .newLine()
       .align("lt")
       .tableCustom([
@@ -116,7 +115,7 @@ const print = (data) => {
       .newLine()
       .align("ct")
       .text("Misaotra tompoko!")
-      .text("admin")
+      .text(data.createBy)
       .control("lf")
       .cut()
       .align("ct")
@@ -127,7 +126,7 @@ const print = (data) => {
       .newLine()
       .style("i")
       .text(`"Aoka ny olona rehetra samy hanao`)
-      .text(`"araka izay inian'ny fony avy..." Oha. 22. 8`)
+      .text(`araka izay inian'ny fony avy..." Oha. 22. 8`)
       .newLine()
       .align("lt")
       .tableCustom([
@@ -210,7 +209,7 @@ const print = (data) => {
       .newLine()
       .align("ct")
       .text("Misaotra tompoko!")
-      .text("admin")
+      .text(data.createBy)
       .control("lf")
       .cut()
       .close();
