@@ -1,13 +1,10 @@
 import Button from "@components/Button";
 import InputNew from "@components/InputNew";
 import Select from "@components/Select";
-import Print from "@containers/Print";
 import api from "@utils/api";
 import { MONTHS } from "@utils/constant";
-import { FC, useEffect, useRef, useState } from "react";
-import { isMobile } from "react-device-detect";
+import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 interface Props {
   mpandray: string;
@@ -23,9 +20,6 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
     pay: "",
     type: "",
   });
-  const [pData, setPdata] = useState<any>();
-  const printButton = useRef<HTMLButtonElement>(null);
-  const navigate = useNavigate();
 
   const [monthEnd, setMonthhEnd] = useState(now.getMonth());
   const [types, setTypes] = useState([]);
@@ -47,21 +41,10 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       month,
     };
     api.post("/adidy", { compta, trace }).then((res) => {
-      setPdata(res.data);
+      toast.success("Success");
+      success();
     });
   };
-
-  useEffect(() => {
-    if (pData) {
-      if (isMobile) {
-        sessionStorage.setItem("prev", window.location.pathname);
-        navigate("/print/" + pData._id);
-      } else {
-        printButton.current?.click();
-      }
-      success();
-    }
-  }, [pData]);
 
   useEffect(
     () => {
@@ -130,13 +113,6 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
           Payer
         </Button>
       </div>
-      {pData && (
-        <div className="hidden">
-          <Print data={pData} onsuccess={success}>
-            <button ref={printButton}></button>
-          </Print>
-        </div>
-      )}
     </div>
   );
 };
