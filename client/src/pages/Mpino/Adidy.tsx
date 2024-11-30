@@ -1,7 +1,7 @@
 import Button from "@components/Button";
 import InputNew from "@components/InputNew";
 import Select from "@components/Select";
-import api from "@utils/api";
+import api, { server } from "@utils/api";
 import { MONTHS } from "@utils/constant";
 import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -41,13 +41,32 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       month,
     };
     api.post("/adidy", { compta, trace }).then((res) => {
-      toast.success("Success");
-      success();
+      const dataToPrint = {
+        data: res.data,
+        printer: {
+          adress: localStorage.getItem("xprinter") || "localhost",
+          port: 9100,
+          copy: parseInt(localStorage.getItem("ncopy") || "2"),
+        },
+      };
+      server
+        .post(
+          `${localStorage.getItem("xpserver") || "localhost"}:30116/receipt`,
+          dataToPrint
+        )
+        .then(() => {
+          toast.success("Success");
+          success();
+        })
+        .catch(() => {
+          toast.error("Une erreur se produit pendant l'operation");
+        });
     });
   };
 
   useEffect(
     () => {
+      //load karazana adidy
       api.get("/adidy/type").then((res) => {
         setData({ ...data, type: res.data[0]._id });
         setTypes(res.data);

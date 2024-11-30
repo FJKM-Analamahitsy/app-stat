@@ -15,6 +15,7 @@ import AdidyType from "@pages/Adidy/Type";
 import Journal from "@pages/Adidy/List";
 import PrintPage from "@pages/Print";
 import ComptBoard from "@pages/Adidy/Board";
+import Setting from "@pages/Setting";
 
 const Routes: FC = () => {
   return (
@@ -41,6 +42,7 @@ const Routes: FC = () => {
             <Route path="type" element={<AdidyType />} />
             <Route path="list" element={<Journal />} />
           </Route>
+          <Route path="setting" element={<Setting />} />
         </Route>
         <Route path="print/:id" element={<PrintPage />} />
       </Route>

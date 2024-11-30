@@ -61,6 +61,12 @@ const MenuData: any = [
     icon: <FontAwesomeIcon icon={solid("users")} />,
     auth: "users",
   },
+  {
+    label: "Parametre",
+    path: "/setting",
+    icon: <FontAwesomeIcon icon={solid("gear")} />,
+    auth: "setting",
+  },
 ];
 
 export default MenuData;
