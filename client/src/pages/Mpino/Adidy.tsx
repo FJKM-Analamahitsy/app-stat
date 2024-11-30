@@ -44,7 +44,7 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       const dataToPrint = {
         data: res.data,
         printer: {
-          adress: localStorage.getItem("xprinter") || "localhost",
+          adress: localStorage.getItem("xprinter") || "192.168.123.100",
           port: 9100,
           copy: parseInt(localStorage.getItem("ncopy") || "2"),
         },
