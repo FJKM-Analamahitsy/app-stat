@@ -51,14 +51,17 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       };
       server
         .post(
-          `${localStorage.getItem("xpserver") || "localhost"}:30116/receipt`,
+          `http://${
+            localStorage.getItem("xpserver") || "localhost"
+          }:30116/receipt`,
           dataToPrint
         )
         .then(() => {
           toast.success("Success");
           success();
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err);
           toast.error("Une erreur se produit pendant l'operation");
         });
     });
