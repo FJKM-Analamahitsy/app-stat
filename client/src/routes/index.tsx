@@ -5,13 +5,17 @@ import NewMember from "@pages/Mpino/New";
 import Page from "@pages/Mpino/Page";
 import { FC } from "react";
 import { Routes as Router, Route } from "react-router-dom";
-import Adidy from "@pages/Mpino/Adidy";
 import AuthGuard from "@auth/AuthGuard";
 import Layout from "layout";
 import ListeSampana from "@pages/Sampana";
 import ProfileList from "@pages/Profile/List";
 import ProfilePage from "@pages/Profile/Page";
 import UserList from "@pages/Users/List";
+import AdidyType from "@pages/Adidy/Type";
+import Journal from "@pages/Adidy/List";
+import PrintPage from "@pages/Print";
+import ComptBoard from "@pages/Adidy/Board";
+import Setting from "@pages/Setting";
 
 const Routes: FC = () => {
   return (
@@ -33,7 +37,14 @@ const Routes: FC = () => {
           </Route>
           <Route path="users" element={<UserList />} />
           <Route path="sampana/:name" element={<ListeSampana />} />
+          <Route path="adidy">
+            <Route index element={<ComptBoard />} />
+            <Route path="type" element={<AdidyType />} />
+            <Route path="list" element={<Journal />} />
+          </Route>
+          <Route path="setting" element={<Setting />} />
         </Route>
+        <Route path="print/:id" element={<PrintPage />} />
       </Route>
     </Router>
   );

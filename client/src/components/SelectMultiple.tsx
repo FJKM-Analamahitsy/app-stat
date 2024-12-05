@@ -30,9 +30,12 @@ const SelectMultiple: FC<Props> = ({ options, onChange, defaultValue }) => {
     setFocus(container.current?.contains(e.target) || false);
   };
 
-  useEffect(() => {
-    onChange(values.join(" "));
-  }, [values]);
+  useEffect(
+    () => {
+      onChange(values.join(" "));
+    }, // eslint-disable-next-line
+    [values]
+  );
 
   useEffect(() => {
     if (defaultValue && defaultValue?.trim() !== "") {
@@ -62,7 +65,7 @@ const SelectMultiple: FC<Props> = ({ options, onChange, defaultValue }) => {
       <input
         type="text"
         className="bg-transparent grow"
-        placeholder="search"
+        placeholder="recherche"
         onChange={(e) => {
           setOpts(
             options.filter((v) =>

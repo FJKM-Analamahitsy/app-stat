@@ -1,6 +1,4 @@
 import Avatar from "@components/Avatar";
-import ExportBtn from "@components/ExportBtn";
-import Search from "@components/Search";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
@@ -144,10 +142,9 @@ const ListeSampana: FC = () => {
     [name]
   );
   return (
-    <div className="p-4 bg-white rounded" id="list">
+    <div className="p-4 bg-white rounded h-full" id="list">
       <div className="flex justify-between my-2">
         <p className="text-lg font-medium">{name}</p>
-        <ExportBtn sampana={name} />
       </div>
 
       <DataTable
@@ -163,6 +160,7 @@ const ListeSampana: FC = () => {
         paginationRowsPerPageOptions={[30, 50, 100]}
         sortServer
         onSort={onSortHandler}
+        className="h-[calc(100vh-250px)] !overflow-y-auto"
       />
     </div>
   );

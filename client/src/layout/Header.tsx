@@ -1,9 +1,9 @@
 import Avatar from "@components/Avatar";
-import Search from "@components/Search";
-import { regular } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAppSelector } from "@redux/hooks";
 import { FC } from "react";
+import { isMobile } from "react-device-detect";
 
 const Header: FC = () => {
   const { username } = useAppSelector((state) => state.user);
@@ -12,11 +12,12 @@ const Header: FC = () => {
       <div className=""></div>
 
       <div className="flex items-center gap-8">
-        <div className="relative">
-          <FontAwesomeIcon icon={regular("bell")} color="#A4B4BD" size="lg" />
-          <div className="w-[12px] h-[12px] rounded-full bg-red-500 text-white text-[10px] flex justify-center items-center p-1 absolute top-0 left-[9px]">
-            2
-          </div>
+        <div className="relative animate-pulse">
+          <FontAwesomeIcon
+            icon={isMobile ? solid("mobile") : solid("laptop")}
+            color="#A4B4BD"
+            size="lg"
+          />
         </div>
         <Avatar label={username} reversed hideLabSm />
       </div>

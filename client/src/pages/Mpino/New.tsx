@@ -3,6 +3,8 @@ import InputNew from "@components/InputNew";
 import RadioButton from "@components/RadioButton";
 import Select from "@components/Select";
 import SelectMultiple from "@components/SelectMultiple";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import { MONTHS, SAMPANA } from "@utils/constant";
 import { FC, ReactNode, useEffect, useRef, useState } from "react";
@@ -311,10 +313,11 @@ const NewMember: FC = () => {
 
         <div className="text-right mt-4">
           <Button
-            className="text-white bg-primary w-1/3 sm:w-1/4 disabled:cursor-not-allowed disabled:opacity-60"
+            className="text-white bg-primary w-full sm:w-1/4 disabled:cursor-not-allowed disabled:opacity-60"
             disabled={id ? JSON.stringify(raw) === JSON.stringify(data) : false}
           >
-            enregistrer
+            <FontAwesomeIcon icon={solid("save")} className="mr-2" />
+            Enregistrer
           </Button>
         </div>
       </div>

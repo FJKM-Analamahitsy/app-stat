@@ -1,9 +1,9 @@
 import Button from "@components/Button";
 import InputNew from "@components/InputNew";
 import Select from "@components/Select";
-import api from "@utils/api";
+import api, { server } from "@utils/api";
 import { MONTHS } from "@utils/constant";
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 interface Props {
@@ -18,37 +18,81 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
     month: now.getMonth(),
     year: now.getFullYear(),
     pay: "",
-    type: "adidy mpandray",
+    type: "",
   });
+
   const [monthEnd, setMonthhEnd] = useState(now.getMonth());
+  const [types, setTypes] = useState([]);
   const submit = async () => {
-    const compta = {
-      mpandray,
-      mtt: parseInt(data.pay.replace(/\./g, "")),
-      note: `${data.type} ${MONTHS[data.month]}-${MONTHS[monthEnd]}`,
-    };
     const month = [];
     for (let i = data.month; i <= monthEnd; i++) {
       month.push(i);
     }
+    const compta = {
+      type: data.type,
+      mpandray,
+      mtt: parseInt(data.pay.replace(/\./g, "")),
+      month,
+      year: data.year,
+    };
     const trace = {
       mpandray,
       year: data.year,
       month,
     };
     api.post("/adidy", { compta, trace }).then((res) => {
-      success();
+      const dataToPrint = {
+        data: res.data,
+        printer: {
+          adress: localStorage.getItem("xprinter") || "192.168.123.100",
+          port: 9100,
+          copy: parseInt(localStorage.getItem("ncopy") || "2"),
+        },
+      };
+      server
+        .post(
+          `http://${
+            localStorage.getItem("xpserver") || "localhost"
+          }:30116/receipt`,
+          dataToPrint
+        )
+        .then(() => {
+          toast.success("Success");
+          success();
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error("Une erreur se produit pendant l'operation");
+        });
     });
   };
 
+  useEffect(
+    () => {
+      //load karazana adidy
+      api.get("/adidy/type").then((res) => {
+        setData({ ...data, type: res.data[0]._id });
+        setTypes(res.data);
+      });
+    }, // eslint-disable-next-line
+    []
+  );
+
   return (
     <div className="min-w-[50vw] text-[20px] py-[2rem] px-6 bg-white border border-bg m-4 mt-8 md:mx-auto  rounded-[5px] flex flex-col gap-8">
-      <Select
+      <select
+        className="p-1 px-1 rounded border text-grey"
         value={data.type}
         onChange={(e) => setData({ ...data, type: e.target.value })}
-        options={["Adidin' ny mpandray", "Adidy iombonana", "Voka-dehibe"]}
-        valueIndex={false}
-      />
+      >
+        {types.map((t: any, i: number) => {
+          return (
+            <option key={i} value={t._id}>
+              {t.name}
+            </option>
+          );
+        })}
+      </select>
       <div className="grid grid-cols-3 gap-4">
         <Select
           value={data.month}

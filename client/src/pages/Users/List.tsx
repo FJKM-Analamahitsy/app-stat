@@ -45,7 +45,7 @@ const UserList: FC = () => {
         name: "Action",
         cell: (row) => {
           return (
-            <div className="flex gap-4">
+            <div className="flex justify-evenly items-center w-full">
               <FormUser
                 data={{ ...row, profile: row.profile._id }}
                 profile={profiles}
@@ -68,6 +68,7 @@ const UserList: FC = () => {
         center: true,
       },
     ],
+    // eslint-disable-next-line
     [onDelete]
   );
 
@@ -80,7 +81,7 @@ const UserList: FC = () => {
       <div>
         <FormUser profile={profiles} success={fetch}>
           <Button className="bg-primary text-white min-w-[150px]">
-            <FontAwesomeIcon icon={solid("add")} className="mr-2" /> New
+            <FontAwesomeIcon icon={solid("add")} className="mr-2" /> Nouveau
           </Button>
         </FormUser>
       </div>

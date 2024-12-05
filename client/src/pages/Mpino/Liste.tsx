@@ -28,23 +28,29 @@ const Liste: FC = () => {
   const { canDelete, canUpdate } = usePermission("member");
 
   const fetch = (page: number) => {
-    api
+    const request = api
       .get(
         `/member?page=${page}&limit=${limit}&${sort[0]}=${
           sort[1]
         }&search=${query}&${prepFilter()}`
       )
       .then((res) => {
+        document
+          .querySelector(".christian")
+          ?.scrollTo({ top: 0, left: 0, behavior: "smooth" });
         setData(res.data.member);
         setRows(res.data.totalRow);
       });
+
+    toast.promise(request, {
+      loading: "chargement...",
+      success: "succées",
+      error: "Une erreur se produit. veuillez reessayer plus tard.",
+    });
   };
 
   const onChangeHandler = (page: number) => {
     setN(page);
-    document
-      .querySelector(".rdt_TableBody")
-      ?.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     fetch(page);
   };
 
@@ -93,7 +99,7 @@ const Liste: FC = () => {
           return (
             <div onClick={() => navigate("/christian/" + row._id)} className="">
               <Avatar
-                label={`${row.name} ${row.forname ? row.forname : ""}`}
+                label={`${row.fullname}`}
                 className={memberStatus(row.lastPayDate, true)}
               />
             </div>
@@ -159,22 +165,31 @@ const Liste: FC = () => {
       .join("&");
   };
 
-  useEffect(() => {
-    fetch(1);
-  }, [filter]);
+  useEffect(
+    () => {
+      if (JSON.stringify(filter) !== JSON.stringify({})) {
+        fetch(1);
+      }
+    },
+    // eslint-disable-next-line
+    [filter]
+  );
 
-  useEffect(() => {
-    if (query.trim() !== "") {
-      fetch(n);
-    } else {
-      fetch(1);
-    }
-  }, [query]);
+  useEffect(
+    () => {
+      if (query.trim() !== "") {
+        fetch(n);
+      }
+    },
+    // eslint-disable-next-line
+    [query]
+  );
 
   useEffect(
     () => {
       fetch(1);
-    }, // eslint-disable-next-line
+    },
+    // eslint-disable-next-line
     []
   );
   return (
@@ -183,8 +198,12 @@ const Liste: FC = () => {
         <div className="w-2/5">
           <Search
             onSearch={(query) => {
-              setN(1);
-              setQuery(query);
+              if (query.trim() === "") {
+                fetch(1);
+              } else {
+                setN(1);
+                setQuery(query);
+              }
             }}
           />
         </div>
@@ -287,7 +306,7 @@ const Liste: FC = () => {
           paginationRowsPerPageOptions={[30, 50, 100]}
           sortServer
           onSort={onSortHandler}
-          className="h-[calc(100vh-250px)] !overflow-y-auto"
+          className="h-[calc(100vh-250px)] !overflow-y-auto christian"
         />
       </div>
     </div>

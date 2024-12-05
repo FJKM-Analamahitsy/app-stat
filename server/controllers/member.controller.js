@@ -16,7 +16,7 @@ const createMember = async (req, res) => {
     const input = await memberInput.validate(req.body);
     const newMember = new Member({
       ...input,
-      fullname: `${input.name} ${input.forname}`,
+      fullname: `${input.name}${input.forname ? ` ${input.forname}` : ""}`,
     });
     await newMember.save();
     log(req.requester, `creation member ${newMember._id}`);
@@ -39,10 +39,12 @@ const deleteMember = async (req, res) => {
 
 const updateMember = async (req, res) => {
   try {
+    const input = await memberInput.validate(req.body);
     await Member.findOneAndUpdate(
       { _id: req.params.id },
       {
-        ...req.body,
+        ...input,
+        fullname: `${input.name}${input.forname ? ` ${input.forname}` : ""}`,
         last_update: new Date(),
       }
     );
@@ -63,7 +65,9 @@ const getMember = async (req, res) => {
         familyId: member.familyId,
         familyRank: 1,
       }).select("-_id home place");
-      result = { ...result, ...adress._doc };
+      if (adress) {
+        result = { ...result, ...adress._doc };
+      }
     }
     return res.send(result);
   } catch (error) {
@@ -101,7 +105,7 @@ const listMember = async (req, res) => {
         { mpandrayN: { $regex: new RegExp(search, "i") } },
       ],
     };
-    sort = { ...sort, mpandrayN: "asc" };
+    sort = { mpandrayN: "asc" };
   }
   const member = await Member.find()
     .sort({ ...sort })

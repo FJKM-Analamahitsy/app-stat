@@ -11,14 +11,14 @@ const MenuData: any = [
   },
 
   {
-    label: "List",
+    label: "Liste",
     path: "/christian",
     icon: <FontAwesomeIcon icon={solid("list")} />,
     auth: "member",
   },
 
   {
-    label: "New",
+    label: "Nouveau",
     path: "/christian/new",
     icon: <FontAwesomeIcon icon={solid("user-plus")} />,
     auth: "newmember",
@@ -31,16 +31,41 @@ const MenuData: any = [
     auth: "sampana",
   },
   {
-    label: "Profile",
+    label: "Adidy",
+    icon: <FontAwesomeIcon icon={solid("money-bill")} />,
+    auth: "adidytype",
+    submenu: [
+      {
+        path: "/adidy",
+        label: "Resumé",
+      },
+      {
+        path: "/adidy/list",
+        label: "Liste",
+      },
+      {
+        path: "/adidy/type",
+        label: "Type",
+      },
+    ],
+  },
+  {
+    label: "Profiles",
     path: "/profile",
     icon: <FontAwesomeIcon icon={solid("users")} />,
     auth: "profile",
   },
   {
-    label: "Users",
+    label: "Utilisateurs",
     path: "/users",
     icon: <FontAwesomeIcon icon={solid("users")} />,
     auth: "users",
+  },
+  {
+    label: "Parametre",
+    path: "/setting",
+    icon: <FontAwesomeIcon icon={solid("gear")} />,
+    auth: "setting",
   },
 ];
 

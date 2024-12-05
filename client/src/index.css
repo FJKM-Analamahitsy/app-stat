@@ -11,12 +11,7 @@ body {
 }
 
 *::-webkit-scrollbar {
-  width: 3px;
-  height: 3px;
-}
-*::-webkit-scrollbar-thumb {
-  background-color: rgb(231, 229, 229);
-  border-radius: 5px;
+  display: none;
 }
 
 input {
@@ -64,7 +59,7 @@ input {
 }
 
 .ps-submenu-content {
-  height: 285px !important;
+  max-height: 285px !important;
 }
 
 .switch {

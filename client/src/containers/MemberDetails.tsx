@@ -108,7 +108,11 @@ const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
               </p>
               <div>
                 <p className="text-gray-400 text-sm">{shema[el].label}</p>
-                <p className="font-medium text-gray-800">
+                <p
+                  className={`font-medium text-gray-800 ${
+                    el === "name" ? "uppercase" : ""
+                  }`}
+                >
                   {el === "phone" ? formatPoneNumber(data[el]) : data[el]}
                 </p>
               </div>

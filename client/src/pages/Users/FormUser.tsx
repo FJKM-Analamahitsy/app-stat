@@ -82,7 +82,11 @@ const FormUser: FC<Props> = ({ children, data, profile, success }) => {
           >
             <option value="">select</option>
             {profile.map((v, i) => {
-              return <option value={v._id}>{v.name}</option>;
+              return (
+                <option key={i} value={v._id}>
+                  {v.name}
+                </option>
+              );
             })}
           </select>
         </div>

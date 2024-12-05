@@ -121,6 +121,7 @@ export const SAMPANA = [
   "VSMAM",
   "DORKASY",
   "FLD",
+  "KATEKOMENA",
 ];
 
 export const APP_OPTIONS = [
@@ -131,6 +132,8 @@ export const APP_OPTIONS = [
   "sampana",
   "profile",
   "users",
+  "adidytype",
+  "setting",
 ];
 
 export const TAB_OPTIONS = ["info", "family", "contrib", "other"];

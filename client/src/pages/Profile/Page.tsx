@@ -1,5 +1,7 @@
 import Button from "@components/Button";
 import Input from "@components/Input";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import { APP_OPTIONS, TAB_OPTIONS } from "@utils/constant";
 import { FC, useEffect, useState } from "react";
@@ -44,7 +46,7 @@ const ProfilePage: FC = () => {
     if (check === -1) {
       setTab([...tabInPage, val]);
     } else {
-      setTab(tabInPage.filter((v) => v != val));
+      setTab(tabInPage.filter((v) => v !== val));
     }
   };
 
@@ -77,9 +79,9 @@ const ProfilePage: FC = () => {
   return (
     <div className="bg-white h-full p-4 overflow-y-auto">
       <div className="flex justify-between">
-        <div>
+        <div className="w-2/5">
           <Input
-            placeholder="name"
+            placeholder="Nom"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -89,7 +91,8 @@ const ProfilePage: FC = () => {
           onClick={() => submit()}
           className="bg-primary text-white max-w-[200px]"
         >
-          {id ? "Update" : "Create"}
+          <FontAwesomeIcon icon={solid("save")} className="mr-2" />
+          {id ? "Mettre à jour" : "Enregistrer"}
         </Button>
       </div>
       <p className="text-lg my-3">Permission</p>

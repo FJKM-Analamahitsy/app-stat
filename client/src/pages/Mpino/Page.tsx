@@ -10,12 +10,12 @@ import { memberStatus } from "@utils/helper";
 import toast from "react-hot-toast";
 import Family from "@containers/Family";
 import AdidyDetails from "@containers/AdidyDetails";
-import AdidySamihafa from "@containers/AdidySamihafa";
 import Modal from "@components/Modal";
 import Button from "@components/Button";
 import Adidy from "./Adidy";
 import ChangeStatus from "@containers/ChangeStatus";
 import usePermission from "@hooks/usePermission";
+import Compta from "@containers/Compta";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
@@ -44,25 +44,20 @@ const Page: FC = () => {
     api.get("/adidy/trace/" + id).then((res) => setTrace(res.data));
   };
 
-  useEffect(() => {
-    if (id) {
-      api.get("/member/get/" + id).then((res) => setData(res.data));
-      getTrace();
-    } else {
-      setData({});
-    }
-  }, [id]);
+  useEffect(
+    () => {
+      if (id) {
+        api.get("/member/get/" + id).then((res) => setData(res.data));
+        getTrace();
+      } else {
+        setData({});
+      }
+    }, // eslint-disable-next-line
+    [id]
+  );
   return (
     <div className="min-h-full bg-white">
-      <div className="relative h-[400px] md:h-[37vh] rounded-t overflow-hidden">
-        <div className="w-full p-2 text-primary absolute top-0 left-0">
-          <div className="cursor-pointer">
-            <Link to="/christian">
-              <FontAwesomeIcon icon={solid("arrow-left-long")} />
-              <span className="ml-2">Back to list</span>
-            </Link>
-          </div>
-        </div>
+      <div className="relative h-[430px] md:h-[37vh] rounded-t overflow-hidden">
         <div className="w-full h-[20vh]  bg-no-repeat bg-cover overflow-hidden bg-line-pattern"></div>
         <div className="w-full flex flex-col md:flex-row  items-center md:items-end -translate-y-[6rem] px-[2rem]">
           <Avatar label={data.name} hideLabel size={200} textSize={54} />
@@ -81,8 +76,8 @@ const Page: FC = () => {
               )}
             </div>
             <div className="text-center sm:text-left">
-              <p className="font-semibold text-lg text-center md:text-left">
-                <span>{data.name}</span>
+              <p className="text-lg text-center md:text-left">
+                <span className="uppercase font-semibold ">{data.name}</span>
                 <br />
                 <span>{data.forname}</span>
               </p>
@@ -93,11 +88,16 @@ const Page: FC = () => {
         </div>
       </div>
       <div className="p-4 gap-y-6 md:gap-6 rounded-b min-h-[43vh] ">
-        <div className="mb-4 flex gap-4">
+        <div className="mb-4 flex justify-evenly md:justify-start gap-4">
           {canPost && (
             <Modal ref={modal}>
-              <Button className="bg-primary text-white mb-4 max-w-[150px]">
-                Contribute
+              <Button className="bg-primary text-white mb-4 ">
+                <FontAwesomeIcon
+                  icon={solid("money-bill-1-wave")}
+                  className="text-white cursor-pointer md:mr-2"
+                  size="sm"
+                />
+                <span className="hidden md:inline-block">Handray adidy</span>
               </Button>
               <Adidy
                 mpandray={id || ""}
@@ -113,10 +113,10 @@ const Page: FC = () => {
               <Button className="bg-primary text-white mb-4 max-w-[150px]">
                 <FontAwesomeIcon
                   icon={solid("user-edit")}
-                  className="text-white cursor-pointer mr-2"
+                  className="text-white cursor-pointer md:mr-2"
                   size="sm"
                 />
-                Modifier
+                <span className="hidden md:inline-block">Modifier</span>
               </Button>
             </Link>
           )}
@@ -140,7 +140,7 @@ const Page: FC = () => {
             <MemberDetails data={data} />
             <Family data={data} />
             <AdidyDetails data={trace} />
-            <AdidySamihafa />
+            <Compta />
           </MemberInfoTab>
         </div>
       </div>

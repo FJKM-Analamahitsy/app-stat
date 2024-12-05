@@ -1,11 +1,10 @@
-import Calendar from "@components/Calendar";
 import DashChart from "@containers/DashChart";
 import Sampana from "@containers/Sampana";
 import { FC, useEffect, useState } from "react";
-import map from "@assets/img/world-map.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import api from "@utils/api";
+import ChartAdidy from "@containers/ChartAdidy";
 
 const Home: FC = () => {
   const [data, setData] = useState<any>();
@@ -65,7 +64,7 @@ const Home: FC = () => {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
         <div className="col-span-2 bg-white rounded-[5px] p-2 h-fit flex flex-col items-center">
-          <DashChart title={`${data && data.total} Christians`} />
+          <DashChart title={`${data && data.total} Chretiens`} />
           <div className="flex overflow-auto w-full p-4  gap-4 mt-2 [&>*:nth-child(1)]:text-primary [&>*:nth-child(2)]:text-green-500 [&>*:nth-child(3)]:text-red-500 [&>*:nth-child(4)]:text-purple-500">
             {data &&
               faritra.map((fr, i) => {
@@ -84,6 +83,9 @@ const Home: FC = () => {
           </div>
         </div>
         <Sampana />
+      </div>
+      <div className="mt-4">
+        <ChartAdidy />
       </div>
     </div>
   );

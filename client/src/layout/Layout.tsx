@@ -1,6 +1,6 @@
 import { FC } from "react";
 import SideMenu from "./SideMenu";
-import Header from "@containers/Header";
+import Header from "layout/Header";
 import { Outlet } from "react-router-dom";
 
 const Layout: FC = () => {

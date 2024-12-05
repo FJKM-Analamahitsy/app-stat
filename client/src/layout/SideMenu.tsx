@@ -21,8 +21,8 @@ const SideMenu: FC = () => {
 
   const logout = () => {
     api.delete("/auth").then(() => {
-      dispatch(userUnSetAction());
       navigate("/");
+      dispatch(userUnSetAction());
     });
   };
   return (
@@ -42,8 +42,10 @@ const SideMenu: FC = () => {
         <div className="h-[calc(100vh-86px)] flex flex-col justify-between">
           <Menu>
             {MenuData.map((mn: any, i: number) => {
-              const permission = user.profile.permission;
-              if (permission.GET.indexOf(mn.auth) !== -1) {
+              const permission = user.profile
+                ? user.profile.permission
+                : undefined;
+              if (permission && permission.GET.indexOf(mn.auth) !== -1) {
                 if (mn.submenu) {
                   return (
                     <SubMenu key={i} label={mn.label} icon={mn.icon}>
@@ -57,6 +59,9 @@ const SideMenu: FC = () => {
                             }`}
                             key={i}
                             component={<Link to={sm.path} />}
+                            onClick={() =>
+                              window.innerWidth < 1024 && setCollapse(true)
+                            }
                           >
                             {sm.label}
                           </MenuItem>
@@ -75,6 +80,9 @@ const SideMenu: FC = () => {
                           : "hover:bg-slate-50"
                       }`}
                       icon={mn.icon}
+                      onClick={() =>
+                        window.innerWidth < 1024 && setCollapse(true)
+                      }
                     >
                       {mn.label}
                     </MenuItem>
@@ -96,11 +104,19 @@ const SideMenu: FC = () => {
                 />
               }
             >
-              Logout
+              se deconnecter
             </MenuItem>
           </Menu>
         </div>
       </Sidebar>
+      <>
+        {!collapse && (
+          <div
+            className="md:hidden absolute bg-slate-400 bg-opacity-10 w-screen h-full top-0"
+            onClick={() => setCollapse(true)}
+          ></div>
+        )}
+      </>
     </div>
   );
 };
