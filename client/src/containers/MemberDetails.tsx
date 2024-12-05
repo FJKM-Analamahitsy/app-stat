@@ -9,6 +9,10 @@ interface MemberDetailsProps {
 
 const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
   const shema: any = {
+    familyId: {
+      label: "Ankohonana Lah.",
+      icon: <FontAwesomeIcon icon={solid("home-alt")} size="sm" />,
+    },
     name: {
       label: "Anarana",
       icon: <FontAwesomeIcon icon={solid("user")} size="sm" />,
