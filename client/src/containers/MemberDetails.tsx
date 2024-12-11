@@ -81,6 +81,10 @@ const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
       label: "Sampana",
       icon: <FontAwesomeIcon icon={solid("users")} size="sm" />,
     },
+    antoko: {
+      label: "Antoko",
+      icon: <FontAwesomeIcon icon={solid("users")} size="sm" />,
+    },
     talent: {
       label: "Talenta",
       icon: <FontAwesomeIcon icon={solid("user-tie")} size="sm" />,
