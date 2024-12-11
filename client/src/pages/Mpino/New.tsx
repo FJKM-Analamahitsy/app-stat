@@ -308,6 +308,18 @@ const NewMember: FC = () => {
             onChange={(val) => setData({ ...data, sampana: val })}
             defaultValue={data.sampana}
           />
+
+          <div>
+            {data.sampana && /DIAKONA|FLD/.test(data.sampana) && (
+              <Select
+                options={["FANILO", "BETELA", "FANASINA", "FILADELFIA"]}
+                onChange={(e) => {
+                  setData({ ...data, antoko: e.target.value });
+                }}
+                valueIndex={false}
+              />
+            )}
+          </div>
         </Container>
 
         <Container title="Toerana">

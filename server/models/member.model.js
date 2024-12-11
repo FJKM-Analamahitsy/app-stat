@@ -22,6 +22,8 @@ const Member = mongoose.model("Member", {
   familyId: Number,
   sampana: String,
   famHead: Boolean,
+  // antoko diakona
+  antoko: String,
   status: {
     type: Boolean,
     default: true,
