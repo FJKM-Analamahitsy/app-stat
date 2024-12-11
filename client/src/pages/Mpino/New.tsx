@@ -310,6 +310,25 @@ const NewMember: FC = () => {
           />
         </Container>
 
+        <Container title="Toerana">
+          <InputNew
+            label="Tondro toerana - GPS"
+            name="location"
+            value={data.location ? data.location.coordinates.join(",") : ""}
+            onChange={(e) => {
+              setData({
+                ...data,
+                location: {
+                  type: "Point",
+                  coordinates: e.target.value
+                    .split(",")
+                    .map((v) => parseFloat(v)),
+                },
+              });
+            }}
+          />
+        </Container>
+
         <Container title="Fanamarihana" childClass="!grid-cols-1">
           <textarea
             name="other"
