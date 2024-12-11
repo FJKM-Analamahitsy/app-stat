@@ -122,6 +122,7 @@ export const SAMPANA = [
   "DORKASY",
   "FLD",
   "KATEKOMENA",
+  "DIAKONA",
 ];
 
 export const APP_OPTIONS = [

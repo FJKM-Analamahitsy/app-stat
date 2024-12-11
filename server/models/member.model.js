@@ -45,6 +45,15 @@ const Member = mongoose.model("Member", {
     type: Date,
     default: Date.now,
   },
+  location: {
+    type: {
+      type: String,
+      enum: ["Point"],
+    },
+    coordinates: {
+      type: [Number],
+    },
+  },
 });
 
 module.exports = { Member };
