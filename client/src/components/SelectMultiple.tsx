@@ -13,6 +13,7 @@ const SelectMultiple: FC<Props> = ({ options, onChange, defaultValue }) => {
   const [opts, setOpts] = useState(options);
   const [values, setValues] = useState<string[]>([]);
   const [focus, setFocus] = useState<boolean>(false);
+  const input = useRef<HTMLInputElement>(null);
 
   const setValuesHandler = (val: string) => {
     if (values?.indexOf(val) === -1) {
@@ -46,7 +47,10 @@ const SelectMultiple: FC<Props> = ({ options, onChange, defaultValue }) => {
   window.addEventListener("click", onclickoutside);
 
   return (
-    <div className="border rounded p-2 relative flex gap-2" ref={container}>
+    <div
+      className="border rounded p-2 relative flex gap-2 flex-wrap"
+      ref={container}
+    >
       {values?.map((v, i) => {
         return (
           <div
@@ -63,6 +67,7 @@ const SelectMultiple: FC<Props> = ({ options, onChange, defaultValue }) => {
         );
       })}
       <input
+        ref={input}
         type="text"
         className="bg-transparent grow"
         placeholder="recherche"
@@ -75,13 +80,17 @@ const SelectMultiple: FC<Props> = ({ options, onChange, defaultValue }) => {
         }}
       />
       {focus && (
-        <div className="w-full absolute top-full left-0 max-h-[200px] overflow-y-auto shadow border bg-white">
+        <div className="w-full absolute top-full left-0 max-h-[200px] overflow-y-auto shadow border bg-white z-50">
           {opts.map((opt, i) => {
             return (
               <div
                 key={i}
                 onClick={() => {
                   setValuesHandler(opt);
+                  if (input.current) {
+                    input.current.value = "";
+                    setOpts(options);
+                  }
                 }}
                 className={`p-3 hover:bg-bg ${
                   values.indexOf(opt) !== -1 ? "bg-bg" : ""

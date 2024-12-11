@@ -40,31 +40,35 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       year: data.year,
       month,
     };
-    api.post("/adidy", { compta, trace }).then((res) => {
-      const dataToPrint = {
-        data: res.data,
-        printer: {
-          adress: localStorage.getItem("xprinter") || "192.168.123.100",
-          port: 9100,
-          copy: parseInt(localStorage.getItem("ncopy") || "2"),
-        },
-      };
-      server
-        .post(
-          `http://${
-            localStorage.getItem("xpserver") || "localhost"
-          }:30116/receipt`,
-          dataToPrint
-        )
-        .then(() => {
-          toast.success("Success");
-          success();
-        })
-        .catch((err) => {
-          console.log(err);
-          toast.error("Une erreur se produit pendant l'operation");
-        });
-    });
+    if (compta.mtt > 0) {
+      api.post("/adidy", { compta, trace }).then((res) => {
+        const dataToPrint = {
+          data: res.data,
+          printer: {
+            adress: localStorage.getItem("xprinter") || "192.168.123.100",
+            port: 9100,
+            copy: parseInt(localStorage.getItem("ncopy") || "2"),
+          },
+        };
+        server
+          .post(
+            `http://${
+              localStorage.getItem("xpserver") || "localhost"
+            }:30116/receipt`,
+            dataToPrint
+          )
+          .then(() => {
+            toast.success("Success");
+            success();
+          })
+          .catch((err) => {
+            console.log(err);
+            toast.error("Une erreur se produit pendant l'operation");
+          });
+      });
+    } else {
+      toast.error("montant obligatoire");
+    }
   };
 
   useEffect(
@@ -113,7 +117,7 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
           value={data.year}
           onChange={(e) => setData({ ...data, year: parseInt(e.target.value) })}
           options={[
-            ...Array.from(Array(4).keys()).map((i) =>
+            ...Array.from(Array(10).keys()).map((i) =>
               (now.getFullYear() + 1 - i).toString()
             ),
           ]}
@@ -131,7 +135,11 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
         }}
       />
       <div className="text-right mt-4">
-        <Button className="text-white bg-primary w-full" onClick={submit}>
+        <Button
+          className="text-white bg-primary w-full disabled:!cursor-not-allowed opacity-50"
+          disabled={parseInt(data.pay.replace(/\./g, "")) <= 0}
+          onClick={submit}
+        >
           Payer
         </Button>
       </div>

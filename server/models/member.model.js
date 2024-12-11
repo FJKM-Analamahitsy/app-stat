@@ -22,6 +22,8 @@ const Member = mongoose.model("Member", {
   familyId: Number,
   sampana: String,
   famHead: Boolean,
+  // antoko diakona
+  antoko: String,
   status: {
     type: Boolean,
     default: true,
@@ -44,6 +46,15 @@ const Member = mongoose.model("Member", {
   last_update: {
     type: Date,
     default: Date.now,
+  },
+  location: {
+    type: {
+      type: String,
+      enum: ["Point"],
+    },
+    coordinates: {
+      type: [Number],
+    },
   },
 });
 

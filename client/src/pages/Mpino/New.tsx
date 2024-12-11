@@ -158,7 +158,7 @@ const NewMember: FC = () => {
         </Container>
 
         <Container title="Mpandray">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             <RadioButton
               name="mpandray"
               value="eny"
@@ -176,6 +176,13 @@ const NewMember: FC = () => {
               checked={data.mpandray === "tsia"}
               onClick={() => setDataHandler("mpandray", "tsia")}
             />
+            <RadioButton
+              name="mpandray"
+              value="hafa"
+              onChange={onChangeHandler}
+              checked={data.mpandray === "hafa"}
+              onClick={() => setDataHandler("mpandray", "hafa")}
+            />
 
             <InputNew
               label="Andiany"
@@ -185,12 +192,14 @@ const NewMember: FC = () => {
               className="col-span-2 md:col-auto"
             />
           </div>
-          <InputNew
-            label="N° Karatra"
-            name="mpandrayN"
-            value={data.mpandrayN ? data.mpandrayN : ""}
-            onChange={onChangeHandler}
-          />
+          <div>
+            <InputNew
+              label="N° Karatra"
+              name="mpandrayN"
+              value={data.mpandrayN ? data.mpandrayN : ""}
+              onChange={onChangeHandler}
+            />
+          </div>
         </Container>
 
         <Container title="Ankohonana">
@@ -298,6 +307,37 @@ const NewMember: FC = () => {
             options={SAMPANA}
             onChange={(val) => setData({ ...data, sampana: val })}
             defaultValue={data.sampana}
+          />
+
+          <div>
+            {data.sampana && /DIAKONA|FLD/.test(data.sampana) && (
+              <Select
+                options={["FANILO", "BETELA", "FANASINA", "FILADELFIA"]}
+                onChange={(e) => {
+                  setData({ ...data, antoko: e.target.value });
+                }}
+                valueIndex={false}
+              />
+            )}
+          </div>
+        </Container>
+
+        <Container title="Toerana">
+          <InputNew
+            label="Tondro toerana - GPS"
+            name="location"
+            value={data.location ? data.location.coordinates.join(",") : ""}
+            onChange={(e) => {
+              setData({
+                ...data,
+                location: {
+                  type: "Point",
+                  coordinates: e.target.value
+                    .split(",")
+                    .map((v) => parseFloat(v)),
+                },
+              });
+            }}
           />
         </Container>
 
