@@ -125,9 +125,9 @@ const statistics = async (req, res) => {
   const batisa = await Member.find({ baptism: "eny" }).countDocuments();
   const avaratra = await Member.find({ place: "avaratra" }).countDocuments();
   const atsimo = await Member.find({ place: "atsimo" }).countDocuments();
-  const tokatrano = await Member.find({ familyId: { $ne: null } })
-    .distinct()
-    .countDocuments();
+  const tokatrano = await Member.distinct("familyId", {
+    familyId: { $exists: true },
+  });
   const atsinanana = await Member.find({
     place: "atsinanana",
   }).countDocuments();
@@ -165,7 +165,7 @@ const statistics = async (req, res) => {
       n: atsinanana,
       p: ((atsinanana / total) * 100).toFixed(0),
     },
-    tokatrano,
+    tokatrano: tokatrano.length,
     total,
   };
   res.send(stast);
