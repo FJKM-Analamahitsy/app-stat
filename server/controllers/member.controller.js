@@ -39,7 +39,7 @@ const deleteMember = async (req, res) => {
 
 const updateMember = async (req, res) => {
   try {
-    const input = await memberInput.validate(req.body);
+    const input = req.body;
     await Member.findOneAndUpdate(
       { _id: req.params.id },
       {
