@@ -298,18 +298,18 @@ const checkKaratra = async (req, res) => {
 
 const statPerBirthMonth = async (req, res) => {
   const month = [
-    "january",
-    "february",
-    "march",
-    "april",
-    "may",
-    "june",
-    "july",
-    "august",
-    "september",
-    "october",
-    "november",
-    "december",
+    "Janvier",
+    "Fevrier",
+    "Mars",
+    "Avril",
+    "Mai",
+    "Juin",
+    "Juillet",
+    "Aout",
+    "Septembre",
+    "Octobre",
+    "Novembre",
+    "Decembre",
   ];
   let result = {};
   for (let i = 0; i < month.length; i++) {
@@ -342,6 +342,10 @@ const statPerSampana = async (req, res) => {
     "VSMAM",
     "DORKASY",
     "FLD",
+    "KATEKOMENA",
+    "DIAKONA",
+    "STK",
+    "GMMC",
   ];
   let result = {};
   for (let i = 0; i < sampana.length; i++) {
