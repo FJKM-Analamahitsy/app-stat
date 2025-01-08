@@ -22,7 +22,8 @@ const Login: FC = () => {
 
   const login = (e: any) => {
     e.preventDefault();
-    const request = api.post("/auth", data).then(() => {
+    const request = api.post("/auth", data).then((res) => {
+      sessionStorage.setItem("token", res.data.token);
       getMe();
     });
 

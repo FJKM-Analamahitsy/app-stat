@@ -10,7 +10,7 @@ const loginInput = object({
 });
 
 const getMe = async (req, res) => {
-  const token = req.cookies.token;
+  const token = req.headers.authorization;
   jwt.verify(token, process.env.PRIVATE_KEY, async (err, dec) => {
     if (err) return res.status(401).send("unauthorised");
     const user = await User.findById(dec.id)
@@ -32,16 +32,8 @@ const login = async (req, res) => {
           { username: user.username, id: user._id },
           process.env.PRIVATE_KEY
         );
-        res.cookie("token", token, {
-          httpOnly: true,
-          domain: process.env.DOMAIN,
-          maxAge: 5 * 3600 * 1000,
-        });
         return res.send({
-          token: jwt.sign(
-            { username: user.username, role: user.role },
-            process.env.PRIVATE_KEY
-          ),
+          token,
         });
       } else {
         return res.status(401).send("Wrong password!");

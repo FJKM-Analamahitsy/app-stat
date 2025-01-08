@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { userUnSetAction } from "@redux/actions";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import MenuData from "@utils/Menu";
-import api from "@utils/api";
 import { FC, useState } from "react";
 import { Menu, MenuItem, Sidebar, SubMenu } from "react-pro-sidebar";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -20,10 +19,9 @@ const SideMenu: FC = () => {
   const user = useAppSelector((state) => state.user);
 
   const logout = () => {
-    api.delete("/auth").then(() => {
-      navigate("/");
-      dispatch(userUnSetAction());
-    });
+    navigate("/");
+    dispatch(userUnSetAction());
+    sessionStorage.removeItem("token");
   };
   return (
     <div className="fixed top-0 left-0 lg:relative h-screen bg-white z-50">
