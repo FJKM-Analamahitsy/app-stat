@@ -346,7 +346,7 @@ const statPerSampana = async (req, res) => {
     "DIAKONA",
     "STK",
     "GMMC",
-  ];
+  ].sort();
   let result = {};
   for (let i = 0; i < sampana.length; i++) {
     const m = sampana[i];
