@@ -13,7 +13,6 @@ const Login: FC = () => {
   const [showPass, setShowPass] = useState<boolean>(false);
   const [data, setData] = useState<any>({});
   const { getMe } = useAuth();
-
   const onChangeHandler = (e: any) => {
     const name = e.target.name;
     const value = e.target.value;
