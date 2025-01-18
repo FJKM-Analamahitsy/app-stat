@@ -52,7 +52,7 @@ const deleteAdidy = async (req, res) => {
 };
 
 const getCompta = async (req, res) => {
-  const { page = 1, limit = 2, start, end, mpandray, creator } = req.query;
+  const { page = 1, limit = 1000, start, end, mpandray, creator } = req.query;
   let filter = {};
   if (start) {
     filter = {

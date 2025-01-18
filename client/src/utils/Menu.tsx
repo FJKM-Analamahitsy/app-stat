@@ -37,7 +37,7 @@ const MenuData: any = [
     submenu: [
       {
         path: "/adidy",
-        label: "Resumé",
+        label: "Recap",
       },
       {
         path: "/adidy/list",

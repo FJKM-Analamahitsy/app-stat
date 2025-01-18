@@ -13,7 +13,11 @@ const useAuth = () => {
   const getMe = () => {
     setLoading(true);
     return api
-      .get("auth")
+      .get("auth", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         if (pathname === "/") {
           navigate("/home");
