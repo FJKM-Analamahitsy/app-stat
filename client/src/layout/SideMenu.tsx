@@ -86,6 +86,8 @@ const SideMenu: FC = () => {
                     </MenuItem>
                   );
                 }
+              } else {
+                return null;
               }
             })}
           </Menu>
