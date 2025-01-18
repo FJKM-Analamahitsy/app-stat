@@ -41,7 +41,7 @@ const MenuData: any = [
       },
       {
         path: "/adidy/list",
-        label: "Liste",
+        label: "Detaille",
       },
       {
         path: "/adidy/type",
