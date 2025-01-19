@@ -55,7 +55,7 @@ const RecapExpand: FC<Props> = ({ data: input }) => {
         cell: (row) => {
           return (
             <div>
-              <p>{dayjs(row.date).format("DD MMM, YYYY  HH:MM")}</p>
+              <p>{dayjs(row.date).format("DD MMM, YYYY  HH:mm")}</p>
             </div>
           );
         },
