@@ -171,106 +171,113 @@ const statistics = async (req, res) => {
   res.send(stast);
 };
 
-const exportMembersToCsv = async (req, res) => {
-  const { filter, sampana } = req.query;
-  const where = sampana
-    ? { sampana: { $regex: new RegExp(sampana, "i") } }
-    : {};
+const exportMembers = async (req, res) => {
+  const { filter, field, fileType } = req.body;
+  let where = {};
+
+  Object.entries(filter).forEach(([k, val]) => {
+    if (val || val !== "") {
+      if (k === "sampana") {
+        where = { ...where, sampana: { $regex: new RegExp(val, "i") } };
+      } else {
+        where = { ...where, [k]: val };
+      }
+    }
+  });
+
   const data = await Member.find()
     .where({ ...where })
-    .select("-_id");
-  const fields = [
-    {
-      label: "Anarana",
-      value: "name",
-    },
-    {
-      label: "Fanampiny",
-      value: "forname",
-    },
-    {
-      label: "L/V",
-      value: "gender",
-    },
-    {
-      label: "Karatra",
-      value: "mpandrayN",
-    },
-    {
-      label: "Taona nahaterahana",
-      value: "birthday",
-    },
-    {
-      label: "Toerana nahaterahana",
-      value: "birthplace",
-    },
-    {
-      label: "Adiresy",
-      value: "home",
-    },
-    {
-      label: "Tanana",
-      value: "city",
-    },
-    {
-      label: "Faritra",
-      value: "place",
-    },
-    {
-      label: "Asa",
-      value: "job",
-    },
-    {
-      label: "Talenta",
-      value: "talent",
-    },
-    {
-      label: "Telephone",
-      value: "phone",
-    },
-    {
-      label: "Email",
-      value: "mail",
-    },
-    {
-      label: "Facebook",
-      value: "fb",
-    },
-    {
-      label: "Fialamboly",
-      value: "hobby",
-    },
-    {
-      label: "Batisa",
-      value: "batisa",
-    },
-    {
-      label: "Taona batisa",
-      value: "baptismYear",
-    },
-    {
-      label: "Mpandray",
-      value: "mpandray",
-    },
-    {
-      label: "Mpandray andiany",
-      value: "mpandrayAndiany",
-    },
-    {
-      label: "Fanamarihana",
-      value: "other",
-    },
-  ];
-  const opt = {
-    fields: fields.filter((el) => filter.includes(el.value)),
-    excelString: true,
-    withBOM: true,
-  };
-  const prep = new parser(opt);
-  const csv = prep.parse(data);
-  res.header("Content-Type", "text/csv");
-  res.attachment("liste.csv");
-  return res.send(csv);
+    .select(`-_id ${field.join(" ")}`);
+  if (fileType === "csv") {
+    const fields = [
+      {
+        label: "Anarana",
+        value: "name",
+      },
+      {
+        label: "Fanampiny",
+        value: "forname",
+      },
+      {
+        label: "L/V",
+        value: "gender",
+      },
+      {
+        label: "Volana nahaterahana",
+        value: "birthday",
+      },
+      {
+        label: "Adiresy",
+        value: "home",
+      },
+      {
+        label: "Faritra",
+        value: "place",
+      },
+      {
+        label: "Telephone",
+        value: "phone",
+      },
+      {
+        label: "Email",
+        value: "mail",
+      },
+      {
+        label: "Facebook",
+        value: "fb",
+      },
+      {
+        label: "Fialam-boly",
+        value: "hobby",
+      },
+      {
+        label: "Fanatanjahan-tena",
+        value: "stport",
+      },
+      {
+        label: "Batisa",
+        value: "batisa",
+      },
+      {
+        label: "Taona batisa",
+        value: "baptismYear",
+      },
+      {
+        label: "Mpandray",
+        value: "mpandray",
+      },
+      {
+        label: "Mpandray andiany",
+        value: "mpandrayAndiany",
+      },
+      {
+        label: "Laharana Karatra",
+        value: "mpandrayN",
+      },
+      {
+        label: "Fanamarihana",
+        value: "other",
+      },
+      {
+        label: "Antoko Diakona",
+        value: "antoko",
+      },
+    ];
+    const opt = {
+      fields: fields.filter((el) => field.includes(el.value)),
+      excelString: true,
+      withBOM: true,
+    };
+    const prep = new parser(opt);
+    const csv = prep.parse(data);
+    res.header("Content-Type", "text/csv");
+    res.attachment("liste.csv");
+    return res.send(csv);
+  } else {
+    res.header("Content-Type", "text/json");
+    res.attachment("liste.json");
+    return res.json(data);
+  }
 };
 
 const getFamily = async (req, res) => {
@@ -365,7 +372,7 @@ module.exports = {
   updateMember,
   getMember,
   listMember,
-  exportMembersToCsv,
+  exportMembers,
   statistics,
   getFamily,
   checkKaratra,

@@ -17,6 +17,8 @@ import PrintPage from "@pages/Print";
 import ComptBoard from "@pages/Adidy/Board";
 import Setting from "@pages/Setting";
 import PageDiakona from "@pages/Mpino/PageDiakona";
+import Import from "@pages/Migration/Import";
+import Export from "@pages/Migration/Export";
 
 const Routes: FC = () => {
   return (
@@ -45,6 +47,8 @@ const Routes: FC = () => {
           </Route>
           <Route path="setting" element={<Setting />} />
           <Route path="diakona/:id" element={<PageDiakona />} />
+          <Route path="export" element={<Export />} />
+          <Route path="import" element={<Import />} />
         </Route>
         <Route path="print/:id" element={<PrintPage />} />
       </Route>

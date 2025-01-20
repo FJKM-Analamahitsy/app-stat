@@ -15,36 +15,16 @@ export const fields = [
     value: "gender",
   },
   {
-    label: "Karatra",
-    value: "mpandrayN",
-  },
-  {
-    label: "Taona nahaterahana",
+    label: "Volana nahaterahana",
     value: "birthday",
-  },
-  {
-    label: "Toerana nahaterahana",
-    value: "birthplace",
   },
   {
     label: "Adiresy",
     value: "home",
   },
   {
-    label: "Tanana",
-    value: "city",
-  },
-  {
     label: "Faritra",
     value: "place",
-  },
-  {
-    label: "Asa",
-    value: "job",
-  },
-  {
-    label: "Talenta",
-    value: "talent",
   },
   {
     label: "Telephone",
@@ -59,8 +39,12 @@ export const fields = [
     value: "fb",
   },
   {
-    label: "Fialamboly",
+    label: "Fialam-boly",
     value: "hobby",
+  },
+  {
+    label: "Fanatanjahan-tena",
+    value: "stport",
   },
   {
     label: "Batisa",
@@ -79,8 +63,16 @@ export const fields = [
     value: "mpandrayAndiany",
   },
   {
+    label: "Laharana Karatra",
+    value: "mpandrayN",
+  },
+  {
     label: "Fanamarihana",
     value: "other",
+  },
+  {
+    label: "Antoko Diakona",
+    value: "antoko",
   },
 ];
 
@@ -136,6 +128,7 @@ export const APP_OPTIONS = [
   "profile",
   "users",
   "adidytype",
+  "migration",
   "setting",
 ];
 

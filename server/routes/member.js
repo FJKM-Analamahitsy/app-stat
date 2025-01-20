@@ -5,7 +5,7 @@ const {
   updateMember,
   listMember,
   getMember,
-  exportMembersToCsv,
+  exportMembers,
   statistics,
   getFamily,
   getLastKaratra,
@@ -17,11 +17,11 @@ const {
 const route = express.Router();
 
 route.post("/", createMember);
+route.post("/export", exportMembers);
 route.delete("/", deleteMember);
 route.patch("/:id", updateMember);
 route.get("/", listMember);
 route.get("/get/:id", getMember);
-route.get("/export", exportMembersToCsv);
 route.get("/stat", statistics);
 route.get("/stat/monthly", statPerBirthMonth);
 route.get("/stat/sampana", statPerSampana);
