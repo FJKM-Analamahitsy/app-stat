@@ -3,7 +3,8 @@ import Input from "@components/Input";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
-import { APP_OPTIONS, TAB_OPTIONS } from "@utils/constant";
+import { TAB_OPTIONS } from "@utils/constant";
+import MenuData from "@utils/Menu";
 import { FC, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -105,7 +106,7 @@ const ProfilePage: FC = () => {
           <p className="text-center">Suppression</p>
         </div>
 
-        {APP_OPTIONS.map((opt, i) => {
+        {MenuData.map((v: any) => v.auth).map((opt: string, i: number) => {
           return (
             <div className="grid grid-cols-5 hover:bg-bg py-4" key={i}>
               <p>{opt}</p>

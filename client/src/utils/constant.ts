@@ -142,17 +142,4 @@ export const SAMPANA = [
   "GMMC",
 ];
 
-export const APP_OPTIONS = [
-  "dash",
-  "member",
-  "newmember",
-  "contribution",
-  "sampana",
-  "profile",
-  "users",
-  "adidytype",
-  "migration",
-  "setting",
-];
-
 export const TAB_OPTIONS = ["info", "family", "contrib", "other"];
