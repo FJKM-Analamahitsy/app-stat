@@ -3,7 +3,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import { formatPoneNumber } from "@utils/helper";
-import { FC, ReactNode, useEffect, useRef, useState } from "react";
+import { FC, ReactNode, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 
 interface Props {
