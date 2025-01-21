@@ -3,6 +3,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import { fields, MONTHS, SAMPANA } from "@utils/constant";
+import dayjs from "dayjs";
 import { FC, useRef, useState } from "react";
 
 const Export: FC = () => {
@@ -13,7 +14,18 @@ const Export: FC = () => {
 
   const exportHandler = () => {
     const data = { filter, field, fileType };
-    api.post("/member/export", data);
+    api.post("/member/export", data).then((res) => {
+      const Type = fileType === "csv" ? "text/csv" : "application/json";
+      const raw =
+        fileType === "csv" ? res.data : JSON.stringify(res.data, null, 2);
+      const blob = new Blob([raw], { type: Type });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `Liste_Export_${dayjs().format(
+        "DD_MM_YYYY_HH_mm"
+      )}.${fileType}`;
+      link.click();
+    });
   };
   return (
     <div className="bg-white h-full p-6">
@@ -196,15 +208,17 @@ const Export: FC = () => {
             <div className="my-5 flex gap-5">
               <p
                 className={`border p-2 w-28 text-center rounded font-semibold ring-2 ring-slate-300 text-slate-500 cursor-pointer ${
-                  fileType === "csv" ? "ring-primary" : ""
+                  fileType === "csv" ? "!ring-primary" : ""
                 }`}
-                onClick={() => setFiletype("csv")}
+                onClick={() => {
+                  setFiletype("csv");
+                }}
               >
                 csv
               </p>
               <p
                 className={`border p-2 w-28 text-center rounded font-semibold ring-2 ring-slate-300 text-slate-500 cursor-pointer ${
-                  fileType === "json" ? "ring-primary" : ""
+                  fileType === "json" ? "!ring-primary" : ""
                 }`}
                 onClick={() => setFiletype("json")}
               >

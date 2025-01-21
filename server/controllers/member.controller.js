@@ -271,12 +271,10 @@ const exportMembers = async (req, res) => {
     const prep = new parser(opt);
     const csv = prep.parse(data);
     res.header("Content-Type", "text/csv");
-    res.attachment("liste.csv");
     return res.send(csv);
   } else {
-    res.header("Content-Type", "text/json");
-    res.attachment("liste.json");
-    return res.json(data);
+    res.setHeader("Content-Type", "application/json");
+    res.json(data);
   }
 };
 
