@@ -37,11 +37,11 @@ const MenuData: any = [
     submenu: [
       {
         path: "/adidy",
-        label: "Resumé",
+        label: "Recap",
       },
       {
         path: "/adidy/list",
-        label: "Liste",
+        label: "Detaille",
       },
       {
         path: "/adidy/type",
@@ -60,6 +60,21 @@ const MenuData: any = [
     path: "/users",
     icon: <FontAwesomeIcon icon={solid("users")} />,
     auth: "users",
+  },
+  {
+    label: "Migration",
+    icon: <FontAwesomeIcon icon={solid("sync-alt")} />,
+    auth: "migration",
+    submenu: [
+      {
+        path: "/export",
+        label: "Export",
+      },
+      {
+        path: "/import",
+        label: "Import",
+      },
+    ],
   },
   {
     label: "Parametre",

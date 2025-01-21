@@ -13,7 +13,6 @@ const Login: FC = () => {
   const [showPass, setShowPass] = useState<boolean>(false);
   const [data, setData] = useState<any>({});
   const { getMe } = useAuth();
-
   const onChangeHandler = (e: any) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -22,7 +21,8 @@ const Login: FC = () => {
 
   const login = (e: any) => {
     e.preventDefault();
-    const request = api.post("/auth", data).then(() => {
+    const request = api.post("/auth", data).then((res) => {
+      localStorage.setItem("token", res.data.token);
       getMe();
     });
 

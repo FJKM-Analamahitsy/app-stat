@@ -2,6 +2,9 @@ const { object, string } = require("yup");
 const { Member } = require("../models/member.model");
 const { log } = require("./log.controller");
 const parser = require("json2csv").Parser;
+const path = require("path");
+const fs = require("fs");
+const csv2json = require("csvtojson");
 
 const memberInput = object({
   name: string().required(),
@@ -39,7 +42,7 @@ const deleteMember = async (req, res) => {
 
 const updateMember = async (req, res) => {
   try {
-    const input = await memberInput.validate(req.body);
+    const input = req.body;
     await Member.findOneAndUpdate(
       { _id: req.params.id },
       {
@@ -125,6 +128,9 @@ const statistics = async (req, res) => {
   const batisa = await Member.find({ baptism: "eny" }).countDocuments();
   const avaratra = await Member.find({ place: "avaratra" }).countDocuments();
   const atsimo = await Member.find({ place: "atsimo" }).countDocuments();
+  const tokatrano = await Member.distinct("familyId", {
+    familyId: { $exists: true },
+  });
   const atsinanana = await Member.find({
     place: "atsinanana",
   }).countDocuments();
@@ -162,111 +168,106 @@ const statistics = async (req, res) => {
       n: atsinanana,
       p: ((atsinanana / total) * 100).toFixed(0),
     },
+    tokatrano: tokatrano.length,
     total,
   };
   res.send(stast);
 };
 
-const exportMembersToCsv = async (req, res) => {
-  const { filter, sampana } = req.query;
-  const where = sampana
-    ? { sampana: { $regex: new RegExp(sampana, "i") } }
-    : {};
+const exportMembers = async (req, res) => {
+  const { filter, fields, fileType } = req.body;
+  let where = {};
+
+  Object.entries(filter).forEach(([k, val]) => {
+    if (val || val !== "") {
+      if (k === "sampana") {
+        where = { ...where, sampana: { $regex: new RegExp(val, "i") } };
+      } else {
+        where = { ...where, [k]: val };
+      }
+    }
+  });
+
   const data = await Member.find()
     .where({ ...where })
-    .select("-_id");
-  const fields = [
-    {
-      label: "Anarana",
-      value: "name",
-    },
-    {
-      label: "Fanampiny",
-      value: "forname",
-    },
-    {
-      label: "L/V",
-      value: "gender",
-    },
-    {
-      label: "Karatra",
-      value: "mpandrayN",
-    },
-    {
-      label: "Taona nahaterahana",
-      value: "birthday",
-    },
-    {
-      label: "Toerana nahaterahana",
-      value: "birthplace",
-    },
-    {
-      label: "Adiresy",
-      value: "home",
-    },
-    {
-      label: "Tanana",
-      value: "city",
-    },
-    {
-      label: "Faritra",
-      value: "place",
-    },
-    {
-      label: "Asa",
-      value: "job",
-    },
-    {
-      label: "Talenta",
-      value: "talent",
-    },
-    {
-      label: "Telephone",
-      value: "phone",
-    },
-    {
-      label: "Email",
-      value: "mail",
-    },
-    {
-      label: "Facebook",
-      value: "fb",
-    },
-    {
-      label: "Fialamboly",
-      value: "hobby",
-    },
-    {
-      label: "Batisa",
-      value: "batisa",
-    },
-    {
-      label: "Taona batisa",
-      value: "baptismYear",
-    },
-    {
-      label: "Mpandray",
-      value: "mpandray",
-    },
-    {
-      label: "Mpandray andiany",
-      value: "mpandrayAndiany",
-    },
-    {
-      label: "Fanamarihana",
-      value: "other",
-    },
-  ];
-  const opt = {
-    fields: fields.filter((el) => filter.includes(el.value)),
-    excelString: true,
-    withBOM: true,
-  };
-  const prep = new parser(opt);
-  const csv = prep.parse(data);
-  res.header("Content-Type", "text/csv");
-  res.attachment("liste.csv");
-  return res.send(csv);
+    .select(
+      `${Object.values(fields)
+        .map((v) => v.value)
+        .join(" ")}`
+    );
+
+  const members = await Promise.all(
+    data.map(async (member) => {
+      let result = { ...member._doc };
+      if (member.familyRank !== 1) {
+        const address = await Member.findOne({
+          familyId: member.familyId,
+          familyRank: 1,
+        }).select("-_id home place");
+        if (address) {
+          result = { ...result, ...address._doc };
+        }
+      }
+      return result;
+    })
+  );
+
+  if (fileType === "csv") {
+    const opt = {
+      fields,
+      excelString: true,
+      withBOM: true,
+    };
+    const prep = new parser(opt);
+    const csv = prep.parse(members);
+    res.header("Content-Type", "text/csv");
+    return res.send(csv);
+  } else {
+    res.setHeader("Content-Type", "application/json");
+    res.json(members);
+  }
+};
+
+const importMembers = async (req, res) => {
+  const file = req.file;
+  if (!file) {
+    return res.status(400).send("No file uploaded.");
+  }
+  try {
+    const { action } = req.body;
+    const filePath = path.join(__dirname, "../", file.path);
+    const fileContent = fs.readFileSync(filePath, "utf-8");
+    const members =
+      file.mimetype === "application/json"
+        ? JSON.parse(fileContent)
+        : await csv2json({
+            ignoreEmpty: true,
+            delimiter: [",", ";", "|"],
+            colParser: {
+              _id: "string",
+              mpandrayN: "string",
+              phone: "string",
+              mpandrayAndiany: "string",
+            },
+            checkType: true,
+          }).fromFile(filePath);
+    if (action === "insert") {
+      await Member.insertMany(members);
+    } else {
+      const bulkOps = members.map((member) => ({
+        updateOne: {
+          filter: { _id: member._id },
+          update: { $set: { ...member } },
+        },
+      }));
+
+      await Member.bulkWrite(bulkOps);
+    }
+    fs.unlinkSync(filePath);
+    res.send();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const getFamily = async (req, res) => {
@@ -294,18 +295,18 @@ const checkKaratra = async (req, res) => {
 
 const statPerBirthMonth = async (req, res) => {
   const month = [
-    "january",
-    "february",
-    "march",
-    "april",
-    "may",
-    "june",
-    "july",
-    "august",
-    "september",
-    "october",
-    "november",
-    "december",
+    "Janvier",
+    "Fevrier",
+    "Mars",
+    "Avril",
+    "Mai",
+    "Juin",
+    "Juillet",
+    "Aout",
+    "Septembre",
+    "Octobre",
+    "Novembre",
+    "Decembre",
   ];
   let result = {};
   for (let i = 0; i < month.length; i++) {
@@ -338,7 +339,11 @@ const statPerSampana = async (req, res) => {
     "VSMAM",
     "DORKASY",
     "FLD",
-  ];
+    "KATEKOMENA",
+    "DIAKONA",
+    "STK",
+    "GMMC",
+  ].sort();
   let result = {};
   for (let i = 0; i < sampana.length; i++) {
     const m = sampana[i];
@@ -357,7 +362,8 @@ module.exports = {
   updateMember,
   getMember,
   listMember,
-  exportMembersToCsv,
+  exportMembers,
+  importMembers,
   statistics,
   getFamily,
   checkKaratra,
