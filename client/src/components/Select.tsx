@@ -23,7 +23,10 @@ const Select: FC<SelectProps> = ({
           {label}
         </p>
       )}
-      <select className="w-full p-1 text-grey h-[40px] outline-none" {...props}>
+      <select
+        className="w-full p-1 text-grey h-10 bg-transparent outline-none"
+        {...props}
+      >
         {options.map((opt, i) => {
           return (
             <option key={i} value={valueIndex ? i : opt}>

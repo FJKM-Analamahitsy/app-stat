@@ -8,6 +8,7 @@ const Member = mongoose.model("Member", {
   gender: String,
   home: String,
   place: String,
+  zone: Number,
   talent: String,
   phone: String,
   mail: String,

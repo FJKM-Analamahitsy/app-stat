@@ -81,11 +81,12 @@ const getMember = async (req, res) => {
 const listMember = async (req, res) => {
   const {
     page = 1,
-    limit = 10,
+    limit = 100,
     karatra,
     anarana,
     sampana,
     search,
+    ondry,
     ...cfil
   } = req.query;
   let sort = {};
@@ -100,6 +101,14 @@ const listMember = async (req, res) => {
   if (sampana) {
     filter = { ...filter, sampana: { $regex: new RegExp(sampana, "i") } };
   }
+
+  if (ondry) {
+    filter = {
+      ...filter,
+      sampana: { $not: new RegExp("DIAKONA", "i") },
+    };
+  }
+
   if (search) {
     filter = {
       ...filter,
@@ -117,7 +126,11 @@ const listMember = async (req, res) => {
     .skip((page - 1) * limit)
     .where({ ...filter });
   const totalRow = await Member.where({ ...filter }).countDocuments();
-  return res.send({ member, totalRow });
+  const tokatrano = await Member.distinct("familyId", {
+    familyId: { $exists: true },
+    ...filter,
+  });
+  return res.send({ member, totalRow, tokatrano: tokatrano.length });
 };
 
 const statistics = async (req, res) => {

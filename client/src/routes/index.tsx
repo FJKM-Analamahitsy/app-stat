@@ -19,6 +19,7 @@ import Setting from "@pages/Setting";
 import PageDiakona from "@pages/Mpino/PageDiakona";
 import Import from "@pages/Migration/Import";
 import Export from "@pages/Migration/Export";
+import Diakona from "@pages/diakona";
 
 const Routes: FC = () => {
   return (
@@ -49,6 +50,9 @@ const Routes: FC = () => {
           <Route path="diakona/:id" element={<PageDiakona />} />
           <Route path="export" element={<Export />} />
           <Route path="import" element={<Import />} />
+          <Route path="diacre">
+            <Route index element={<Diakona />} />
+          </Route>
         </Route>
         <Route path="print/:id" element={<PrintPage />} />
       </Route>
