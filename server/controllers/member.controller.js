@@ -242,8 +242,9 @@ const importMembers = async (req, res) => {
         ? JSON.parse(fileContent)
         : await csv2json({
             ignoreEmpty: true,
-            delimiter: ";",
+            delimiter: [",", ";", "|"],
             colParser: {
+              _id: "string",
               mpandrayN: "string",
               phone: "string",
               mpandrayAndiany: "string",
