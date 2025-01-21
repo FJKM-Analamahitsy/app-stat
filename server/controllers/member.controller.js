@@ -2,6 +2,9 @@ const { object, string } = require("yup");
 const { Member } = require("../models/member.model");
 const { log } = require("./log.controller");
 const parser = require("json2csv").Parser;
+const path = require("path");
+const fs = require("fs");
+const csv2json = require("csvtojson");
 
 const memberInput = object({
   name: string().required(),
@@ -172,7 +175,7 @@ const statistics = async (req, res) => {
 };
 
 const exportMembers = async (req, res) => {
-  const { filter, field, fileType } = req.body;
+  const { filter, fields, fileType } = req.body;
   let where = {};
 
   Object.entries(filter).forEach(([k, val]) => {
@@ -187,94 +190,82 @@ const exportMembers = async (req, res) => {
 
   const data = await Member.find()
     .where({ ...where })
-    .select(`-_id ${field.join(" ")}`);
+    .select(
+      `${Object.values(fields)
+        .map((v) => v.value)
+        .join(" ")}`
+    );
+
+  const members = await Promise.all(
+    data.map(async (member) => {
+      let result = { ...member._doc };
+      if (member.familyRank !== 1) {
+        const address = await Member.findOne({
+          familyId: member.familyId,
+          familyRank: 1,
+        }).select("-_id home place");
+        if (address) {
+          result = { ...result, ...address._doc };
+        }
+      }
+      return result;
+    })
+  );
+
   if (fileType === "csv") {
-    const fields = [
-      {
-        label: "Anarana",
-        value: "name",
-      },
-      {
-        label: "Fanampiny",
-        value: "forname",
-      },
-      {
-        label: "L/V",
-        value: "gender",
-      },
-      {
-        label: "Volana nahaterahana",
-        value: "birthday",
-      },
-      {
-        label: "Adiresy",
-        value: "home",
-      },
-      {
-        label: "Faritra",
-        value: "place",
-      },
-      {
-        label: "Telephone",
-        value: "phone",
-      },
-      {
-        label: "Email",
-        value: "mail",
-      },
-      {
-        label: "Facebook",
-        value: "fb",
-      },
-      {
-        label: "Fialam-boly",
-        value: "hobby",
-      },
-      {
-        label: "Fanatanjahan-tena",
-        value: "stport",
-      },
-      {
-        label: "Batisa",
-        value: "batisa",
-      },
-      {
-        label: "Taona batisa",
-        value: "baptismYear",
-      },
-      {
-        label: "Mpandray",
-        value: "mpandray",
-      },
-      {
-        label: "Mpandray andiany",
-        value: "mpandrayAndiany",
-      },
-      {
-        label: "Laharana Karatra",
-        value: "mpandrayN",
-      },
-      {
-        label: "Fanamarihana",
-        value: "other",
-      },
-      {
-        label: "Antoko Diakona",
-        value: "antoko",
-      },
-    ];
     const opt = {
-      fields: fields.filter((el) => field.includes(el.value)),
+      fields,
       excelString: true,
       withBOM: true,
     };
     const prep = new parser(opt);
-    const csv = prep.parse(data);
+    const csv = prep.parse(members);
     res.header("Content-Type", "text/csv");
     return res.send(csv);
   } else {
     res.setHeader("Content-Type", "application/json");
-    res.json(data);
+    res.json(members);
+  }
+};
+
+const importMembers = async (req, res) => {
+  const file = req.file;
+  if (!file) {
+    return res.status(400).send("No file uploaded.");
+  }
+  try {
+    const { action } = req.body;
+    const filePath = path.join(__dirname, "../", file.path);
+    const fileContent = fs.readFileSync(filePath, "utf-8");
+    const members =
+      file.mimetype === "application/json"
+        ? JSON.parse(fileContent)
+        : await csv2json({
+            ignoreEmpty: true,
+            delimiter: ";",
+            colParser: {
+              mpandrayN: "string",
+              phone: "string",
+              mpandrayAndiany: "string",
+            },
+            checkType: true,
+          }).fromFile(filePath);
+    if (action === "insert") {
+      await Member.insertMany(members);
+    } else {
+      const bulkOps = members.map((member) => ({
+        updateOne: {
+          filter: { _id: member._id },
+          update: { $set: { ...member } },
+        },
+      }));
+
+      await Member.bulkWrite(bulkOps);
+    }
+    fs.unlinkSync(filePath);
+    res.send();
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -371,6 +362,7 @@ module.exports = {
   getMember,
   listMember,
   exportMembers,
+  importMembers,
   statistics,
   getFamily,
   checkKaratra,

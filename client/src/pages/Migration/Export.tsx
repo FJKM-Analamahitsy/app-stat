@@ -8,12 +8,13 @@ import { FC, useRef, useState } from "react";
 
 const Export: FC = () => {
   const [filter, setFilter] = useState<any>({});
-  const [field, setField] = useState<string[]>([]);
+  const [field, setField] = useState<any[]>([]);
   const modal = useRef<any>(null);
   const [fileType, setFiletype] = useState("csv");
 
   const exportHandler = () => {
-    const data = { filter, field, fileType };
+    const sortField = field.sort((a, b) => a.rank - b.rank);
+    const data = { filter, fields: sortField, fileType };
     api.post("/member/export", data).then((res) => {
       const Type = fileType === "csv" ? "text/csv" : "application/json";
       const raw =
@@ -25,6 +26,11 @@ const Export: FC = () => {
         "DD_MM_YYYY_HH_mm"
       )}.${fileType}`;
       link.click();
+      setTimeout(() => {
+        modal.current.close();
+        setField([]);
+        setFilter({});
+      }, 500);
     });
   };
   return (
@@ -38,7 +44,7 @@ const Export: FC = () => {
               className={`bg-bg w-full p-3 px-1 rounded duration-200 ${
                 filter.mpandray ? "bg-primary text-white" : ""
               }`}
-              value={filter.mpandray}
+              value={filter.mpandray ?? ""}
               onChange={(e) => {
                 setFilter({ ...filter, mpandray: e.target.value });
               }}
@@ -55,7 +61,7 @@ const Export: FC = () => {
               className={`bg-bg w-full p-3 px-1 rounded duration-200 ${
                 filter.baptism ? "bg-primary text-white" : ""
               }`}
-              value={filter.baptism}
+              value={filter.baptism ?? ""}
               onChange={(e) => {
                 setFilter({ ...filter, baptism: e.target.value });
               }}
@@ -72,7 +78,7 @@ const Export: FC = () => {
               className={`bg-bg w-full p-3 px-1 rounded duration-200 ${
                 filter.place ? "bg-primary text-white" : ""
               }`}
-              value={filter.place}
+              value={filter.place ?? ""}
               onChange={(e) => {
                 setFilter({ ...filter, place: e.target.value });
               }}
@@ -91,7 +97,7 @@ const Export: FC = () => {
               className={`bg-bg w-full p-3 px-1 rounded duration-200 ${
                 filter.gender ? "bg-primary text-white" : ""
               }`}
-              value={filter.gender}
+              value={filter.gender ?? ""}
               onChange={(e) => {
                 setFilter({ ...filter, gender: e.target.value });
               }}
@@ -108,14 +114,18 @@ const Export: FC = () => {
               className={`bg-bg w-full p-3 px-1 rounded duration-200 ${
                 filter.birthday ? "bg-primary text-white" : ""
               }`}
-              value={filter.birthday}
+              value={filter.birthday ?? ""}
               onChange={(e) => {
                 setFilter({ ...filter, birthday: e.target.value });
               }}
             >
               <option value="">Tous</option>
-              {MONTHS.sort().map((s) => {
-                return <option value={s}>{s}</option>;
+              {MONTHS.sort().map((s, i) => {
+                return (
+                  <option key={i} value={s}>
+                    {s}
+                  </option>
+                );
               })}
             </select>
           </div>
@@ -126,7 +136,7 @@ const Export: FC = () => {
               className={`bg-bg w-full p-3 px-1 rounded duration-200 ${
                 filter.status ? "bg-primary text-white" : ""
               }`}
-              value={filter.status}
+              value={filter.status ?? ""}
               onChange={(e) => {
                 setFilter({ ...filter, status: e.target.value === "true" });
               }}
@@ -142,14 +152,18 @@ const Export: FC = () => {
               className={`bg-bg w-full p-3 px-1 rounded duration-200 ${
                 filter.sampana ? "bg-primary text-white" : ""
               }`}
-              value={filter.sampana}
+              value={filter.sampana ?? ""}
               onChange={(e) => {
                 setFilter({ ...filter, sampana: e.target.value });
               }}
             >
               <option value="">Tous</option>
-              {SAMPANA.sort().map((s) => {
-                return <option value={s}>{s}</option>;
+              {SAMPANA.sort().map((s, i) => {
+                return (
+                  <option key={i} value={s}>
+                    {s}
+                  </option>
+                );
               })}
             </select>
           </div>
@@ -161,13 +175,12 @@ const Export: FC = () => {
           <div
             className="flex items-center gap-4 cursor-pointer"
             onClick={() => {
-              field.length < fields.length
-                ? setField([...fields.map((el) => el.value)])
-                : setField([]);
+              field.length < fields.length ? setField(fields) : setField([]);
             }}
           >
             <input
               type="checkbox"
+              onChange={() => console.log()}
               className="cursor-pointer"
               checked={field.length === fields.length}
             />
@@ -179,16 +192,19 @@ const Export: FC = () => {
                 key={i}
                 className="flex items-center gap-4"
                 onClick={() => {
-                  field.indexOf(el.value) !== -1
-                    ? setField(field.filter((vl) => vl !== el.value))
-                    : setField([...field, el.value]);
+                  Object.values(field)
+                    .map((v) => v.value)
+                    .indexOf(el.value) !== -1
+                    ? setField(field.filter((vl) => vl.value !== el.value))
+                    : setField([...field, el]);
                 }}
               >
                 <input
                   type="checkbox"
-                  name=""
-                  id=""
-                  checked={field.includes(el.value)}
+                  onChange={() => console.log()}
+                  checked={Object.values(field)
+                    .map((v) => v.value)
+                    .includes(el.value)}
                   className="cursor-pointer"
                 />
                 <label className="capitalize cursor-pointer">{el.label}</label>

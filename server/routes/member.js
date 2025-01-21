@@ -12,12 +12,19 @@ const {
   checkKaratra,
   statPerBirthMonth,
   statPerSampana,
+  importMembers,
 } = require("../controllers/member.controller");
+const multer = require("multer");
 
 const route = express.Router();
 
+const upload = multer({
+  dest: "uploads/",
+});
+
 route.post("/", createMember);
 route.post("/export", exportMembers);
+route.post("/import", upload.single("file"), importMembers);
 route.delete("/", deleteMember);
 route.patch("/:id", updateMember);
 route.get("/", listMember);
