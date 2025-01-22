@@ -12,7 +12,6 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 const Diakona: FC = () => {
   const [filter, setFilter] = useState<any>({});
   const [data, setData] = useState<any>([]);
-  const [total, setTotal] = useState(0);
   const navigate = useNavigate();
 
   const columns: TableColumn<any>[] = useMemo(
@@ -60,20 +59,28 @@ const Diakona: FC = () => {
   );
   useEffect(() => {
     const query = new URLSearchParams();
-    query.set("sampana", "DIAKONA");
     Object.entries(filter).forEach(([k, v]) => {
       v && v !== "" && query.set(k, v as string);
     });
-    api.get(`/member?${query.toString()}`).then((res) => {
-      setData(res.data.member);
-      setTotal(res.data.totalRow);
+    api.get(`/diacre?${query.toString()}`).then((res) => {
+      setData(res.data);
     });
   }, [filter]);
   return (
     <div className="h-full bg-white p-4">
       <div className="flex justify-between">
-        <p className="text-lg font-medium">Diakona - {total}</p>
+        <p className="text-lg font-medium">Diakona - {data.length}</p>
         <div className="flex gap-3">
+          <select
+            className="p-1 px-2 border rounded"
+            onChange={(e) => {
+              setFilter({ ...filter, sampana: e.target.value });
+            }}
+          >
+            <option value="">Tous</option>
+            <option value="DIAKONA">Diakona</option>
+            <option value="FLD">FLD</option>
+          </select>
           <select
             className="p-1 px-2 border rounded"
             onChange={(e) => {
@@ -100,7 +107,11 @@ const Diakona: FC = () => {
         </div>
       </div>
       <div>
-        <DataTable data={data} columns={columns} />
+        <DataTable
+          data={data}
+          columns={columns}
+          className="h-[calc(100vh-170px)] !overflow-y-auto"
+        />
       </div>
     </div>
   );

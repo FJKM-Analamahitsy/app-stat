@@ -1,11 +1,22 @@
 const { Member } = require("../models/member.model");
 
+const getList = async (req, res) => {
+  const { sampana, ...cfil } = req.query;
+  let filter = { ...cfil, sampana: { $regex: new RegExp("DIAKONA|FLD", "i") } };
+  if (sampana) {
+    filter = { ...filter, sampana: { $regex: new RegExp(sampana, "i") } };
+  }
+  const member = await Member.find()
+    .where({ ...filter })
+    .sort({ zone: "asc" });
+  return res.send(member);
+};
+
 const getCoordinates = async (req, res) => {
   const result = await Member.aggregate([
     {
       $match: {
         "location.type": { $exists: true },
-        sampana: new RegExp("DIAKONA", "i"), // Filter for the specific place
       },
     },
     {
@@ -26,4 +37,4 @@ const getCoordinates = async (req, res) => {
   res.json(result);
 };
 
-module.exports = { getCoordinates };
+module.exports = { getCoordinates, getList };

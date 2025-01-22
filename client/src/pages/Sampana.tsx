@@ -2,7 +2,6 @@ import Avatar from "@components/Avatar";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
-import { formatPoneNumber } from "@utils/helper";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import toast from "react-hot-toast";
@@ -100,15 +99,10 @@ const ListeSampana: FC = () => {
         hide: 800,
       },
       {
-        name: "Karatra",
+        name: "Sampana",
         sortable: true,
-        selector: (row) => row.mpandrayN,
+        selector: (row) => row.sampana,
         hide: 500,
-      },
-      {
-        name: "Contact",
-        cell: (row) => formatPoneNumber(row.phone),
-        hide: 800,
       },
       {
         name: "Action",

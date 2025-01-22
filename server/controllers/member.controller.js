@@ -66,7 +66,7 @@ const getMember = async (req, res) => {
     if (member.familyRank !== 1) {
       const adress = await Member.findOne({
         familyId: member.familyId,
-        familyRank: 1,
+        famHead: true,
       }).select("-_id home place");
       if (adress) {
         result = { ...result, ...adress._doc };
@@ -105,7 +105,7 @@ const listMember = async (req, res) => {
   if (ondry) {
     filter = {
       ...filter,
-      sampana: { $not: new RegExp("DIAKONA", "i") },
+      sampana: { $not: new RegExp("DIAKONA|FLD", "i") },
     };
   }
 
@@ -201,21 +201,15 @@ const exportMembers = async (req, res) => {
     }
   });
 
-  const data = await Member.find()
-    .where({ ...where })
-    .select(
-      `${Object.values(fields)
-        .map((v) => v.value)
-        .join(" ")}`
-    );
+  const data = await Member.find().where({ ...where });
 
   const members = await Promise.all(
     data.map(async (member) => {
       let result = { ...member._doc };
-      if (member.familyRank !== 1) {
+      if (!member.famHead) {
         const address = await Member.findOne({
           familyId: member.familyId,
-          familyRank: 1,
+          famHead: true,
         }).select("-_id home place");
         if (address) {
           result = { ...result, ...address._doc };
