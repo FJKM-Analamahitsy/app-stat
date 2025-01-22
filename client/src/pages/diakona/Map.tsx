@@ -1,8 +1,14 @@
-import { FC } from "react";
+import api from "@utils/api";
+import { FC, useEffect } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
-const PageDiakona: FC = () => {
+const Map: FC = () => {
   const posFiangonana: any = [-18.874445079089178, 47.549243413401385];
+  useEffect(() => {
+    api.get("/member?sampana=DIAKONA").then((res) => {
+      console.log(res.data);
+    });
+  }, []);
   return (
     <div className="h-full">
       <div></div>
@@ -23,4 +29,4 @@ const PageDiakona: FC = () => {
   );
 };
 
-export default PageDiakona;
+export default Map;

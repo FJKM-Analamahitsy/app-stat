@@ -28,6 +28,21 @@ export const fields = [
     rank: 5,
   },
   {
+    label: "Toerana eo amin'ny fianakaviana",
+    value: "familyRank",
+    rank: 5,
+  },
+  {
+    label: "Laharana Ankohonana",
+    value: "familyId",
+    rank: 6,
+  },
+  {
+    label: "Zone",
+    value: "zone",
+    rank: 6,
+  },
+  {
     label: "Adiresy",
     value: "home",
     rank: 6,
@@ -96,6 +111,17 @@ export const fields = [
     label: "Antoko Diakona",
     value: "antoko",
     rank: 19,
+  },
+  {
+    label: "GPS",
+    value: "location",
+    rank: 20,
+  },
+
+  {
+    label: "Sampana",
+    value: "sampana",
+    rank: 21,
   },
 ];
 
