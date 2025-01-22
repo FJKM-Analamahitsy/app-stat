@@ -325,7 +325,8 @@ const NewMember: FC = () => {
           {data.sampana && /DIAKONA|FLD/.test(data.sampana) && (
             <>
               <Select
-                options={ANTOKO_DIAKONE}
+                label="Antoko diakona"
+                options={["", ...ANTOKO_DIAKONE]}
                 onChange={(e) => {
                   setData({ ...data, antoko: e.target.value });
                 }}

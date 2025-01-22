@@ -18,14 +18,16 @@ const Ondry: FC<Props> = ({ children, diacre }) => {
   const [stat, setStat] = useState({ total: 0, NbHome: 0 });
 
   const fetch = () => {
-    api
-      .get(
-        `/member?zone=${diacre.zone}&place=${diacre.place}&karatra=asc&ondry=true`
-      )
-      .then((res) => {
-        setData(res.data.member);
-        setStat({ total: res.data.totalRow, NbHome: res.data.tokatrano });
-      });
+    if (diacre.zone) {
+      api
+        .get(
+          `/member?zone=${diacre.zone}&place=${diacre.place}&karatra=asc&ondry=true`
+        )
+        .then((res) => {
+          setData(res.data.member);
+          setStat({ total: res.data.totalRow, NbHome: res.data.tokatrano });
+        });
+    }
   };
   return (
     <Modal>
