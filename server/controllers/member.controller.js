@@ -63,7 +63,7 @@ const getMember = async (req, res) => {
     const { id } = await idSchema.validate(req.params);
     const member = await Member.findOne({ _id: id });
     let result = { ...member._doc };
-    if (member.familyRank !== 1) {
+    if (!member.famHead) {
       const adress = await Member.findOne({
         familyId: member.familyId,
         famHead: true,
