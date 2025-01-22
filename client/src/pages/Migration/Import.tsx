@@ -28,6 +28,7 @@ const Import: FC = () => {
       .post("/member/import", data)
       .then((res) => {
         toast.success("Importation avec success");
+        setData(new FormData());
       })
       .catch(() => {
         toast.error("Une erreur se produit pendant l'operarion");
@@ -37,7 +38,7 @@ const Import: FC = () => {
       });
   };
   return (
-    <div className="h-full bg-white p-4">
+    <div className="h-full overflow-y-auto bg-white p-4">
       <div className="p-4 border-2 border-dashed rounded">
         <div className="flex justify-between items-center">
           <p className="text-slate-600 text-lg font-medium">Chretien</p>
