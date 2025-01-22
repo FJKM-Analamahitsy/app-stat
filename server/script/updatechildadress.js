@@ -10,7 +10,7 @@ mongoose.connect(process.env.MONGODB_URI).then(async () => {
       { familyId: member.familyId },
       { home: member.home, zone: member.zone, place: member.place }
     );
+    console.log(member.familyId);
   });
   console.log("updated");
-  process.exit(0);
 });
