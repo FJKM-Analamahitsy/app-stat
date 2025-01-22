@@ -22,6 +22,12 @@ const createMember = async (req, res) => {
       fullname: `${input.name}${input.forname ? ` ${input.forname}` : ""}`,
     });
     await newMember.save();
+    if (input.famHead) {
+      await Member.updateMany(
+        { familyId: input.familyId },
+        { home: input.home, zone: input.zone, place: input.place }
+      );
+    }
     log(req.requester, `creation member ${newMember._id}`);
     return res.send(newMember);
   } catch (error) {
@@ -51,6 +57,12 @@ const updateMember = async (req, res) => {
         last_update: new Date(),
       }
     );
+    if (input.famHead) {
+      await Member.updateMany(
+        { familyId: input.familyId },
+        { home: input.home, zone: input.zone, place: input.place }
+      );
+    }
     log(req.requester, `update member ${req.params.id}`);
     return res.send("sucess");
   } catch (error) {
@@ -62,17 +74,7 @@ const getMember = async (req, res) => {
   try {
     const { id } = await idSchema.validate(req.params);
     const member = await Member.findOne({ _id: id });
-    let result = { ...member._doc };
-    if (!member.famHead) {
-      const adress = await Member.findOne({
-        familyId: member.familyId,
-        famHead: true,
-      }).select("-_id home place");
-      if (adress) {
-        result = { ...result, ...adress._doc };
-      }
-    }
-    return res.send(result);
+    return res.send(member);
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -190,7 +192,6 @@ const statistics = async (req, res) => {
 const exportMembers = async (req, res) => {
   const { filter, fields, fileType } = req.body;
   let where = {};
-
   Object.entries(filter).forEach(([k, val]) => {
     if (val || val !== "") {
       if (k === "sampana") {
@@ -200,24 +201,7 @@ const exportMembers = async (req, res) => {
       }
     }
   });
-
   const data = await Member.find().where({ ...where });
-
-  const members = await Promise.all(
-    data.map(async (member) => {
-      let result = { ...member._doc };
-      if (!member.famHead) {
-        const address = await Member.findOne({
-          familyId: member.familyId,
-          famHead: true,
-        }).select("-_id home place");
-        if (address) {
-          result = { ...result, ...address._doc };
-        }
-      }
-      return result;
-    })
-  );
 
   if (fileType === "csv") {
     const opt = {
@@ -226,12 +210,12 @@ const exportMembers = async (req, res) => {
       withBOM: true,
     };
     const prep = new parser(opt);
-    const csv = prep.parse(members);
+    const csv = prep.parse(data);
     res.header("Content-Type", "text/csv");
     return res.send(csv);
   } else {
     res.setHeader("Content-Type", "application/json");
-    res.json(members);
+    res.json(data);
   }
 };
 
