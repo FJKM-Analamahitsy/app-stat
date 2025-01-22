@@ -1,5 +1,4 @@
 import Avatar from "@components/Avatar";
-import Select from "@components/Select";
 import api from "@utils/api";
 import { ANTOKO_DIAKONE, FARITRA } from "@utils/constant";
 import { memberStatus } from "@utils/helper";
@@ -13,6 +12,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 const Diakona: FC = () => {
   const [filter, setFilter] = useState<any>({});
   const [data, setData] = useState<any>([]);
+  const [total, setTotal] = useState(0);
   const navigate = useNavigate();
 
   const columns: TableColumn<any>[] = useMemo(
@@ -62,31 +62,41 @@ const Diakona: FC = () => {
     const query = new URLSearchParams();
     query.set("sampana", "DIAKONA");
     Object.entries(filter).forEach(([k, v]) => {
-      query.set(k, v as string);
+      v && v !== "" && query.set(k, v as string);
     });
     api.get(`/member?${query.toString()}`).then((res) => {
       setData(res.data.member);
+      setTotal(res.data.totalRow);
     });
-  }, []);
+  }, [filter]);
   return (
     <div className="h-full bg-white p-4">
       <div className="flex justify-between">
-        <p className="text-lg font-medium">Diakona</p>
+        <p className="text-lg font-medium">Diakona - {total}</p>
         <div className="flex gap-3">
-          <Select
-            options={ANTOKO_DIAKONE}
+          <select
+            className="p-1 px-2 border rounded"
             onChange={(e) => {
-              setFilter({ ...filter, antoko: e.target.value.toLowerCase() });
+              setFilter({ ...filter, antoko: e.target.value });
             }}
-            valueIndex={false}
-          />
-          <Select
-            options={FARITRA}
+          >
+            <option value="">Tous</option>
+            {ANTOKO_DIAKONE.map((a) => {
+              return <option value={a}>{a}</option>;
+            })}
+          </select>
+
+          <select
+            className="p-1 px-2 border rounded"
             onChange={(e) => {
               setFilter({ ...filter, place: e.target.value.toLowerCase() });
             }}
-            valueIndex={false}
-          />
+          >
+            <option value="">Tous</option>
+            {FARITRA.map((a) => {
+              return <option value={a}>{a}</option>;
+            })}
+          </select>
         </div>
       </div>
       <div>
