@@ -13,7 +13,10 @@ interface Props {
 
 const Ondry: FC<Props> = ({ children, diacre }) => {
   const printarea = useRef<any>(null);
-  const print = useReactToPrint({ contentRef: printarea });
+  const print = useReactToPrint({
+    contentRef: printarea,
+    bodyClass: "[&_*]:!text-[12px]",
+  });
   const [data, setData] = useState<any[]>([]);
   const [stat, setStat] = useState({ total: 0, NbHome: 0 });
 
@@ -31,7 +34,7 @@ const Ondry: FC<Props> = ({ children, diacre }) => {
     <Modal>
       <div onClick={() => fetch()}>{children}</div>
       <div className="w-[70vw] bg-white border rounded">
-        <div className="max-h-[70vh] overflow-y-auto [&_*]:!text-sm">
+        <div className="max-h-[70vh] overflow-y-auto [&_*]:!text-base">
           <div ref={printarea} className="p-4">
             <div className="text-center">
               <p>FIAGONAN'I JESOA KRISTY ETO MADAGASIKARA</p>
@@ -56,10 +59,11 @@ const Ondry: FC<Props> = ({ children, diacre }) => {
               <table className="table w-full [&_td]:border [&_th]:border [&_*]:border-black [&_td]:p-1 [&_th]:p-1">
                 <thead>
                   <tr>
-                    <th className="text-left w-24">Karatra Lah.</th>
-                    <th className="text-left">Anarana</th>
-                    <th>Adiresy</th>
-                    <th>Contact</th>
+                    <th className="text-left w-fit">ID</th>
+                    <th className="text-left w-fit">Anarana</th>
+                    <th className="text-left w-fit">Adiresy</th>
+                    <th className="w-fit">Faritra</th>
+                    <th className="w-fit">Contact</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -72,6 +76,7 @@ const Ondry: FC<Props> = ({ children, diacre }) => {
                           <span>{v.forname}</span>
                         </td>
                         <td>{v.home}</td>
+                        <td className="text-center">{v.place}</td>
                         <td>{formatPoneNumber(v.phone)}</td>
                       </tr>
                     );

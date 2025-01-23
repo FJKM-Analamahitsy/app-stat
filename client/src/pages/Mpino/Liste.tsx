@@ -30,9 +30,9 @@ const Liste: FC = () => {
   const fetch = (page: number) => {
     const request = api
       .get(
-        `/member?page=${page}&limit=${limit}&${sort[0]}=${
-          sort[1]
-        }&search=${query}&${prepFilter()}`
+        `/member?page=${page}&limit=${limit}&${sort[0]}=${sort[1]}${
+          query !== "" ? `&search=${query}` : ""
+        }&${prepFilter()}`
       )
       .then((res) => {
         document
@@ -122,6 +122,14 @@ const Liste: FC = () => {
         sortable: true,
         selector: (row) => row.mpandrayN,
         hide: 500,
+        center: true,
+      },
+      {
+        name: "Ankohonana",
+        sortable: true,
+        selector: (row) => row.familyId,
+        hide: 500,
+        center: true,
       },
       {
         name: "Contact",
@@ -177,33 +185,19 @@ const Liste: FC = () => {
 
   useEffect(
     () => {
-      if (query.trim() !== "") {
-        fetch(n);
-      }
+      fetch(1);
     },
     // eslint-disable-next-line
     [query]
   );
 
-  useEffect(
-    () => {
-      fetch(1);
-    },
-    // eslint-disable-next-line
-    []
-  );
   return (
     <div className="p-4 bg-white rounded h-full">
       <div className="flex justify-between w-full">
         <div className="w-2/5">
           <Search
             onSearch={(query) => {
-              if (query.trim() === "") {
-                fetch(1);
-              } else {
-                setN(1);
-                setQuery(query);
-              }
+              setQuery(query);
             }}
           />
         </div>

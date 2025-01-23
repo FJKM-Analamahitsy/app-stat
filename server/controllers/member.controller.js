@@ -22,7 +22,7 @@ const createMember = async (req, res) => {
       fullname: `${input.name}${input.forname ? ` ${input.forname}` : ""}`,
     });
     await newMember.save();
-    if (input.famHead) {
+    if (input.famHead && input.familyId) {
       await Member.updateMany(
         { familyId: input.familyId },
         { home: input.home, zone: input.zone, place: input.place }
@@ -57,7 +57,7 @@ const updateMember = async (req, res) => {
         last_update: new Date(),
       }
     );
-    if (input.famHead) {
+    if (input.famHead && input.familyId) {
       await Member.updateMany(
         { familyId: input.familyId },
         { home: input.home, zone: input.zone, place: input.place }
@@ -88,12 +88,17 @@ const listMember = async (req, res) => {
     anarana,
     sampana,
     search,
+    ankohonana,
     ondry,
     ...cfil
   } = req.query;
   let sort = {};
   if (karatra) {
     sort = { ...sort, mpandrayN: karatra };
+  }
+
+  if (ankohonana) {
+    sort = { ...sort, familyId: ankohonana };
   }
 
   if (anarana) {
@@ -258,6 +263,7 @@ const importMembers = async (req, res) => {
     res.send();
   } catch (error) {
     console.log(error);
+    res.status(400).json(error);
   }
 };
 
