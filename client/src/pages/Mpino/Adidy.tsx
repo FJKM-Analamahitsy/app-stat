@@ -50,21 +50,25 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
             copy: parseInt(localStorage.getItem("ncopy") || "2"),
           },
         };
-        server
-          .post(
-            `http://${
-              localStorage.getItem("xpserver") || "localhost"
-            }:30116/receipt`,
-            dataToPrint
-          )
-          .then(() => {
-            toast.success("Success");
-            success();
-          })
-          .catch((err) => {
-            console.log(err);
-            toast.error("Une erreur se produit pendant l'operation");
-          });
+        if (dataToPrint.printer.copy > 0) {
+          server
+            .post(
+              `http://${
+                localStorage.getItem("xpserver") || "localhost"
+              }:30116/receipt`,
+              dataToPrint
+            )
+            .then(() => {
+              toast.success("Success");
+              success();
+            })
+            .catch((err) => {
+              console.log(err);
+              toast.error("Une erreur se produit pendant l'operation");
+            });
+        } else {
+          toast.success("succès");
+        }
       });
     } else {
       toast.error("montant obligatoire");
