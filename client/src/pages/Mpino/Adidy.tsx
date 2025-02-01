@@ -68,6 +68,7 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
             });
         } else {
           toast.success("succès");
+          success();
         }
       });
     } else {
