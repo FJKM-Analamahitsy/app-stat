@@ -1,6 +1,6 @@
 const { Adidy, Compta, AdidyType } = require("../models/adidy.model");
 const { Member } = require("../models/member.model");
-const { default: mongoose } = require("mongoose");
+const { default: mongoose, Schema } = require("mongoose");
 
 const createAdidy = async (req, res) => {
   try {
@@ -138,18 +138,21 @@ const getComptaById = async (req, res) => {
 };
 
 const getDailySummary = async (req, res) => {
+  let match = { date: req.query.date };
+  if (req.query.type) {
+    match = { ...match, type: new mongoose.Types.ObjectId(req.query.type) };
+  }
   const pipeline = [
     {
       $project: {
         date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
         createBy: "$createBy",
         mtt: "$mtt",
+        type: "$type",
       },
     },
     {
-      $match: {
-        date: req.query.date,
-      },
+      $match: match,
     },
     {
       $group: {
