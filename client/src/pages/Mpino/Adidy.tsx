@@ -79,7 +79,10 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
     () => {
       //load karazana adidy
       api.get("/adidy/type").then((res) => {
-        setData({ ...data, type: res.data[0]._id });
+        setData({
+          ...data,
+          type: localStorage.getItem("type") ?? res.data[0]._id,
+        });
         setTypes(res.data);
       });
     }, // eslint-disable-next-line
@@ -91,7 +94,10 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       <select
         className="p-1 px-1 rounded border text-grey"
         value={data.type}
-        onChange={(e) => setData({ ...data, type: e.target.value })}
+        onChange={(e) => {
+          setData({ ...data, type: e.target.value });
+          localStorage.setItem("type", e.target.value);
+        }}
       >
         {types.map((t: any, i: number) => {
           return (
@@ -140,8 +146,10 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       />
       <div className="text-right mt-4">
         <Button
-          className="text-white bg-primary w-full disabled:!cursor-not-allowed opacity-50"
-          disabled={parseInt(data.pay.replace(/\./g, "")) <= 0}
+          className="text-white bg-primary w-full disabled:!cursor-not-allowed disabled:opacity-50"
+          disabled={
+            data.pay === "" || parseInt(data.pay.replace(/\./g, "")) <= 0
+          }
           onClick={submit}
         >
           Payer
