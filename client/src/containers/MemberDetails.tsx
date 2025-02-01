@@ -13,6 +13,10 @@ const MemberDetails: FC<MemberDetailsProps> = ({ data }) => {
       label: "Ankohonana Lah.",
       icon: <FontAwesomeIcon icon={solid("home-alt")} size="sm" />,
     },
+    zone: {
+      label: "Zone",
+      icon: <FontAwesomeIcon icon={solid("map-location")} size="sm" />,
+    },
     name: {
       label: "Anarana",
       icon: <FontAwesomeIcon icon={solid("user")} size="sm" />,

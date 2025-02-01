@@ -28,6 +28,21 @@ export const fields = [
     rank: 5,
   },
   {
+    label: "Toerana eo amin'ny fianakaviana",
+    value: "familyRank",
+    rank: 5,
+  },
+  {
+    label: "Laharana Ankohonana",
+    value: "familyId",
+    rank: 6,
+  },
+  {
+    label: "Zone",
+    value: "zone",
+    rank: 6,
+  },
+  {
     label: "Adiresy",
     value: "home",
     rank: 6,
@@ -97,6 +112,17 @@ export const fields = [
     value: "antoko",
     rank: 19,
   },
+  {
+    label: "GPS",
+    value: "location",
+    rank: 20,
+  },
+
+  {
+    label: "Sampana",
+    value: "sampana",
+    rank: 21,
+  },
 ];
 
 export const MONTHS = [
@@ -142,17 +168,8 @@ export const SAMPANA = [
   "GMMC",
 ];
 
-export const APP_OPTIONS = [
-  "dash",
-  "member",
-  "newmember",
-  "contribution",
-  "sampana",
-  "profile",
-  "users",
-  "adidytype",
-  "migration",
-  "setting",
-];
+export const ANTOKO_DIAKONE = ["FANILO", "BETELA", "FANASINA", "FILADELFIA"];
+
+export const FARITRA = ["Avaratra", "Atsimo", "Andrefana", "Atsinanana"];
 
 export const TAB_OPTIONS = ["info", "family", "contrib", "other"];

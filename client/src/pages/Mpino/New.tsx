@@ -6,7 +6,7 @@ import SelectMultiple from "@components/SelectMultiple";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
-import { MONTHS, SAMPANA } from "@utils/constant";
+import { ANTOKO_DIAKONE, MONTHS, SAMPANA } from "@utils/constant";
 import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
@@ -261,6 +261,19 @@ const NewMember: FC = () => {
               <option value="atsinanana">Atsinanana</option>
               <option value="andrefana">Andrefana</option>
             </select>
+            <InputNew
+              label="Zone"
+              name="zone"
+              type="number"
+              min={0}
+              value={data.zone ?? ""}
+              onChange={(e) => {
+                setData({
+                  ...data,
+                  zone: +e.target.value,
+                });
+              }}
+            />
           </Container>
         )}
 
@@ -309,36 +322,47 @@ const NewMember: FC = () => {
             defaultValue={data.sampana}
           />
 
-          <div>
-            {data.sampana && /DIAKONA|FLD/.test(data.sampana) && (
+          {data.sampana && /DIAKONA|FLD/.test(data.sampana) && (
+            <>
               <Select
-                options={["FANILO", "BETELA", "FANASINA", "FILADELFIA"]}
+                label="Antoko diakona"
+                options={["", ...ANTOKO_DIAKONE]}
                 onChange={(e) => {
                   setData({ ...data, antoko: e.target.value });
                 }}
                 valueIndex={false}
               />
-            )}
-          </div>
-        </Container>
-
-        <Container title="Toerana">
-          <InputNew
-            label="Tondro toerana - GPS"
-            name="location"
-            value={data.location ? data.location.coordinates.join(",") : ""}
-            onChange={(e) => {
-              setData({
-                ...data,
-                location: {
-                  type: "Point",
-                  coordinates: e.target.value
-                    .split(",")
-                    .map((v) => parseFloat(v)),
-                },
-              });
-            }}
-          />
+              <InputNew
+                label="Tondro toerana - GPS"
+                name="location"
+                value={data.location ? data.location.coordinates.join(",") : ""}
+                onChange={(e) => {
+                  setData({
+                    ...data,
+                    location: {
+                      type: "Point",
+                      coordinates: e.target.value
+                        .split(",")
+                        .map((v) => parseFloat(v)),
+                    },
+                  });
+                }}
+              />
+              <InputNew
+                label="Zone"
+                name="zone"
+                type="number"
+                min={0}
+                value={data.zone ?? ""}
+                onChange={(e) => {
+                  setData({
+                    ...data,
+                    zone: +e.target.value,
+                  });
+                }}
+              />
+            </>
+          )}
         </Container>
 
         <Container title="Fanamarihana" childClass="!grid-cols-1">

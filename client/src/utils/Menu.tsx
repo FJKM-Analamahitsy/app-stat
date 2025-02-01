@@ -50,6 +50,21 @@ const MenuData: any = [
     ],
   },
   {
+    label: "Diacre",
+    icon: <FontAwesomeIcon icon={solid("user-group")} />,
+    auth: "diacre",
+    submenu: [
+      {
+        path: "/diacre",
+        label: "Liste",
+      },
+      {
+        path: "/diacre/map",
+        label: "Map",
+      },
+    ],
+  },
+  {
     label: "Profiles",
     path: "/profile",
     icon: <FontAwesomeIcon icon={solid("users")} />,

@@ -5,6 +5,7 @@ import api from "@utils/api";
 import { fields, MONTHS, SAMPANA } from "@utils/constant";
 import dayjs from "dayjs";
 import { FC, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 const Export: FC = () => {
   const [filter, setFilter] = useState<any>({});
@@ -15,7 +16,7 @@ const Export: FC = () => {
   const exportHandler = () => {
     const sortField = field.sort((a, b) => a.rank - b.rank);
     const data = { filter, fields: sortField, fileType };
-    api.post("/member/export", data).then((res) => {
+    const request = api.post("/member/export", data).then((res) => {
       const Type = fileType === "csv" ? "text/csv" : "application/json";
       const raw =
         fileType === "csv" ? res.data : JSON.stringify(res.data, null, 2);
@@ -32,9 +33,14 @@ const Export: FC = () => {
         setFilter({});
       }, 500);
     });
+    toast.promise(request, {
+      loading: "En attente",
+      success: "Export avec success",
+      error: "An error occured during the operation",
+    });
   };
   return (
-    <div className="bg-white h-full p-6">
+    <div className="bg-white h-full overflow-y-auto p-6">
       <div className="border rounded p-5 mb-6">
         <p className="text-lg mb-3">Filtre</p>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">

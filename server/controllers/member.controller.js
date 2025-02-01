@@ -22,6 +22,12 @@ const createMember = async (req, res) => {
       fullname: `${input.name}${input.forname ? ` ${input.forname}` : ""}`,
     });
     await newMember.save();
+    if (input.famHead && input.familyId) {
+      await Member.updateMany(
+        { familyId: input.familyId },
+        { home: input.home, zone: input.zone, place: input.place }
+      );
+    }
     log(req.requester, `creation member ${newMember._id}`);
     return res.send(newMember);
   } catch (error) {
@@ -51,6 +57,12 @@ const updateMember = async (req, res) => {
         last_update: new Date(),
       }
     );
+    if (input.famHead && input.familyId) {
+      await Member.updateMany(
+        { familyId: input.familyId },
+        { home: input.home, zone: input.zone, place: input.place }
+      );
+    }
     log(req.requester, `update member ${req.params.id}`);
     return res.send("sucess");
   } catch (error) {
@@ -62,17 +74,7 @@ const getMember = async (req, res) => {
   try {
     const { id } = await idSchema.validate(req.params);
     const member = await Member.findOne({ _id: id });
-    let result = { ...member._doc };
-    if (member.familyRank !== 1) {
-      const adress = await Member.findOne({
-        familyId: member.familyId,
-        familyRank: 1,
-      }).select("-_id home place");
-      if (adress) {
-        result = { ...result, ...adress._doc };
-      }
-    }
-    return res.send(result);
+    return res.send(member);
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -81,16 +83,22 @@ const getMember = async (req, res) => {
 const listMember = async (req, res) => {
   const {
     page = 1,
-    limit = 10,
+    limit = 100,
     karatra,
     anarana,
     sampana,
     search,
+    ankohonana,
+    ondry,
     ...cfil
   } = req.query;
   let sort = {};
   if (karatra) {
     sort = { ...sort, mpandrayN: karatra };
+  }
+
+  if (ankohonana) {
+    sort = { ...sort, familyId: ankohonana };
   }
 
   if (anarana) {
@@ -100,6 +108,14 @@ const listMember = async (req, res) => {
   if (sampana) {
     filter = { ...filter, sampana: { $regex: new RegExp(sampana, "i") } };
   }
+
+  if (ondry) {
+    filter = {
+      ...filter,
+      sampana: { $not: new RegExp("DIAKONA|FLD", "i") },
+    };
+  }
+
   if (search) {
     filter = {
       ...filter,
@@ -117,7 +133,11 @@ const listMember = async (req, res) => {
     .skip((page - 1) * limit)
     .where({ ...filter });
   const totalRow = await Member.where({ ...filter }).countDocuments();
-  return res.send({ member, totalRow });
+  const tokatrano = await Member.distinct("familyId", {
+    familyId: { $exists: true },
+    ...filter,
+  });
+  return res.send({ member, totalRow, tokatrano: tokatrano.length });
 };
 
 const statistics = async (req, res) => {
@@ -177,7 +197,6 @@ const statistics = async (req, res) => {
 const exportMembers = async (req, res) => {
   const { filter, fields, fileType } = req.body;
   let where = {};
-
   Object.entries(filter).forEach(([k, val]) => {
     if (val || val !== "") {
       if (k === "sampana") {
@@ -187,30 +206,7 @@ const exportMembers = async (req, res) => {
       }
     }
   });
-
-  const data = await Member.find()
-    .where({ ...where })
-    .select(
-      `${Object.values(fields)
-        .map((v) => v.value)
-        .join(" ")}`
-    );
-
-  const members = await Promise.all(
-    data.map(async (member) => {
-      let result = { ...member._doc };
-      if (member.familyRank !== 1) {
-        const address = await Member.findOne({
-          familyId: member.familyId,
-          familyRank: 1,
-        }).select("-_id home place");
-        if (address) {
-          result = { ...result, ...address._doc };
-        }
-      }
-      return result;
-    })
-  );
+  const data = await Member.find().where({ ...where });
 
   if (fileType === "csv") {
     const opt = {
@@ -219,12 +215,12 @@ const exportMembers = async (req, res) => {
       withBOM: true,
     };
     const prep = new parser(opt);
-    const csv = prep.parse(members);
+    const csv = prep.parse(data);
     res.header("Content-Type", "text/csv");
     return res.send(csv);
   } else {
     res.setHeader("Content-Type", "application/json");
-    res.json(members);
+    res.json(data);
   }
 };
 
@@ -267,6 +263,7 @@ const importMembers = async (req, res) => {
     res.send();
   } catch (error) {
     console.log(error);
+    res.status(400).json(error);
   }
 };
 

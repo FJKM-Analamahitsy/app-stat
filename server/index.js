@@ -8,6 +8,7 @@ const { adidy } = require("./routes/adidy");
 const { cookieParser } = require("./utils/cookieParser");
 const { profile } = require("./routes/profile");
 const { users } = require("./routes/users");
+const { diacre } = require("./routes/diacre");
 const { authMiddlware } = require("./middleware/middleware");
 
 const app = express();
@@ -23,6 +24,7 @@ app.use("/member", authMiddlware, member);
 app.use("/adidy", authMiddlware, adidy);
 app.use("/profile", authMiddlware, profile);
 app.use("/users", authMiddlware, users);
+app.use("/diacre", authMiddlware, diacre);
 
 const port = process.env.PORT || 4000;
 

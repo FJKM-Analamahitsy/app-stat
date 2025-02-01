@@ -48,6 +48,9 @@ const InputNew: FC<InputNewProps> = ({
         onKeyUp={(e: any) =>
           props.name === "mpandrayN" && check(e.target.value)
         }
+        onWheel={(e) => {
+          e.preventDefault();
+        }}
         placeholder={placeholder}
         {...props}
       />
