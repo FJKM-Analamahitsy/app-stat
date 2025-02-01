@@ -158,14 +158,15 @@ const getDailySummary = async (req, res) => {
       $group: {
         _id: {
           date: "$date",
-          createBy: { $toLower: "$createBy" },
+          createBy: "$createBy",
+          name: { $toLower: "$createBy" },
         },
         count: { $sum: 1 },
         sum: { $sum: "$mtt" },
       },
     },
     {
-      $sort: { "_id.createBy": 1 }, // Trier après regroupement
+      $sort: { "_id.name": 1 }, // Trier après regroupement
     },
   ];
   const result = await Compta.aggregate([...pipeline]);
