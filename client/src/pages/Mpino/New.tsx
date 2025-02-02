@@ -269,7 +269,7 @@ const NewMember: FC = () => {
               onChange={(e) => {
                 setData({
                   ...data,
-                  zone: +e.target.value,
+                  zone: e.target.value,
                 });
               }}
             />
