@@ -112,8 +112,10 @@ const listMember = async (req, res) => {
   if (ondry) {
     filter = {
       ...filter,
+      mpandray: "eny",
       sampana: { $not: new RegExp("DIAKONA|FLD", "i") },
     };
+    sort = { ...sort, familyId: "asc" };
   }
 
   if (search) {
