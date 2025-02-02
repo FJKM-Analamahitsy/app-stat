@@ -264,8 +264,7 @@ const NewMember: FC = () => {
             <InputNew
               label="Zone"
               name="zone"
-              type="number"
-              min={0}
+              type="text"
               value={data.zone ?? ""}
               onChange={(e) => {
                 setData({
