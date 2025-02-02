@@ -21,9 +21,12 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
     type: "",
   });
 
+  const [disabled, setDisabled] = useState(false);
+
   const [monthEnd, setMonthhEnd] = useState(now.getMonth());
   const [types, setTypes] = useState([]);
   const submit = async () => {
+    setDisabled(true);
     const month = [];
     for (let i = data.month; i <= monthEnd; i++) {
       month.push(i);
@@ -41,7 +44,7 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       month,
     };
     if (compta.mtt > 0) {
-      api.post("/adidy", { compta, trace }).then((res) => {
+      const request = api.post("/adidy", { compta, trace }).then((res) => {
         const dataToPrint = {
           data: res.data,
           printer: {
@@ -61,15 +64,23 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
             .then(() => {
               toast.success("Success");
               success();
+              setDisabled(false);
             })
             .catch((err) => {
               console.log(err);
               toast.error("Une erreur se produit pendant l'operation");
+              setDisabled(false);
             });
         } else {
           toast.success("succès");
           success();
+          setDisabled(false);
         }
+      });
+      toast.promise(request, {
+        success: "success",
+        error: "error",
+        loading: "En attente",
       });
     } else {
       toast.error("montant obligatoire");
@@ -149,7 +160,9 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
         <Button
           className="text-white bg-primary w-full disabled:!cursor-not-allowed disabled:opacity-50"
           disabled={
-            data.pay === "" || parseInt(data.pay.replace(/\./g, "")) <= 0
+            disabled ||
+            data.pay === "" ||
+            parseInt(data.pay.replace(/\./g, "")) <= 0
           }
           onClick={submit}
         >
