@@ -88,6 +88,7 @@ const listMember = async (req, res) => {
     anarana,
     sampana,
     search,
+    searchField,
     ankohonana,
     ondry,
     ...cfil
@@ -119,14 +120,22 @@ const listMember = async (req, res) => {
   }
 
   if (search) {
-    filter = {
-      ...filter,
-      $or: [
-        { fullname: { $regex: new RegExp(search, "i") } },
-        { mpandrayN: { $regex: new RegExp(search, "i") } },
-      ],
-    };
-    sort = { mpandrayN: "asc" };
+    if (searchField === "home") {
+      filter = {
+        ...filter,
+        familyId: search,
+      };
+      sort = { familyId: "asc" };
+    } else {
+      filter = {
+        ...filter,
+        $or: [
+          { fullname: { $regex: new RegExp(search, "i") } },
+          { mpandrayN: { $regex: new RegExp(search, "i") } },
+        ],
+      };
+      sort = { mpandrayN: "asc" };
+    }
   }
   const member = await Member.find()
     .sort({ ...sort })

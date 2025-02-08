@@ -132,6 +132,13 @@ const Liste: FC = () => {
         center: true,
       },
       {
+        name: "Ankohonana",
+        sortable: true,
+        selector: (row) => row.home,
+        hide: 500,
+        center: true,
+      },
+      {
         name: "Contact",
         cell: (row) => formatPoneNumber(row.phone),
         hide: 800,
@@ -194,12 +201,24 @@ const Liste: FC = () => {
   return (
     <div className="p-4 bg-white rounded h-full">
       <div className="flex justify-between w-full">
-        <div className="w-2/5">
-          <Search
-            onSearch={(query) => {
-              setQuery(query);
+        <div className="w-2/5 flex gap-3">
+          <div className="grow">
+            <Search
+              onSearch={(query) => {
+                setQuery(query);
+              }}
+            />
+          </div>
+
+          <select
+            className="border rounded"
+            onChange={(e) => {
+              setFilter({ ...filter, searchField: e.target.value });
             }}
-          />
+          >
+            <option value="all">Tous</option>
+            <option value="home">Ankohonana</option>
+          </select>
         </div>
         <Popup>
           <Button className="bg-bg">
