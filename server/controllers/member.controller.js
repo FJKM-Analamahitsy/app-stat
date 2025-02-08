@@ -170,20 +170,43 @@ const listMember = async (req, res) => {
 };
 
 const statistics = async (req, res) => {
-  const total = await Member.countDocuments();
-  const lehilahy = await Member.find({ gender: "lehilahy" }).countDocuments();
-  const vehivavy = await Member.find({ gender: "vehivavy" }).countDocuments();
-  const mpandray = await Member.find({ mpandray: "eny" }).countDocuments();
-  const batisa = await Member.find({ baptism: "eny" }).countDocuments();
-  const avaratra = await Member.find({ place: "avaratra" }).countDocuments();
-  const atsimo = await Member.find({ place: "atsimo" }).countDocuments();
+  const total = await Member.countDocuments({ status: true });
+  const lehilahy = await Member.find({
+    gender: "lehilahy",
+    status: true,
+  }).countDocuments();
+  const vehivavy = await Member.find({
+    gender: "vehivavy",
+    status: true,
+  }).countDocuments();
+  const mpandray = await Member.find({
+    mpandray: "eny",
+    status: true,
+  }).countDocuments();
+  const batisa = await Member.find({
+    baptism: "eny",
+    status: true,
+  }).countDocuments();
+  const avaratra = await Member.find({
+    place: "avaratra",
+    status: true,
+  }).countDocuments();
+  const atsimo = await Member.find({
+    place: "atsimo",
+    status: true,
+  }).countDocuments();
   const tokatrano = await Member.distinct("familyId", {
     familyId: { $exists: true },
+    status: true,
   });
   const atsinanana = await Member.find({
     place: "atsinanana",
+    status: true,
   }).countDocuments();
-  const andrefana = await Member.find({ place: "andrefana" }).countDocuments();
+  const andrefana = await Member.find({
+    place: "andrefana",
+    status: true,
+  }).countDocuments();
   const stast = {
     lehilahy: {
       n: lehilahy,
