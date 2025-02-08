@@ -22,12 +22,10 @@ const Ondry: FC<Props> = ({ children, diacre }) => {
 
   const fetch = () => {
     if (diacre.zone) {
-      api
-        .get(`/member?zone=${diacre.zone}&karatra=asc&ondry=true`)
-        .then((res) => {
-          setData(res.data.member);
-          setStat({ total: res.data.totalRow, NbHome: res.data.tokatrano });
-        });
+      api.get(`/member?zone=${diacre.zone}&ondry=true`).then((res) => {
+        setData(res.data.member);
+        setStat({ total: res.data.totalRow, NbHome: res.data.tokatrano });
+      });
     }
   };
   return (

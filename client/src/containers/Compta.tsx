@@ -188,7 +188,7 @@ const Compta: FC<Props> = ({ className }) => {
         pagination
         paginationServer
         paginationPerPage={limit}
-        paginationRowsPerPageOptions={[5, 10]}
+        paginationRowsPerPageOptions={[5, 10, 50, 100, 500]}
         paginationTotalRows={data.totalRow}
         onChangePage={onChangeHandler}
         onChangeRowsPerPage={onLimitChange}

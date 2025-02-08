@@ -21,7 +21,7 @@ const SideMenu: FC = () => {
   const logout = () => {
     navigate("/");
     dispatch(userUnSetAction());
-    sessionStorage.removeItem("token");
+    localStorage.removeItem("token");
   };
   return (
     <div className="fixed top-0 left-0 lg:relative h-screen bg-white z-50">

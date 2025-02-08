@@ -264,13 +264,12 @@ const NewMember: FC = () => {
             <InputNew
               label="Zone"
               name="zone"
-              type="number"
-              min={0}
+              type="text"
               value={data.zone ?? ""}
               onChange={(e) => {
                 setData({
                   ...data,
-                  zone: +e.target.value,
+                  zone: e.target.value,
                 });
               }}
             />
