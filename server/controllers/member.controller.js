@@ -22,11 +22,20 @@ const createMember = async (req, res) => {
       fullname: `${input.name}${input.forname ? ` ${input.forname}` : ""}`,
     });
     await newMember.save();
-    if (input.famHead && input.familyId) {
-      await Member.updateMany(
-        { familyId: input.familyId },
-        { home: input.home, zone: input.zone, place: input.place }
-      );
+    if (input.familyId) {
+      if (input.famHead) {
+        await Member.updateMany(
+          { familyId: input.familyId },
+          { home: input.home, zone: input.zone, place: input.place }
+        );
+      } else {
+        const adress = await Member.findOne({
+          familyId: input.familyId,
+          famHead: true,
+        }).select("-_id home place");
+        console.log(adress);
+        await Member.findOneAndUpdate({ _id: newMember._id }, { ...adress });
+      }
     }
     log(req.requester, `creation member ${newMember._id}`);
     return res.send(newMember);
@@ -57,11 +66,20 @@ const updateMember = async (req, res) => {
         last_update: new Date(),
       }
     );
-    if (input.famHead && input.familyId) {
-      await Member.updateMany(
-        { familyId: input.familyId },
-        { home: input.home, zone: input.zone, place: input.place }
-      );
+    if (input.familyId) {
+      if (input.famHead) {
+        await Member.updateMany(
+          { familyId: input.familyId },
+          { home: input.home, zone: input.zone, place: input.place }
+        );
+      } else {
+        const adress = await Member.findOne({
+          familyId: input.familyId,
+          famHead: true,
+        }).select("-_id home place");
+        console.log(adress);
+        await Member.findOneAndUpdate({ _id: req.params.id }, { ...adress });
+      }
     }
     log(req.requester, `update member ${req.params.id}`);
     return res.send("sucess");
