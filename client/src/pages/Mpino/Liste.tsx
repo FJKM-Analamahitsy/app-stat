@@ -90,6 +90,15 @@ const Liste: FC = () => {
     }
   };
 
+  const updateGender = (gender: string, id: string) => {
+    const request = api.patch(`/member/${id}`, { gender });
+    toast.promise(request, {
+      success: "succès",
+      error: "erreur",
+      loading: "En attente",
+    });
+  };
+
   const columns: TableColumn<DataRow>[] = useMemo(
     () => [
       {
@@ -109,7 +118,25 @@ const Liste: FC = () => {
       },
       {
         name: "L/V",
-        selector: (row) => row.gender,
+        cell: (row) => {
+          return (
+            <div>
+              {canUpdate ? (
+                <select
+                  className="p-2 bg-transparent"
+                  defaultValue={row.gender}
+                  onChange={(e) => updateGender(e.target.value, row._id)}
+                >
+                  <option value=""></option>
+                  <option value="lehilahy">lehilahy</option>
+                  <option value="vehivavy">vehivavy</option>
+                </select>
+              ) : (
+                <p>{row.gender}</p>
+              )}
+            </div>
+          );
+        },
         hide: 500,
       },
       {

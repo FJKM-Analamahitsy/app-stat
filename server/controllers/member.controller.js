@@ -57,12 +57,17 @@ const deleteMember = async (req, res) => {
 
 const updateMember = async (req, res) => {
   try {
-    const input = req.body;
+    let input = req.body;
+    if (input.name || input.forname) {
+      input = {
+        ...input,
+        fullname: `${input.name}${input.forname ? ` ${input.forname}` : ""}`,
+      };
+    }
     await Member.findOneAndUpdate(
       { _id: req.params.id },
       {
         ...input,
-        fullname: `${input.name}${input.forname ? ` ${input.forname}` : ""}`,
         last_update: new Date(),
       }
     );
