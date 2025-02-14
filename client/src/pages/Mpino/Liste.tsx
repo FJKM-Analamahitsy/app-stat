@@ -2,6 +2,7 @@ import Avatar from "@components/Avatar";
 import Button from "@components/Button";
 import Popup from "@components/Popup";
 import Search from "@components/Search";
+import Select from "@components/Select";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import usePermission from "@hooks/usePermission";
@@ -119,18 +120,17 @@ const Liste: FC = () => {
       {
         name: "L/V",
         cell: (row) => {
+          console.log(row.gender);
           return (
             <div>
               {canUpdate ? (
-                <select
-                  className="p-2 bg-transparent"
+                <Select
+                  key={row._id}
                   defaultValue={row.gender}
+                  options={["", "lehilahy", "vehivavy"]}
                   onChange={(e) => updateGender(e.target.value, row._id)}
-                >
-                  <option value=""></option>
-                  <option value="lehilahy">lehilahy</option>
-                  <option value="vehivavy">vehivavy</option>
-                </select>
+                  valueIndex={false}
+                />
               ) : (
                 <p>{row.gender}</p>
               )}
