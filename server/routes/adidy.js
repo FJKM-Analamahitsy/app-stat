@@ -12,6 +12,7 @@ const {
   getDailySummary,
   getAllCreator,
   getAnnualySummary,
+  getMySummary,
 } = require("../controllers/adidy.controller");
 
 const route = express.Router();
@@ -20,6 +21,7 @@ route.get("/trace/:id", getAdidyTrace);
 route.get("/", getCompta);
 route.get("/byid/:id", getComptaById);
 route.get("/type", getType);
+route.get("/summary/me", getMySummary);
 route.get("/summary/daily", getDailySummary);
 route.get("/summary/annualy", getAnnualySummary);
 route.get("/creator", getAllCreator);

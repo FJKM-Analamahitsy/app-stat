@@ -1,6 +1,7 @@
 const { Adidy, Compta, AdidyType } = require("../models/adidy.model");
 const { Member } = require("../models/member.model");
 const { default: mongoose, Schema } = require("mongoose");
+const dayjs = require("dayjs");
 
 const createAdidy = async (req, res) => {
   try {
@@ -134,6 +135,32 @@ const getType = async (req, res) => {
 
 const getComptaById = async (req, res) => {
   const result = await Compta.findById(req.params.id).populate("type mpandray");
+  res.json(result);
+};
+
+const getMySummary = async (req, res) => {
+  const pipeline = [
+    {
+      $project: {
+        date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+        createBy: "$createBy",
+        mtt: "$mtt",
+        type: "$type",
+      },
+    },
+    {
+      $match: { createBy: req.requester, date: dayjs().format("YYYY-MM-DD") },
+    },
+    {
+      $group: {
+        _id: null,
+        count: { $sum: 1 },
+        sum: { $sum: "$mtt" },
+      },
+    },
+  ];
+  const result = await Compta.aggregate([...pipeline]);
+
   res.json(result);
 };
 
@@ -279,6 +306,7 @@ module.exports = {
   getDailySummary,
   getAnnualySummary,
   getAllCreator,
+  getMySummary,
   createType,
   updateType,
   deleteType,

@@ -8,6 +8,10 @@ export const formatPoneNumber = (num: string) => {
   return null;
 };
 
+export const formatMoney = (val: any) => {
+  return new Intl.NumberFormat("de-FR").format(val);
+};
+
 export const memberStatus = (date: string, border = false) => {
   const diff = new Date().getTime() - new Date(date).getTime();
   const days = diff / 1000 / 60 / 60 / 24;

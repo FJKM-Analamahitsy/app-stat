@@ -1,5 +1,6 @@
 export const setUser = "SET_USER";
 export const unSetUser = "UNSET_USER";
+export const setSummary = "SET_MY_SUMMARY";
 
 export const fields = [
   {

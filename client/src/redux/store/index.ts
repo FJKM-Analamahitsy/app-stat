@@ -1,9 +1,10 @@
-import { userReducer } from "@redux/reducers";
+import { sumReducer, userReducer } from "@redux/reducers";
 import { configureStore } from "@reduxjs/toolkit";
 
 const store = configureStore({
   reducer: {
     user: userReducer,
+    summary: sumReducer,
   },
 });
 

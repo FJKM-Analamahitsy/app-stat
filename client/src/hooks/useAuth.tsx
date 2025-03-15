@@ -1,4 +1,4 @@
-import { userSetAction } from "@redux/actions";
+import { sumSetAction, userSetAction } from "@redux/actions";
 import { useAppDispatch } from "@redux/hooks";
 import api from "@utils/api";
 import { useState } from "react";
@@ -19,6 +19,11 @@ const useAuth = () => {
           navigate("/home");
         }
         dispatch(userSetAction(res.data));
+        api.get("adidy/summary/me").then((res) => {
+          if (res.data.length > 0) {
+            dispatch(sumSetAction(res.data[0]));
+          }
+        });
         setLoading(false);
       })
       .catch(() => {
