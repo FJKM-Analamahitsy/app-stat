@@ -6,13 +6,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import DataTable, { TableColumn } from "react-data-table-component";
 import Avatar from "@components/Avatar";
+import useFilter from "@hooks/useFilter";
+import Search from "@components/Search";
 
 const UserList: FC = () => {
   const [data, setData] = useState([]);
   const [profiles, setProfiles] = useState([]);
+  const [params, setFilter] = useFilter();
 
   const fetch = () => {
-    api.get("/users").then((res) => {
+    api.get(`/users?${params}`).then((res) => {
       setData(res.data);
     });
   };
@@ -74,12 +77,20 @@ const UserList: FC = () => {
   );
 
   useEffect(() => {
-    fetch();
+    if (params !== undefined) {
+      fetch();
+    }
+  }, [params]);
+
+  useEffect(() => {
     getProfile();
   }, []);
   return (
     <div className="bg-white p-4 h-full overflow-y-auto">
-      <div>
+      <div className="flex justify-between">
+        <div>
+          <Search onSearch={(q) => setFilter({ q })} />
+        </div>
         <FormUser profile={profiles} success={fetch}>
           <Button className="bg-primary text-white min-w-[150px]">
             <FontAwesomeIcon icon={solid("add")} className="mr-2" /> Nouveau

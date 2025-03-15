@@ -1,8 +1,11 @@
 import Button from "@components/Button";
 import Input from "@components/Input";
 import Modal from "@components/Modal";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import { FC, FormEvent, ReactNode, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 interface Props {
   children: ReactNode;
@@ -15,27 +18,38 @@ const FormUser: FC<Props> = ({ children, data, profile, success }) => {
   const [input, setInput] = useState<any>({});
   const form = useRef<HTMLFormElement>(null);
   const modal = useRef<any>(null);
+  const [show, setShow] = useState(false);
 
   const onChangeHandler = (e: any) => {
     const name = e.target.name;
-    const value = e.target.value;
+    let value = e.target.value as string;
+    if (name === "username") {
+      value = value.toLowerCase();
+    }
     setInput({ ...input, [name]: value });
   };
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
+    let request = new Promise(() => {});
     if (data) {
-      api.patch("/users/" + data._id, input).then((res) => {
+      request = api.patch("/users/" + data._id, input).then((res) => {
         success && success();
         form.current?.reset();
         modal.current.close();
       });
     } else {
-      api.post("/users", input).then((res) => {
+      request = api.post("/users", input).then((res) => {
         success && success();
+        modal.current.close();
         form.current?.reset();
       });
     }
+
+    toast.promise(request, {
+      loading: "En attente...",
+      success: "Succès",
+    });
   };
 
   useEffect(() => {
@@ -50,7 +64,7 @@ const FormUser: FC<Props> = ({ children, data, profile, success }) => {
         className="flex flex-col gap-4 bg-white p-6 rounded min-w-[30vw]"
       >
         <div>
-          <p>username</p>
+          <p className="mb-1">Nom d'utilisateur</p>
           <Input
             placeholder="rakoto"
             name="username"
@@ -60,9 +74,16 @@ const FormUser: FC<Props> = ({ children, data, profile, success }) => {
           />
         </div>
         <div>
-          <p>password</p>
+          <p className="mb-1">Mot de passe</p>
           <Input
-            type="password"
+            type={show ? "text" : "password"}
+            rightIcon={
+              <FontAwesomeIcon
+                icon={show ? solid("eye-slash") : solid("eye")}
+                onClick={() => setShow(!show)}
+                size="sm"
+              />
+            }
             placeholder="******"
             name="password"
             required={!data}
@@ -72,7 +93,7 @@ const FormUser: FC<Props> = ({ children, data, profile, success }) => {
         </div>
 
         <div>
-          <p>profile</p>
+          <p className="mb-1">Profile</p>
           <select
             name="profile"
             required
@@ -91,7 +112,7 @@ const FormUser: FC<Props> = ({ children, data, profile, success }) => {
           </select>
         </div>
 
-        <Button className="bg-primary text-white">Create</Button>
+        <Button className="bg-primary text-white mt-4">enregistrer</Button>
       </form>
     </Modal>
   );

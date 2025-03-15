@@ -46,7 +46,16 @@ const updateUser = async (req, res) => {
 };
 
 const getAllUser = async (req, res) => {
-  const user = await User.find().select("username").populate("profile");
+  const { q } = req.query;
+  let filter = {};
+  if (q) {
+    filter = { username: { $regex: new RegExp(q, "i") } };
+  }
+  const user = await User.find()
+    .sort({ username: "asc" })
+    .where(filter)
+    .select("username")
+    .populate("profile");
   return res.send(user);
 };
 
