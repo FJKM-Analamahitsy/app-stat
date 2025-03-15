@@ -114,6 +114,7 @@ const listMember = async (req, res) => {
     searchField,
     ankohonana,
     ondry,
+    other,
     ...cfil
   } = req.query;
   let sort = {};
@@ -131,6 +132,10 @@ const listMember = async (req, res) => {
   let filter = { ...cfil };
   if (sampana) {
     filter = { ...filter, sampana: { $regex: new RegExp(sampana, "i") } };
+  }
+
+  if (other) {
+    filter = { ...filter, other: { $exists: true } };
   }
 
   if (ondry) {

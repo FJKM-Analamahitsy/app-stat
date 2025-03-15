@@ -7,7 +7,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import usePermission from "@hooks/usePermission";
 import api from "@utils/api";
-import { formatPoneNumber, memberStatus } from "@utils/helper";
+import { formatPoneNumber } from "@utils/helper";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import toast from "react-hot-toast";
@@ -107,10 +107,17 @@ const Liste: FC = () => {
         sortable: true,
         cell: (row) => {
           return (
-            <div onClick={() => navigate("/christian/" + row._id)} className="">
+            <div
+              onClick={() => navigate("/christian/" + row._id)}
+              className="overflow-hidden"
+            >
               <Avatar
                 label={`${row.fullname}`}
-                className={memberStatus(row.lastPayDate, true)}
+                className={`${
+                  row.other && row.other !== ""
+                    ? "border-red-500"
+                    : "border-white"
+                }`}
               />
             </div>
           );
@@ -326,6 +333,20 @@ const Liste: FC = () => {
                 <option value="">Tous</option>
                 <option value="lehilahy">Activer</option>
                 <option value="vehivavy">Desactiver</option>
+              </select>
+            </div>
+
+            <div>
+              <p className="my-2">Remarque</p>
+              <select
+                className="bg-bg w-full p-3 px-1 rounded"
+                value={filter.other}
+                onChange={(e) => {
+                  setFilter({ ...filter, other: e.target.value });
+                }}
+              >
+                <option value="">Tous</option>
+                <option value="exist">Existe</option>
               </select>
             </div>
           </div>
