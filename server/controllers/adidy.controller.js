@@ -228,8 +228,12 @@ const getAllCreator = async (req, res) => {
       $group: {
         _id: {
           createBy: "$createBy",
+          name: { $toLower: "$createBy" },
         },
       },
+    },
+    {
+      $sort: { "_id.name": 1 },
     },
   ]);
 

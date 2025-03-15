@@ -22,11 +22,20 @@ const createMember = async (req, res) => {
       fullname: `${input.name}${input.forname ? ` ${input.forname}` : ""}`,
     });
     await newMember.save();
-    if (input.famHead && input.familyId) {
-      await Member.updateMany(
-        { familyId: input.familyId },
-        { home: input.home, zone: input.zone, place: input.place }
-      );
+    if (input.familyId) {
+      if (input.famHead) {
+        await Member.updateMany(
+          { familyId: input.familyId },
+          { home: input.home, zone: input.zone, place: input.place }
+        );
+      } else {
+        const adress = await Member.findOne({
+          familyId: input.familyId,
+          famHead: true,
+        }).select("-_id home place");
+        console.log(adress);
+        await Member.findOneAndUpdate({ _id: newMember._id }, { ...adress });
+      }
     }
     log(req.requester, `creation member ${newMember._id}`);
     return res.send(newMember);
@@ -48,20 +57,34 @@ const deleteMember = async (req, res) => {
 
 const updateMember = async (req, res) => {
   try {
-    const input = req.body;
+    let input = req.body;
+    if (input.name || input.forname) {
+      input = {
+        ...input,
+        fullname: `${input.name}${input.forname ? ` ${input.forname}` : ""}`,
+      };
+    }
     await Member.findOneAndUpdate(
       { _id: req.params.id },
       {
         ...input,
-        fullname: `${input.name}${input.forname ? ` ${input.forname}` : ""}`,
         last_update: new Date(),
       }
     );
-    if (input.famHead && input.familyId) {
-      await Member.updateMany(
-        { familyId: input.familyId },
-        { home: input.home, zone: input.zone, place: input.place }
-      );
+    if (input.familyId) {
+      if (input.famHead) {
+        await Member.updateMany(
+          { familyId: input.familyId },
+          { home: input.home, zone: input.zone, place: input.place }
+        );
+      } else {
+        const adress = await Member.findOne({
+          familyId: input.familyId,
+          famHead: true,
+        }).select("-_id home place");
+        console.log(adress);
+        await Member.findOneAndUpdate({ _id: req.params.id }, { ...adress });
+      }
     }
     log(req.requester, `update member ${req.params.id}`);
     return res.send("sucess");
@@ -88,8 +111,10 @@ const listMember = async (req, res) => {
     anarana,
     sampana,
     search,
+    searchField,
     ankohonana,
     ondry,
+    other,
     ...cfil
   } = req.query;
   let sort = {};
@@ -109,6 +134,10 @@ const listMember = async (req, res) => {
     filter = { ...filter, sampana: { $regex: new RegExp(sampana, "i") } };
   }
 
+  if (other) {
+    filter = { ...filter, other: { $exists: true } };
+  }
+
   if (ondry) {
     filter = {
       ...filter,
@@ -119,14 +148,22 @@ const listMember = async (req, res) => {
   }
 
   if (search) {
-    filter = {
-      ...filter,
-      $or: [
-        { fullname: { $regex: new RegExp(search, "i") } },
-        { mpandrayN: { $regex: new RegExp(search, "i") } },
-      ],
-    };
-    sort = { mpandrayN: "asc" };
+    if (searchField === "home") {
+      filter = {
+        ...filter,
+        familyId: search,
+      };
+      sort = { familyId: "asc" };
+    } else {
+      filter = {
+        ...filter,
+        $or: [
+          { fullname: { $regex: new RegExp(search, "i") } },
+          { mpandrayN: { $regex: new RegExp(search, "i") } },
+        ],
+      };
+      sort = { mpandrayN: "asc" };
+    }
   }
   const member = await Member.find()
     .sort({ ...sort })
@@ -143,20 +180,43 @@ const listMember = async (req, res) => {
 };
 
 const statistics = async (req, res) => {
-  const total = await Member.countDocuments();
-  const lehilahy = await Member.find({ gender: "lehilahy" }).countDocuments();
-  const vehivavy = await Member.find({ gender: "vehivavy" }).countDocuments();
-  const mpandray = await Member.find({ mpandray: "eny" }).countDocuments();
-  const batisa = await Member.find({ baptism: "eny" }).countDocuments();
-  const avaratra = await Member.find({ place: "avaratra" }).countDocuments();
-  const atsimo = await Member.find({ place: "atsimo" }).countDocuments();
+  const total = await Member.countDocuments({ status: true });
+  const lehilahy = await Member.find({
+    gender: "lehilahy",
+    status: true,
+  }).countDocuments();
+  const vehivavy = await Member.find({
+    gender: "vehivavy",
+    status: true,
+  }).countDocuments();
+  const mpandray = await Member.find({
+    mpandray: "eny",
+    status: true,
+  }).countDocuments();
+  const batisa = await Member.find({
+    baptism: "eny",
+    status: true,
+  }).countDocuments();
+  const avaratra = await Member.find({
+    place: "avaratra",
+    status: true,
+  }).countDocuments();
+  const atsimo = await Member.find({
+    place: "atsimo",
+    status: true,
+  }).countDocuments();
   const tokatrano = await Member.distinct("familyId", {
     familyId: { $exists: true },
+    status: true,
   });
   const atsinanana = await Member.find({
     place: "atsinanana",
+    status: true,
   }).countDocuments();
-  const andrefana = await Member.find({ place: "andrefana" }).countDocuments();
+  const andrefana = await Member.find({
+    place: "andrefana",
+    status: true,
+  }).countDocuments();
   const stast = {
     lehilahy: {
       n: lehilahy,

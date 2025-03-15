@@ -30,7 +30,7 @@ const Avatar: FC<AvatarProps> = ({
     >
       <div
         className={`rounded-full bg-bg flex border-2 justify-center items-center cursor-pointer overflow-hidden ${className}`}
-        style={{ width: size, height: size }}
+        style={{ width: size, height: size, minWidth: size }}
       >
         {img && <img src={img} alt="" className="w-full h-full" />}
         {name && (
@@ -44,7 +44,11 @@ const Avatar: FC<AvatarProps> = ({
       </div>
       {name && !hideLabel && (
         <div className={`${hideLabSm && "hidden sm:block"}`}>
-          <p className={`leading-[1.3] ${reversed && "text-right"}`}>
+          <p
+            className={`leading-[1.3] overflow-ellipsis ${
+              reversed && "text-right"
+            }`}
+          >
             <span className="font-semibold truncate uppercase">{name[0]}</span>
             <br />
             <span className="block truncate w-full">

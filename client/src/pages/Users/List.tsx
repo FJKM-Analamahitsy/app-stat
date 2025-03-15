@@ -36,6 +36,7 @@ const UserList: FC = () => {
         cell: (row) => {
           return <Avatar label={row.username} />;
         },
+        sortable: true,
       },
       {
         name: "Profile",
@@ -91,7 +92,7 @@ const UserList: FC = () => {
           data={data}
           pagination
           paginationPerPage={5}
-          paginationRowsPerPageOptions={[5, 10, 20]}
+          paginationRowsPerPageOptions={[5, 50, 100, 200]}
           className="h-[calc(100vh-250px)] !overflow-y-auto"
         />
       </div>

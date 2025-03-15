@@ -2,11 +2,12 @@ import Avatar from "@components/Avatar";
 import Button from "@components/Button";
 import Popup from "@components/Popup";
 import Search from "@components/Search";
+import Select from "@components/Select";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import usePermission from "@hooks/usePermission";
 import api from "@utils/api";
-import { formatPoneNumber, memberStatus } from "@utils/helper";
+import { formatPoneNumber } from "@utils/helper";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import toast from "react-hot-toast";
@@ -90,6 +91,15 @@ const Liste: FC = () => {
     }
   };
 
+  const updateGender = (gender: string, id: string) => {
+    const request = api.patch(`/member/${id}`, { gender });
+    toast.promise(request, {
+      success: "succès",
+      error: "erreur",
+      loading: "En attente",
+    });
+  };
+
   const columns: TableColumn<DataRow>[] = useMemo(
     () => [
       {
@@ -97,10 +107,17 @@ const Liste: FC = () => {
         sortable: true,
         cell: (row) => {
           return (
-            <div onClick={() => navigate("/christian/" + row._id)} className="">
+            <div
+              onClick={() => navigate("/christian/" + row._id)}
+              className="overflow-hidden"
+            >
               <Avatar
                 label={`${row.fullname}`}
-                className={memberStatus(row.lastPayDate, true)}
+                className={`${
+                  row.other && row.other !== ""
+                    ? "border-red-500"
+                    : "border-white"
+                }`}
               />
             </div>
           );
@@ -109,7 +126,24 @@ const Liste: FC = () => {
       },
       {
         name: "L/V",
-        selector: (row) => row.gender,
+        cell: (row) => {
+          console.log(row.gender);
+          return (
+            <div>
+              {canUpdate ? (
+                <Select
+                  key={row._id}
+                  defaultValue={row.gender}
+                  options={["", "lehilahy", "vehivavy"]}
+                  onChange={(e) => updateGender(e.target.value, row._id)}
+                  valueIndex={false}
+                />
+              ) : (
+                <p>{row.gender}</p>
+              )}
+            </div>
+          );
+        },
         hide: 500,
       },
       {
@@ -128,6 +162,13 @@ const Liste: FC = () => {
         name: "Ankohonana",
         sortable: true,
         selector: (row) => row.familyId,
+        hide: 500,
+        center: true,
+      },
+      {
+        name: "Ankohonana",
+        sortable: true,
+        selector: (row) => row.home,
         hide: 500,
         center: true,
       },
@@ -194,12 +235,24 @@ const Liste: FC = () => {
   return (
     <div className="p-4 bg-white rounded h-full">
       <div className="flex justify-between w-full">
-        <div className="w-2/5">
-          <Search
-            onSearch={(query) => {
-              setQuery(query);
+        <div className="w-2/5 flex gap-3">
+          <div className="grow">
+            <Search
+              onSearch={(query) => {
+                setQuery(query);
+              }}
+            />
+          </div>
+
+          <select
+            className="border rounded"
+            onChange={(e) => {
+              setFilter({ ...filter, searchField: e.target.value });
             }}
-          />
+          >
+            <option value="all">Tous</option>
+            <option value="home">Ankohonana</option>
+          </select>
         </div>
         <Popup>
           <Button className="bg-bg">
@@ -280,6 +333,20 @@ const Liste: FC = () => {
                 <option value="">Tous</option>
                 <option value="lehilahy">Activer</option>
                 <option value="vehivavy">Desactiver</option>
+              </select>
+            </div>
+
+            <div>
+              <p className="my-2">Remarque</p>
+              <select
+                className="bg-bg w-full p-3 px-1 rounded"
+                value={filter.other}
+                onChange={(e) => {
+                  setFilter({ ...filter, other: e.target.value });
+                }}
+              >
+                <option value="">Tous</option>
+                <option value="exist">Existe</option>
               </select>
             </div>
           </div>
