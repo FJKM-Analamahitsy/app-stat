@@ -144,7 +144,7 @@ const Liste: FC = () => {
             </div>
           );
         },
-        hide: 500,
+        hide: 1400,
       },
       {
         name: "Mpandray",
@@ -169,7 +169,7 @@ const Liste: FC = () => {
         name: "Ankohonana",
         sortable: true,
         selector: (row) => row.home,
-        hide: 500,
+        hide: 1400,
         center: true,
       },
       {
