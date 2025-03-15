@@ -24,7 +24,7 @@ const Page: FC = () => {
   const [trace, setTrace] = useState<any>([]);
   const modal = useRef<any>(null);
   const { canUpdate, canDelete } = usePermission("member");
-  const { canPost } = usePermission("contribution");
+  const { canPost } = usePermission("adidy");
 
   const onDeleteHandler = () => {
     const conf = window.confirm("Are you sure to proceed to this action?");

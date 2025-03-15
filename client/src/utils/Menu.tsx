@@ -33,7 +33,7 @@ const MenuData: any = [
   {
     label: "Adidy",
     icon: <FontAwesomeIcon icon={solid("money-bill")} />,
-    auth: "adidytype",
+    auth: "adidy",
     submenu: [
       {
         path: "/adidy",
