@@ -93,8 +93,12 @@ const ComptBoard: FC = () => {
             }}
           >
             <option value="">tous</option>
-            {type.map((t: any) => {
-              return <option value={t._id}>{t.name}</option>;
+            {type.map((t: any, i: number) => {
+              return (
+                <option key={i} value={t._id}>
+                  {t.name}
+                </option>
+              );
             })}
           </select>
         </div>
