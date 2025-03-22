@@ -122,10 +122,9 @@ const Compta: FC<Props> = ({ className }) => {
                   }}
                 />
               ) : (
-                <></>
-                // <Print data={row}>
-                //   <FontAwesomeIcon icon={solid("print")} />
-                // </Print>
+                <Print data={row} mode="lan">
+                  <FontAwesomeIcon icon={solid("print")} />
+                </Print>
               )}
               <Confirm
                 onContinue={() => {
