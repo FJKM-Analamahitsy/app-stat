@@ -72,7 +72,6 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
               setDisabled(false);
             });
         } else {
-          toast.success("succès");
           success();
           setDisabled(false);
         }

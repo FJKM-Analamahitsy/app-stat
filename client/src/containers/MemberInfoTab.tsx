@@ -26,9 +26,10 @@ const MemberInfoTab: FC<Props> = ({ children }) => {
   });
 
   useEffect(() => {
-    setActive(user.profile.tabInPage.sort()[0]);
-    setTab(user.profile.tabInPage.sort());
-  }, [user]);
+    const tab = [...user.profile.tabInPage];
+    setActive(tab.sort()[0]);
+    setTab(tab.sort());
+  }, []);
   return (
     <div>
       <>

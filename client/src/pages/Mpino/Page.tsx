@@ -16,6 +16,8 @@ import Adidy from "./Adidy";
 import ChangeStatus from "@containers/ChangeStatus";
 import usePermission from "@hooks/usePermission";
 import Compta from "@containers/Compta";
+import { sumSetAction } from "@redux/actions";
+import { useAppDispatch } from "@redux/hooks";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
@@ -25,6 +27,7 @@ const Page: FC = () => {
   const modal = useRef<any>(null);
   const { canUpdate, canDelete } = usePermission("member");
   const { canPost } = usePermission("adidy");
+  const dispatch = useAppDispatch();
 
   const onDeleteHandler = () => {
     const conf = window.confirm("Are you sure to proceed to this action?");
@@ -103,6 +106,11 @@ const Page: FC = () => {
                 mpandray={id || ""}
                 success={() => {
                   getTrace();
+                  api.get("adidy/summary/me").then((res) => {
+                    if (res.data.length > 0) {
+                      dispatch(sumSetAction(res.data[0]));
+                    }
+                  });
                   modal.current.close();
                 }}
               />
