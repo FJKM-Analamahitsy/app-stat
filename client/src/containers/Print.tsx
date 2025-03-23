@@ -22,7 +22,7 @@ interface Props {
 
 const Print: FC<Props> = ({ children, data, onsuccess, mode = "lan" }) => {
   const contentRef = useRef<HTMLDivElement>(null);
-  const [value, setValue] = useState<any>();
+  const [value, setValue] = useState<any>(1);
   const modal = useRef<any>(null);
   const print = useReactToPrint({
     contentRef,
@@ -31,33 +31,34 @@ const Print: FC<Props> = ({ children, data, onsuccess, mode = "lan" }) => {
     },
   });
 
-  const onPrint = useCallback((e: FormEvent) => {
-    e.preventDefault();
-    const dataToPrint = {
-      data: data,
-      printer: {
-        adress: localStorage.getItem("xprinter") || "192.168.123.100",
-        port: 9100,
-        copy: value,
-      },
-    };
-    server
-      .post(
-        `http://${
-          localStorage.getItem("xpserver") || "localhost"
-        }:30116/receipt`,
-        dataToPrint
-      )
-      .then(() => {
-        toast.success("Success");
-      })
-      .catch((err) => {
-        toast.error("Une erreur se produit pendant l'operation");
-      });
-  }, []);
-  useEffect(() => {
-    setValue(localStorage.getItem("ncopy") ?? 1);
-  }, []);
+  const onPrint = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault();
+      const dataToPrint = {
+        data: data,
+        printer: {
+          adress: localStorage.getItem("xprinter") || "192.168.3.100",
+          port: 9100,
+          copy: parseInt(value),
+        },
+      };
+      server
+        .post(
+          `http://${
+            localStorage.getItem("xpserver") || "localhost"
+          }:30116/receipt`,
+          dataToPrint
+        )
+        .then(() => {
+          toast.success("Success");
+        })
+        .catch((err) => {
+          toast.error("Une erreur se produit pendant l'operation");
+        });
+    },
+    [value]
+  );
+
   return (
     <>
       {mode === "lan" ? (
@@ -75,7 +76,7 @@ const Print: FC<Props> = ({ children, data, onsuccess, mode = "lan" }) => {
               required
               min={1}
               onChange={(e) => {
-                setValue(e.target.value);
+                setValue(+e.target.value);
               }}
             />
             <div className="flex gap-4 justify-end mt-4">
