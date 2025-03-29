@@ -1,12 +1,4 @@
-import {
-  FC,
-  FormEvent,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { FC, FormEvent, ReactNode, useCallback, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import Receipt from "./Receipt";
 import Modal from "@components/Modal";
@@ -17,10 +9,9 @@ interface Props {
   children: ReactNode;
   data: any;
   onsuccess?: () => void;
-  mode?: string;
 }
 
-const Print: FC<Props> = ({ children, data, onsuccess, mode = "lan" }) => {
+const Print: FC<Props> = ({ children, data, onsuccess }) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [value, setValue] = useState<any>(1);
   const modal = useRef<any>(null);
@@ -59,9 +50,11 @@ const Print: FC<Props> = ({ children, data, onsuccess, mode = "lan" }) => {
     [value]
   );
 
+  const isXprinter = localStorage.getItem("xptype") === "third-party";
+
   return (
     <>
-      {mode === "lan" ? (
+      {isXprinter ? (
         <Modal ref={modal}>
           <div>{children}</div>
           <form

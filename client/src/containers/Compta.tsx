@@ -122,7 +122,7 @@ const Compta: FC<Props> = ({ className }) => {
                   }}
                 />
               ) : (
-                <Print data={row} mode="lan">
+                <Print data={row}>
                   <FontAwesomeIcon icon={solid("print")} />
                 </Print>
               )}
