@@ -65,7 +65,15 @@ const deleteAdidy = async (req, res) => {
 };
 
 const getCompta = async (req, res) => {
-  const { page = 1, limit = 1000, start, end, mpandray, creator } = req.query;
+  const {
+    page = 1,
+    limit = 1000,
+    start,
+    end,
+    mpandray,
+    creator,
+    culte,
+  } = req.query;
   let filter = {};
   if (start) {
     filter = {
@@ -92,6 +100,10 @@ const getCompta = async (req, res) => {
 
   if (creator) {
     filter = { ...filter, createBy: creator };
+  }
+
+  if (culte) {
+    filter = { ...filter, culte: +culte };
   }
 
   let member = await Compta.aggregate([
@@ -179,7 +191,16 @@ const getMySummary = async (req, res) => {
 const getDailySummary = async (req, res) => {
   let match = { date: req.query.date };
   if (req.query.type) {
-    match = { ...match, type: new mongoose.Types.ObjectId(req.query.type) };
+    match = {
+      ...match,
+      type: new mongoose.Types.ObjectId(req.query.type),
+    };
+  }
+  if (req.query.culte) {
+    match = {
+      ...match,
+      culte: +req.query.culte,
+    };
   }
   const pipeline = [
     {
@@ -188,6 +209,7 @@ const getDailySummary = async (req, res) => {
         createBy: "$createBy",
         mtt: "$mtt",
         type: "$type",
+        culte: "$culte",
       },
     },
     {

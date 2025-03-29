@@ -15,6 +15,7 @@ const ComptBoard: FC = () => {
   const [filter, setfilter] = useState<any>({
     date: query.get("date") ?? dayjs().format("YYYY-MM-DD"),
     type: query.get("type") ?? "",
+    culte: query.get("culte") ?? "",
   });
 
   const [type, setType] = useState<any>([]);
@@ -69,10 +70,10 @@ const ComptBoard: FC = () => {
   return (
     <div className="bg-white h-full p-4">
       <div className="flex justify-between">
-        <div>
+        <div className="flex gap-2">
           <input
             type="date"
-            className="bg-bg p-2 rounded mr-3"
+            className="bg-bg p-2 rounded"
             value={filter.date}
             onChange={(e) =>
               setfilter({
@@ -100,6 +101,17 @@ const ComptBoard: FC = () => {
                 </option>
               );
             })}
+          </select>
+          <select
+            className="border rounded p-2"
+            value={filter.culte.toString()}
+            onChange={(e) => {
+              setfilter({ ...filter, culte: e.target.value });
+            }}
+          >
+            <option value="">tous</option>
+            <option value="1">Premier culte</option>
+            <option value="2">Deuxieme culte</option>
           </select>
         </div>
         <button

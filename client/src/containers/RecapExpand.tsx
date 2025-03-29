@@ -8,7 +8,12 @@ import { MONTHS } from "@utils/constant";
 import dayjs from "dayjs";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import Print from "./Print";
 import toast from "react-hot-toast";
 import { isMobile } from "react-device-detect";
@@ -21,12 +26,19 @@ const RecapExpand: FC<Props> = ({ data: input }) => {
   const [data, setData] = useState<any>({});
   const { id } = useParams();
   const navigate = useNavigate();
+  const [query] = useSearchParams();
+
+  console.log(input);
 
   const fetch = () => {
     const start = dayjs(input._id.date).format("YYYY-MM-DD");
     const end = dayjs(input._id.date).add(1, "day").format("YYYY-MM-DD");
     api
-      .get(`/adidy?creator=${input._id.createBy}&start=${start}&end=${end}`)
+      .get(
+        `/adidy?creator=${input._id.createBy}&start=${start}&end=${end}${
+          query.get("culte") ? `&culte=${query.get("culte")}` : ""
+        }`
+      )
       .then((res) => {
         setData(res.data);
       });
