@@ -111,7 +111,7 @@ const ComptBoard: FC = () => {
           >
             <option value="">tous</option>
             <option value="1">Premier culte</option>
-            <option value="2">Deuxieme culte</option>
+            <option value="2">Deuxième culte</option>
           </select>
         </div>
         <button
