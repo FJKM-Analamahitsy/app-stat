@@ -36,6 +36,15 @@ const Setting: FC = () => {
         label="type d'imprimante"
         valueIndex={false}
       />
+      <Select
+        defaultValue={localStorage.getItem("culte") || "1"}
+        onChange={(e) => {
+          localStorage.setItem("culte", e.target.value);
+        }}
+        options={["1", "2"]}
+        label="Culte"
+        valueIndex={false}
+      />
     </div>
   );
 };

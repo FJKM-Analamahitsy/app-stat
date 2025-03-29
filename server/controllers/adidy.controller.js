@@ -1,6 +1,6 @@
 const { Adidy, Compta, AdidyType } = require("../models/adidy.model");
 const { Member } = require("../models/member.model");
-const { default: mongoose, Schema } = require("mongoose");
+const { default: mongoose } = require("mongoose");
 const dayjs = require("dayjs");
 
 const createAdidy = async (req, res) => {
@@ -15,7 +15,19 @@ const createAdidy = async (req, res) => {
       const newAdidy = new Adidy(req.body.trace);
       await newAdidy.save();
     }
-    const compta = new Compta({ ...req.body.compta, createBy: req.requester });
+
+    //get nth compta
+    const today = dayjs().set("hour", 5).toISOString();
+    const number = await Compta.find({
+      createBy: req.requester,
+      date: { $gte: today },
+    }).countDocuments();
+
+    const compta = new Compta({
+      ...req.body.compta,
+      number: number + 1,
+      createBy: req.requester,
+    });
     await compta.save();
     await Member.findByIdAndUpdate(mpandray, { lastPayDate: new Date() });
     const result = await compta.populate("mpandray type");

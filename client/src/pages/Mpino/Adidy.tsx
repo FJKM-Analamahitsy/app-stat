@@ -37,6 +37,7 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       mtt: parseInt(data.pay.replace(/\./g, "")),
       month,
       year: data.year,
+      culte: parseInt(localStorage.getItem("culte") as string),
     };
     const trace = {
       mpandray,

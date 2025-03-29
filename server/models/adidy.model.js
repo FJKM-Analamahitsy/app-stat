@@ -26,6 +26,8 @@ const Compta = mongoose.model("Compta", {
   mtt: Number,
   month: [Number],
   year: Number,
+  number: Number,
+  culte: Number,
 });
 
 const AdidyType = mongoose.model("AdidyType", {
