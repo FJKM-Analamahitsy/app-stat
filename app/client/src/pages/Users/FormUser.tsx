@@ -49,6 +49,7 @@ const FormUser: FC<Props> = ({ children, data, profile, success }) => {
     toast.promise(request, {
       loading: "En attente...",
       success: "Succès",
+      error: "",
     });
   };
 
