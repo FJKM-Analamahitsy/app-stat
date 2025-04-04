@@ -12,6 +12,7 @@ const { diacre } = require("./routes/diacre");
 const { printer } = require("./routes/printer");
 const { authMiddlware } = require("./middleware/middleware");
 const path = require("path");
+const route = express.Router();
 
 const app = express();
 app.use(express.json());
@@ -21,13 +22,14 @@ app.use(
   })
 );
 app.use(cookieParser);
-app.use("/auth", auth);
-app.use("/member", authMiddlware, member);
-app.use("/adidy", authMiddlware, adidy);
-app.use("/profile", authMiddlware, profile);
-app.use("/users", authMiddlware, users);
-app.use("/diacre", authMiddlware, diacre);
-app.use("/printer", authMiddlware, printer);
+route.use("/auth", auth);
+route.use("/member", authMiddlware, member);
+route.use("/adidy", authMiddlware, adidy);
+route.use("/profile", authMiddlware, profile);
+route.use("/users", authMiddlware, users);
+route.use("/diacre", authMiddlware, diacre);
+route.use("/printer", authMiddlware, printer);
+app.use("/api", route);
 
 app.use(express.static(path.join(__dirname, "public")));
 

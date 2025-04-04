@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
+    "start": "node --experimental-modules dist/main.js",
     "dev": "nodemon index.js",
     "prebuild": "cd client && yarn build && cd ..",
     "build": "rollup -c"

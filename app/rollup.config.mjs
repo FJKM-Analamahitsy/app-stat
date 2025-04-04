@@ -1,6 +1,5 @@
 import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
 import copy from "rollup-plugin-copy";
 import del from "rollup-plugin-delete";
@@ -16,7 +15,6 @@ export default {
     del({
       targets: "dist/*",
     }),
-    nodeResolve(),
     commonjs(),
     json(),
     terser(),
