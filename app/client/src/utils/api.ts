@@ -2,14 +2,10 @@ import axios from "axios";
 
 export const server = axios;
 
-const localServer = `${window.location.protocol}//${window.location.hostname}`;
+const host = `${window.location.protocol}//${window.location.hostname}`;
 
 const api = axios.create({
-  baseURL: `${
-    process.env.REACT_APP_ENV === "cloud"
-      ? process.env.REACT_APP_SERVER
-      : localServer
-  }:3001`,
+  baseURL: `${host}${process.env.REACT_APP_ENV === "cloud" ? "" : ":3001"}`,
   headers: {
     device: navigator.userAgent,
   },

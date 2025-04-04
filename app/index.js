@@ -10,6 +10,7 @@ const { profile } = require("./routes/profile");
 const { users } = require("./routes/users");
 const { diacre } = require("./routes/diacre");
 const { authMiddlware } = require("./middleware/middleware");
+const path = require("path");
 
 const app = express();
 app.use(express.json());
@@ -25,6 +26,12 @@ app.use("/adidy", authMiddlware, adidy);
 app.use("/profile", authMiddlware, profile);
 app.use("/users", authMiddlware, users);
 app.use("/diacre", authMiddlware, diacre);
+
+app.use(express.static(path.join(__dirname, "client", "build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 const port = process.env.PORT || 4000;
 
