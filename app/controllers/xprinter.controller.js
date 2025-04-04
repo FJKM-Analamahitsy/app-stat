@@ -93,7 +93,7 @@ const printReceipt = (printer, data) => {
     .cut();
 };
 
-const PrintReceipt = (req, res) => {
+const PrintReceipt = async (req, res) => {
   try {
     const { data, printer } = req.body;
     const device = new escpos.Network(printer.adress, printer.port);

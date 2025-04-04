@@ -5,4 +5,4 @@ const route = express.Router();
 
 route.post("/", PrintReceipt);
 
-module.exports.profile = route;
+module.exports.printer = route;
