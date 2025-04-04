@@ -91,7 +91,7 @@ const Print: FC<Props> = ({ children, data, onsuccess }) => {
           <div onClick={() => print()}>{children}</div>
           <div className="hidden">
             <div ref={contentRef}>
-              <Receipt data={data} />
+              {data.mpandray && <Receipt data={data} />}
             </div>
           </div>
         </div>
