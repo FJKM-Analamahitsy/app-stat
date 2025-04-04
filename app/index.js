@@ -9,6 +9,7 @@ const { cookieParser } = require("./utils/cookieParser");
 const { profile } = require("./routes/profile");
 const { users } = require("./routes/users");
 const { diacre } = require("./routes/diacre");
+const { printer } = require("./routes/printer");
 const { authMiddlware } = require("./middleware/middleware");
 const path = require("path");
 
@@ -26,6 +27,7 @@ app.use("/adidy", authMiddlware, adidy);
 app.use("/profile", authMiddlware, profile);
 app.use("/users", authMiddlware, users);
 app.use("/diacre", authMiddlware, diacre);
+app.use("/printer", authMiddlware, printer);
 
 app.use(express.static(path.join(__dirname, "client", "build")));
 
