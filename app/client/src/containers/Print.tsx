@@ -2,7 +2,7 @@ import { FC, FormEvent, ReactNode, useCallback, useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import Receipt from "./Receipt";
 import Modal from "@components/Modal";
-import { server } from "@utils/api";
+import api from "@utils/api";
 import toast from "react-hot-toast";
 
 interface Props {
@@ -28,18 +28,13 @@ const Print: FC<Props> = ({ children, data, onsuccess }) => {
       const dataToPrint = {
         data: data,
         printer: {
-          adress: localStorage.getItem("xprinter") || "192.168.3.100",
+          adress: localStorage.getItem("xprinter") || "192.168.123.100",
           port: 9100,
           copy: parseInt(value),
         },
       };
-      server
-        .post(
-          `http://${
-            localStorage.getItem("xpserver") || "localhost"
-          }:30116/receipt`,
-          dataToPrint
-        )
+      api
+        .post("/printer", dataToPrint)
         .then(() => {
           toast.success("Success");
         })

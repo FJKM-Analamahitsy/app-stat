@@ -55,13 +55,8 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
           },
         };
         if (dataToPrint.printer.copy > 0) {
-          server
-            .post(
-              `http://${
-                localStorage.getItem("xpserver") || "localhost"
-              }:30116/receipt`,
-              dataToPrint
-            )
+          api
+            .post("/printer", dataToPrint)
             .then(() => {
               toast.success("Success");
               success();
