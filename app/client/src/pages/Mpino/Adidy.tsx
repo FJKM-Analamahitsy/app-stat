@@ -1,7 +1,7 @@
 import Button from "@components/Button";
 import InputNew from "@components/InputNew";
 import Select from "@components/Select";
-import api, { server } from "@utils/api";
+import api from "@utils/api";
 import { MONTHS } from "@utils/constant";
 import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
