@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, Suspense } from "react";
 import SideMenu from "./SideMenu";
 import Header from "layout/Header";
 import { Outlet } from "react-router-dom";
@@ -10,7 +10,9 @@ const Layout: FC = () => {
       <div className="w-full">
         <Header />
         <div className="w-full h-[calc(100vh-70px)] overflow-hidden overflow-y-auto p-4 bg-slate-50">
-          <Outlet />
+          <Suspense fallback={<div>loading...</div>}>
+            <Outlet />
+          </Suspense>
         </div>
       </div>
     </div>

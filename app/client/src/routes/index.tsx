@@ -1,25 +1,26 @@
-import Liste from "@pages/Mpino/Liste";
-import Home from "@pages/Home";
 import Login from "@pages/Login";
-import NewMember from "@pages/Mpino/New";
-import Page from "@pages/Mpino/Page";
-import { FC } from "react";
+import { FC, lazy } from "react";
 import { Routes as Router, Route } from "react-router-dom";
 import AuthGuard from "@auth/AuthGuard";
 import Layout from "layout";
-import ListeSampana from "@pages/Sampana";
-import ProfileList from "@pages/Profile/List";
-import ProfilePage from "@pages/Profile/Page";
-import UserList from "@pages/Users/List";
-import AdidyType from "@pages/Adidy/Type";
-import Journal from "@pages/Adidy/List";
-import PrintPage from "@pages/Print";
-import ComptBoard from "@pages/Adidy/Board";
-import Setting from "@pages/Setting";
-import Map from "@pages/diakona/Map";
-import Import from "@pages/Migration/Import";
-import Export from "@pages/Migration/Export";
-import Diakona from "@pages/diakona";
+
+const Liste = lazy(() => import("@pages/Mpino/Liste"));
+const Home = lazy(() => import("@pages/Home"));
+const NewMember = lazy(() => import("@pages/Mpino/New"));
+const Page = lazy(() => import("@pages/Mpino/Page"));
+const ListeSampana = lazy(() => import("@pages/Sampana"));
+const ProfileList = lazy(() => import("@pages/Profile/List"));
+const ProfilePage = lazy(() => import("@pages/Profile/Page"));
+const UserList = lazy(() => import("@pages/Users/List"));
+const AdidyType = lazy(() => import("@pages/Adidy/Type"));
+const Journal = lazy(() => import("@pages/Adidy/List"));
+const PrintPage = lazy(() => import("@pages/Print"));
+const ComptBoard = lazy(() => import("@pages/Adidy/Board"));
+const Setting = lazy(() => import("@pages/Setting"));
+const Map = lazy(() => import("@pages/diakona/Map"));
+const Import = lazy(() => import("@pages/Migration/Import"));
+const Export = lazy(() => import("@pages/Migration/Export"));
+const Diakona = lazy(() => import("@pages/diakona"));
 
 const Routes: FC = () => {
   return (
