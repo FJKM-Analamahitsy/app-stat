@@ -5,7 +5,11 @@ export const server = axios;
 const host = `${window.location.protocol}//${window.location.hostname}`;
 
 const api = axios.create({
-  baseURL: `${host}${process.env.REACT_APP_ENV === "cloud" ? "" : ":3001"}/api`,
+  baseURL: `${
+    process.env.REACT_APP_ENV === "cloud"
+      ? window.location.origin
+      : `${host}:3001`
+  }/api`,
   headers: {
     device: navigator.userAgent,
   },
