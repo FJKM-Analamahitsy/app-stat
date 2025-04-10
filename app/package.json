@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node --experimental-modules dist/main.js",
     "dev": "nodemon index.js",
-    "prebuildd": "cd client && npm run build && cd ..",
+    "prebuild": "cd client && npm run build && cd ..",
     "build": "rollup -c"
   },
   "dependencies": {
