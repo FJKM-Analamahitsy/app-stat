@@ -1,8 +1,8 @@
 const express = require("express");
-const { PrintReceipt } = require("../controllers/xprinter.controller");
+const { Print } = require("../controllers/xprinter.controller");
 
 const route = express.Router();
 
-route.post("/", PrintReceipt);
+route.post("/", Print);
 
 module.exports.printer = route;

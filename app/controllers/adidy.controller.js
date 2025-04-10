@@ -2,10 +2,12 @@ const { Adidy, Compta, AdidyType } = require("../models/adidy.model");
 const { Member } = require("../models/member.model");
 const { default: mongoose } = require("mongoose");
 const dayjs = require("dayjs");
+const { PrintReceipt } = require("../service/print.service");
 
 const createAdidy = async (req, res) => {
   try {
     const { mpandray, year } = req.body.trace;
+    const { printer } = req.body;
     const check = await Adidy.findOne({ mpandray, year });
     if (check) {
       await check.updateOne({
@@ -31,7 +33,13 @@ const createAdidy = async (req, res) => {
     await compta.save();
     await Member.findByIdAndUpdate(mpandray, { lastPayDate: new Date() });
     const result = await compta.populate("mpandray type");
-    res.json(result);
+
+    // print receipt if copy more than 0
+    if (printer.copy > 0) {
+      PrintReceipt(result, printer);
+    }
+
+    res.status(200).send();
   } catch (error) {
     res.status(400).send(error.message);
   }

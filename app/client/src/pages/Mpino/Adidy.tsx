@@ -45,33 +45,17 @@ const Adidy: FC<Props> = ({ mpandray, success }) => {
       month,
     };
     if (compta.mtt > 0) {
-      const request = api.post("/adidy", { compta, trace }).then((res) => {
-        const dataToPrint = {
-          data: res.data,
-          printer: {
-            adress: localStorage.getItem("xprinter") || "192.168.123.100",
-            port: 9100,
-            copy: parseInt(localStorage.getItem("ncopy") || "2"),
-          },
-        };
-        if (dataToPrint.printer.copy > 0) {
-          api
-            .post("/printer", dataToPrint)
-            .then(() => {
-              toast.success("Success");
-              success();
-              setDisabled(false);
-            })
-            .catch((err) => {
-              console.log(err);
-              toast.error("Une erreur se produit pendant l'operation");
-              setDisabled(false);
-            });
-        } else {
+      const printer = {
+        adress: localStorage.getItem("xprinter") || "192.168.123.100",
+        port: 9100,
+        copy: parseInt(localStorage.getItem("ncopy") || "2"),
+      };
+      const request = api
+        .post("/adidy", { compta, trace, printer })
+        .then(() => {
           success();
           setDisabled(false);
-        }
-      });
+        });
       toast.promise(request, {
         success: "success",
         error: "error",

@@ -98,13 +98,12 @@ const PrintReceipt = (data, printer) => {
   const xprinter = new escpos.Printer(device);
   device.open((err) => {
     if (err) {
-      return 1;
+      throw err;
     }
     for (let i = 0; i < +printer.copy; i++) {
       Receipt(xprinter, data);
     }
     xprinter.close();
-    return 0;
   });
 };
 
