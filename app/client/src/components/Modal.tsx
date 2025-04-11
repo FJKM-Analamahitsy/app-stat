@@ -68,10 +68,7 @@ const Modal = forwardRef<any, ModalProps>(
           <ModalContent>
             <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center z-50 cursor-auto">
               <div className="animate-drop m-6">{child[1]}</div>
-              <div
-                className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 -z-10"
-                onClick={close}
-              ></div>
+              <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 -z-10"></div>
             </div>
           </ModalContent>
         )}

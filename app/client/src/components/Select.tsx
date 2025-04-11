@@ -17,14 +17,14 @@ const Select: FC<SelectProps> = ({
   ...props
 }) => {
   return (
-    <div className="relative border border-slate-100 rounded p-1">
+    <div className="relative border border-slate-100 rounded px-1">
       {label && (
         <p className="absolute z-10 bg-white -translate-y-3 translate-x-2 text-sm text-grey">
           {label}
         </p>
       )}
       <select
-        className="w-full p-1 text-grey h-10 bg-transparent outline-none"
+        className="w-full text-grey h-10 bg-transparent outline-none"
         {...props}
       >
         {options.map((opt, i) => {

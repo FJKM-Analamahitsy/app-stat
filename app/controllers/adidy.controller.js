@@ -6,18 +6,8 @@ const { PrintReceipt } = require("../service/print.service");
 
 const createAdidy = async (req, res) => {
   try {
-    const { mpandray, year } = req.body.trace;
+    const { mpandray } = req.body.compta;
     const { printer } = req.body;
-    const check = await Adidy.findOne({ mpandray, year });
-    if (check) {
-      await check.updateOne({
-        month: [...check.month, ...req.body.trace.month],
-      });
-    } else {
-      const newAdidy = new Adidy(req.body.trace);
-      await newAdidy.save();
-    }
-
     //get nth compta
     const today = dayjs().set("hour", 5).toISOString();
     const number = await Compta.find({
@@ -41,6 +31,7 @@ const createAdidy = async (req, res) => {
 
     res.status(200).send();
   } catch (error) {
+    console.log(error);
     res.status(400).send(error.message);
   }
 };

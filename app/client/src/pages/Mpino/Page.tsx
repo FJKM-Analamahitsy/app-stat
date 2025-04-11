@@ -1,7 +1,7 @@
 import Avatar from "@components/Avatar";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import MemberDetails from "@containers/MemberDetails";
 import MemberInfoTab from "@containers/MemberInfoTab";
@@ -10,24 +10,19 @@ import { memberStatus } from "@utils/helper";
 import toast from "react-hot-toast";
 import Family from "@containers/Family";
 import AdidyDetails from "@containers/AdidyDetails";
-import Modal from "@components/Modal";
 import Button from "@components/Button";
 import Adidy from "./Adidy";
 import ChangeStatus from "@containers/ChangeStatus";
 import usePermission from "@hooks/usePermission";
 import Compta from "@containers/Compta";
-import { sumSetAction } from "@redux/actions";
-import { useAppDispatch } from "@redux/hooks";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
   const { id } = useParams();
   const navigate = useNavigate();
   const [trace, setTrace] = useState<any>([]);
-  const modal = useRef<any>(null);
   const { canUpdate, canDelete } = usePermission("member");
   const { canPost } = usePermission("adidy");
-  const dispatch = useAppDispatch();
 
   const onDeleteHandler = () => {
     const conf = window.confirm("Are you sure to proceed to this action?");
@@ -93,7 +88,12 @@ const Page: FC = () => {
       <div className="p-4 gap-y-6 md:gap-6 rounded-b min-h-[43vh] ">
         <div className="mb-4 flex justify-evenly md:justify-start gap-4">
           {canPost && (
-            <Modal ref={modal}>
+            <Adidy
+              mpandray={id || ""}
+              success={() => {
+                getTrace();
+              }}
+            >
               <Button className="bg-primary text-white mb-4 ">
                 <FontAwesomeIcon
                   icon={solid("money-bill-1-wave")}
@@ -102,19 +102,7 @@ const Page: FC = () => {
                 />
                 <span className="hidden md:inline-block">Handray adidy</span>
               </Button>
-              <Adidy
-                mpandray={id || ""}
-                success={() => {
-                  getTrace();
-                  api.get("adidy/summary/me").then((res) => {
-                    if (res.data.length > 0) {
-                      dispatch(sumSetAction(res.data[0]));
-                    }
-                  });
-                  modal.current.close();
-                }}
-              />
-            </Modal>
+            </Adidy>
           )}
           {canUpdate && (
             <Link to={`/christian/edit/${id}`}>
