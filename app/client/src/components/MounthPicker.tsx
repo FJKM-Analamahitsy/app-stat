@@ -24,7 +24,7 @@ const MounthPicker: FC<Props> = ({ onChange }) => {
         onClick={() => {
           setData({ s: 0, e: 11 });
         }}
-        className={`rounded border border-slate-100 p-1 bg-slate-700 text-white w-ful text-base col-span-2 `}
+        className={`rounded border border-slate-100 p-1 bg-slate-700 text-white w-ful text-lg lg:text-base col-span-2 `}
       >
         Tous
       </button>
@@ -41,7 +41,7 @@ const MounthPicker: FC<Props> = ({ onChange }) => {
               }
               setIsStart(!iStart);
             }}
-            className={`rounded border border-slate-100 p-2 bg-slate-50 w-full m-auto text-base ${
+            className={`rounded border border-slate-100 p-2 bg-slate-50 w-full m-auto text-lg lg:text-base ${
               i === data.s && "!bg-primary text-white"
             } ${i === data.e && "!bg-orange-400 text-white"} ${
               i > data.s && i < data.e && "!bg-blue-100 text-slate-500"

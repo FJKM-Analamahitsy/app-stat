@@ -17,7 +17,7 @@ const Select: FC<SelectProps> = ({
   ...props
 }) => {
   return (
-    <div className="relative border border-slate-100 rounded px-1">
+    <div className="relative border border-slate-200 rounded px-2 flex items-center">
       {label && (
         <p className="absolute z-10 bg-white -translate-y-3 translate-x-2 text-sm text-grey">
           {label}

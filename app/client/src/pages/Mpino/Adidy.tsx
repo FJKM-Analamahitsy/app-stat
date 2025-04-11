@@ -81,11 +81,11 @@ const Adidy: FC<Props> = ({ mpandray, success, children }) => {
         {data && (
           <form
             onSubmit={submit}
-            className="min-w-[50vw] text-lg py-[2rem] px-6 bg-white border border-bg m-4 mt-8 md:mx-auto  rounded-[5px] flex flex-col gap-8"
+            className="min-w-[80vw] lg:min-w-[50vw] text-xl lg:text-lg py-[2rem] px-6 bg-white border border-bg m-4 mt-8 md:mx-auto  rounded-[5px] flex flex-col gap-8"
           >
             <div className="grid grid-cols-2 gap-3">
               <select
-                className="p-1 rounded border border-slate-100 text-grey"
+                className="p-3 lg:p-2 rounded border border-slate-100 text-grey"
                 value={data.type}
                 onChange={(e) => {
                   setData({ ...data, type: e.target.value });
