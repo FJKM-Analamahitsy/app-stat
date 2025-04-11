@@ -38,15 +38,10 @@ const Page: FC = () => {
     }
   };
 
-  const getTrace = () => {
-    api.get("/adidy/trace/" + id).then((res) => setTrace(res.data));
-  };
-
   useEffect(
     () => {
       if (id) {
         api.get("/member/get/" + id).then((res) => setData(res.data));
-        getTrace();
       } else {
         setData({});
       }
@@ -88,12 +83,7 @@ const Page: FC = () => {
       <div className="p-4 gap-y-6 md:gap-6 rounded-b min-h-[43vh] ">
         <div className="mb-4 flex justify-evenly md:justify-start gap-4">
           {canPost && (
-            <Adidy
-              mpandray={id || ""}
-              success={() => {
-                getTrace();
-              }}
-            >
+            <Adidy mpandray={id || ""} success={() => {}}>
               <Button className="bg-primary text-white mb-4 ">
                 <FontAwesomeIcon
                   icon={solid("money-bill-1-wave")}
@@ -135,7 +125,7 @@ const Page: FC = () => {
           <MemberInfoTab>
             <MemberDetails data={data} />
             <Family data={data} />
-            <AdidyDetails data={trace} />
+            <AdidyDetails />
             <Compta />
           </MemberInfoTab>
         </div>

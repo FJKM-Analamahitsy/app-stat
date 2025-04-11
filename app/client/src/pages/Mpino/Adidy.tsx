@@ -6,7 +6,7 @@ import Select from "@components/Select";
 import api, { getData } from "@utils/api";
 import { FC, FormEvent, ReactNode, useMemo, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { preload } from "swr";
+import { mutate, preload } from "swr";
 import useSWR from "swr/immutable";
 
 interface Props {
@@ -47,6 +47,7 @@ const Adidy: FC<Props> = ({ mpandray, success, children }) => {
         .post("/adidy", { compta, printer })
         .then(() => {
           success();
+          mutate("/adidy/trace/" + mpandray);
           modal.current.close();
         })
         .finally(() => {

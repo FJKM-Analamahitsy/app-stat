@@ -1,4 +1,4 @@
-const { Adidy, Compta, AdidyType } = require("../models/adidy.model");
+const { Compta, AdidyType } = require("../models/adidy.model");
 const { Member } = require("../models/member.model");
 const { default: mongoose } = require("mongoose");
 const dayjs = require("dayjs");
@@ -38,11 +38,34 @@ const createAdidy = async (req, res) => {
 
 const getAdidyTrace = async (req, res) => {
   try {
-    const result = await Adidy.find({ mpandray: req.params.id })
-      .sort({
-        year: "desc",
-      })
-      .limit(4);
+    const currentYear = new Date().getFullYear();
+    const lastFiveYears = currentYear - 5;
+
+    const result = await Compta.aggregate([
+      {
+        $match: {
+          year: { $gte: lastFiveYears },
+          mpandray: new mongoose.Types.ObjectId(req.params.id),
+        },
+      }, // Only last 5 years
+      { $unwind: "$month" }, // Flatten month arrays
+      {
+        $group: {
+          _id: "$year",
+          month: { $addToSet: "$month" },
+        },
+      },
+      { $sort: { _id: -1 } },
+      {
+        $project: {
+          year: "$_id",
+          month: {
+            $sortArray: { input: "$month", sortBy: 1 },
+          },
+          _id: 0,
+        },
+      },
+    ]);
     res.json(result);
   } catch (error) {
     res.status(400).send(error.message);
