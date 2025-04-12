@@ -91,7 +91,9 @@ const Adidy: FC<Props> = ({ mpandray, success, children }) => {
                   setData({ ...data, type: e.target.value });
                   localStorage.setItem("type", e.target.value);
                 }}
+                required
               >
+                <option value="">selectioner</option>
                 {types.map((t: any, i: number) => {
                   return (
                     <option key={i} value={t._id}>
@@ -129,6 +131,8 @@ const Adidy: FC<Props> = ({ mpandray, success, children }) => {
                   setData({ ...data, pay: cval });
                 }
               }}
+              required
+              min={0}
             />
             <div className="flex mt-4 gap-4">
               <Button

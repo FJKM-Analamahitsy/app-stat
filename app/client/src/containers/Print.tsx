@@ -45,7 +45,7 @@ const Print: FC<Props> = ({ children, data, onsuccess }) => {
     [value]
   );
 
-  const isXprinter = localStorage.getItem("xptype") === "third-party";
+  const isXprinter = localStorage.getItem("xptype") !== "native";
 
   return (
     <>
