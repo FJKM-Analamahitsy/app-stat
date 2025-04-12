@@ -45,7 +45,7 @@ const Receipt = (printer, data) => {
     .newLine()
     .tableCustom([
       { text: "Karatra Lah.", align: "LEFT", width: 0.3 },
-      { text: data.mpandray.mpandrayN, align: "RIGHT", width: 0.8 },
+      { text: data.mpandray.mpandrayN ?? "", align: "RIGHT", width: 0.8 },
     ])
     .newLine()
     .tableCustom([
@@ -81,7 +81,11 @@ const Receipt = (printer, data) => {
     .newLine()
     .tableCustom([
       { text: "Montant:", align: "LEFT", width: 0.3 },
-      { text: data.mtt + " MGA", align: "RIGHT", width: 0.8 },
+      {
+        text: new Intl.NumberFormat("de-Fr").format(data.mtt) + " MGA",
+        align: "RIGHT",
+        width: 0.8,
+      },
     ])
     .newLine()
     .newLine()
