@@ -25,11 +25,11 @@ const createAdidy = async (req, res) => {
     const result = await compta.populate("mpandray type");
 
     // print receipt if copy more than 0
-    if (printer.copy > 0) {
+    if (printer && printer.copy > 0) {
       PrintReceipt(result, printer);
     }
 
-    res.status(200).send();
+    res.status(200).json(number + 1);
   } catch (error) {
     console.log(error);
     res.status(400).send(error.message);
@@ -180,15 +180,27 @@ const getMySummary = async (req, res) => {
   const pipeline = [
     {
       $project: {
-        date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+        day: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
         createBy: "$createBy",
         mtt: "$mtt",
         type: "$type",
+        month: "$month",
+        year: "$year",
+        mpandray: "$mpandray",
+        number: "$number",
+        date: "$date",
       },
     },
     {
-      $match: { createBy: req.requester, date: dayjs().format("YYYY-MM-DD") },
+      $match: { createBy: req.requester, day: dayjs().format("YYYY-MM-DD") },
     },
+  ];
+  let data = await Compta.aggregate([...pipeline]);
+
+  data = await Compta.populate(data, { path: "type" });
+  data = await Compta.populate(data, { path: "mpandray" });
+  const sum = await Compta.aggregate([
+    ...pipeline,
     {
       $group: {
         _id: null,
@@ -196,10 +208,9 @@ const getMySummary = async (req, res) => {
         sum: { $sum: "$mtt" },
       },
     },
-  ];
-  const result = await Compta.aggregate([...pipeline]);
+  ]);
 
-  res.json(result);
+  res.json({ data, sum: sum[0] });
 };
 
 const getDailySummary = async (req, res) => {

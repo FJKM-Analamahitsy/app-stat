@@ -28,8 +28,6 @@ const RecapExpand: FC<Props> = ({ data: input }) => {
   const navigate = useNavigate();
   const [query] = useSearchParams();
 
-  console.log(input);
-
   const fetch = () => {
     const start = dayjs(input._id.date).format("YYYY-MM-DD");
     const end = dayjs(input._id.date).add(1, "day").format("YYYY-MM-DD");
