@@ -6,8 +6,6 @@ import Select from "@components/Select";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import usePermission from "@hooks/usePermission";
-import { sumSetAction } from "@redux/actions";
-import { useAppDispatch } from "@redux/hooks";
 import api from "@utils/api";
 import { formatPoneNumber } from "@utils/helper";
 import { FC, useEffect, useMemo, useState } from "react";

@@ -20,7 +20,6 @@ const Page: FC = () => {
   const [data, setData] = useState<any>({});
   const { id } = useParams();
   const navigate = useNavigate();
-  const [trace, setTrace] = useState<any>([]);
   const { canUpdate, canDelete } = usePermission("member");
   const { canPost } = usePermission("adidy");
 

@@ -20,8 +20,8 @@ const useAuth = () => {
         }
         dispatch(userSetAction(res.data));
         api.get("adidy/summary/me").then((res) => {
-          if (res.data.length > 0) {
-            dispatch(sumSetAction(res.data[0]));
+          if (res.data.sum.count) {
+            dispatch(sumSetAction(res.data.sum));
           }
         });
         setLoading(false);
