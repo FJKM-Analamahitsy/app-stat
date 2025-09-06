@@ -210,7 +210,7 @@ const getMySummary = async (req, res) => {
     },
   ]);
 
-  res.json({ data, sum: sum[0] });
+  res.json({ sum: sum[0] });
 };
 
 const getDailySummary = async (req, res) => {

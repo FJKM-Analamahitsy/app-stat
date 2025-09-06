@@ -20,7 +20,7 @@ const useAuth = () => {
         }
         dispatch(userSetAction(res.data));
         api.get("adidy/summary/me").then((res) => {
-          if (res.data.sum.count) {
+          if (res.data.sum) {
             dispatch(sumSetAction(res.data.sum));
           }
         });

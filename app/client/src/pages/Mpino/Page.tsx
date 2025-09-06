@@ -15,6 +15,8 @@ import Adidy from "./Adidy";
 import ChangeStatus from "@containers/ChangeStatus";
 import usePermission from "@hooks/usePermission";
 import Compta from "@containers/Compta";
+import { useAppDispatch } from "@redux/hooks";
+import { sumSetAction } from "@redux/actions";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
@@ -22,6 +24,7 @@ const Page: FC = () => {
   const navigate = useNavigate();
   const { canUpdate, canDelete } = usePermission("member");
   const { canPost } = usePermission("adidy");
+  const dispatch = useAppDispatch();
 
   const onDeleteHandler = () => {
     const conf = window.confirm("Are you sure to proceed to this action?");
@@ -82,7 +85,16 @@ const Page: FC = () => {
       <div className="p-4 gap-y-6 md:gap-6 rounded-b min-h-[43vh] ">
         <div className="mb-4 flex justify-evenly md:justify-start gap-4">
           {canPost && (
-            <Adidy mpandray={id || ""} success={() => {}}>
+            <Adidy
+              mpandray={id || ""}
+              success={() => {
+                api.get("adidy/summary/me").then((res) => {
+                  if (res.data.sum) {
+                    dispatch(sumSetAction(res.data.sum));
+                  }
+                });
+              }}
+            >
               <Button className="bg-primary text-white mb-4 ">
                 <FontAwesomeIcon
                   icon={solid("money-bill-1-wave")}

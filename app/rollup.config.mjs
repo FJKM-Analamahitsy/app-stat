@@ -7,9 +7,8 @@ import del from "rollup-plugin-delete";
 export default {
   input: "index.js",
   output: {
-    dir: "dist",
-    preserveModules: true,
-    format: "system",
+    file: "./dist/main.js",
+    format: "cjs",
   },
 
   plugins: [
