@@ -17,6 +17,7 @@ import usePermission from "@hooks/usePermission";
 import Compta from "@containers/Compta";
 import { useAppDispatch } from "@redux/hooks";
 import { sumSetAction } from "@redux/actions";
+import QrCode from "./QrCode";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
@@ -96,7 +97,7 @@ const Page: FC = () => {
                 });
               }}
             >
-              <Button className="bg-primary text-white mb-4 ">
+              <Button className="bg-primary text-white ">
                 <FontAwesomeIcon
                   icon={solid("money-bill-1-wave")}
                   className="text-white cursor-pointer md:mr-2"
@@ -108,7 +109,7 @@ const Page: FC = () => {
           )}
           {canUpdate && (
             <Link to={`/christian/edit/${id}`}>
-              <Button className="bg-primary text-white mb-4 max-w-[150px]">
+              <Button className="bg-primary text-white max-w-[150px]">
                 <FontAwesomeIcon
                   icon={solid("user-edit")}
                   className="text-white cursor-pointer md:mr-2"
@@ -121,7 +122,7 @@ const Page: FC = () => {
 
           {canDelete && (
             <Button
-              className="bg-primary text-white mb-4 w-fit"
+              className="bg-primary text-white w-fit"
               onClick={() => onDeleteHandler()}
             >
               <FontAwesomeIcon
@@ -131,6 +132,8 @@ const Page: FC = () => {
               />
             </Button>
           )}
+
+          <QrCode />
         </div>
 
         <div className="col-span-2">

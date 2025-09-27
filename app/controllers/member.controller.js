@@ -5,6 +5,7 @@ const parser = require("json2csv").Parser;
 const path = require("path");
 const fs = require("fs");
 const csv2json = require("csvtojson");
+const jwt = require("jsonwebtoken");
 
 const memberInput = object({
   name: string().required(),
@@ -415,6 +416,20 @@ const statPerSampana = async (req, res) => {
   return res.json(result);
 };
 
+// generate token for the qr code
+
+const generateUserToken = async (req, res) => {
+  const id = req.params.id;
+  const member = await Member.where({ _id: id }).findOne();
+  const token = jwt.sign(
+    { username: member.fullname, id: member._id },
+    process.env.PRIVATE_KEY
+  );
+  return res.send({
+    token,
+  });
+};
+
 module.exports = {
   createMember,
   deleteMember,
@@ -429,4 +444,5 @@ module.exports = {
   getLastKaratra,
   statPerBirthMonth,
   statPerSampana,
+  generateUserToken,
 };
