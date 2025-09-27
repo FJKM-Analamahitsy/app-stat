@@ -88,7 +88,8 @@ const Page: FC = () => {
             <Adidy
               mpandray={id || ""}
               success={() => {
-                api.get("adidy/summary/me").then((res) => {
+                const culte = localStorage.getItem("culte");
+                api.get(`adidy/summary/me?culte=${culte ?? 1}`).then((res) => {
                   if (res.data.sum) {
                     dispatch(sumSetAction(res.data.sum));
                   }

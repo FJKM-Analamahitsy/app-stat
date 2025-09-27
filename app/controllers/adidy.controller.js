@@ -177,6 +177,19 @@ const getComptaById = async (req, res) => {
 };
 
 const getMySummary = async (req, res) => {
+  let match = {
+    createBy: req.requester,
+    day: dayjs().format("YYYY-MM-DD"),
+    culte: 1,
+  };
+
+  if (req.query.culte) {
+    match = {
+      ...match,
+      culte: +req.query.culte,
+    };
+  }
+
   const pipeline = [
     {
       $project: {
@@ -189,10 +202,11 @@ const getMySummary = async (req, res) => {
         mpandray: "$mpandray",
         number: "$number",
         date: "$date",
+        culte: "$culte",
       },
     },
     {
-      $match: { createBy: req.requester, day: dayjs().format("YYYY-MM-DD") },
+      $match: { ...match },
     },
   ];
   let data = await Compta.aggregate([...pipeline]);
