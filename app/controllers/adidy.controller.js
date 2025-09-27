@@ -224,7 +224,7 @@ const getMySummary = async (req, res) => {
     },
   ]);
 
-  res.json({ sum: sum[0] });
+  res.json({ sum: sum[0], data });
 };
 
 const getDailySummary = async (req, res) => {
