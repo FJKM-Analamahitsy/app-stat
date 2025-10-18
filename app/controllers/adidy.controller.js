@@ -6,12 +6,14 @@ const { PrintReceipt } = require("../service/print.service");
 
 const createAdidy = async (req, res) => {
   try {
-    const { mpandray } = req.body.compta;
+    const { mpandray, type, culte } = req.body.compta;
     const { printer } = req.body;
     //get nth compta
-    const today = dayjs().set("hour", 5).toISOString();
+    const today = dayjs().set("hour", 0).toISOString();
     const number = await Compta.find({
       createBy: req.requester,
+      type: new mongoose.Types.ObjectId(type),
+      culte,
       date: { $gte: today },
     }).countDocuments();
 
@@ -109,7 +111,10 @@ const getCompta = async (req, res) => {
   }
 
   if (mpandray) {
-    filter = { ...filter, mpandray: new mongoose.Types.ObjectId(mpandray) };
+    filter = {
+      ...filter,
+      mpandray: new mongoose.Types.ObjectId(mpandray),
+    };
   }
 
   if (creator) {

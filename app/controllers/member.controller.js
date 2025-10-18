@@ -190,13 +190,22 @@ const statistics = async (req, res) => {
           { $group: { _id: "$familyId" } },
           { $count: "id" },
         ],
-        mpandray: [{ $match: { mpandray: "eny" } }, { $count: "id" }],
-        batisa: [{ $match: { baptism: "eny" } }, { $count: "id" }],
-        registered: [
-          { $match: { familyId: { $exists: true } } },
+        mpandray: [
+          { $match: { status: true, mpandray: "eny" } },
           { $count: "id" },
         ],
-        sheep: [{ $match: { zone: { $exists: true } } }, { $count: "id" }],
+        batisa: [
+          { $match: { status: true, baptism: "eny" } },
+          { $count: "id" },
+        ],
+        registered: [
+          { $match: { status: true, familyId: { $exists: true } } },
+          { $count: "id" },
+        ],
+        sheep: [
+          { $match: { status: true, zone: { $exists: true } } },
+          { $count: "id" },
+        ],
         gender: [
           { $match: { status: true } },
           { $group: { _id: "$gender", count: { $sum: 1 } } },
@@ -207,6 +216,7 @@ const statistics = async (req, res) => {
               status: true,
               familyRank: { $lte: 2 },
               mpandray: "eny",
+              familyId: { $exists: true },
             },
           },
           { $count: "id" },
@@ -246,7 +256,7 @@ const statistics = async (req, res) => {
   ];
   Object.keys(raw).forEach((v) => {
     if (numfields.indexOf(v) === -1) {
-      item = raw[v].reduce((acc, cur) => {
+      let item = raw[v].reduce((acc, cur) => {
         acc[cur._id] = cur.count;
         return acc;
       }, {});
@@ -256,7 +266,6 @@ const statistics = async (req, res) => {
       stats[v] = raw[v].length > 0 ? raw[v][0].id : 0;
     }
   });
-  console.log(stats);
   res.send(stats);
 };
 

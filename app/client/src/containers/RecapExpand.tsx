@@ -46,7 +46,7 @@ const RecapExpand: FC<Props> = ({ data: input }) => {
     () => [
       {
         name: "#",
-        cell: (row, i) => i + 1,
+        cell: (row, i) => row.number ?? i + 1,
         maxWidth: "100px",
         center: true,
       },
@@ -73,7 +73,7 @@ const RecapExpand: FC<Props> = ({ data: input }) => {
       {
         name: "Libellé",
         cell: (row) =>
-          `${row.type.name} ${
+          `${row.type ? row.type.name : ""} ${
             row.month.length > 1
               ? MONTHS[row.month[0]] +
                 " - " +
