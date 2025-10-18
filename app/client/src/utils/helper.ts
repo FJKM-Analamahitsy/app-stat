@@ -23,3 +23,7 @@ export const memberStatus = (date: string, border = false) => {
     return !border ? "bg-red-400" : "!border-[1px] border-red-400";
   }
 };
+
+export const formatPercent = (stat: number, total: number) => {
+  return ((stat / total) * 100).toFixed(0);
+};

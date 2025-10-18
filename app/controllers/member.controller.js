@@ -181,80 +181,83 @@ const listMember = async (req, res) => {
 };
 
 const statistics = async (req, res) => {
-  const total = await Member.countDocuments({ status: true });
-  const lehilahy = await Member.find({
-    gender: "lehilahy",
-    status: true,
-  }).countDocuments();
-  const vehivavy = await Member.find({
-    gender: "vehivavy",
-    status: true,
-  }).countDocuments();
-  const mpandray = await Member.find({
-    mpandray: "eny",
-    status: true,
-  }).countDocuments();
-  const batisa = await Member.find({
-    baptism: "eny",
-    status: true,
-  }).countDocuments();
-  const avaratra = await Member.find({
-    place: "avaratra",
-    status: true,
-  }).countDocuments();
-  const atsimo = await Member.find({
-    place: "atsimo",
-    status: true,
-  }).countDocuments();
-  const tokatrano = await Member.distinct("familyId", {
-    familyId: { $exists: true },
-    status: true,
+  let raw = await Member.aggregate([
+    {
+      $facet: {
+        total: [{ $match: { status: true } }, { $count: "id" }],
+        home: [
+          { $match: { familyId: { $exists: true }, status: true } },
+          { $group: { _id: "$familyId" } },
+          { $count: "id" },
+        ],
+        mpandray: [{ $match: { mpandray: "eny" } }, { $count: "id" }],
+        batisa: [{ $match: { baptism: "eny" } }, { $count: "id" }],
+        registered: [
+          { $match: { familyId: { $exists: true } } },
+          { $count: "id" },
+        ],
+        sheep: [{ $match: { zone: { $exists: true } } }, { $count: "id" }],
+        gender: [
+          { $match: { status: true } },
+          { $group: { _id: "$gender", count: { $sum: 1 } } },
+        ],
+        mpandray_categ_1: [
+          {
+            $match: {
+              status: true,
+              familyRank: { $lte: 2 },
+              mpandray: "eny",
+            },
+          },
+          { $count: "id" },
+        ],
+        mpandray_categ_2: [
+          {
+            $match: { status: true, familyRank: { $gt: 2 }, mpandray: "eny" },
+          },
+          { $count: "id" },
+        ],
+        mpandray_categ_3: [
+          {
+            $match: { status: true, mpandray: "hafa" },
+          },
+          { $count: "id" },
+        ],
+        region: [
+          { $match: { status: true } },
+          { $group: { _id: "$place", count: { $sum: 1 } } },
+        ],
+      },
+    },
+  ]);
+  raw = raw[0];
+
+  let stats = {};
+  const numfields = [
+    "total",
+    "mpandray",
+    "batisa",
+    "home",
+    "mpandray_categ_1",
+    "mpandray_categ_2",
+    "mpandray_categ_3",
+    "registered",
+    "sheep",
+  ];
+  Object.keys(raw).forEach((v) => {
+    if (numfields.indexOf(v) === -1) {
+      item = raw[v].reduce((acc, cur) => {
+        acc[cur._id] = cur.count;
+        return acc;
+      }, {});
+
+      stats[v] = item;
+    } else {
+      stats[v] = raw[v].length > 0 ? raw[v][0].id : 0;
+    }
   });
-  const atsinanana = await Member.find({
-    place: "atsinanana",
-    status: true,
-  }).countDocuments();
-  const andrefana = await Member.find({
-    place: "andrefana",
-    status: true,
-  }).countDocuments();
-  const stast = {
-    lehilahy: {
-      n: lehilahy,
-      p: ((lehilahy / total) * 100).toFixed(0),
-    },
-    vehivavy: {
-      n: vehivavy,
-      p: ((vehivavy / total) * 100).toFixed(0),
-    },
-    mpandray: {
-      n: mpandray,
-      p: ((mpandray / total) * 100).toFixed(0),
-    },
-    batisa: {
-      n: batisa,
-      p: ((batisa / total) * 100).toFixed(0),
-    },
-    atsimo: {
-      n: atsimo,
-      p: ((atsimo / total) * 100).toFixed(0),
-    },
-    andrefana: {
-      n: andrefana,
-      p: ((andrefana / total) * 100).toFixed(0),
-    },
-    avaratra: {
-      n: avaratra,
-      p: ((avaratra / total) * 100).toFixed(0),
-    },
-    atsinanana: {
-      n: atsinanana,
-      p: ((atsinanana / total) * 100).toFixed(0),
-    },
-    tokatrano: tokatrano.length,
-    total,
-  };
-  res.send(stast);
+  console.log(stats);
+  res.send(stats);
 };
 
 const exportMembers = async (req, res) => {
