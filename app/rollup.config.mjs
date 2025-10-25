@@ -21,8 +21,8 @@ export default {
     copy({
       targets: [
         {
-          src: "public",
-          dest: "dist/",
+          src: "client/build/*",
+          dest: "dist/public",
         },
       ],
     }),

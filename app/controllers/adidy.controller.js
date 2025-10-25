@@ -1,4 +1,4 @@
-const { Adidy, Compta, AdidyType } = require("../models/adidy.model");
+const { Compta, AdidyType } = require("../models/adidy.model");
 const { Member } = require("../models/member.model");
 const { default: mongoose } = require("mongoose");
 const dayjs = require("dayjs");
@@ -6,22 +6,14 @@ const { PrintReceipt } = require("../service/print.service");
 
 const createAdidy = async (req, res) => {
   try {
-    const { mpandray, year } = req.body.trace;
+    const { mpandray, type, culte } = req.body.compta;
     const { printer } = req.body;
-    const check = await Adidy.findOne({ mpandray, year });
-    if (check) {
-      await check.updateOne({
-        month: [...check.month, ...req.body.trace.month],
-      });
-    } else {
-      const newAdidy = new Adidy(req.body.trace);
-      await newAdidy.save();
-    }
-
     //get nth compta
-    const today = dayjs().set("hour", 5).toISOString();
+    const today = dayjs().set("hour", 0).toISOString();
     const number = await Compta.find({
       createBy: req.requester,
+      type: new mongoose.Types.ObjectId(type),
+      culte,
       date: { $gte: today },
     }).countDocuments();
 
@@ -35,23 +27,47 @@ const createAdidy = async (req, res) => {
     const result = await compta.populate("mpandray type");
 
     // print receipt if copy more than 0
-    if (printer.copy > 0) {
+    if (printer && printer.copy > 0) {
       PrintReceipt(result, printer);
     }
 
-    res.status(200).send();
+    res.status(200).json(number + 1);
   } catch (error) {
+    console.log(error);
     res.status(400).send(error.message);
   }
 };
 
 const getAdidyTrace = async (req, res) => {
   try {
-    const result = await Adidy.find({ mpandray: req.params.id })
-      .sort({
-        year: "desc",
-      })
-      .limit(4);
+    const currentYear = new Date().getFullYear();
+    const lastFiveYears = currentYear - 5;
+
+    const result = await Compta.aggregate([
+      {
+        $match: {
+          year: { $gte: lastFiveYears },
+          mpandray: new mongoose.Types.ObjectId(req.params.id),
+        },
+      }, // Only last 5 years
+      { $unwind: "$month" }, // Flatten month arrays
+      {
+        $group: {
+          _id: "$year",
+          month: { $addToSet: "$month" },
+        },
+      },
+      { $sort: { _id: -1 } },
+      {
+        $project: {
+          year: "$_id",
+          month: {
+            $sortArray: { input: "$month", sortBy: 1 },
+          },
+          _id: 0,
+        },
+      },
+    ]);
     res.json(result);
   } catch (error) {
     res.status(400).send(error.message);
@@ -60,15 +76,7 @@ const getAdidyTrace = async (req, res) => {
 
 const deleteAdidy = async (req, res) => {
   if (!req.params.id) return res.status(404).send("id required");
-  const adidy = await Compta.findByIdAndDelete(req.params.id);
-  const trace = await Adidy.findOne({
-    mpandray: adidy.mpandray,
-    year: adidy.year,
-  });
-
-  await trace.updateOne({
-    month: trace.month.filter((v) => !adidy.month.includes(v)),
-  });
+  await Compta.findByIdAndDelete(req.params.id);
   res.send();
 };
 
@@ -103,7 +111,10 @@ const getCompta = async (req, res) => {
   }
 
   if (mpandray) {
-    filter = { ...filter, mpandray: new mongoose.Types.ObjectId(mpandray) };
+    filter = {
+      ...filter,
+      mpandray: new mongoose.Types.ObjectId(mpandray),
+    };
   }
 
   if (creator) {
@@ -171,18 +182,44 @@ const getComptaById = async (req, res) => {
 };
 
 const getMySummary = async (req, res) => {
+  let match = {
+    createBy: req.requester,
+    day: dayjs().format("YYYY-MM-DD"),
+    culte: 1,
+  };
+
+  if (req.query.culte) {
+    match = {
+      ...match,
+      culte: +req.query.culte,
+    };
+  }
+
   const pipeline = [
     {
       $project: {
-        date: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+        day: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
         createBy: "$createBy",
         mtt: "$mtt",
         type: "$type",
+        month: "$month",
+        year: "$year",
+        mpandray: "$mpandray",
+        number: "$number",
+        date: "$date",
+        culte: "$culte",
       },
     },
     {
-      $match: { createBy: req.requester, date: dayjs().format("YYYY-MM-DD") },
+      $match: { ...match },
     },
+  ];
+  let data = await Compta.aggregate([...pipeline]);
+
+  data = await Compta.populate(data, { path: "type" });
+  data = await Compta.populate(data, { path: "mpandray" });
+  const sum = await Compta.aggregate([
+    ...pipeline,
     {
       $group: {
         _id: null,
@@ -190,10 +227,9 @@ const getMySummary = async (req, res) => {
         sum: { $sum: "$mtt" },
       },
     },
-  ];
-  const result = await Compta.aggregate([...pipeline]);
+  ]);
 
-  res.json(result);
+  res.json({ sum: sum[0], data });
 };
 
 const getDailySummary = async (req, res) => {

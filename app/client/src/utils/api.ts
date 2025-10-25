@@ -28,4 +28,9 @@ api.interceptors.request.use(
   }
 );
 
+export const getData = async (url: string) => {
+  const result = await api.get(url);
+  return result.data;
+};
+
 export default api;

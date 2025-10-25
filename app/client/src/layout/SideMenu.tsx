@@ -25,12 +25,11 @@ const SideMenu: FC = () => {
   };
   return (
     <div className="fixed top-0 left-0 lg:relative h-screen bg-white z-50">
-      <div className="h-[68px] bg-white absolute left-full flex justify-center items-center px-4 lg:hidden">
-        <FontAwesomeIcon
-          icon={solid("bars")}
-          className="text-grey"
-          onClick={() => setCollapse(!collapse)}
-        />
+      <div
+        onClick={() => setCollapse(!collapse)}
+        className="h-[68px] bg-white absolute left-full flex justify-center items-center px-4 lg:hidden"
+      >
+        <FontAwesomeIcon icon={solid("bars")} className="text-grey" />
       </div>
 
       <Sidebar className="h-full" collapsed={collapse} collapsedWidth="0">

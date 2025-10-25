@@ -1,7 +1,7 @@
 import Avatar from "@components/Avatar";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import MemberDetails from "@containers/MemberDetails";
 import MemberInfoTab from "@containers/MemberInfoTab";
@@ -10,21 +10,19 @@ import { memberStatus } from "@utils/helper";
 import toast from "react-hot-toast";
 import Family from "@containers/Family";
 import AdidyDetails from "@containers/AdidyDetails";
-import Modal from "@components/Modal";
 import Button from "@components/Button";
 import Adidy from "./Adidy";
 import ChangeStatus from "@containers/ChangeStatus";
 import usePermission from "@hooks/usePermission";
 import Compta from "@containers/Compta";
-import { sumSetAction } from "@redux/actions";
 import { useAppDispatch } from "@redux/hooks";
+import { sumSetAction } from "@redux/actions";
+import QrCode from "./QrCode";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
   const { id } = useParams();
   const navigate = useNavigate();
-  const [trace, setTrace] = useState<any>([]);
-  const modal = useRef<any>(null);
   const { canUpdate, canDelete } = usePermission("member");
   const { canPost } = usePermission("adidy");
   const dispatch = useAppDispatch();
@@ -43,15 +41,10 @@ const Page: FC = () => {
     }
   };
 
-  const getTrace = () => {
-    api.get("/adidy/trace/" + id).then((res) => setTrace(res.data));
-  };
-
   useEffect(
     () => {
       if (id) {
         api.get("/member/get/" + id).then((res) => setData(res.data));
-        getTrace();
       } else {
         setData({});
       }
@@ -93,8 +86,18 @@ const Page: FC = () => {
       <div className="p-4 gap-y-6 md:gap-6 rounded-b min-h-[43vh] ">
         <div className="mb-4 flex justify-evenly md:justify-start gap-4">
           {canPost && (
-            <Modal ref={modal}>
-              <Button className="bg-primary text-white mb-4 ">
+            <Adidy
+              mpandray={id || ""}
+              success={() => {
+                const culte = localStorage.getItem("culte");
+                api.get(`adidy/summary/me?culte=${culte ?? 1}`).then((res) => {
+                  if (res.data.sum) {
+                    dispatch(sumSetAction(res.data.sum));
+                  }
+                });
+              }}
+            >
+              <Button className="bg-primary text-white ">
                 <FontAwesomeIcon
                   icon={solid("money-bill-1-wave")}
                   className="text-white cursor-pointer md:mr-2"
@@ -102,23 +105,11 @@ const Page: FC = () => {
                 />
                 <span className="hidden md:inline-block">Handray adidy</span>
               </Button>
-              <Adidy
-                mpandray={id || ""}
-                success={() => {
-                  getTrace();
-                  api.get("adidy/summary/me").then((res) => {
-                    if (res.data.length > 0) {
-                      dispatch(sumSetAction(res.data[0]));
-                    }
-                  });
-                  modal.current.close();
-                }}
-              />
-            </Modal>
+            </Adidy>
           )}
           {canUpdate && (
             <Link to={`/christian/edit/${id}`}>
-              <Button className="bg-primary text-white mb-4 max-w-[150px]">
+              <Button className="bg-primary text-white max-w-[150px]">
                 <FontAwesomeIcon
                   icon={solid("user-edit")}
                   className="text-white cursor-pointer md:mr-2"
@@ -131,7 +122,7 @@ const Page: FC = () => {
 
           {canDelete && (
             <Button
-              className="bg-primary text-white mb-4 w-fit"
+              className="bg-primary text-white w-fit"
               onClick={() => onDeleteHandler()}
             >
               <FontAwesomeIcon
@@ -141,13 +132,15 @@ const Page: FC = () => {
               />
             </Button>
           )}
+
+          <QrCode />
         </div>
 
         <div className="col-span-2">
           <MemberInfoTab>
             <MemberDetails data={data} />
             <Family data={data} />
-            <AdidyDetails data={trace} />
+            <AdidyDetails />
             <Compta />
           </MemberInfoTab>
         </div>

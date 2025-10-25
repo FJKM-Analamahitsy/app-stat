@@ -13,7 +13,6 @@ const { printer } = require("./routes/printer");
 const { authMiddlware } = require("./middleware/middleware");
 const path = require("path");
 const route = express.Router();
-const https = require("https");
 
 const app = express();
 app.use(express.json());
@@ -45,11 +44,7 @@ const start = async () => {
     .connect(process.env.MONGODB_URI)
     .then(() => {
       console.log("db connected successfuly");
-      if (process.env.SECURED === "false") {
-        app.listen(port, () =>
-          console.log(`server is running on port ${port}`)
-        );
-      }
+      app.listen(port, () => console.log(`server is running on port ${port}`));
     })
     .catch((err) => {
       console.log(err);

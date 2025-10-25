@@ -1,11 +1,14 @@
+import { getData } from "@utils/api";
 import { MONTHS } from "@utils/constant";
 import { FC } from "react";
+import { useParams } from "react-router-dom";
+import useSWR from "swr/immutable";
 
-interface Props {
-  data: any[];
-}
+interface Props {}
 
-const AdidyDetails: FC<Props> = ({ data }) => {
+const AdidyDetails: FC<Props> = ({}) => {
+  const { id } = useParams();
+  const { data } = useSWR("/adidy/trace/" + id, getData, { suspense: true });
   return (
     <div className="p-4">
       <div className="overflow-x-auto py-2">
@@ -19,7 +22,7 @@ const AdidyDetails: FC<Props> = ({ data }) => {
             );
           })}
         </div>
-        {data.map((dt, i) => {
+        {data.map((dt: any, i: number) => {
           return (
             <div
               key={i}

@@ -13,6 +13,7 @@ const {
   statPerBirthMonth,
   statPerSampana,
   importMembers,
+  generateUserToken,
 } = require("../controllers/member.controller");
 const multer = require("multer");
 
@@ -28,6 +29,7 @@ route.post("/import", upload.single("file"), importMembers);
 route.delete("/", deleteMember);
 route.patch("/:id", updateMember);
 route.get("/", listMember);
+route.get("/token/:id", generateUserToken);
 route.get("/get/:id", getMember);
 route.get("/stat", statistics);
 route.get("/stat/monthly", statPerBirthMonth);
