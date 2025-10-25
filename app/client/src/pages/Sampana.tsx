@@ -74,6 +74,18 @@ const ListeSampana: FC = () => {
     }
   };
 
+  const onAddAttendance = (id: string) => {
+    const conf = window.confirm("Are you sure to proceed to this action?");
+    if (conf) {
+      const req = api.post("/attendance/" + id);
+      toast.promise(req, {
+        loading: "En attente...",
+        error: "error",
+        success: "succes",
+      });
+    }
+  };
+
   const columns: TableColumn<DataRow>[] = useMemo(
     () => [
       {
@@ -99,12 +111,6 @@ const ListeSampana: FC = () => {
         hide: 800,
       },
       {
-        name: "Sampana",
-        sortable: true,
-        selector: (row) => row.sampana,
-        hide: 500,
-      },
-      {
         name: "Action",
         center: true,
         cell: (row) => {
@@ -119,6 +125,12 @@ const ListeSampana: FC = () => {
                 icon={solid("trash")}
                 className="cursor-pointer hover:text-red-500"
                 onClick={() => onDeleteHandler(row._id)}
+              />
+
+              <FontAwesomeIcon
+                icon={solid("user-check")}
+                className="cursor-pointer hover:text-primary"
+                onClick={() => onAddAttendance(row._id)}
               />
             </div>
           );

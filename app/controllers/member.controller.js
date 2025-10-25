@@ -34,7 +34,6 @@ const createMember = async (req, res) => {
           familyId: input.familyId,
           famHead: true,
         }).select("-_id home place");
-        console.log(adress);
         await Member.findOneAndUpdate({ _id: newMember._id }, { ...adress });
       }
     }

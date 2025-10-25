@@ -1,12 +1,15 @@
 const mongoose = require("mongoose");
 
-const Attendance = mongoose.Model("Attendance", {
+const Attendance = mongoose.model("Attendance", {
   member: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Member",
   },
-
   date: {
+    type: Date,
+    default: Date.now,
+  },
+  createdAt: {
     type: Date,
     default: Date.now,
   },

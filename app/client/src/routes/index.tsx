@@ -21,6 +21,7 @@ const Map = lazy(() => import("@pages/diakona/Map"));
 const Import = lazy(() => import("@pages/Migration/Import"));
 const Export = lazy(() => import("@pages/Migration/Export"));
 const Diakona = lazy(() => import("@pages/diakona"));
+const Attendance = lazy(() => import("@pages/Attendance"));
 
 const Routes: FC = () => {
   return (
@@ -42,6 +43,7 @@ const Routes: FC = () => {
           </Route>
           <Route path="users" element={<UserList />} />
           <Route path="sampana/:name" element={<ListeSampana />} />
+          <Route path="attendance" element={<Attendance />} />
           <Route path="adidy">
             <Route index element={<ComptBoard />} />
             <Route path="type" element={<AdidyType />} />
