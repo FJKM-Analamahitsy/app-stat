@@ -133,7 +133,7 @@ const Page: FC = () => {
             </Button>
           )}
 
-          <QrCode />
+          <QrCode name={data.fullname} />
         </div>
 
         <div className="col-span-2">
