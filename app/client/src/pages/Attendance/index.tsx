@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { FC, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useSWR from "swr";
 
 const Attendance: FC = () => {
@@ -83,6 +83,9 @@ const Attendance: FC = () => {
             value={day}
             onChange={(e) => setDay(dayjs(e.target.value).format("YYYY-MM-DD"))}
           />
+          <Link to="qr" className="bg-bg p-3 rounded ml-3">
+            Imprimer Token
+          </Link>
         </div>
         <p className="font-medium text-lg">{data.length} present</p>
       </div>

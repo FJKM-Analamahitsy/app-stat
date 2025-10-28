@@ -14,6 +14,7 @@ const {
   statPerSampana,
   importMembers,
   generateUserToken,
+  getAllMemberToken,
 } = require("../controllers/member.controller");
 const multer = require("multer");
 
@@ -30,6 +31,7 @@ route.delete("/", deleteMember);
 route.patch("/:id", updateMember);
 route.get("/", listMember);
 route.get("/token/:id", generateUserToken);
+route.get("/get/token", getAllMemberToken);
 route.get("/get/:id", getMember);
 route.get("/stat", statistics);
 route.get("/stat/monthly", statPerBirthMonth);

@@ -441,6 +441,31 @@ const generateUserToken = async (req, res) => {
   });
 };
 
+const getAllMemberToken = async (req, res) => {
+  let filter = {
+    sampana: { $regex: new RegExp("KATEKOMENA", "i") },
+  };
+
+  const result = [];
+  const data = await Member.where({ ...filter })
+    .collation({ locale: "en_US", numericOrdering: true })
+    .sort({ mpandrayN: "asc" })
+    .find();
+
+  data.forEach((member) => {
+    const token = jwt.sign(
+      { username: member.fullname, id: member._id },
+      process.env.PRIVATE_KEY
+    );
+    result.push({
+      token,
+      fullname: member.fullname,
+      mpandrayN: member.mpandrayN,
+    });
+  });
+  res.send(result);
+};
+
 module.exports = {
   createMember,
   deleteMember,
@@ -456,4 +481,5 @@ module.exports = {
   statPerBirthMonth,
   statPerSampana,
   generateUserToken,
+  getAllMemberToken,
 };
