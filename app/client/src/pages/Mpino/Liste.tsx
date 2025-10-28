@@ -6,6 +6,7 @@ import Select from "@components/Select";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import usePermission from "@hooks/usePermission";
+import { onAddAttendance } from "@utils/action";
 import api from "@utils/api";
 import { formatPoneNumber } from "@utils/helper";
 import { FC, useEffect, useMemo, useState } from "react";
@@ -183,6 +184,11 @@ const Liste: FC = () => {
         cell: (row) => {
           return (
             <div className="flex gap-8">
+              <FontAwesomeIcon
+                icon={solid("user-check")}
+                className="cursor-pointer hover:text-primary"
+                onClick={() => onAddAttendance(row._id)}
+              />
               {canUpdate && (
                 <FontAwesomeIcon
                   icon={solid("user-pen")}

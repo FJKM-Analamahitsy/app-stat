@@ -1,6 +1,7 @@
 import Avatar from "@components/Avatar";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { onAddAttendance } from "@utils/action";
 import api from "@utils/api";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
@@ -71,18 +72,6 @@ const ListeSampana: FC = () => {
         .catch(function (err) {
           toast.error(err.message);
         });
-    }
-  };
-
-  const onAddAttendance = (id: string) => {
-    const conf = window.confirm("Are you sure to proceed to this action?");
-    if (conf) {
-      const req = api.post("/attendance/" + id);
-      toast.promise(req, {
-        loading: "En attente...",
-        error: "error",
-        success: "succes",
-      });
     }
   };
 

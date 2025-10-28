@@ -18,6 +18,7 @@ import Compta from "@containers/Compta";
 import { useAppDispatch } from "@redux/hooks";
 import { sumSetAction } from "@redux/actions";
 import QrCode from "./QrCode";
+import { onAddAttendance } from "@utils/action";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
@@ -132,6 +133,18 @@ const Page: FC = () => {
               />
             </Button>
           )}
+
+          <Button
+            className="bg-primary text-white w-fit cursor-pointer"
+            onClick={() => onAddAttendance(id ?? "")}
+          >
+            <FontAwesomeIcon
+              icon={solid("user-check")}
+              className="text-white  mr-2"
+              size="sm"
+            />
+            <span>Présent</span>
+          </Button>
 
           <QrCode name={data.fullname} />
         </div>
