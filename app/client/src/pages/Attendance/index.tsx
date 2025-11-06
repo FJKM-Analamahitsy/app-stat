@@ -37,7 +37,7 @@ const Attendance: FC = () => {
         cell: (row) => {
           return (
             <div onClick={() => navigate("/christian/" + row._id)}>
-              <Avatar label={`${row.member.fullname}`} />
+              <Avatar label={`${row.member ? row.member.fullname : ""}`} />
             </div>
           );
         },
@@ -45,7 +45,7 @@ const Attendance: FC = () => {
       },
       {
         name: "L/V",
-        selector: (row) => row.member.gender,
+        selector: (row) => (row.member ? row.member.gender : ""),
         hide: 500,
       },
       {
