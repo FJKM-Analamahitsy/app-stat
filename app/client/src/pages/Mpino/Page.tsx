@@ -18,11 +18,11 @@ import Compta from "@containers/Compta";
 import { useAppDispatch } from "@redux/hooks";
 import { sumSetAction } from "@redux/actions";
 import QrCode from "./QrCode";
-import { onAddAttendance } from "@utils/action";
+import Present from "./Present";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
-  const { id } = useParams();
+  const { id = "" } = useParams();
   const navigate = useNavigate();
   const { canUpdate, canDelete } = usePermission("member");
   const { canPost } = usePermission("adidy");
@@ -44,7 +44,7 @@ const Page: FC = () => {
 
   useEffect(
     () => {
-      if (id) {
+      if (id != "") {
         api.get("/member/get/" + id).then((res) => setData(res.data));
       } else {
         setData({});
@@ -134,17 +134,16 @@ const Page: FC = () => {
             </Button>
           )}
 
-          <Button
-            className="bg-primary text-white w-fit cursor-pointer"
-            onClick={() => onAddAttendance(id ?? "")}
-          >
-            <FontAwesomeIcon
-              icon={solid("user-check")}
-              className="text-white  mr-2"
-              size="sm"
-            />
-            <span>Présent</span>
-          </Button>
+          <Present id={id}>
+            <Button className="bg-primary text-white w-fit cursor-pointer">
+              <FontAwesomeIcon
+                icon={solid("user-check")}
+                className="text-white  mr-2"
+                size="sm"
+              />
+              <span>Présent</span>
+            </Button>
+          </Present>
 
           <QrCode name={data.fullname} />
         </div>

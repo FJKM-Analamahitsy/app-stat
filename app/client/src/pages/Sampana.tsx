@@ -1,7 +1,6 @@
 import Avatar from "@components/Avatar";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { onAddAttendance } from "@utils/action";
 import api from "@utils/api";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
@@ -114,12 +113,6 @@ const ListeSampana: FC = () => {
                 icon={solid("trash")}
                 className="cursor-pointer hover:text-red-500"
                 onClick={() => onDeleteHandler(row._id)}
-              />
-
-              <FontAwesomeIcon
-                icon={solid("user-check")}
-                className="cursor-pointer hover:text-primary"
-                onClick={() => onAddAttendance(row._id)}
               />
             </div>
           );

@@ -38,7 +38,8 @@ const getAttendance = async (req, res) => {
 
 const addAttendance = async (req, res) => {
   try {
-    const today = dayjs().format("YYYY-MM-DD");
+    const { date } = req.body;
+    const today = dayjs(date).format("YYYY-MM-DD");
     const { id } = await idSchema.validate(req.params);
     await Attendance.updateOne(
       { date: today, member: id },

@@ -6,13 +6,13 @@ import Select from "@components/Select";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import usePermission from "@hooks/usePermission";
-import { onAddAttendance } from "@utils/action";
 import api from "@utils/api";
 import { formatPoneNumber } from "@utils/helper";
 import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Present from "./Present";
 
 interface DataRow {
   [key: string]: string;
@@ -184,11 +184,13 @@ const Liste: FC = () => {
         cell: (row) => {
           return (
             <div className="flex gap-8">
-              <FontAwesomeIcon
-                icon={solid("user-check")}
-                className="cursor-pointer hover:text-primary"
-                onClick={() => onAddAttendance(row._id)}
-              />
+              <Present id={row._id}>
+                <FontAwesomeIcon
+                  icon={solid("user-check")}
+                  className="cursor-pointer hover:text-primary"
+                />
+              </Present>
+
               {canUpdate && (
                 <FontAwesomeIcon
                   icon={solid("user-pen")}
