@@ -167,6 +167,7 @@ export const SAMPANA = [
   "DIAKONA",
   "STK",
   "GMMC",
+  "ZOKIOLONA",
 ];
 
 export const ANTOKO_DIAKONE = ["FANILO", "BETELA", "FANASINA", "FILADELFIA"];
