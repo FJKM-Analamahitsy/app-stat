@@ -92,7 +92,7 @@ const Home: FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 mt-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 gap-6">
             <div className="p-2 bg-white rounded">
               <p>L/V</p>
               <DoghnutChart

@@ -34,7 +34,6 @@ const createMember = async (req, res) => {
           familyId: input.familyId,
           famHead: true,
         }).select("-_id home place");
-        console.log(adress);
         await Member.findOneAndUpdate({ _id: newMember._id }, { ...adress });
       }
     }
@@ -415,6 +414,7 @@ const statPerSampana = async (req, res) => {
     "DIAKONA",
     "STK",
     "GMMC",
+    "ZOKIOLONA",
   ].sort();
   let result = {};
   for (let i = 0; i < sampana.length; i++) {
@@ -442,6 +442,31 @@ const generateUserToken = async (req, res) => {
   });
 };
 
+const getAllMemberToken = async (req, res) => {
+  let filter = {
+    sampana: { $regex: new RegExp("KATEKOMENA", "i") },
+  };
+
+  const result = [];
+  const data = await Member.where({ ...filter })
+    .collation({ locale: "en_US", numericOrdering: true })
+    .sort({ mpandrayN: "asc" })
+    .find();
+
+  data.forEach((member) => {
+    const token = jwt.sign(
+      { username: member.fullname, id: member._id },
+      process.env.PRIVATE_KEY
+    );
+    result.push({
+      token,
+      fullname: member.fullname,
+      mpandrayN: member.mpandrayN,
+    });
+  });
+  res.send(result);
+};
+
 module.exports = {
   createMember,
   deleteMember,
@@ -457,4 +482,5 @@ module.exports = {
   statPerBirthMonth,
   statPerSampana,
   generateUserToken,
+  getAllMemberToken,
 };

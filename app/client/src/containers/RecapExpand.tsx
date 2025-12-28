@@ -55,9 +55,13 @@ const RecapExpand: FC<Props> = ({ data: input }) => {
         grow: 2,
         omit: id !== undefined,
         cell: (row) => (
-          <Link to={`/christian/${row.mpandray._id}`}>
-            <Avatar label={row.mpandray.fullname} />
-          </Link>
+          <>
+            {row.mpandray && (
+              <Link to={`/christian/${row.mpandray._id}`}>
+                <Avatar label={row.mpandray.fullname} />
+              </Link>
+            )}
+          </>
         ),
       },
       {

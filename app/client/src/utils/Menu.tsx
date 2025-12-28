@@ -31,6 +31,12 @@ const MenuData: any = [
     auth: "sampana",
   },
   {
+    label: "Presence",
+    icon: <FontAwesomeIcon icon={solid("calendar-days")} />,
+    path: "/attendance",
+    auth: "attendance",
+  },
+  {
     label: "Adidy",
     icon: <FontAwesomeIcon icon={solid("money-bill")} />,
     auth: "adidy",

@@ -99,12 +99,6 @@ const ListeSampana: FC = () => {
         hide: 800,
       },
       {
-        name: "Sampana",
-        sortable: true,
-        selector: (row) => row.sampana,
-        hide: 500,
-      },
-      {
         name: "Action",
         center: true,
         cell: (row) => {

@@ -3,6 +3,7 @@ import { FC, lazy } from "react";
 import { Routes as Router, Route } from "react-router-dom";
 import AuthGuard from "@auth/AuthGuard";
 import Layout from "layout";
+import PrintQRPDF from "@pages/Attendance/PrintQr";
 
 const Liste = lazy(() => import("@pages/Mpino/Liste"));
 const Home = lazy(() => import("@pages/Home"));
@@ -21,6 +22,7 @@ const Map = lazy(() => import("@pages/diakona/Map"));
 const Import = lazy(() => import("@pages/Migration/Import"));
 const Export = lazy(() => import("@pages/Migration/Export"));
 const Diakona = lazy(() => import("@pages/diakona"));
+const Attendance = lazy(() => import("@pages/Attendance"));
 
 const Routes: FC = () => {
   return (
@@ -42,6 +44,10 @@ const Routes: FC = () => {
           </Route>
           <Route path="users" element={<UserList />} />
           <Route path="sampana/:name" element={<ListeSampana />} />
+          <Route path="attendance">
+            <Route index element={<Attendance />} />
+            <Route path="qr" element={<PrintQRPDF />} />
+          </Route>
           <Route path="adidy">
             <Route index element={<ComptBoard />} />
             <Route path="type" element={<AdidyType />} />

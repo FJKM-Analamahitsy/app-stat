@@ -12,6 +12,7 @@ import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Present from "./Present";
 
 interface DataRow {
   [key: string]: string;
@@ -183,6 +184,13 @@ const Liste: FC = () => {
         cell: (row) => {
           return (
             <div className="flex gap-8">
+              <Present id={row._id}>
+                <FontAwesomeIcon
+                  icon={solid("user-check")}
+                  className="cursor-pointer hover:text-primary"
+                />
+              </Present>
+
               {canUpdate && (
                 <FontAwesomeIcon
                   icon={solid("user-pen")}
