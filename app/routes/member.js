@@ -15,6 +15,7 @@ const {
   importMembers,
   generateUserToken,
   getAllMemberToken,
+  getPhoneNumber,
 } = require("../controllers/member.controller");
 const multer = require("multer");
 
@@ -27,6 +28,7 @@ const upload = multer({
 route.post("/", createMember);
 route.post("/export", exportMembers);
 route.post("/import", upload.single("file"), importMembers);
+route.get("/phone", getPhoneNumber);
 route.delete("/", deleteMember);
 route.patch("/:id", updateMember);
 route.get("/", listMember);

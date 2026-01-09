@@ -71,6 +71,12 @@ const MenuData: any = [
     ],
   },
   {
+    label: "Message",
+    path: "/message",
+    icon: <FontAwesomeIcon icon={solid("message")} />,
+    auth: "message",
+  },
+  {
     label: "Profiles",
     path: "/profile",
     icon: <FontAwesomeIcon icon={solid("users")} />,

@@ -23,6 +23,7 @@ const Import = lazy(() => import("@pages/Migration/Import"));
 const Export = lazy(() => import("@pages/Migration/Export"));
 const Diakona = lazy(() => import("@pages/diakona"));
 const Attendance = lazy(() => import("@pages/Attendance"));
+const Message = lazy(() => import("@pages/Message"));
 
 const Routes: FC = () => {
   return (
@@ -53,6 +54,7 @@ const Routes: FC = () => {
             <Route path="type" element={<AdidyType />} />
             <Route path="list" element={<Journal />} />
           </Route>
+          <Route path="message" element={<Message />} />
           <Route path="setting" element={<Setting />} />
           <Route path="export" element={<Export />} />
           <Route path="import" element={<Import />} />
