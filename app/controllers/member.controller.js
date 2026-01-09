@@ -478,6 +478,7 @@ const getPhoneNumber = async (req, res) => {
   const result = await Member.where({
     ...filters,
     phone: { $exists: true, $ne: "" },
+    status: true,
   })
     .find()
     .distinct("phone");
