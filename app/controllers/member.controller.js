@@ -471,7 +471,7 @@ const getPhoneNumber = async (req, res) => {
   const { filter } = req.query;
   const filterArray = filter.split(" ");
   let filters = {};
-  if (filterArray.length > 0) {
+  if (filter !== "" && filterArray.length > 0) {
     filters = { ...filters, sampana: new RegExp(filterArray.join("|"), "i") };
   }
 
