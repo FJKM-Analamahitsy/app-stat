@@ -105,7 +105,9 @@ const Message: FC = () => {
               <div className="relative border grow rounded">
                 <div
                   className="absolute h-full bg-primary flex items-center animate-pulse px-2 text-white"
-                  style={{ width: `${Math.floor(progress / data.length)}%` }}
+                  style={{
+                    width: `${Math.floor((progress / data.length) * 100)}%`,
+                  }}
                 >
                   {progress}
                 </div>
