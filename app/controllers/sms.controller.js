@@ -42,7 +42,26 @@ const sendSms = async (req, res) => {
   return res.status(response.status).json(data);
 };
 
+const getBalance = async (req, res) => {
+  const { token } = req.query;
+  if (!token) return res.sendStatus(401);
+  const response = await fetch(
+    "https://api.orange.com/sms/admin/v1/contracts",
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const data = await response.json();
+
+  return res.status(response.status).json(data);
+};
+
 module.exports = {
   getToken,
   sendSms,
+  getBalance,
 };
