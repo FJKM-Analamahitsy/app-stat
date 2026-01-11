@@ -6,9 +6,15 @@ interface Props {
   options: string[];
   onChange: (val: string) => void;
   defaultValue?: string;
+  placeholder?: string;
 }
 
-const SelectMultiple: FC<Props> = ({ options, onChange, defaultValue }) => {
+const SelectMultiple: FC<Props> = ({
+  options,
+  onChange,
+  defaultValue,
+  placeholder = "recherche",
+}) => {
   const container = useRef<HTMLDivElement>(null);
   const [opts, setOpts] = useState(options);
   const [values, setValues] = useState<string[]>([]);
@@ -70,7 +76,7 @@ const SelectMultiple: FC<Props> = ({ options, onChange, defaultValue }) => {
         ref={input}
         type="text"
         className="bg-transparent grow"
-        placeholder="recherche"
+        placeholder={placeholder}
         onChange={(e) => {
           setOpts(
             options.filter((v) =>

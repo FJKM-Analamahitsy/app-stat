@@ -131,11 +131,12 @@ const Message: FC = () => {
           onChange={(v) => {
             setFilter(v);
           }}
+          placeholder="Tous"
         />
         <div>
           <p className="text-slate-500 text-end mb-1">{message.length}/320</p>
           <textarea
-            className="border p-2 w-full"
+            className="border p-2 w-full min-h-40 rounded"
             placeholder="message"
             maxLength={320}
             value={message}
