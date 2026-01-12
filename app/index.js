@@ -14,6 +14,7 @@ const { sms } = require("./routes/sms");
 const { authMiddlware } = require("./middleware/middleware");
 const path = require("path");
 const { attendance } = require("./routes/attendance");
+const { group } = require("./routes/group");
 const route = express.Router();
 
 const app = express();
@@ -33,6 +34,7 @@ route.use("/diacre", authMiddlware, diacre);
 route.use("/printer", authMiddlware, printer);
 route.use("/attendance", authMiddlware, attendance);
 route.use("/sms", authMiddlware, sms);
+route.use("/group", authMiddlware, group);
 app.use("/api", route);
 
 app.use(express.static(path.join(__dirname, "public")));
