@@ -31,11 +31,12 @@ const RecapExpand: FC<Props> = ({ data: input }) => {
   const fetch = () => {
     const start = dayjs(input._id.date).format("YYYY-MM-DD");
     const end = dayjs(input._id.date).add(1, "day").format("YYYY-MM-DD");
+    const type = query.get("type") ?? null;
     api
       .get(
         `/adidy?creator=${input._id.createBy}&start=${start}&end=${end}${
           query.get("culte") ? `&culte=${query.get("culte")}` : ""
-        }`
+        }${type ? `&type=${type}` : ""}`
       )
       .then((res) => {
         setData(res.data);
@@ -145,7 +146,7 @@ const RecapExpand: FC<Props> = ({ data: input }) => {
       <DataTable
         columns={columns}
         data={data.member}
-        className="h-60 !overflow-y-auto"
+        className="h-[60vh] !overflow-y-auto"
       />
     </div>
   );
