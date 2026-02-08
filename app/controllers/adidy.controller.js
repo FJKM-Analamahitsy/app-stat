@@ -89,6 +89,7 @@ const getCompta = async (req, res) => {
     mpandray,
     creator,
     culte,
+    type,
   } = req.query;
   let filter = {};
   if (start) {
@@ -97,6 +98,13 @@ const getCompta = async (req, res) => {
       date: {
         $gte: new Date(start),
       },
+    };
+  }
+
+  if (type) {
+    filter = {
+      ...filter,
+      type: new mongoose.Types.ObjectId(type),
     };
   }
 
