@@ -156,6 +156,8 @@ const ComptBoard: FC = () => {
             }}
             options={["", "1", "2", "3", "4"]}
             valueIndex={false}
+            label="partie"
+            className="min-w-32 text-center"
           />
         </div>
         <button

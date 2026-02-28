@@ -53,6 +53,30 @@ const RecapExpand: FC<Props> = ({ data: input }) => {
         center: true,
       },
       {
+        name: "Partie",
+        cell: (row) => (
+          <p className={`p-1 px-2 rounded bg-slate-400 text-white`}>
+            {row.part ?? ""}
+          </p>
+        ),
+        maxWidth: "100px",
+        center: true,
+      },
+      {
+        name: "Culte",
+        cell: (row) => (
+          <p
+            className={`p-1 px-2 rounded ${
+              row.culte > 1 ? "bg-orange-400" : "bg-green-500"
+            } text-white`}
+          >
+            {row.culte ?? ""}
+          </p>
+        ),
+        maxWidth: "100px",
+        center: true,
+      },
+      {
         name: "Chretien",
         grow: 3,
         omit: id !== undefined,
