@@ -1,4 +1,5 @@
 import Avatar from "@components/Avatar";
+import Modal from "@components/Modal";
 import RecapExpand from "@containers/RecapExpand";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -40,6 +41,32 @@ const ComptBoard: FC = () => {
         name: "Montant",
         center: true,
         cell: (row) => Intl.NumberFormat("de-FR").format(row.sum) + " MGA",
+      },
+      {
+        name: "Action",
+        center: true,
+        cell: (row) => {
+          return (
+            <Modal closeonclickoutside>
+              <button className="bg-slate-300 p-1 px-2 rounded">details</button>
+              <div className="bg-white rounded w-[70vw] h-[70vh]">
+                <div className="flex justify-between px-4 pt-2">
+                  <div className="flex gap-2 font-medium">
+                    <p>Tickets: {row.count}</p>
+                    <p>
+                      Montant:{" "}
+                      {Intl.NumberFormat("de-FR").format(row.sum) + " MGA"}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-medium">{row._id && row._id.createBy}</p>
+                  </div>
+                </div>
+                <RecapExpand data={row} />
+              </div>
+            </Modal>
+          );
+        },
       },
     ],
     []
@@ -125,9 +152,6 @@ const ComptBoard: FC = () => {
         columns={columns}
         data={data}
         className="h-[calc(100vh-180px)] !overflow-y-auto"
-        expandableRows
-        expandOnRowClicked
-        expandableRowsComponent={RecapExpand}
       />
       <div className="hidden">
         <div ref={contentRef} className="p-6">

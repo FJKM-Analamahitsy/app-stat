@@ -53,7 +53,7 @@ const RecapExpand: FC<Props> = ({ data: input }) => {
       },
       {
         name: "Chretien",
-        grow: 2,
+        grow: 3,
         omit: id !== undefined,
         cell: (row) => (
           <>
