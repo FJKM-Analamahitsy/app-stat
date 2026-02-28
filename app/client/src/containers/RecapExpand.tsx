@@ -32,11 +32,12 @@ const RecapExpand: FC<Props> = ({ data: input }) => {
     const start = dayjs(input._id.date).format("YYYY-MM-DD");
     const end = dayjs(input._id.date).add(1, "day").format("YYYY-MM-DD");
     const type = query.get("type") ?? null;
+    const part = query.get("part") ?? null;
     api
       .get(
         `/adidy?creator=${input._id.createBy}&start=${start}&end=${end}${
           query.get("culte") ? `&culte=${query.get("culte")}` : ""
-        }${type ? `&type=${type}` : ""}`
+        }${type ? `&type=${type}` : ""} ${part ? `&part=${part}` : ""}`
       )
       .then((res) => {
         setData(res.data);

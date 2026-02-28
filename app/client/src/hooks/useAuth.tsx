@@ -19,8 +19,9 @@ const useAuth = () => {
           navigate("/home");
         }
         dispatch(userSetAction(res.data));
-        const culte = localStorage.getItem("culte");
-        api.get(`adidy/summary/me?culte=${culte ?? 1}`).then((res) => {
+        const culte = localStorage.getItem("culte") ?? 1;
+        const part = localStorage.getItem("part") ?? 1;
+        api.get(`adidy/summary/me?culte=${culte}&part=${part}`).then((res) => {
           if (res.data.sum) {
             dispatch(sumSetAction(res.data.sum));
           }

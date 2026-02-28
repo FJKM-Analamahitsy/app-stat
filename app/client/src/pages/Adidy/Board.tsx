@@ -1,5 +1,6 @@
 import Avatar from "@components/Avatar";
 import Modal from "@components/Modal";
+import Select from "@components/Select";
 import RecapExpand from "@containers/RecapExpand";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -47,24 +48,32 @@ const ComptBoard: FC = () => {
         center: true,
         cell: (row) => {
           return (
-            <Modal closeonclickoutside>
-              <button className="bg-slate-300 p-1 px-2 rounded">details</button>
-              <div className="bg-white rounded w-[70vw] h-[70vh]">
-                <div className="flex justify-between px-4 pt-2">
-                  <div className="flex gap-2 font-medium">
-                    <p>Tickets: {row.count}</p>
-                    <p>
-                      Montant:{" "}
-                      {Intl.NumberFormat("de-FR").format(row.sum) + " MGA"}
-                    </p>
+            <>
+              {row._id && (
+                <Modal closeonclickoutside>
+                  <button className="bg-slate-300 p-1 px-2 rounded">
+                    details
+                  </button>
+                  <div className="bg-white rounded w-[70vw] h-[70vh]">
+                    <div className="flex justify-between px-4 pt-2">
+                      <div className="flex gap-2 font-medium">
+                        <p>Tickets: {row.count}</p>
+                        <p>
+                          Montant:{" "}
+                          {Intl.NumberFormat("de-FR").format(row.sum) + " MGA"}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="font-medium">
+                          {row._id && row._id.createBy}
+                        </p>
+                      </div>
+                    </div>
+                    <RecapExpand data={row} />
                   </div>
-                  <div>
-                    <p className="font-medium">{row._id && row._id.createBy}</p>
-                  </div>
-                </div>
-                <RecapExpand data={row} />
-              </div>
-            </Modal>
+                </Modal>
+              )}
+            </>
           );
         },
       },
@@ -140,6 +149,14 @@ const ComptBoard: FC = () => {
             <option value="1">Premier culte</option>
             <option value="2">Deuxième culte</option>
           </select>
+          <Select
+            defaultValue={localStorage.getItem("part") || "1"}
+            onChange={(e) => {
+              setfilter({ ...filter, part: e.target.value });
+            }}
+            options={["", "1", "2", "3", "4"]}
+            valueIndex={false}
+          />
         </div>
         <button
           className="bg-primary text-white p-1 px-4 rounded flex gap-3 items-center"

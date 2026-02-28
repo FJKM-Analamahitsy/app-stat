@@ -90,12 +90,15 @@ const Page: FC = () => {
             <Adidy
               mpandray={id || ""}
               success={() => {
-                const culte = localStorage.getItem("culte");
-                api.get(`adidy/summary/me?culte=${culte ?? 1}`).then((res) => {
-                  if (res.data.sum) {
-                    dispatch(sumSetAction(res.data.sum));
-                  }
-                });
+                const culte = localStorage.getItem("culte") ?? 1;
+                const part = localStorage.getItem("part") ?? 1;
+                api
+                  .get(`adidy/summary/me?culte=${culte}&part=${part}`)
+                  .then((res) => {
+                    if (res.data.sum) {
+                      dispatch(sumSetAction(res.data.sum));
+                    }
+                  });
               }}
             >
               <Button className="bg-primary text-white ">

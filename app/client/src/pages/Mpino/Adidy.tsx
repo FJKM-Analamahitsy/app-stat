@@ -34,14 +34,15 @@ const Adidy: FC<Props> = ({ mpandray, success, children }) => {
       mtt: parseInt(data.pay.replace(/\./g, "")),
       month: data.month,
       year: data.year,
-      culte: parseInt(localStorage.getItem("culte") as string),
+      culte: parseInt(localStorage.getItem("culte") ?? "1"),
+      part: parseInt(localStorage.getItem("part") ?? "1"),
     };
 
     if (compta.mtt > 0) {
       const printer = {
         adress: localStorage.getItem("xprinter") || "192.168.123.100",
         port: 9100,
-        copy: parseInt(localStorage.getItem("ncopy") || "2"),
+        copy: parseInt(localStorage.getItem("ncopy") || "0"),
       };
       const request = api
         .post("/adidy", { compta, printer })
@@ -83,6 +84,32 @@ const Adidy: FC<Props> = ({ mpandray, success, children }) => {
             onSubmit={submit}
             className="min-w-[80vw] lg:min-w-[50vw] text-xl lg:text-lg py-[2rem] px-6 bg-white border border-bg m-4 mt-8 md:mx-auto  rounded-[5px] flex flex-col gap-8"
           >
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <p className="text-slate-500 mb-1">Culte</p>
+                <Select
+                  defaultValue={localStorage.getItem("culte") || "1"}
+                  onChange={(e) => {
+                    setData({ ...data, culte: +e.target.value });
+                    localStorage.setItem("culte", e.target.value);
+                  }}
+                  options={["1", "2"]}
+                  valueIndex={false}
+                />
+              </div>
+              <div>
+                <p className="text-slate-500 mb-1">Partie</p>
+                <Select
+                  defaultValue={localStorage.getItem("part") || "1"}
+                  onChange={(e) => {
+                    setData({ ...data, part: +e.target.value });
+                    localStorage.setItem("part", e.target.value);
+                  }}
+                  options={["1", "2", "3", "4"]}
+                  valueIndex={false}
+                />
+              </div>
+            </div>
             <div className="grid grid-cols-2 gap-3">
               <select
                 className="p-3 lg:p-2 rounded border border-slate-100 text-grey"
