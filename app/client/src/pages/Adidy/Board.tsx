@@ -154,7 +154,7 @@ const ComptBoard: FC = () => {
             onChange={(e) => {
               setfilter({ ...filter, part: e.target.value });
             }}
-            options={["", "1", "2", "3", "4"]}
+            options={["", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]}
             valueIndex={false}
             label="partie"
             className="min-w-32 text-center"

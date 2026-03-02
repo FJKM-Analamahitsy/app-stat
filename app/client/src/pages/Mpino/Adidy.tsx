@@ -105,7 +105,7 @@ const Adidy: FC<Props> = ({ mpandray, success, children }) => {
                     setData({ ...data, part: +e.target.value });
                     localStorage.setItem("part", e.target.value);
                   }}
-                  options={["1", "2", "3", "4"]}
+                  options={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]}
                   valueIndex={false}
                 />
               </div>
