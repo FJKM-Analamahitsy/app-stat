@@ -262,7 +262,7 @@ const Liste: FC = () => {
           </select>
         </div>
         <Popup>
-          <Button className="bg-bg">
+          <Button className="bg-bg p-2">
             <FontAwesomeIcon icon={solid("filter")} className="mr-3" /> Filtre
           </Button>
           <div className="shadow border min-w-[300px] max-h-[450px] overflow-y-auto bg-white rounded p-4 flex flex-col gap-4">

@@ -90,6 +90,7 @@ const getCompta = async (req, res) => {
     creator,
     culte,
     type,
+    part,
   } = req.query;
   let filter = {};
   if (start) {
@@ -131,6 +132,10 @@ const getCompta = async (req, res) => {
 
   if (culte) {
     filter = { ...filter, culte: +culte };
+  }
+
+  if (part) {
+    filter = { ...filter, part: +part };
   }
 
   let member = await Compta.aggregate([
@@ -203,6 +208,13 @@ const getMySummary = async (req, res) => {
     };
   }
 
+  if (req.query.part) {
+    match = {
+      ...match,
+      part: +req.query.part,
+    };
+  }
+
   const pipeline = [
     {
       $project: {
@@ -254,6 +266,13 @@ const getDailySummary = async (req, res) => {
       culte: +req.query.culte,
     };
   }
+
+  if (req.query.part) {
+    match = {
+      ...match,
+      part: +req.query.part,
+    };
+  }
   const pipeline = [
     {
       $project: {
@@ -262,6 +281,7 @@ const getDailySummary = async (req, res) => {
         mtt: "$mtt",
         type: "$type",
         culte: "$culte",
+        part: "$part",
       },
     },
     {

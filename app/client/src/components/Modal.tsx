@@ -15,6 +15,7 @@ interface ModalProps {
   children: ReactElement[];
   onClose?: () => void;
   className?: string;
+  closeonclickoutside?: boolean;
 }
 
 interface ContentProps {
@@ -26,7 +27,7 @@ const ModalContent: FC<ContentProps> = ({ children }) => {
 };
 
 const Modal = forwardRef<any, ModalProps>(
-  ({ children, onClose, className }, ref) => {
+  ({ children, onClose, className, closeonclickoutside }, ref) => {
     const [show, setShow] = useState(false);
     const child = Children.map(children, (child) => {
       if (isValidElement(child)) {
@@ -68,7 +69,14 @@ const Modal = forwardRef<any, ModalProps>(
           <ModalContent>
             <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center z-50 cursor-auto">
               <div className="animate-drop m-6">{child[1]}</div>
-              <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 -z-10"></div>
+              <div
+                className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 -z-10"
+                onClick={() => {
+                  if (closeonclickoutside) {
+                    setShow(false);
+                  }
+                }}
+              ></div>
             </div>
           </ModalContent>
         )}

@@ -32,11 +32,12 @@ const RecapExpand: FC<Props> = ({ data: input }) => {
     const start = dayjs(input._id.date).format("YYYY-MM-DD");
     const end = dayjs(input._id.date).add(1, "day").format("YYYY-MM-DD");
     const type = query.get("type") ?? null;
+    const part = query.get("part") ?? null;
     api
       .get(
         `/adidy?creator=${input._id.createBy}&start=${start}&end=${end}${
           query.get("culte") ? `&culte=${query.get("culte")}` : ""
-        }${type ? `&type=${type}` : ""}`
+        }${type ? `&type=${type}` : ""} ${part ? `&part=${part}` : ""}`
       )
       .then((res) => {
         setData(res.data);
@@ -52,8 +53,32 @@ const RecapExpand: FC<Props> = ({ data: input }) => {
         center: true,
       },
       {
+        name: "Partie",
+        cell: (row) => (
+          <p className={`p-1 px-2 rounded bg-slate-400 text-white`}>
+            {row.part ?? ""}
+          </p>
+        ),
+        maxWidth: "100px",
+        center: true,
+      },
+      {
+        name: "Culte",
+        cell: (row) => (
+          <p
+            className={`p-1 px-2 rounded ${
+              row.culte > 1 ? "bg-orange-400" : "bg-green-500"
+            } text-white`}
+          >
+            {row.culte ?? ""}
+          </p>
+        ),
+        maxWidth: "100px",
+        center: true,
+      },
+      {
         name: "Chretien",
-        grow: 2,
+        grow: 3,
         omit: id !== undefined,
         cell: (row) => (
           <>

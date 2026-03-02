@@ -18,7 +18,7 @@ const Search: FC<Props> = ({ onSearch }) => {
     setTimer(
       setTimeout(() => {
         onSearch(e.target.value);
-      }, 500)
+      }, 800)
     );
   };
 

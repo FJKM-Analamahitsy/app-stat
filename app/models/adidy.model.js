@@ -19,6 +19,7 @@ const Compta = mongoose.model("Compta", {
   year: Number,
   number: Number,
   culte: Number,
+  part: Number,
 });
 
 const AdidyType = mongoose.model("AdidyType", {
