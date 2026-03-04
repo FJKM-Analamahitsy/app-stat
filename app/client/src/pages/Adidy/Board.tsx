@@ -6,10 +6,10 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import dayjs from "dayjs";
-import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useReactToPrint } from "react-to-print";
+import PrintAdidy from "./Print";
 
 const ComptBoard: FC = () => {
   const [data, setData] = useState<any>([]);
@@ -80,10 +80,7 @@ const ComptBoard: FC = () => {
     ],
     []
   );
-  const contentRef = useRef<HTMLDivElement>(null);
-  const print = useReactToPrint({
-    contentRef,
-  });
+
   const navigate = useNavigate();
   useEffect(() => {
     const params = new URLSearchParams(query);
@@ -160,39 +157,17 @@ const ComptBoard: FC = () => {
             className="min-w-32 text-center"
           />
         </div>
-        <button
-          className="bg-primary text-white p-1 px-4 rounded flex gap-3 items-center"
-          onClick={() => print()}
-        >
-          <FontAwesomeIcon icon={solid("print")} size="sm" /> Imprimer
-        </button>
+        <PrintAdidy date={filter.date} title={title} data={data}>
+          <button className="bg-primary text-white p-1 px-4 rounded flex gap-3 items-center">
+            <FontAwesomeIcon icon={solid("print")} size="sm" /> Imprimer
+          </button>
+        </PrintAdidy>
       </div>
       <DataTable
         columns={columns}
         data={data}
         className="h-[calc(100vh-180px)] !overflow-y-auto"
       />
-      <div className="hidden">
-        <div ref={contentRef} className="p-6">
-          <div className="text-center mb-5">
-            <p>FIANGONAN'I JESOA KRISTY ETO MADAGASIKARA</p>
-            <p>FITANDREMANA ANALAMAHITSY SPIA 19</p>
-            <p className="my-3 flex items-center justify-center gap-2">
-              <span className="mt-2">************************</span>
-              <FontAwesomeIcon icon={solid("church")} />
-              <span className="mt-2">************************</span>
-            </p>
-            <p className="font-medium">
-              Recaputilation adidy -{" "}
-              <span className="text-primary">
-                {dayjs(filter.date).format("MMM DD, YYYY")}
-              </span>
-            </p>
-            <p>{title}</p>
-          </div>
-          <DataTable columns={columns} data={data} />
-        </div>
-      </div>
     </div>
   );
 };
