@@ -27,7 +27,7 @@ const SideMenu: FC = () => {
     <div className="fixed top-0 left-0 lg:relative h-screen bg-white z-50">
       <div
         onClick={() => setCollapse(!collapse)}
-        className="h-[68px] bg-white absolute left-full flex justify-center items-center px-4 lg:hidden"
+        className="h-[68px] bg-white absolute left-full flex justify-center items-center px-4"
       >
         <FontAwesomeIcon icon={solid("bars")} className="text-grey" />
       </div>
@@ -36,8 +36,8 @@ const SideMenu: FC = () => {
         <div className="p-2 px-8 flex items-center h-[70px] relative">
           <Logo />
         </div>
-        <div className="h-[calc(100vh-86px)] flex flex-col justify-between">
-          <Menu>
+        <div className="">
+          <Menu className="h-[calc(100vh-136px)] overflow-y-auto">
             {MenuData.map((mn: any, i: number) => {
               const permission = user.profile
                 ? user.profile.permission
@@ -108,14 +108,6 @@ const SideMenu: FC = () => {
           </Menu>
         </div>
       </Sidebar>
-      <>
-        {!collapse && (
-          <div
-            className="md:hidden absolute bg-slate-400 bg-opacity-10 w-screen h-full top-0"
-            onClick={() => setCollapse(true)}
-          ></div>
-        )}
-      </>
     </div>
   );
 };

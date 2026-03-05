@@ -20,6 +20,7 @@ input {
 
 .ps-sidebar-container {
   background-color: #ffffff !important;
+  overflow-y: hidden !important;
 }
 
 .ps-menu-button:hover {
