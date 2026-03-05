@@ -10,17 +10,10 @@ const MenuData: any = [
   },
 
   {
-    label: "Liste",
+    label: "Chretien",
     path: "/christian",
     icon: <FontAwesomeIcon icon={solid("list")} />,
     auth: "member",
-  },
-
-  {
-    label: "Nouveau",
-    path: "/christian/new",
-    icon: <FontAwesomeIcon icon={solid("user-plus")} />,
-    auth: "newmember",
   },
 
   {
@@ -36,7 +29,7 @@ const MenuData: any = [
     auth: "attendance",
   },
   {
-    label: "Adidy",
+    label: "Offrande",
     icon: <FontAwesomeIcon icon={solid("money-bill")} />,
     auth: "adidy",
     submenu: [
@@ -56,7 +49,7 @@ const MenuData: any = [
   },
   {
     label: "Diacre",
-    icon: <FontAwesomeIcon icon={solid("user-group")} />,
+    icon: <FontAwesomeIcon icon={solid("users")} />,
     auth: "diacre",
     submenu: [
       {
@@ -76,20 +69,21 @@ const MenuData: any = [
     auth: "message",
   },
   {
-    label: "Profiles",
-    path: "/profile",
-    icon: <FontAwesomeIcon icon={solid("users")} />,
-    auth: "profile",
-  },
-  {
-    label: "Utilisateurs",
+    label: "Utilisateur",
     path: "/users",
-    icon: <FontAwesomeIcon icon={solid("users")} />,
+    icon: <FontAwesomeIcon icon={solid("user-shield")} />,
     auth: "users",
   },
   {
+    label: "Profile",
+    path: "/profile",
+    icon: <FontAwesomeIcon icon={solid("tags")} />,
+    auth: "profile",
+  },
+
+  {
     label: "Migration",
-    icon: <FontAwesomeIcon icon={solid("sync-alt")} />,
+    icon: <FontAwesomeIcon icon={solid("file")} />,
     auth: "migration",
     submenu: [
       {
