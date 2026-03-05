@@ -6,14 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import { MONTHS } from "@utils/constant";
 import dayjs from "dayjs";
-import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Print from "./Print";
 import toast from "react-hot-toast";
 import { isMobile } from "react-device-detect";
-import { useReactToPrint } from "react-to-print";
-import { faPrint } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   className?: string;
@@ -26,8 +24,6 @@ const Compta: FC<Props> = ({ className }) => {
   const [filter, setFilter] = useState<any>({});
   const { id } = useParams();
   const navigate = useNavigate();
-  const contentRef = useRef<any>(null);
-  const print = useReactToPrint({ contentRef });
 
   const fetch = (page: number) => {
     const params = new URLSearchParams();
@@ -190,24 +186,9 @@ const Compta: FC<Props> = ({ className }) => {
               );
             })}
           </select>
-          <button
-            className="flex items-center gap-3 bg-primary text-white p-2 px-4 rounded"
-            onClick={() => print()}
-          >
-            <FontAwesomeIcon icon={faPrint} size="sm" />
-            imprimer
-          </button>
         </div>
         <div className="font-medium text-lg">
           Total: {Intl.NumberFormat("de-FR").format(data.sum)} MGA
-        </div>
-      </div>
-      <div className="hidden">
-        <div ref={contentRef} className="p-4">
-          <DataTable
-            columns={columns.filter((c) => c.name !== "Action")}
-            data={data.member}
-          />
         </div>
       </div>
 
