@@ -8,7 +8,7 @@ const Table: FC<Props> = (props) => {
     <DataTable
       {...props}
       paginationComponentOptions={{
-        rowsPerPageText: "Resultas",
+        rowsPerPageText: "Lignes par page",
         rangeSeparatorText: "sur",
       }}
     />
