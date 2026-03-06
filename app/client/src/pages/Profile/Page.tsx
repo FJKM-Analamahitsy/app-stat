@@ -29,17 +29,19 @@ const ProfilePage: FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const setPermissionHandler = (name: Perm, val: string) => {
-    const selectedPerm = permission[name] || [];
-    const check = selectedPerm?.indexOf(val);
-    if (check === -1) {
-      setPermission({ ...permission, [name]: [...selectedPerm, val] });
-    } else {
-      setPermission({
-        ...permission,
-        [name]: selectedPerm.filter((v) => v !== val),
-      });
-    }
+  const setPermissionHandler = (name: Perm[], val: string) => {
+    name.forEach((n) => {
+      const selectedPerm = permission[n] || [];
+      const check = selectedPerm?.indexOf(val);
+      if (check === -1) {
+        setPermission((prev) => ({ ...prev, [n]: [...selectedPerm, val] }));
+      } else {
+        setPermission((prev) => ({
+          ...prev,
+          [n]: selectedPerm.filter((v) => v !== val),
+        }));
+      }
+    });
   };
 
   const setTabHandler = (val: number) => {
@@ -96,68 +98,91 @@ const ProfilePage: FC = () => {
           {id ? "Mettre à jour" : "Enregistrer"}
         </Button>
       </div>
-      <p className="text-lg my-3">Permission</p>
-      <div>
-        <div className="grid grid-cols-5">
-          <p>Option</p>
-          <p className="text-center">Lecture</p>
-          <p className="text-center">Ecrire</p>
-          <p className="text-center">Modification</p>
-          <p className="text-center">Suppression</p>
+      <div className="border border-slate-100 mt-4">
+        <div className="grid grid-cols-5 bg-slate-100">
+          <p className="p-4 font-medium">Option</p>
+          <p className="text-center p-4 font-medium">Lecture</p>
+          <p className="text-center p-4 font-medium">Ecrire</p>
+          <p className="text-center p-4 font-medium">Modification</p>
+          <p className="text-center p-4 font-medium">Suppression</p>
         </div>
 
-        {MenuData.map((v: any) => v.auth).map((opt: string, i: number) => {
+        {MenuData.map((opt: any, i: number) => {
+          const auth = opt.auth;
           return (
-            <div className="grid grid-cols-5 hover:bg-bg py-4" key={i}>
-              <p>{opt}</p>
-              <p className="text-center">
+            <div
+              className="grid grid-cols-5 hover:bg-bg py-4 border-b border-slate-100"
+              key={i}
+            >
+              <p
+                className="px-4 capitalize cursor-pointer"
+                onClick={() => {
+                  setPermissionHandler(
+                    ["GET", "POST", "PATCH", "DELETE"],
+                    auth,
+                  );
+                }}
+              >
+                {opt.label}
+              </p>
+              <div className="text-center h-4 relative">
                 <input
                   type="checkbox"
-                  checked={permission.GET?.indexOf(opt) !== -1}
-                  onChange={() => setPermissionHandler("GET", opt)}
+                  checked={permission.GET?.indexOf(auth) !== -1}
+                  onChange={() => setPermissionHandler(["GET"], auth)}
+                  className="switch"
                 />
-              </p>
-              <p className="text-center">
+              </div>
+              <div className="text-center h-4 relative">
                 <input
                   type="checkbox"
-                  checked={permission.POST?.indexOf(opt) !== -1}
-                  onChange={() => setPermissionHandler("POST", opt)}
+                  checked={permission.POST?.indexOf(auth) !== -1}
+                  onChange={() => setPermissionHandler(["POST"], auth)}
+                  className="switch"
                 />
-              </p>
-              <p className="text-center">
+              </div>
+              <div className="text-center h-4 relative">
                 <input
                   type="checkbox"
-                  checked={permission.PATCH?.indexOf(opt) !== -1}
-                  onChange={() => setPermissionHandler("PATCH", opt)}
+                  checked={permission.PATCH?.indexOf(auth) !== -1}
+                  onChange={() => setPermissionHandler(["PATCH"], auth)}
+                  className="switch"
                 />
-              </p>
-              <p className="text-center">
+              </div>
+              <div className="text-center h-4 relative">
                 <input
                   type="checkbox"
-                  checked={permission.DELETE?.indexOf(opt) !== -1}
-                  onChange={() => setPermissionHandler("DELETE", opt)}
+                  checked={permission.DELETE?.indexOf(auth) !== -1}
+                  onChange={() => setPermissionHandler(["DELETE"], auth)}
+                  className="switch"
                 />
-              </p>
+              </div>
             </div>
           );
         })}
       </div>
 
-      <p className="text-lg my-3">Tab in page profile</p>
-      {TAB_OPTIONS.map((opt, i) => {
-        return (
-          <div className="grid grid-cols-5 hover:bg-bg py-4" key={i}>
-            <p>{opt}</p>
-            <p className="text-center">
-              <input
-                type="checkbox"
-                checked={tabInPage.indexOf(i) !== -1}
-                onChange={() => setTabHandler(i)}
-              />
-            </p>
-          </div>
-        );
-      })}
+      <div className="border border-slate-100 max-w-[300px] mt-4">
+        <p className="font-medium bg-slate-100 p-4">Tab in page</p>
+        {TAB_OPTIONS.map((opt, i) => {
+          return (
+            <div
+              className="grid grid-cols-2 hover:bg-bg py-4 border-b border-slate-100"
+              key={i}
+            >
+              <p className="px-4 capitalize">{opt}</p>
+              <div className="text-center h-4 relative">
+                <input
+                  type="checkbox"
+                  checked={tabInPage.indexOf(i) !== -1}
+                  onChange={() => setTabHandler(i)}
+                  className="switch"
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
