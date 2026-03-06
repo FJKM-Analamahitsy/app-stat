@@ -17,7 +17,7 @@ const MenuData: any = [
   },
 
   {
-    label: "Fikambanana",
+    label: "Groupe",
     icon: <FontAwesomeIcon icon={solid("users")} />,
     path: "/group",
     auth: "group",
