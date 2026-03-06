@@ -1,17 +1,16 @@
 import Modal from "@components/Modal";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import QRCode from "react-qr-code";
 import { useReactToPrint } from "react-to-print";
 
 interface Props {
   name: string;
+  children: ReactNode;
 }
 
-const QrCode: FC<Props> = ({ name }) => {
+const QrCode: FC<Props> = ({ name, children }) => {
   const { id } = useParams();
   const [token, setToken] = useState("");
   const modal = useRef<any>(null);
@@ -28,26 +27,17 @@ const QrCode: FC<Props> = ({ name }) => {
         setToken("");
       }
     }, // eslint-disable-next-line
-    [id]
+    [id],
   );
   return (
-    <Modal
-      ref={modal}
-      className="flex justify-center items-center  bg-primary rounded px-4"
-    >
-      <button className="">
-        <FontAwesomeIcon
-          icon={solid("qrcode")}
-          size="lg"
-          className="text-white"
-        />
-      </button>
-      <div className="bg-white rounded p-4">
-        <div ref={contentRef}>
+    <Modal ref={modal}>
+      <>{children}</>
+      <div className="bg-white rounded p-4 flex flex-col items-center gap-4">
+        <div ref={contentRef} className="flex flex-col items-center">
           <QRCode value={token} />
           <p className="text-lg">{name}</p>
         </div>
-        <div className="mt-4">
+        <div>
           <button
             className="p-2 rounded px-4 bg-slate-200"
             onClick={() => {
@@ -61,7 +51,7 @@ const QrCode: FC<Props> = ({ name }) => {
             onClick={() => print()}
             className="bg-primary text-white p-2 rounded ml-3"
           >
-            imprimer qrcode
+            imprimer
           </button>
         </div>
       </div>

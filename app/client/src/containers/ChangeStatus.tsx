@@ -35,8 +35,8 @@ const ChangeStatus: FC<Props> = ({ data, onsuccess }) => {
           />
         </div>
       ) : (
-        <Modal ref={modal}>
-          <div className="relative h-5">
+        <Modal ref={modal} closeonclickoutside>
+          <div className="relative h-4">
             <input
               type="checkbox"
               className="switch"

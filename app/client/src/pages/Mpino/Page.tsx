@@ -33,7 +33,7 @@ const Page: FC = () => {
     if (conf) {
       api
         .delete("/member/", { data: { id } })
-        .then((res) => {
+        .then(() => {
           navigate("/list");
         })
         .catch(function (err) {
@@ -50,19 +50,28 @@ const Page: FC = () => {
         setData({});
       }
     }, // eslint-disable-next-line
-    [id]
+    [id],
   );
   return (
     <div className="min-h-full bg-white">
       <div className="relative h-[430px] md:h-[37vh] rounded-t overflow-hidden">
         <div className="w-full h-[20vh]  bg-no-repeat bg-cover overflow-hidden bg-line-pattern"></div>
-        <div className="w-full flex flex-col md:flex-row  items-center md:items-end -translate-y-[6rem] px-[2rem]">
-          <Avatar label={data.name} hideLabel size={200} textSize={54} />
+        <div className="w-full flex flex-col md:flex-row  items-center md:items-end -translate-y-[6rem] px-[2rem] ">
+          <div className="relative">
+            <QrCode name={data.fullname}>
+              <>
+                <Avatar label={data.name} hideLabel size={200} textSize={54} />
+                <div className="absolute bottom-0 right-0 border border-white border-t-0 border-l-0 bg-primary rounded-md text-white flex items-end justify-end cursor-pointer w-1/2 h-1/2 text-center -z-10 p-2">
+                  <FontAwesomeIcon icon={solid("qrcode")} />
+                </div>
+              </>
+            </QrCode>
+          </div>
           <div className={`px-[2rem] grow `}>
-            <div className="flex gap-3 justify-center md:justify-start my-4">
+            <div className="flex gap-3 justify-center items-center md:justify-start my-4">
               <div
                 className={`w-5 aspect-square bg-bg rounded ${memberStatus(
-                  data.lastPayDate
+                  data.lastPayDate,
                 )}`}
               />
               {canUpdate && (
@@ -111,9 +120,19 @@ const Page: FC = () => {
               </Button>
             </Adidy>
           )}
+          <Present id={id}>
+            <Button className="bg-green-500 text-white w-fit cursor-pointer">
+              <FontAwesomeIcon
+                icon={solid("user-check")}
+                className="text-white  mr-2"
+                size="sm"
+              />
+              <span>Présent</span>
+            </Button>
+          </Present>
           {canUpdate && (
             <Link to={`/christian/edit/${id}`}>
-              <Button className="bg-primary text-white max-w-[150px]">
+              <Button className="bg-slate-400 text-white max-w-[150px]">
                 <FontAwesomeIcon
                   icon={solid("user-edit")}
                   className="text-white cursor-pointer md:mr-2"
@@ -126,7 +145,7 @@ const Page: FC = () => {
 
           {canDelete && (
             <Button
-              className="bg-primary text-white w-fit"
+              className="bg-red-500 text-white w-fit"
               onClick={() => onDeleteHandler()}
             >
               <FontAwesomeIcon
@@ -136,19 +155,6 @@ const Page: FC = () => {
               />
             </Button>
           )}
-
-          <Present id={id}>
-            <Button className="bg-primary text-white w-fit cursor-pointer">
-              <FontAwesomeIcon
-                icon={solid("user-check")}
-                className="text-white  mr-2"
-                size="sm"
-              />
-              <span>Présent</span>
-            </Button>
-          </Present>
-
-          <QrCode name={data.fullname} />
         </div>
 
         <div className="col-span-2">
