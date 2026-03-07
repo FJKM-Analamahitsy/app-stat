@@ -174,4 +174,4 @@ export const ANTOKO_DIAKONE = ["FANILO", "BETELA", "FANASINA", "FILADELFIA"];
 
 export const FARITRA = ["Avaratra", "Atsimo", "Andrefana", "Atsinanana"];
 
-export const TAB_OPTIONS = ["info", "family", "contrib", "other"];
+export const TAB_OPTIONS = ["info", "family", "contrib", "other", "attend"];

@@ -19,6 +19,7 @@ import { useAppDispatch } from "@redux/hooks";
 import { sumSetAction } from "@redux/actions";
 import QrCode from "./QrCode";
 import Present from "./Present";
+import Attendance from "./Attendance";
 
 const Page: FC = () => {
   const [data, setData] = useState<any>({});
@@ -50,7 +51,7 @@ const Page: FC = () => {
         setData({});
       }
     }, // eslint-disable-next-line
-    [id],
+    [id]
   );
   return (
     <div className="min-h-full bg-white">
@@ -71,7 +72,7 @@ const Page: FC = () => {
             <div className="flex gap-3 justify-center items-center md:justify-start my-4">
               <div
                 className={`w-5 aspect-square bg-bg rounded ${memberStatus(
-                  data.lastPayDate,
+                  data.lastPayDate
                 )}`}
               />
               {canUpdate && (
@@ -163,6 +164,7 @@ const Page: FC = () => {
             <Family data={data} />
             <AdidyDetails />
             <Compta />
+            <Attendance id={data._id} />
           </MemberInfoTab>
         </div>
       </div>

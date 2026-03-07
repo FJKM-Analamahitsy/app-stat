@@ -1,10 +1,27 @@
 const { Attendance } = require("../models/attendance.model");
 const { object, string } = require("yup");
 const dayjs = require("dayjs");
+const { default: mongoose } = require("mongoose");
 
 const idSchema = object({
   id: string().required(),
 });
+
+const getDateCount = async (req, res) => {
+  const result = await Attendance.aggregate([
+    {
+      $group: {
+        _id: {
+          $dateToString: { format: "%Y-%m-%d", date: "$day" },
+        },
+      },
+    },
+    {
+      $count: "count",
+    },
+  ]);
+  res.json(result[0].count);
+};
 
 const getAttendance = async (req, res) => {
   let match = {
@@ -18,11 +35,19 @@ const getAttendance = async (req, res) => {
     };
   }
 
+  if (req.query.member) {
+    match = {
+      ...match,
+      member: new mongoose.Types.ObjectId(req.query.member),
+    };
+  }
+
   const pipeline = [
     {
       $project: {
         day: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
         member: "$member",
+        cratedAt: "$createdAt",
       },
     },
     {
@@ -63,6 +88,7 @@ const deleteAttendance = async (req, res) => {
 };
 
 module.exports = {
+  getDateCount,
   getAttendance,
   addAttendance,
   deleteAttendance,
