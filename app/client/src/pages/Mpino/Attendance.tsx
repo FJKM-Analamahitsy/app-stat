@@ -14,7 +14,7 @@ const Attendance: FC<Props> = ({ id }) => {
   return (
     <div className="pt-4">
       <div className="bg-primary w-fit text-white rounded px-3 p-2">
-        {count} | {data.length}
+        {data.length} | {count}
       </div>
       <div className="max-w-[300px] w-fit">
         {data.map((d: any, i: number) => {

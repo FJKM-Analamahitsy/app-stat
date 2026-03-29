@@ -175,3 +175,10 @@ export const ANTOKO_DIAKONE = ["FANILO", "BETELA", "FANASINA", "FILADELFIA"];
 export const FARITRA = ["Avaratra", "Atsimo", "Andrefana", "Atsinanana"];
 
 export const TAB_OPTIONS = ["info", "family", "contrib", "other", "attend"];
+
+export const APK_FILE = [
+  "app-arm64-v8a",
+  "app-armeabi-v7a",
+  "app-x86_64",
+  "app-x86",
+];
