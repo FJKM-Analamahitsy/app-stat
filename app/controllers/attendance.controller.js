@@ -11,9 +11,7 @@ const getDateCount = async (req, res) => {
   const result = await Attendance.aggregate([
     {
       $group: {
-        _id: {
-          $dateToString: { format: "%Y-%m-%d", date: "$day" },
-        },
+        _id: "$date",
       },
     },
     {
@@ -25,7 +23,7 @@ const getDateCount = async (req, res) => {
 
 const getAttendance = async (req, res) => {
   let match = {
-    day: dayjs().format("YYYY-MM-DD"),
+    // day: dayjs().format("YYYY-MM-DD"),
   };
 
   if (req.query.day) {

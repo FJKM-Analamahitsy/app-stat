@@ -16,12 +16,13 @@ const Attendance: FC<Props> = ({ id }) => {
       <div className="bg-primary w-fit text-white rounded px-3 p-2">
         {data.length} | {count}
       </div>
-      <div className="max-w-[300px] w-fit">
+      <div className="max-w-[500px] w-fit">
         {data.map((d: any, i: number) => {
           return (
-            <div className="flex gap-3 p-2 py-3 border-b border-slate-100">
+            <div className="flex p-2 py-3 border-b border-slate-100">
               <p className="w-10">{i + 1}</p>
-              <p>{dayjs(d.createdAt).format("DD, MMM YYYY à HH:mm")}</p>
+              <p className="mr-8">{dayjs(d.day).format("DD, MMM YYYY")}</p>
+              <p>{dayjs(d.cratedAt).format("DD, MMM YYYY à HH:mm")}</p>
             </div>
           );
         })}
