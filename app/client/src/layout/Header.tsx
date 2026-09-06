@@ -7,7 +7,7 @@ import { FC } from "react";
 import { isMobile } from "react-device-detect";
 
 const Header: FC = () => {
-  const { username } = useAppSelector((state) => state.user);
+  const { fullname } = useAppSelector((state) => state.user);
   const summary = useAppSelector((state) => state.summary);
 
   return (
@@ -28,7 +28,7 @@ const Header: FC = () => {
             size="lg"
           />
         </div>
-        <Avatar label={username} reversed hideLabSm />
+        <Avatar label={fullname} reversed hideLabSm />
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import Avatar from "@components/Avatar";
 import Modal from "@components/Modal";
-import Select from "@components/Select";
 import RecapExpand from "@containers/RecapExpand";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,6 +19,7 @@ const ComptBoard: FC = () => {
     date: query.get("date") ?? dayjs().format("YYYY-MM-DD"),
     type: query.get("type") ?? "",
     culte: query.get("culte") ?? "",
+    part: query.get("part") ?? "",
   });
 
   const [type, setType] = useState<any>([]);
@@ -165,27 +165,20 @@ const ComptBoard: FC = () => {
 
               <div>
                 <p className="mb-1 text-slate-500">Partie</p>
-                <Select
-                  defaultValue={localStorage.getItem("part") || "1"}
+                <select
+                  className="border rounded p-3 w-full"
+                  value={filter.part}
                   onChange={(e) => {
                     setfilter({ ...filter, part: e.target.value });
                   }}
-                  options={[
-                    "",
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "10",
-                  ]}
-                  valueIndex={false}
-                  className="min-w-32 w-full p-3"
-                />
+                >
+                  <option value="">tous</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
               </div>
             </div>
           </Popup>

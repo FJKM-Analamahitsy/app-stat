@@ -160,6 +160,8 @@ const listMember = async (req, res) => {
         $or: [
           { fullname: { $regex: new RegExp(search, "i") } },
           { mpandrayN: { $regex: new RegExp(search, "i") } },
+          { home: { $regex: new RegExp(search, "i") } },
+          { phone: { $regex: new RegExp(search, "i") } },
         ],
       };
       sort = { mpandrayN: "asc" };

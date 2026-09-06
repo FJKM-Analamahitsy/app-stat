@@ -59,7 +59,7 @@ const Page: FC = () => {
         <div className="w-full h-[20vh]  bg-no-repeat bg-cover overflow-hidden bg-line-pattern"></div>
         <div className="w-full flex flex-col md:flex-row  items-center md:items-end -translate-y-[6rem] px-[2rem] ">
           <div className="relative">
-            <QrCode name={data.fullname}>
+            <QrCode member={data}>
               <>
                 <Avatar label={data.name} hideLabel size={200} textSize={54} />
                 <div className="absolute bottom-0 right-0 border border-white border-t-0 border-l-0 bg-primary rounded-md text-white flex items-end justify-end cursor-pointer w-1/2 h-1/2 text-center -z-10 p-2">

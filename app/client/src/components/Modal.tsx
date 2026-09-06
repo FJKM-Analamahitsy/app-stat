@@ -1,3 +1,5 @@
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Children,
   FC,
@@ -69,6 +71,14 @@ const Modal = forwardRef<any, ModalProps>(
           <ModalContent>
             <div className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center z-50 cursor-auto">
               <div className="animate-drop m-6">{child[1]}</div>
+              <div className="absolute top-4 right-4">
+                <button
+                  className="bg-bg rounded-full p-2 w-10"
+                  onClick={() => setShow(false)}
+                >
+                  <FontAwesomeIcon icon={solid("close")} />
+                </button>
+              </div>
               <div
                 className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 -z-10"
                 onClick={() => {

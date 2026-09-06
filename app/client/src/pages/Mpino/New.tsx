@@ -5,11 +5,12 @@ import Select from "@components/Select";
 import SelectMultiple from "@components/SelectMultiple";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import api from "@utils/api";
+import api, { getData } from "@utils/api";
 import { ANTOKO_DIAKONE, MONTHS, SAMPANA } from "@utils/constant";
 import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import useSWR from "swr";
 
 interface ContainerProps {
   title: string;
@@ -36,6 +37,7 @@ const NewMember: FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const container = useRef<HTMLDivElement>(null);
+  const { data: profile = [] } = useSWR("profile", getData);
 
   const getLastKaratra = () => {
     api.get("/member/lastKaratra").then((res) => {
@@ -372,6 +374,27 @@ const NewMember: FC = () => {
             value={data.other ? data.other : ""}
             onChange={onChangeHandler}
           ></textarea>
+        </Container>
+
+        <Container title="Authentification" childClass="!grid-cols-1">
+          <div>
+            <p className="mb-1">Profile</p>
+            <select
+              name="profile"
+              defaultValue={data.profile}
+              onChange={onChangeHandler}
+              className="h-[40px] w-full min-w-[200px] bg-bg rounded-[5px] flex items-center gap-[10px] px-[10px]"
+            >
+              <option value="">select</option>
+              {profile.map((v: any, i: number) => {
+                return (
+                  <option key={i} value={v._id}>
+                    {v.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
         </Container>
 
         <div className="text-right mt-4">
