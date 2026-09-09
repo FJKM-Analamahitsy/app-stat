@@ -59,7 +59,6 @@ const Member = mongoose.model("Member", {
   },
   username: {
     type: String,
-    unique: true,
   },
 
   profile: {
