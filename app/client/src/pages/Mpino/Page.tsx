@@ -35,7 +35,7 @@ const Page: FC = () => {
       api
         .delete("/member/", { data: { id } })
         .then(() => {
-          navigate("/list");
+          navigate("/christian");
         })
         .catch(function (err) {
           toast.error(err.message);
@@ -51,7 +51,7 @@ const Page: FC = () => {
         setData({});
       }
     }, // eslint-disable-next-line
-    [id]
+    [id],
   );
   return (
     <div className="min-h-full bg-white">
@@ -72,7 +72,7 @@ const Page: FC = () => {
             <div className="flex gap-3 justify-center items-center md:justify-start my-4">
               <div
                 className={`w-5 aspect-square bg-bg rounded ${memberStatus(
-                  data.lastPayDate
+                  data.lastPayDate,
                 )}`}
               />
               {canUpdate && (
