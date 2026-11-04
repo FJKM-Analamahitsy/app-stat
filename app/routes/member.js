@@ -6,12 +6,9 @@ const {
   listMember,
   getMember,
   exportMembers,
-  statistics,
   getFamily,
   getLastKaratra,
   checkKaratra,
-  statPerBirthMonth,
-  statPerSampana,
   importMembers,
   generateUserToken,
   getAllMemberToken,
@@ -35,9 +32,6 @@ route.get("/", listMember);
 route.get("/token/:id", generateUserToken);
 route.get("/get/token", getAllMemberToken);
 route.get("/get/:id", getMember);
-route.get("/stat", statistics);
-route.get("/stat/monthly", statPerBirthMonth);
-route.get("/stat/sampana", statPerSampana);
 route.get("/family/:id", getFamily);
 route.get("/lastKaratra", getLastKaratra);
 route.get("/check/:num", checkKaratra);

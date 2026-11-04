@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useMemo } from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -10,7 +10,8 @@ import {
   Legend,
   BarElement,
 } from "chart.js";
-import api from "@utils/api";
+import { getData } from "@utils/api";
+import useSWR from "swr";
 
 ChartJS.register(
   CategoryScale,
@@ -19,7 +20,7 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 interface Props {
@@ -27,30 +28,30 @@ interface Props {
 }
 
 const DashChart: FC<Props> = ({ title }) => {
-  const [data, setData] = useState({});
+  const { data } = useSWR("stat/perbirth", getData);
   const options = {
     responsive: true,
   };
 
-  const chart = {
-    labels: Object.keys(data).map((v) => v.slice(0, 3)),
-    datasets: [
-      {
-        label: title,
-        data: Object.values(data),
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.7)",
-      },
-    ],
-  };
-  useEffect(() => {
-    api.get("/member/stat/monthly").then((res) => {
-      setData(res.data);
-    });
-  }, []);
+  const chart = useMemo(() => {
+    if (!data) return null;
+    return {
+      labels: Object.keys(data).map((v) => v.slice(0, 3)),
+      datasets: [
+        {
+          label: title,
+          data: Object.values(data),
+          borderColor: "rgb(53, 162, 235)",
+          backgroundColor: "rgba(53, 162, 235, 0.7)",
+        },
+      ],
+    };
+  }, [data]);
   return (
     <div className="bg-white rounded-[5px] p-4 w-full">
-      <Bar options={options} data={chart} className="w-full h-full" />
+      {chart && (
+        <Bar options={options} data={chart} className="w-full h-full" />
+      )}
     </div>
   );
 };

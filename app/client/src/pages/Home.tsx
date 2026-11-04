@@ -1,12 +1,13 @@
 import DashChart from "@containers/DashChart";
 import Sampana from "@containers/Sampana";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
-import api from "@utils/api";
+import { getData } from "@utils/api";
 import ChartAdidy from "@containers/ChartAdidy";
 import DoghnutChart from "@containers/DoghnutChart";
 import { formatMoney, formatPercent } from "@utils/helper";
+import useSWR from "swr";
 
 interface SummaryProps {
   title: string;
@@ -53,12 +54,9 @@ const SummaryItem: FC<SummaryProps> = ({
 };
 
 const Home: FC = () => {
-  const [data, setData] = useState<any>();
+  const { data } = useSWR("stat", getData);
   const faritra = ["avaratra", "atsinanana", "atsimo", "andrefana"];
 
-  useEffect(() => {
-    api.get("/member/stat").then((res) => setData(res.data));
-  }, []);
   return (
     <>
       {data && (

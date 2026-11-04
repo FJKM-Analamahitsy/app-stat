@@ -15,6 +15,7 @@ const { authMiddlware } = require("./middleware/middleware");
 const path = require("path");
 const { attendance } = require("./routes/attendance");
 const { group } = require("./routes/group");
+const { stat } = require("./routes/stat");
 const route = express.Router();
 
 const app = express();
@@ -22,7 +23,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: "*",
-  })
+  }),
 );
 app.use(cookieParser);
 route.use("/auth", auth);
@@ -35,6 +36,7 @@ route.use("/printer", authMiddlware, printer);
 route.use("/attendance", authMiddlware, attendance);
 route.use("/sms", authMiddlware, sms);
 route.use("/group", authMiddlware, group);
+route.use("/stat", authMiddlware, stat);
 app.use("/api", route);
 
 app.use(express.static(path.join(__dirname, "public")));
