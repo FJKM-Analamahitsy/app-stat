@@ -1,6 +1,5 @@
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SAMPANA } from "./constant";
 
 const MenuData: any = [
   {
@@ -11,24 +10,17 @@ const MenuData: any = [
   },
 
   {
-    label: "Liste",
+    label: "Chretien",
     path: "/christian",
     icon: <FontAwesomeIcon icon={solid("list")} />,
     auth: "member",
   },
 
   {
-    label: "Nouveau",
-    path: "/christian/new",
-    icon: <FontAwesomeIcon icon={solid("user-plus")} />,
-    auth: "newmember",
-  },
-
-  {
-    label: "Sampana",
+    label: "Groupe",
     icon: <FontAwesomeIcon icon={solid("users")} />,
-    submenu: SAMPANA.sort().map((v) => ({ path: `/sampana/${v}`, label: v })),
-    auth: "sampana",
+    path: "/group",
+    auth: "group",
   },
   {
     label: "Presence",
@@ -37,7 +29,7 @@ const MenuData: any = [
     auth: "attendance",
   },
   {
-    label: "Adidy",
+    label: "Offrande",
     icon: <FontAwesomeIcon icon={solid("money-bill")} />,
     auth: "adidy",
     submenu: [
@@ -57,7 +49,7 @@ const MenuData: any = [
   },
   {
     label: "Diacre",
-    icon: <FontAwesomeIcon icon={solid("user-group")} />,
+    icon: <FontAwesomeIcon icon={solid("users")} />,
     auth: "diacre",
     submenu: [
       {
@@ -71,20 +63,27 @@ const MenuData: any = [
     ],
   },
   {
-    label: "Profiles",
-    path: "/profile",
-    icon: <FontAwesomeIcon icon={solid("users")} />,
-    auth: "profile",
+    label: "Message",
+    path: "/message",
+    icon: <FontAwesomeIcon icon={solid("message")} />,
+    auth: "message",
   },
   {
-    label: "Utilisateurs",
+    label: "Utilisateur",
     path: "/users",
-    icon: <FontAwesomeIcon icon={solid("users")} />,
+    icon: <FontAwesomeIcon icon={solid("user-shield")} />,
     auth: "users",
   },
   {
+    label: "Profile",
+    path: "/profile",
+    icon: <FontAwesomeIcon icon={solid("tags")} />,
+    auth: "profile",
+  },
+
+  {
     label: "Migration",
-    icon: <FontAwesomeIcon icon={solid("sync-alt")} />,
+    icon: <FontAwesomeIcon icon={solid("file")} />,
     auth: "migration",
     submenu: [
       {

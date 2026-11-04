@@ -9,10 +9,11 @@ import usePermission from "@hooks/usePermission";
 import api from "@utils/api";
 import { formatPoneNumber } from "@utils/helper";
 import { FC, useEffect, useMemo, useState } from "react";
-import DataTable, { TableColumn } from "react-data-table-component";
+import { TableColumn } from "react-data-table-component";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Present from "./Present";
+import Table from "@components/Table";
 
 interface DataRow {
   [key: string]: string;
@@ -252,7 +253,7 @@ const Liste: FC = () => {
           </div>
 
           <select
-            className="border rounded"
+            className="border rounded px-3"
             onChange={(e) => {
               setFilter({ ...filter, searchField: e.target.value });
             }}
@@ -261,107 +262,114 @@ const Liste: FC = () => {
             <option value="home">Ankohonana</option>
           </select>
         </div>
-        <Popup>
-          <Button className="bg-bg">
-            <FontAwesomeIcon icon={solid("filter")} className="mr-3" /> Filtre
-          </Button>
-          <div className="shadow border min-w-[300px] max-h-[450px] overflow-y-auto bg-white rounded p-4 flex flex-col gap-4">
-            <div>
-              <p className="my-2">Mpandray</p>
-              <select
-                className="bg-bg w-full p-3 px-1 rounded"
-                value={filter.mpandray}
-                onChange={(e) => {
-                  setFilter({ ...filter, mpandray: e.target.value });
-                }}
-              >
-                <option value="">Tous</option>
-                <option value="eny">Eny</option>
-                <option value="tsia">Tsia</option>
-              </select>
-            </div>
+        <div className="flex gap-2">
+          <Popup>
+            <Button className="bg-bg p-2">
+              <FontAwesomeIcon icon={solid("filter")} />
+            </Button>
+            <div className="shadow border min-w-[300px] max-h-[450px] overflow-y-auto bg-white rounded p-4 flex flex-col gap-4">
+              <div>
+                <p className="my-2">Mpandray</p>
+                <select
+                  className="bg-bg w-full p-3 px-1 rounded"
+                  value={filter.mpandray}
+                  onChange={(e) => {
+                    setFilter({ ...filter, mpandray: e.target.value });
+                  }}
+                >
+                  <option value="">Tous</option>
+                  <option value="eny">Eny</option>
+                  <option value="tsia">Tsia</option>
+                </select>
+              </div>
 
-            <div>
-              <p className="my-2">Batisa</p>
-              <select
-                className="bg-bg w-full p-3 px-1 rounded"
-                value={filter.batisa}
-                onChange={(e) => {
-                  setFilter({ ...filter, batisa: e.target.value });
-                }}
-              >
-                <option value="">Tous</option>
-                <option value="eny">Eny</option>
-                <option value="tsia">Tsia</option>
-              </select>
-            </div>
+              <div>
+                <p className="my-2">Batisa</p>
+                <select
+                  className="bg-bg w-full p-3 px-1 rounded"
+                  value={filter.batisa}
+                  onChange={(e) => {
+                    setFilter({ ...filter, batisa: e.target.value });
+                  }}
+                >
+                  <option value="">Tous</option>
+                  <option value="eny">Eny</option>
+                  <option value="tsia">Tsia</option>
+                </select>
+              </div>
 
-            <div>
-              <p className="my-2">Faritra</p>
-              <select
-                className="bg-bg w-full p-3 px-1 rounded"
-                value={filter.place}
-                onChange={(e) => {
-                  setFilter({ ...filter, place: e.target.value });
-                }}
-              >
-                <option value="">Tous</option>
-                <option value="atsimo">Atsimo</option>
-                <option value="andrefana">Andrefana</option>
-                <option value="atsinanana">Atsinanana</option>
-                <option value="avaratra">Avaratra</option>
-              </select>
-            </div>
+              <div>
+                <p className="my-2">Faritra</p>
+                <select
+                  className="bg-bg w-full p-3 px-1 rounded"
+                  value={filter.place}
+                  onChange={(e) => {
+                    setFilter({ ...filter, place: e.target.value });
+                  }}
+                >
+                  <option value="">Tous</option>
+                  <option value="atsimo">Atsimo</option>
+                  <option value="andrefana">Andrefana</option>
+                  <option value="atsinanana">Atsinanana</option>
+                  <option value="avaratra">Avaratra</option>
+                </select>
+              </div>
 
-            <div>
-              <p className="my-2">L/V</p>
-              <select
-                className="bg-bg w-full p-3 px-1 rounded"
-                value={filter.gender}
-                onChange={(e) => {
-                  setFilter({ ...filter, gender: e.target.value });
-                }}
-              >
-                <option value="">Tous</option>
-                <option value="lehilahy">Lehilahy</option>
-                <option value="vehivavy">Vehivavy</option>
-              </select>
-            </div>
+              <div>
+                <p className="my-2">L/V</p>
+                <select
+                  className="bg-bg w-full p-3 px-1 rounded"
+                  value={filter.gender}
+                  onChange={(e) => {
+                    setFilter({ ...filter, gender: e.target.value });
+                  }}
+                >
+                  <option value="">Tous</option>
+                  <option value="lehilahy">Lehilahy</option>
+                  <option value="vehivavy">Vehivavy</option>
+                </select>
+              </div>
 
-            <div>
-              <p className="my-2">Statut</p>
-              <select
-                className="bg-bg w-full p-3 px-1 rounded"
-                value={filter.status}
-                onChange={(e) => {
-                  setFilter({ ...filter, status: e.target.value });
-                }}
-              >
-                <option value="">Tous</option>
-                <option value="lehilahy">Activer</option>
-                <option value="vehivavy">Desactiver</option>
-              </select>
-            </div>
+              <div>
+                <p className="my-2">Statut</p>
+                <select
+                  className="bg-bg w-full p-3 px-1 rounded"
+                  value={filter.status}
+                  onChange={(e) => {
+                    setFilter({ ...filter, status: e.target.value });
+                  }}
+                >
+                  <option value="">Tous</option>
+                  <option value="lehilahy">Activer</option>
+                  <option value="vehivavy">Desactiver</option>
+                </select>
+              </div>
 
-            <div>
-              <p className="my-2">Remarque</p>
-              <select
-                className="bg-bg w-full p-3 px-1 rounded"
-                value={filter.other}
-                onChange={(e) => {
-                  setFilter({ ...filter, other: e.target.value });
-                }}
-              >
-                <option value="">Tous</option>
-                <option value="exist">Existe</option>
-              </select>
+              <div>
+                <p className="my-2">Remarque</p>
+                <select
+                  className="bg-bg w-full p-3 px-1 rounded"
+                  value={filter.other}
+                  onChange={(e) => {
+                    setFilter({ ...filter, other: e.target.value });
+                  }}
+                >
+                  <option value="">Tous</option>
+                  <option value="exist">Existe</option>
+                </select>
+              </div>
             </div>
-          </div>
-        </Popup>
+          </Popup>
+          <Link to="new">
+            <Button className="bg-primary text-white">
+              <FontAwesomeIcon icon={solid("add")} /> Nouveau
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <div className="mt-4">
-        <DataTable
+        <Table
           columns={columns}
           data={data}
           pagination

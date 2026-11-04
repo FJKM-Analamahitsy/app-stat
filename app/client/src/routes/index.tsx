@@ -9,7 +9,7 @@ const Liste = lazy(() => import("@pages/Mpino/Liste"));
 const Home = lazy(() => import("@pages/Home"));
 const NewMember = lazy(() => import("@pages/Mpino/New"));
 const Page = lazy(() => import("@pages/Mpino/Page"));
-const ListeSampana = lazy(() => import("@pages/Sampana"));
+const Group = lazy(() => import("@pages/Group"));
 const ProfileList = lazy(() => import("@pages/Profile/List"));
 const ProfilePage = lazy(() => import("@pages/Profile/Page"));
 const UserList = lazy(() => import("@pages/Users/List"));
@@ -23,6 +23,7 @@ const Import = lazy(() => import("@pages/Migration/Import"));
 const Export = lazy(() => import("@pages/Migration/Export"));
 const Diakona = lazy(() => import("@pages/diakona"));
 const Attendance = lazy(() => import("@pages/Attendance"));
+const Message = lazy(() => import("@pages/Message"));
 
 const Routes: FC = () => {
   return (
@@ -43,7 +44,7 @@ const Routes: FC = () => {
             <Route path=":id" element={<ProfilePage />} />
           </Route>
           <Route path="users" element={<UserList />} />
-          <Route path="sampana/:name" element={<ListeSampana />} />
+          <Route path="group" element={<Group />} />
           <Route path="attendance">
             <Route index element={<Attendance />} />
             <Route path="qr" element={<PrintQRPDF />} />
@@ -53,6 +54,7 @@ const Routes: FC = () => {
             <Route path="type" element={<AdidyType />} />
             <Route path="list" element={<Journal />} />
           </Route>
+          <Route path="message" element={<Message />} />
           <Route path="setting" element={<Setting />} />
           <Route path="export" element={<Export />} />
           <Route path="import" element={<Import />} />

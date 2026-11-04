@@ -1,5 +1,8 @@
 import InputNew from "@components/InputNew";
 import Select from "@components/Select";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { APK_FILE } from "@utils/constant";
 import { FC } from "react";
 
 const Setting: FC = () => {
@@ -45,6 +48,22 @@ const Setting: FC = () => {
         label="Culte"
         valueIndex={false}
       />
+
+      <div>
+        <p className="font-medium text-slate-800 mb-3">Fichier apk</p>
+        <div className="flex flex-col gap-3">
+          {APK_FILE.map((apk, i) => {
+            return (
+              <div className="flex items-center gap-1">
+                <FontAwesomeIcon icon={solid("tag")} />
+                <a key={i} href={`apk/${apk}-release.apk`} download>
+                  {apk}
+                </a>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };

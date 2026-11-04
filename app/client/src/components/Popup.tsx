@@ -9,8 +9,9 @@ import {
 } from "react";
 interface Props {
   children: ReactNode;
+  className?: string;
 }
-const Popup = ({ children }: Props) => {
+const Popup = ({ children, className }: Props) => {
   const container = useRef<HTMLDivElement>(null);
   const child: any = Children.map(children, (child) => {
     if (isValidElement(child)) {
@@ -27,7 +28,9 @@ const Popup = ({ children }: Props) => {
     <div ref={container} className="relative">
       <div>{child[0]}</div>
       {open && (
-        <div className="absolute top-full right-0 pt-2 z-50">{child[1]}</div>
+        <div className={`absolute top-full right-0 pt-2 z-50 ${className}`}>
+          {child[1]}
+        </div>
       )}
     </div>
   );

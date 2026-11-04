@@ -57,6 +57,15 @@ const Member = mongoose.model("Member", {
       type: [Number],
     },
   },
+  username: {
+    type: String,
+  },
+
+  profile: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Profile",
+  },
+  password: String,
 });
 
 module.exports = { Member };

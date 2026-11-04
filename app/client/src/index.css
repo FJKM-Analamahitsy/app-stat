@@ -20,6 +20,7 @@ input {
 
 .ps-sidebar-container {
   background-color: #ffffff !important;
+  overflow-y: hidden !important;
 }
 
 .ps-menu-button:hover {
@@ -63,7 +64,7 @@ input {
 }
 
 .switch {
-  @apply w-11 h-0 cursor-pointer inline-block;
+  @apply w-10 h-0 cursor-pointer inline-block;
   @apply focus:outline-0 dark:focus:outline-0;
   @apply border-0 dark:border-0;
   @apply focus:ring-offset-transparent dark:focus:ring-offset-transparent;
@@ -76,14 +77,14 @@ input {
   @apply after:block before:inline-block;
   @apply before:rounded-full after:rounded-full;
 
-  @apply after:content-[''] after:w-4 after:h-4 after:mt-0.5 after:ml-0.5;
+  @apply after:content-[''] after:w-3 after:h-3 after:mt-0.5 after:ml-0.5;
   @apply after:shadow-md after:duration-100;
 
-  @apply before:content-[''] before:w-10 before:h-full;
+  @apply before:content-[''] before:w-8 before:h-full;
   @apply before:shadow-[inset_0_0_#000];
 
   @apply after:bg-white dark:after:bg-gray-50;
-  @apply before:bg-gray-300 dark:before:bg-gray-600;
+  @apply before:bg-gray-300;
   @apply before:checked:bg-blue-500 dark:before:checked:bg-blue-500;
   @apply checked:after:duration-300 checked:after:translate-x-4;
 

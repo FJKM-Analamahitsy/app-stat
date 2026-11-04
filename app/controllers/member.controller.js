@@ -160,6 +160,8 @@ const listMember = async (req, res) => {
         $or: [
           { fullname: { $regex: new RegExp(search, "i") } },
           { mpandrayN: { $regex: new RegExp(search, "i") } },
+          { home: { $regex: new RegExp(search, "i") } },
+          { phone: { $regex: new RegExp(search, "i") } },
         ],
       };
       sort = { mpandrayN: "asc" };
@@ -467,6 +469,24 @@ const getAllMemberToken = async (req, res) => {
   res.send(result);
 };
 
+const getPhoneNumber = async (req, res) => {
+  const { filter } = req.query;
+  const filterArray = filter.split(" ");
+  let filters = {};
+  if (filter !== "" && filterArray.length > 0) {
+    filters = { ...filters, sampana: new RegExp(filterArray.join("|"), "i") };
+  }
+
+  const result = await Member.where({
+    ...filters,
+    phone: { $exists: true, $ne: "" },
+    status: true,
+  })
+    .find()
+    .distinct("phone");
+  return res.json(result);
+};
+
 module.exports = {
   createMember,
   deleteMember,
@@ -483,4 +503,5 @@ module.exports = {
   statPerSampana,
   generateUserToken,
   getAllMemberToken,
+  getPhoneNumber,
 };

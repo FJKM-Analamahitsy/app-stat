@@ -1,8 +1,7 @@
 const jwt = require("jsonwebtoken");
-const { User } = require("../models/user.model");
 const { log } = require("./log.controller");
 const { object, string } = require("yup");
-const { compare } = require("../utils/bcrypt");
+const { Member } = require("../models/member.model");
 
 const loginInput = object({
   username: string().required(),
@@ -13,9 +12,7 @@ const getMe = async (req, res) => {
   const token = req.headers.authorization;
   jwt.verify(token, process.env.PRIVATE_KEY, async (err, dec) => {
     if (err) return res.status(401).send("unauthorised");
-    const user = await User.findById(dec.id)
-      .select("username")
-      .populate("profile");
+    const user = await Member.findById(dec.id).populate("profile");
     return res.send(user);
   });
 };
@@ -23,25 +20,21 @@ const getMe = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { password, username } = await loginInput.validate(req.body);
-    const user = await User.findOne({ username });
+    const user = await Member.findOne({ password, username });
     if (user) {
-      const check = await compare(password, user.password);
-      if (check) {
-        log(user.username, "connection");
-        const token = jwt.sign(
-          { username: user.username, id: user._id },
-          process.env.PRIVATE_KEY
-        );
-        return res.send({
-          token,
-        });
-      } else {
-        return res.status(401).send("Wrong password!");
-      }
+      log(user.username, "connection");
+      const token = jwt.sign(
+        { username: user.fullname, id: user._id },
+        process.env.PRIVATE_KEY
+      );
+      return res.send({
+        token,
+      });
     } else {
       return res.status(401).send("user does not exist!");
     }
   } catch (error) {
+    console.log(error);
     res.status(400).send(error.message);
   }
 };

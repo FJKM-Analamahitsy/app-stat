@@ -1,11 +1,12 @@
 import Avatar from "@components/Avatar";
 import Button from "@components/Button";
 import Confirm from "@components/Confirm";
+import Table from "@components/Table";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "@utils/api";
 import { FC, useEffect, useMemo, useState } from "react";
-import DataTable, { TableColumn } from "react-data-table-component";
+import { TableColumn } from "react-data-table-component";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
@@ -60,7 +61,7 @@ const ProfileList: FC = () => {
       },
     ],
     // eslint-disable-next-line
-    []
+    [],
   );
 
   useEffect(
@@ -68,7 +69,7 @@ const ProfileList: FC = () => {
       fetch();
     },
     // eslint-disable-next-line
-    []
+    [],
   );
   return (
     <div className="bg-white h-full p-4">
@@ -78,7 +79,7 @@ const ProfileList: FC = () => {
         </Button>
       </Link>
       <div className="mt-4">
-        <DataTable
+        <Table
           columns={columns}
           data={data}
           pagination

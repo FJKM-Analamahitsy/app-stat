@@ -18,7 +18,13 @@ const MemberInfoTab: FC<Props> = ({ children }) => {
   const [active, setActive] = useState(0);
   const [tabPage, setTab] = useState<any>([]);
 
-  const tab = ["Ny tena", "Ankohonana", "Adidy mpandray", "Adidy vita"];
+  const tab = [
+    "Ny tena",
+    "Ankohonana",
+    "Adidy mpandray",
+    "Adidy vita",
+    "Presence",
+  ];
   const child = Children.map(children, (child) => {
     if (isValidElement(child)) {
       return child;

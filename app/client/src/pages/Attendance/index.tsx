@@ -44,6 +44,11 @@ const Attendance: FC = () => {
         grow: 2,
       },
       {
+        name: "Laharana",
+        selector: (row) => (row.member ? row.member.mpandrayN : ""),
+        hide: 500,
+      },
+      {
         name: "L/V",
         selector: (row) => (row.member ? row.member.gender : ""),
         hide: 500,
