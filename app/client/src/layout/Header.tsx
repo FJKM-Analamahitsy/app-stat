@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAppSelector } from "@redux/hooks";
 import { formatMoney } from "@utils/helper";
 import { FC } from "react";
-import { isMobile } from "react-device-detect";
 
 const Header: FC = () => {
   const { fullname } = useAppSelector((state) => state.user);
@@ -21,13 +20,6 @@ const Header: FC = () => {
       </div>
 
       <div className="flex items-center gap-8">
-        <div className="relative animate-pulse">
-          <FontAwesomeIcon
-            icon={isMobile ? solid("mobile") : solid("laptop")}
-            color="#A4B4BD"
-            size="lg"
-          />
-        </div>
         <Avatar label={fullname} reversed hideLabSm />
       </div>
     </div>
