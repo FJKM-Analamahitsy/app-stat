@@ -1,6 +1,4 @@
 import Avatar from "@components/Avatar";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAppSelector } from "@redux/hooks";
 import { formatMoney } from "@utils/helper";
 import { FC } from "react";
