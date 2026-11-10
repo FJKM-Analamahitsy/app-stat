@@ -1,4 +1,4 @@
-import api from "@utils/api";
+import api, { getData } from "@utils/api";
 import dayjs from "dayjs";
 import { FC, useEffect, useState } from "react";
 import {
@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import Select from "@components/Select";
+import useSWR from "swr";
 
 ChartJS.register(
   CategoryScale,
@@ -21,13 +22,14 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 const ChartAdidy: FC = () => {
   const now = useState(new Date())[0];
   const [data, setData] = useState<any>([]);
   const [year, setYear] = useState(dayjs().format("YYYY"));
+  const {} = useSWR("stat/offering", getData);
   const chart = {
     labels: data.map((v: any) => dayjs(v._id.date).format("DD-MM")),
     datasets: [
@@ -68,7 +70,7 @@ const ChartAdidy: FC = () => {
             onChange={(e) => setYear(e.target.value)}
             options={[
               ...Array.from(Array(4).keys()).map((i) =>
-                (now.getFullYear() - i).toString()
+                (now.getFullYear() - i).toString(),
               ),
             ]}
             valueIndex={false}

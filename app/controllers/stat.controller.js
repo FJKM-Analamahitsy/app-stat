@@ -1,4 +1,5 @@
 const { Member } = require("../models/member.model");
+const { Compta } = require("../models/adidy.model");
 
 const statistics = async (req, res) => {
   let raw = await Member.aggregate([
@@ -153,8 +154,80 @@ const statPerSampana = async (req, res) => {
   return res.json(result);
 };
 
+const offeringStatus = async (req, res) => {
+  const { year = new Date().getFullYear() } = req.query;
+  const base = [
+    {
+      $match: { year },
+    },
+    {
+      $unwind: "$month",
+    },
+    {
+      $group: {
+        _id: {
+          year: "$year",
+          mpandray: "$mpandray",
+        },
+        months: { $addToSet: "$month" },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        year: "$_id.year",
+        mpandray: "$_id.mpandray",
+        months: {
+          $sortArray: {
+            input: "$months",
+            sortBy: 1,
+          },
+        },
+        percentage: {
+          $multiply: [{ $divide: [{ $size: "$months" }, 12] }, 100],
+        },
+      },
+    },
+  ];
+  const d = await Compta.aggregate([
+    {
+      $facet: {
+        mean: [
+          ...base,
+          {
+            $group: {
+              _id: "$year",
+              meanPercentage: { $avg: "$percentage" },
+              totalUsers: { $sum: 1 },
+            },
+          },
+          {
+            $project: {
+              _id: { $round: ["$meanPercentage", 2] },
+            },
+          },
+        ],
+        fullpaid: [
+          ...base,
+          {
+            $match: {
+              percentage: 100,
+            },
+          },
+          {
+            $count: "id",
+          },
+        ],
+      },
+    },
+  ]);
+
+  return res.json(d);
+};
+
 module.exports = {
   statistics,
   statPerBirthMonth,
   statPerSampana,
+  offeringStatus,
 };
